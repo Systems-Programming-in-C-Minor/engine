@@ -15,12 +15,21 @@ jobs:
       - name: Setup cmake
         run: |
           sudo apt-get update
-          sudo apt-get install ninja-build cmake valgrind
-          pip install ValgrindCI
+          sudo apt-get install ninja-build cmake
           gcc --version
           cmake --version
           ninja --version
+      - name: Setup Valgrind
+        run: |
+          sudo apt-get install valgrind
+          pip install ValgrindCI
           valgrind --version
+      - name: Setup SDL
+        run: |
+          sudo apt-get install libsdl2-dev libsdl2-image-dev
+          sudo mkdir /usr/lib/x86_64-linux-gnu/cmake/sdl2_image/
+          echo -e 'set(prefix "/usr")\nset(exec_prefix "${prefix}")\nset(libdir "${prefix}/lib/x86_64-linux-gnu")\nset(SDL2_IMAGE_PREFIX "/usr")\nset(SDL2_IMAGE_EXEC_PREFIX "/usr")\nset(SDL2_IMAGE_INCLUDE_DIRS "${prefix}/include/SDL2_image")\nset(SDL2_IMAGE_LIBRARIES "-lSDL2_image")' > sdl2_image-config.cmake
+          sudo mv sdl2_image-config.cmake /usr/lib/x86_64-linux-gnu/cmake/sdl2_image/
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Cache build files
