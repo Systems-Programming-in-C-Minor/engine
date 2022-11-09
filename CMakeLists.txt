@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.24)
+cmake_minimum_required(VERSION 3.23)
 project(engine)
 
 option(ENGINE_TEST "Generate the test target." ON)
@@ -20,9 +20,15 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(fmt)
 
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS ./src/*.cpp)
+file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS ./src/*.hpp)
 
-include_directories(engine include)
-add_library(engine SHARED ${SOURCE_FILES})
+add_library(engine STATIC ${SOURCE_FILES} ${HEADER_FILES})
+target_include_directories(engine PUBLIC include)
+target_link_libraries(engine PRIVATE
+        SDL2
+        SDL2_image
+        fmt::fmt
+        )
 
 if (ENGINE_TEST)
     add_subdirectory(test)
