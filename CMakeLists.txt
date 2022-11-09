@@ -20,7 +20,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(fmt)
 
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS ./src/*.cpp)
-file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS ./src/*.hpp)
+file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS ./include/*.hpp)
 
 add_library(engine STATIC ${SOURCE_FILES} ${HEADER_FILES})
 target_include_directories(engine PUBLIC include)
