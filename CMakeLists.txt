@@ -25,8 +25,8 @@ file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS ./src/*.hpp)
 add_library(engine STATIC ${SOURCE_FILES} ${HEADER_FILES})
 target_include_directories(engine PUBLIC include)
 target_link_libraries(engine PRIVATE
-        SDL2
-        SDL2_image
+        ${SDL2_LIBRARIES}
+        SDL2_image::SDL2_image
         fmt::fmt
         )
 
