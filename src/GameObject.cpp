@@ -15,8 +15,8 @@ void GameObject::addChild(const std::shared_ptr<GameObject> &gameObject) {
 void GameObject::removeChild(const std::shared_ptr<GameObject> &gameObject) {
     for (auto it = children.begin(); it != children.end(); ++it) {
         if (*it == gameObject) {
-            children.erase(it);
             it->get()->parent = nullptr;
+            children.erase(it);
             return;
         }
     }
