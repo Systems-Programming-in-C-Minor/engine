@@ -166,3 +166,5 @@ _deps
 ### Other ###
 .idea/
 build/
+
+CMakeUserPresets.json
