@@ -4,9 +4,6 @@ project(engine-tests)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(SDL2 REQUIRED)
-find_package(SDL2_image REQUIRED)
-
 include(FetchContent)
 set(FETCHCONTENT_QUIET FALSE)
 
