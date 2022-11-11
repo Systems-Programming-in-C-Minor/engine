@@ -24,7 +24,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(fmt)
 
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS ./src/*.cpp)
-file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS ./include/*.hpp)
+file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS ./include/*.hpp )
 
 if (WIN32)
     set(SDL2_IMAGE_LIBRARIES SDL2_image::SDL2_image)
