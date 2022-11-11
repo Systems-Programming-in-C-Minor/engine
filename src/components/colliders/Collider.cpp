@@ -2,7 +2,7 @@
 // Created by Laerositus on 11/11/2022.
 //
 //#include
-#include "components/Collider.hpp"
+#include "components/colliders/Collider.hpp"
 
 std::vector<GameObject> Collider::collision_since_previous_tick(){
     std::vector<GameObject> collisions;
