@@ -1,5 +1,5 @@
-#ifndef AUDIOSOURCE_H_NE8Ak79aUp
-#define AUDIOSOURCE_H_NE8Ak79aUp
+#ifndef COMPONENTS_AUDIOSOURCE_H_NE8Ak79aUp
+#define COMPONENTS_AUDIOSOURCE_H_NE8Ak79aUp
 
 #include "Component.hpp"
 
@@ -44,4 +44,4 @@ private:
 	int m_play_count = 0;
 };
 
-#endif // AUDIOSOURCE_H_NE8Ak79aUp
+#endif // COMPONENTS_AUDIOSOURCE_H_NE8Ak79aUp
