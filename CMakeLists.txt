@@ -32,7 +32,7 @@ else ()
     set(SDL2_IMAGE_LIBRARIES SDL2_image)
 endif ()
 
-add_library(engine STATIC ${SOURCE_FILES} ${HEADER_FILES})
+add_library(engine STATIC ${SOURCE_FILES} ${HEADER_FILES} include/listeners/IKeyListener.hpp include/enums/Key.hpp)
 target_include_directories(engine PUBLIC include)
 target_link_libraries(engine PRIVATE
         ${SDL2_LIBRARIES}
