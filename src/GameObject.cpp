@@ -7,6 +7,9 @@ GameObject::GameObject(std::string name, std::string tag) : name(std::move(name)
                                                             parent(nullptr),
                                                             _id(objectCounter++) {}
 
+GameObject::GameObject() : parent(nullptr),
+                        _id(objectCounter++) {}
+
 void GameObject::addChild(const std::shared_ptr<GameObject> &gameObject) {
     children.push_back(gameObject);
     gameObject->parent = this;

@@ -170,5 +170,7 @@ public:
 
     GameObject(std::string name, std::string tag);
 
+    GameObject();
+
     virtual ~GameObject();
 };
