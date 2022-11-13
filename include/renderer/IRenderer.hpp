@@ -5,12 +5,13 @@
 #ifndef ENGINE_IRENDERER_HPP
 #define ENGINE_IRENDERER_HPP
 
-#include "components/Sprite.hpp"
 #include "ITexture.hpp"
+
+class Sprite;
 
 class IRenderer {
 public:
-    virtual void renderSprite(Sprite &sprite, ITexture &texture, bool isWorldSpace = true) const = 0;
+    virtual void renderSprite(const Sprite &sprite, ITexture &texture, bool isWorldSpace) = 0;
 };
 
 #endif //ENGINE_IRENDERER_HPP
