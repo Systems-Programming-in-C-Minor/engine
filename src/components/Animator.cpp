@@ -38,6 +38,7 @@ void Animator::tick() {
 }
 
 int Animator::animatePerTicks() const {
+    // TODO get the TICKS_PER_SECOND dynamically
     const int TICKS_PER_SECOND = 20;
     return TICKS_PER_SECOND / fps;
 }
