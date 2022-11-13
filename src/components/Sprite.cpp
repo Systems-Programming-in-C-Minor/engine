@@ -13,5 +13,5 @@ Sprite::Sprite(std::string sprite, Color color, bool flipX, bool flipY, int sort
         orderInLayer(orderInLayer) {}
 
 void Sprite::render(IRenderer &renderer, bool isWorldSpace) const {
-    renderer.renderSprite(renderer, texture, isWorldSpace);
+    renderer.renderSprite(*this, *texture, isWorldSpace);
 }
