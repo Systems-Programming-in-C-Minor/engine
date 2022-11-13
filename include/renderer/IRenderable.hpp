@@ -9,7 +9,7 @@
 
 class IRenderable {
 
-    virtual void render(IRenderer renderer, bool isWorldSpace = true) const = 0;
+    virtual void render(IRenderer &renderer, bool isWorldSpace = true) const = 0;
 
 };
 

@@ -2,7 +2,7 @@
 // Created by lars on 13-11-22.
 //
 
-#include "../include/components/Sprite.hpp"
+#include "components/Sprite.hpp"
 
 Sprite::Sprite(std::string sprite, Color color, bool flipX, bool flipY, int sortingLayer, int orderInLayer) :
         sprite(std::move(sprite)),
@@ -12,4 +12,6 @@ Sprite::Sprite(std::string sprite, Color color, bool flipX, bool flipY, int sort
         sortingLayer(sortingLayer),
         orderInLayer(orderInLayer) {}
 
-void Sprite::render(IRenderer renderer, bool isWorldSpace) const {}
+void Sprite::render(IRenderer &renderer, bool isWorldSpace) const {
+    renderer.renderSprite(renderer, texture, isWorldSpace);
+}
