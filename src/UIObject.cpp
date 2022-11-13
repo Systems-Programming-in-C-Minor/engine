@@ -4,6 +4,8 @@ UIObject::UIObject(double width, double height) :
     width(width),
     height(height) {}
 
+UIObject::UIObject() {}
+
 double UIObject::getHeight() const {
     return height;
 }

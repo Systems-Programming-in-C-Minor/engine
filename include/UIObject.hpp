@@ -8,6 +8,7 @@
 class UIObject : public GameObject {
 public:
     UIObject(double width, double height);
+    UIObject();
     [[nodiscard]] double getWidth() const;
     [[nodiscard]] double getHeight() const;
     void setWidth(double newWidth);
