@@ -18,7 +18,7 @@ class Sprite : public Component, public IRenderable {
 public:
     Sprite(string sprite, Color color, bool flipX, bool flipY, int sortingLayer, int orderInLayer);
 
-    void render(IRenderer renderer, bool isWorldSpace = true) const override;
+    void render(IRenderer &renderer, bool isWorldSpace = true) const override;
 
 private:
     std::string sprite;
