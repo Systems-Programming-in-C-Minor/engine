@@ -5,12 +5,11 @@
 #ifndef ENGINE_IRENDERABLE_HPP
 #define ENGINE_IRENDERABLE_HPP
 
-// TODO remove when IRenderer is implemented
-class IRenderer;
+#include "IRenderer.hpp"
 
 class IRenderable {
 
-    virtual void render(IRenderer renderer, bool isWorldSpace = true) = 0;
+    virtual void render(IRenderer renderer, bool isWorldSpace = true) const = 0;
 
 };
 
