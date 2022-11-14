@@ -1,11 +1,11 @@
 #ifndef ENGINE_SPRITE_HPP
 #define ENGINE_SPRITE_HPP
 
-#include "renderer/IRenderable.hpp"
+#include "renderer/irenderable.hpp"
 #include "string"
-#include "Component.hpp"
-#include "Color.hpp"
-#include "renderer/ITexture.hpp"
+#include "component.hpp"
+#include "color.hpp"
+#include "renderer/itexture.hpp"
 #include "memory"
 
 using namespace std;

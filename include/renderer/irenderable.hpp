@@ -1,7 +1,7 @@
 #ifndef ENGINE_IRENDERABLE_HPP
 #define ENGINE_IRENDERABLE_HPP
 
-#include "IRenderer.hpp"
+#include "irenderer.hpp"
 
 class IRenderable {
 

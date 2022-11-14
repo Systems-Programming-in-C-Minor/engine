@@ -1,7 +1,7 @@
 #ifndef ENGINE_IRENDERER_HPP
 #define ENGINE_IRENDERER_HPP
 
-#include "ITexture.hpp"
+#include "itexture.hpp"
 
 class Sprite;
 

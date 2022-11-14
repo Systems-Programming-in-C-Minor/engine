@@ -1,4 +1,4 @@
-#include "components/Sprite.hpp"
+#include "components/sprite.hpp"
 
 Sprite::Sprite(std::string sprite, Color color, bool flip_x, bool flip_y, int sorting_layer, int order_in_layer) :
         sprite(std::move(sprite)),
