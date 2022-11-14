@@ -1,7 +1,3 @@
-//
-// Created by lars on 12-11-22.
-//
-
 #ifndef ENGINE_IMOUSELISTENER_HPP
 #define ENGINE_IMOUSELISTENER_HPP
 
@@ -9,13 +5,13 @@
 
 class IMouseListener {
 
-    virtual void OnMouseMoved() = 0;
+    virtual void on_mouse_moved() = 0;
 
-    virtual void OnMouseClicked(MouseInput button) = 0;
+    virtual void on_mouse_clicked(MouseInput button) = 0;
 
-    virtual void OnMousePressed(MouseInput button) = 0;
+    virtual void on_mouse_pressed(MouseInput button) = 0;
 
-    virtual void OnMouseReleased(MouseInput button) = 0;
+    virtual void on_mouse_released(MouseInput button) = 0;
 
 };
 
