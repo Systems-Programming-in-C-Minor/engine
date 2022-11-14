@@ -7,8 +7,8 @@ class BoxCollider : public Collider
     BoxCollider();
     ~BoxCollider();
 
-    double m_width;
-    double m_height;
+    double _width;
+    double _height;
 
 public:
     double get_width();
