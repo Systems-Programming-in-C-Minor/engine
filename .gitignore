@@ -561,5 +561,3 @@ FodyWeavers.xsd
 ### Other ###
 .idea/
 build/
-
-CMakeUserPresets.json
