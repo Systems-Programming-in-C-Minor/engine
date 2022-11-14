@@ -1,7 +1,3 @@
-//
-// Created by Laerositus on 11/11/2022.
-//
-
 #include "components/colliders/BoxCollider.hpp"
 
 double BoxCollider::get_width(){
