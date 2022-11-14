@@ -1,7 +1,7 @@
 #ifndef ENGINE_IMOUSELISTENER_HPP
 #define ENGINE_IMOUSELISTENER_HPP
 
-#include "enums/MouseInput.hpp"
+#include "enums/mouse_input.hpp"
 
 class IMouseListener {
 
