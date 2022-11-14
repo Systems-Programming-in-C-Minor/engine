@@ -21,6 +21,12 @@ FetchContent_Declare(
         URL https://github.com/fmtlib/fmt/releases/download/9.1.0/fmt-9.1.0.zip
 )
 
+FetchContent_Declare(box2d
+        GIT_REPOSITORY https://github.com/erincatto/box2d.git
+        GIT_TAG v2.4.1
+        GIT_PROGRESS TRUE
+        )
+
 FetchContent_MakeAvailable(fmt)
 
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS ./src/*.cpp)
@@ -38,6 +44,7 @@ target_link_libraries(engine PRIVATE
         ${SDL2_LIBRARIES}
         ${SDL2_IMAGE_LIBRARIES}
         fmt::fmt
+        box2d
         )
 
 if (ENGINE_TEST)
