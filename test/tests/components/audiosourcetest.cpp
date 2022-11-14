@@ -4,19 +4,19 @@
 
 TEST(AudioSourceTest, HasNotBeenPlayed_Active)
 {
-	AudioSource audio("testpath.wav");
+	AudioSource audio("sample.wav");
 	EXPECT_EQ(audio.get_play_count(), 0);
 }
 
 TEST(AudioSourceTest, HasBeenPlayed_Active)
 {
-	AudioSource audio("testpath.wav", true);
+	AudioSource audio("sample.wav", true);
 	EXPECT_EQ(audio.get_play_count(), 1);
 }
 
 TEST(AudioSourceTest, HasBeenPlayed_NotActiveToActive)
 {
-	AudioSource audio("testpath.wav", true);
+	AudioSource audio("sample.wav", true);
 	audio.setActive(false);
 	audio.setActive(true);
 	EXPECT_EQ(audio.get_play_count(), 2);
@@ -24,7 +24,7 @@ TEST(AudioSourceTest, HasBeenPlayed_NotActiveToActive)
 
 TEST(AudioSourceTest, HasBeenPlayed)
 {
-	AudioSource audio("testpath.wav");
+	AudioSource audio("sample.wav");
 	audio.play();
 	EXPECT_EQ(audio.get_play_count(), 1);
 }

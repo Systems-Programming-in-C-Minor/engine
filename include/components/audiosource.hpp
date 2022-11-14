@@ -4,6 +4,9 @@
 #include "Component.hpp"
 
 #include <string>
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 /// Component for playback of an audio file
 class AudioSource : public Component
@@ -35,7 +38,7 @@ public:
 		double volume = 1.0
 	);
 private:
-	std::string m_audio_clip;
+	fs::path m_audio_clip;
 	bool m_play_on_awake;
 	bool m_loop;
 	double m_volume;
