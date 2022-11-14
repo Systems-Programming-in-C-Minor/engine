@@ -8,10 +8,6 @@
 class Transform
 {
 public:
-	Vector2d position;
-	double angle;
-	double scale;
-
 	double get_angle();
 	void set_angle(double angle = 0.0);
 	double get_scale();
@@ -20,6 +16,12 @@ public:
 	void set_position(Vector2d& position);
 
 	Transform(const Vector2d& position, double angle = 0.0, double scale = 0.0);
+
+	// TODO MUst ask product owner approval for these removed/private members
+private:
+	Vector2d _position;
+	double _angle;
+	double _scale;
 };
 
 #endif // ENGINE_TRANSFORM_H_sZYCcKEA4x
