@@ -22,6 +22,16 @@ void Transform::set_scale(double scale)
 	this->scale = scale;
 }
 
+Vector2d Transform::get_position()
+{
+	return position;
+}
+
+void Transform::set_position(Vector2d & position)
+{
+	this->position = position;
+}
+
 Transform::Transform(const Vector2d& position, double angle, double scale):
 	position(position),
 	angle(angle),
