@@ -12,10 +12,16 @@ class Scene
 public:
 	std::vector<std::shared_ptr<GameObject>> gameobjects;
 	
-	/// Simulates a tick on this scene's gameobjects
+	/**
+	 * Simulates a tick on this scene's gameobjects
+	 */
 	void tick();
 
-	/// Calls the render functions on this scene's gameobjects
+	/**
+	 * Calls the render functions on this scene's gameobjects
+	 * 
+	 * @param[in] renderer Reference to the active renderer
+	 */
 	void render(IRenderer& renderer);
 
 	Scene();
