@@ -1,7 +1,3 @@
-//
-// Created by lars on 12-11-22.
-//
-
 #ifndef ENGINE_KEY_HPP
 #define ENGINE_KEY_HPP
 
