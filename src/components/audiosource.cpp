@@ -5,8 +5,8 @@
 void AudioSource::setActive(bool isActive)
 {
 	active = isActive;
-	if (m_play_on_awake && active)
-		play(m_loop);
+	if (_play_on_awake && active)
+		play(_loop);
 	return;
 }
 
@@ -26,24 +26,24 @@ void AudioSource::play(bool looping)
         return;
     }
 
-	m_loop = looping;
-	m_is_playing = true;
+	_loop = looping;
+	_is_playing = true;
 	// Play audio file here
-	++m_play_count;
+	++_play_count;
 	stop();
 	return;
 }
 
 void AudioSource::stop()
 {
-	if(m_is_playing)
-		m_is_playing = false;
+	if(_is_playing)
+		_is_playing = false;
 	return;
 }
 
 int AudioSource::get_play_count()
 {
-	return m_play_count;
+	return _play_count;
 }
 
 AudioSource::AudioSource(
@@ -52,12 +52,12 @@ AudioSource::AudioSource(
 	bool loop,
 	double volume) :
 	m_audio_clip(fs::current_path().append(audio_clip)),
-	m_play_on_awake(play_on_awake),
-	m_loop(loop),
-	m_volume(volume) 
+	_play_on_awake(play_on_awake),
+	_loop(loop),
+	_volume(volume) 
 {
 	// Play sample if component is active
 	// and play on awake is true
-	if (m_play_on_awake && active)
+	if (_play_on_awake && active)
 		play(loop);
 }

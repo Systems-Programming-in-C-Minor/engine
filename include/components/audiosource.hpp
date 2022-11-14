@@ -39,12 +39,12 @@ public:
 	);
 private:
 	fs::path m_audio_clip;
-	bool m_play_on_awake;
-	bool m_loop;
-	double m_volume;
+	bool _play_on_awake;
+	bool _loop;
+	double _volume;
 
-	bool m_is_playing = false;
-	int m_play_count = 0;
+	bool _is_playing = false;
+	int _play_count = 0;
 };
 
 #endif // COMPONENTS_AUDIOSOURCE_H_NE8Ak79aUp
