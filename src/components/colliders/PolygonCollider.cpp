@@ -1,6 +1,3 @@
-//
-// Created by Laerositus on 11/11/2022.
-//
 #include "components/colliders/PolygonCollider.hpp"
 
 //std::vector<Vector2d> PolygonCollider::get_points(){
