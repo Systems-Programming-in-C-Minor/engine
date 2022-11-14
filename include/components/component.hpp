@@ -5,8 +5,8 @@ protected:
     Component() = default;
     bool active = true;
 public:
-    void setActive(bool isActive);
-    [[nodiscard]] bool getActive() const;
+    void set_active(bool is_active);
+    [[nodiscard]] bool get_active() const;
 
     virtual ~Component() = default;
 };

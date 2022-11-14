@@ -1,20 +1,20 @@
-#include "GameObject.hpp"
+#include "gameobject.hpp"
 
-int GameObject::objectCounter = 0;
+int GameObject::object_counter = 0;
 
 GameObject::GameObject(std::string name, std::string tag) : name(std::move(name)),
                                                             tag(std::move(tag)),
                                                             parent(nullptr),
-                                                            _id(objectCounter++) {}
+                                                            _id(object_counter++) {}
 
-void GameObject::addChild(const std::shared_ptr<GameObject> &gameObject) {
-    children.push_back(gameObject);
-    gameObject->parent = this;
+void GameObject::add_child(const std::shared_ptr<GameObject> &game_object) {
+    children.push_back(game_object);
+    game_object->parent = this;
 }
 
-void GameObject::removeChild(const std::shared_ptr<GameObject> &gameObject) {
+void GameObject::remove_child(const std::shared_ptr<GameObject> &game_object) {
     for (auto it = children.begin(); it != children.end(); ++it) {
-        if (*it == gameObject) {
+        if (*it == game_object) {
             it->get()->parent = nullptr;
             children.erase(it);
             return;
@@ -22,23 +22,23 @@ void GameObject::removeChild(const std::shared_ptr<GameObject> &gameObject) {
     }
 }
 
-std::list<std::shared_ptr<GameObject>> GameObject::getChildren() {
+std::list<std::shared_ptr<GameObject>> GameObject::get_children() {
     return children;
 }
 
-bool GameObject::isActive() const {
+bool GameObject::is_active() const {
     return active;
 }
 
-void GameObject::setActive(bool isActive) {
-    active = isActive;
+void GameObject::set_active(bool is_active) {
+    active = is_active;
 }
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "misc-no-recursion"
 
-bool GameObject::isActiveInWorld() const {
-    return active && (parent == nullptr || parent->isActiveInWorld());
+bool GameObject::is_active_in_world() const {
+    return active && (parent == nullptr || parent->is_active_in_world());
 }
 
 #pragma clang diagnostic pop
