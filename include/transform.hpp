@@ -12,6 +12,11 @@ public:
 	double angle;
 	double scale;
 
+	double get_angle();
+	void set_angle(double angle = 0.0);
+	double get_scale();
+	void set_scale(double scale = 1.0);
+
 	Transform(const Vector2d& position, double angle = 0.0, double scale = 0.0);
 };
 
