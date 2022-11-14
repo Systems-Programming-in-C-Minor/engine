@@ -1,7 +1,3 @@
-//
-// Created by Laerositus on 11/11/2022.
-//
-
 #include "components/colliders/SpriteCollider.hpp"
 
 std::string SpriteCollider::get_path(){
