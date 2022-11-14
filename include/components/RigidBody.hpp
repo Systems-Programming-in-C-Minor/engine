@@ -1,13 +1,9 @@
-//
-// Created by Laerositus on 11/11/2022.
-//
-
 #ifndef ENGINE_RIGIDBODY_HPP
 #define ENGINE_RIGIDBODY_HPP
 
 #include "Component.hpp"
-//#include "Vector2d.hpp"
-class Vector2d;
+//#include "Vector2d"
+class Vector2d; // TODO Replace with above include statement.
 
 enum class BodyType
 {
