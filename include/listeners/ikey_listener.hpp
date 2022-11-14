@@ -1,7 +1,7 @@
 #ifndef ENGINE_IKEYLISTENER_HPP
 #define ENGINE_IKEYLISTENER_HPP
 
-#include "enums/Key.hpp"
+#include "enums/key.hpp"
 
 class IKeyListener {
 
