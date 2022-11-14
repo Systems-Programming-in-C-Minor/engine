@@ -27,6 +27,7 @@ FetchContent_Declare(box2d
         GIT_PROGRESS TRUE
         )
 
+FetchContent_MakeAvailable(box2d)
 FetchContent_MakeAvailable(fmt)
 
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS ./src/*.cpp)
