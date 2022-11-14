@@ -4,7 +4,7 @@
 #include <vector>
 #include <memory>
 
-class IRender;
+class IRenderer;
 class GameObject;
 
 class Scene
