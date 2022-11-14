@@ -1,7 +1,3 @@
-//
-// Created by lars on 13-11-22.
-//
-
 #ifndef ENGINE_COLOR_HPP
 #define ENGINE_COLOR_HPP
 

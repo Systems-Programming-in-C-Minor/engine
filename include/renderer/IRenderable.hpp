@@ -1,7 +1,3 @@
-//
-// Created by lars on 13-11-22.
-//
-
 #ifndef ENGINE_IRENDERABLE_HPP
 #define ENGINE_IRENDERABLE_HPP
 
@@ -9,7 +5,7 @@
 
 class IRenderable {
 
-    virtual void render(IRenderer &renderer, bool isWorldSpace = true) const = 0;
+    virtual void render(IRenderer &renderer, bool is_world_space = true) const = 0;
 
 };
 
