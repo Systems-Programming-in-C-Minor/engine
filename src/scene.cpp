@@ -7,7 +7,7 @@ void Scene::tick()
 	}
 }
 
-void Scene::render()
+void Scene::render(IRenderer& renderer)
 {
 	for (auto& gameobject : gameobjects) {
 		// TODO Render gameobjects here. Missing render func and renderer

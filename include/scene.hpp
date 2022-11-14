@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 
+class IRender;
 class GameObject;
 
 class Scene
@@ -15,7 +16,7 @@ public:
 	void tick();
 
 	/// Calls the render functions on this scene's gameobjects
-	void render();
+	void render(IRenderer& renderer);
 
 	Scene();
 };
