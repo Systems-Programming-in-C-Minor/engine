@@ -12,23 +12,31 @@ namespace fs = std::filesystem;
 class AudioSource : public Component
 {
 public:
-	/// Sets the component's active state
-	/// Plays audio if play on awake is true and component is active
-	/// 
-	/// @param[in] isActive Sets active state
+	/**
+	 * Sets the component's active state
+	 * Plays audio if play on awake is true and component is active
+	 * 
+	 * @param[in] isActive Sets active state
+	 */
 	virtual void setActive(bool isActive) override;
 
-	/// Plays an audio source
-	/// 
-	/// @param[in] looping Automatically replay when sample ends
+	/**
+	 * Plays an audio source
+	 * 
+	 * @param[in] looping Automatically replay when sample ends
+	 */
 	void play(bool looping = false);
 
-	/// Stops playback if playing
+	/**
+	 * Stops playback if playing
+	 */
 	void stop();
 
-	/// Returns the times a sample has been played
-	/// 
-	/// @return Times this audiosource has been played
+	/**
+	 * Returns the times a sample has been played
+	 * 
+	 * @return Times this audiosource has been played
+	 */
 	int get_play_count();
 
 	AudioSource(
