@@ -1,7 +1,3 @@
-//
-// Created by lars on 13-11-22.
-//
-
 #ifndef ENGINE_IRENDERER_HPP
 #define ENGINE_IRENDERER_HPP
 
@@ -11,7 +7,7 @@ class Sprite;
 
 class IRenderer {
 public:
-    virtual void renderSprite(const Sprite &sprite, ITexture &texture, bool isWorldSpace) = 0;
+    virtual void render_sprite(const Sprite &sprite, ITexture &texture, bool is_world_space) = 0;
 };
 
 #endif //ENGINE_IRENDERER_HPP
