@@ -1,7 +1,3 @@
-//
-// Created by lars on 13-11-22.
-//
-
 #ifndef ENGINE_IRENDERABLE_HPP
 #define ENGINE_IRENDERABLE_HPP
 
