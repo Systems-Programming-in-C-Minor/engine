@@ -2,13 +2,6 @@
 
 #include "GameObject.hpp"
 
-class Color {
-    int r = 0;
-    int g = 0;
-    int b = 0;
-    int a = 1;
-};
-
 class Camera : public GameObject
 {
     Color _background_color;
