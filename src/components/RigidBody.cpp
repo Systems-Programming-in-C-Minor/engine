@@ -32,20 +32,20 @@
 //}
 
 double RigidBody::get_mass(){
-    return m_mass;
+    return _mass;
 }
 void RigidBody::set_mass(double m){
-    m_mass = m;
+    _mass = m;
 }
 double RigidBody::get_gravity_scale(){
-    return m_gravity_scale;
+    return _gravity_scale;
 }
 void RigidBody::set_gravity_scale(double gs){
-    m_gravity_scale = gs;
+    _gravity_scale = gs;
 }
 BodyType RigidBody::get_bodytype(){
-    return m_bodytype;
+    return _bodytype;
 }
 void RigidBody::set_bodytype(BodyType bt){
-    m_bodytype = bt;
+    _bodytype = bt;
 }
