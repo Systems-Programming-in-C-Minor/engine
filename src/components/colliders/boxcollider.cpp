@@ -1,14 +1,14 @@
 #include "components/colliders/boxcollider.hpp"
 
 double BoxCollider::get_width(){
-    return m_width;
+    return _width;
 }
 void BoxCollider::set_width(double w){
-    m_width = w;
+    _width = w;
 }
 double BoxCollider::get_height(){
-    return m_height;
+    return _height;
 }
 void BoxCollider::set_height(double h){
-    m_height = h;
+    _height = h;
 }

@@ -12,7 +12,7 @@ class PolygonCollider : public Collider
     PolygonCollider();
     ~PolygonCollider();
 
-    std::vector<Vector2d> m_points;
+    std::vector<Vector2d> _points;
 
 public:
 //    std::vector<Vector2d> get_points();

@@ -10,7 +10,7 @@ class Collider : public Component
     Collider();
     ~Collider();
 
-    bool m_ignore_collision_physics;
+    bool _ignore_collision_physics;
 
 public:
     std::vector<GameObject> collision_since_previous_tick();

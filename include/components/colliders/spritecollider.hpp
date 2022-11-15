@@ -7,7 +7,7 @@ class SpriteCollider : public Collider
     SpriteCollider();
     ~SpriteCollider();
 
-    std::string m_path;
+    std::string _path;
 
 public:
     std::string get_path();

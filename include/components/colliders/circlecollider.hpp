@@ -7,7 +7,7 @@ class CircleCollider : public Collider
     CircleCollider();
     ~CircleCollider();
 
-    double m_radius;
+    double _radius;
 
 public:
     double get_radius();

@@ -1,8 +1,8 @@
 #include "components/colliders/circlecollider.hpp"
 
 double CircleCollider::get_radius(){
-    return m_radius;
+    return _radius;
 }
 void CircleCollider::set_radius(double r){
-    m_radius = r;
+    _radius = r;
 }

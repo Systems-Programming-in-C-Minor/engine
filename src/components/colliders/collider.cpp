@@ -11,9 +11,9 @@ std::vector<GameObject> Collider::collision_since_previous_tick(){
 //}
 
 bool Collider::get_ignore_collision_physics() {
-    return m_ignore_collision_physics;
+    return _ignore_collision_physics;
 }
 
 void Collider::set_ignore_collision_physics(bool icp) {
-    m_ignore_collision_physics = icp;
+    _ignore_collision_physics = icp;
 }
