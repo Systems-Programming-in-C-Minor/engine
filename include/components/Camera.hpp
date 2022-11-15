@@ -11,9 +11,9 @@ class Color {
 
 class Camera : public GameObject
 {
-    Color m_background_color;
-    int m_aspect_width;
-    int m_aspect_height;
+    Color _background_color;
+    int _aspect_width;
+    int _aspect_height;
 
 public:
     Color get_background_color();
