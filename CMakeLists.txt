@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.23)
 project(engine)
 
 option(ENGINE_TEST "Generate the test target." ON)
+option(ENGINE_SAMPLE "Generate a sample UnEngine project." ON)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -32,6 +33,18 @@ FetchContent_Declare(box2d
 
 FetchContent_MakeAvailable(fmt box2d)
 
+FetchContent_Declare(SDL2pp
+  GIT_REPOSITORY https://github.com/libSDL2pp/libSDL2pp.git
+  GIT_TAG 0.17.0
+  GIT_PROGRESS TRUE
+)
+
+FetchContent_MakeAvailable(SDL2pp)
+
+set(SDL2PP_WITH_IMAGE ON) # if you need SDL_image support
+set(SDL2PP_WITH_MIXER OFF) # if you need SDL_mixer support
+set(SDL2PP_WITH_TTF OFF) # if you need SDL_ttf support
+
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS ./src/*.cpp)
 file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS ./include/*.hpp)
 
@@ -48,9 +61,14 @@ target_link_libraries(engine PRIVATE
         ${SDL2_IMAGE_LIBRARIES}
         fmt::fmt
         box2d
+        SDL2pp::SDL2pp
         )
 
 if (ENGINE_TEST)
     add_subdirectory(test)
     enable_testing()
 endif ()
+
+if (ENGINE_SAMPLE)
+    add_subdirectory(sample)
+endif()
