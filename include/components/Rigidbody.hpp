@@ -1,6 +1,4 @@
-#ifndef ENGINE_RIGIDBODY_HPP
-#define ENGINE_RIGIDBODY_HPP
-
+#pragma once
 #include "Component.hpp"
 //#include "Vector2d"  TODO include Vector2d class
 
@@ -38,5 +36,3 @@ public:
     void set_bodytype(BodyType bt);
 
 };
-
-#endif //ENGINE_RIGIDBODY_HPP
