@@ -7,7 +7,7 @@
 using namespace std;
 
 class iproperties {
-    virtual void set_property(string name) = 0;
+    virtual void set_property(string name, string value) = 0;
 
     virtual optional<string> get_property(string name) = 0;
 };
