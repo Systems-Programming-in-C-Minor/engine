@@ -1,10 +1,10 @@
 #include "components/component.hpp"
 
-void Component::set_active(bool is_active) {
-    active = is_active;
+void Component::setActive(bool isActive) {
+    active = isActive;
 }
 
-bool Component::get_active() const {
+bool Component::getActive() const {
     return active;
 }
 

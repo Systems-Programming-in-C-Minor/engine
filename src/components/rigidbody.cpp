@@ -1,4 +1,4 @@
-#include "components/Rigidbody.hpp"
+#include "components/rigidbody.hpp"
 
 //void RigidBody::apply_force(Vector2d force){ TODO Uncomment code when Vector2d has been implemented
 //
