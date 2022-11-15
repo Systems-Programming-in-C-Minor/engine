@@ -1,4 +1,4 @@
-#include "components/Camera.hpp"
+#include "components/camera.hpp"
 
 Color Camera::get_background_color(){
     return _background_color;

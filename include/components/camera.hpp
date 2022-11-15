@@ -1,7 +1,7 @@
 #pragma once
 
-#include "GameObject.hpp"
-#include "Color.hpp"
+#include "gameobject.hpp"
+#include "color.hpp"
 
 class Camera : public GameObject
 {
