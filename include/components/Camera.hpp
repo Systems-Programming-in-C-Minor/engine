@@ -1,6 +1,3 @@
-//
-// Created by Laerositus on 11/11/2022.
-//
 #pragma once
 
 #include "GameObject.hpp"
