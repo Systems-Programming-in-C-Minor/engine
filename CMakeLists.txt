@@ -21,6 +21,8 @@ FetchContent_Declare(
         URL https://github.com/fmtlib/fmt/releases/download/9.1.0/fmt-9.1.0.zip
 )
 
+FetchContent_MakeAvailable(fmt)
+
 FetchContent_Declare(box2d
         GIT_REPOSITORY https://github.com/erincatto/box2d.git
         GIT_TAG v2.4.1
@@ -28,7 +30,6 @@ FetchContent_Declare(box2d
         )
 
 FetchContent_MakeAvailable(box2d)
-FetchContent_MakeAvailable(fmt)
 
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS ./src/*.cpp)
 file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS ./include/*.hpp)
