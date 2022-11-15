@@ -7,8 +7,8 @@
  */
 class UIObject : public GameObject {
 private:
-    double width;
-    double height;
+    double _width;
+    double _height;
 public:
     void set_width(double new_width);
     [[nodiscard]] double get_width() const;
