@@ -12,7 +12,7 @@ class Sprite : public Component, public IRenderable {
 public:
     Sprite(std::string sprite, Color color, bool flip_x, bool flip_y, int sorting_layer, int order_in_layer);
 
-    void render(IRenderer &renderer, bool is_world_space = true) const override;
+    void render(IRenderer &renderer, bool is_world_space) const override;
 
 private:
     std::string sprite;

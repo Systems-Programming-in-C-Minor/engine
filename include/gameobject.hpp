@@ -5,6 +5,8 @@
 #include <memory>
 #include <list>
 #include "components/component.hpp"
+#include "interfaces/irenderable.hpp"
+#include "interfaces/itickable.hpp"
 
 #define assert_T_derived_from_component static_assert(std::is_base_of<Component, T>::value, "T not derived from Component")
 
@@ -20,6 +22,7 @@ protected:
     std::string tag;
     bool active = true;
     int layer = 0;
+    bool is_worldspace = true;
 
     std::list<std::shared_ptr<Component>> components;
 
@@ -168,7 +171,11 @@ public:
      */
     [[nodiscard]] bool is_active_in_world() const;
 
-    GameObject(std::string name, std::string tag);
+    void render(IRenderer& renderer) const;
+
+    void tick();
+
+    GameObject(std::string name, std::string tag, bool is_worldspace = true);
 
     virtual ~GameObject();
 };
