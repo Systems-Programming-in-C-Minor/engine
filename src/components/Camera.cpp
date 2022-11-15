@@ -1,24 +1,21 @@
-//
-// Created by Laerositus on 11/11/2022.
-//
 #include "components/Camera.hpp"
 
 Color Camera::get_background_color(){
-    return m_background_color;
+    return _background_color;
 }
 void Camera::set_background_color(Color c){
-    m_background_color = c;
+    _background_color = c;
 }
 int Camera::get_aspect_width(){
-    return m_aspect_width;
+    return _aspect_width;
 }
 void Camera::set_aspect_width(int w){
-    m_aspect_width = w;
+    _aspect_width = w;
 }
 int Camera::get_aspect_height(){
-    return m_aspect_height;
+    return _aspect_height;
 }
 void Camera::set_aspect_height(int h){
-    m_aspect_height = h;
+    _aspect_height = h;
 }
 
