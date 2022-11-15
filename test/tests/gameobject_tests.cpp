@@ -40,6 +40,24 @@ TEST(GameObjectTest, AddGetComponent) {
     EXPECT_EQ(game_object.get_component<Test3Component>(), nullptr);
 }
 
+TEST(GameObjectTest, RemoveComponent) {
+    auto game_object = test_game_object;
+
+    const auto test1_component = std::make_shared<Test1Component>();
+    const auto test2_component = std::make_shared<Test2Component>();
+
+    game_object.add_component(test1_component);
+    game_object.add_component(test2_component);
+
+    EXPECT_EQ(game_object.get_component<Test1Component>(), test1_component);
+    EXPECT_EQ(game_object.get_component<Test2Component>(), test2_component);
+
+    game_object.remove_component(test1_component);
+
+    EXPECT_EQ(game_object.get_component<Test1Component>(), nullptr);
+    EXPECT_EQ(game_object.get_component<Test2Component>(), test2_component);
+}
+
 TEST(GameObjectTest, AddGetComponents) {
     auto game_object = test_game_object;
 

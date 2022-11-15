@@ -65,6 +65,19 @@ public:
     }
 
     /**
+     * @brief Remove a the given Component.
+     * @details This function removes all pointers to the component in
+     *          a suitable container.
+     * @param component Reference to the component.
+     */
+    template<class T>
+    void remove_component(std::shared_ptr<T> component) {
+        assert_T_derived_from_component;
+
+        components.remove(component);
+    }
+
+    /**
      * @brief Get the first component of the specified type. Must be
      *        a valid subclass of Component.
      * @return Pointer to Component instance.
