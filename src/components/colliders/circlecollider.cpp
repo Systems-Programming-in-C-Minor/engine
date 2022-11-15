@@ -1,4 +1,4 @@
-#include "components/colliders/CircleCollider.hpp"
+#include "components/colliders/circlecollider.hpp"
 
 double CircleCollider::get_radius(){
     return m_radius;

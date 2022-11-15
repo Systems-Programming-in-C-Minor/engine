@@ -1,4 +1,4 @@
-#include "components/colliders/SpriteCollider.hpp"
+#include "components/colliders/spritecollider.hpp"
 
 std::string SpriteCollider::get_path(){
     return m_path;

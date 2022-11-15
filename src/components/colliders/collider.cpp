@@ -1,4 +1,4 @@
-#include "components/colliders/Collider.hpp"
+#include "components/colliders/collider.hpp"
 
 std::vector<GameObject> Collider::collision_since_previous_tick(){
     std::vector<GameObject> collisions;

@@ -1,4 +1,4 @@
-#include "components/colliders/PolygonCollider.hpp"
+#include "components/colliders/polygoncollider.hpp"
 
 //std::vector<Vector2d> PolygonCollider::get_points(){
 //    return m_points;

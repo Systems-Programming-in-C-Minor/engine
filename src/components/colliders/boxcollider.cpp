@@ -1,4 +1,4 @@
-#include "components/colliders/BoxCollider.hpp"
+#include "components/colliders/boxcollider.hpp"
 
 double BoxCollider::get_width(){
     return m_width;

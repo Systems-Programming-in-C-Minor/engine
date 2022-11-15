@@ -1,7 +1,7 @@
 #pragma once
 
 //#include "Vector2d.hpp"
-#include "Collider.hpp"
+#include "collider.hpp"
 
 #include <vector>
 
