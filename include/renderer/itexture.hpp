@@ -3,11 +3,9 @@
 
 #include "string"
 
-using namespace std;
-
 class ITexture {
 public:
-    ITexture(string imagePath);
+    ITexture(std::string imagePath);
 };
 
 #endif //ENGINE_ITEXTURE_HPP
