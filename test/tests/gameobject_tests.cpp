@@ -18,6 +18,9 @@ class Test2Component : public Component {
 class Test3Component : public Component {
 };
 
+class Test4Component : public Component {
+};
+
 TEST(GameObjectTest, GetSetActive) {
     auto game_object = test_game_object;
     game_object.set_active(true);
@@ -116,6 +119,7 @@ TEST(GameObjectTest, GetChildComponent) {
     const auto test1_component = std::make_shared<Test1Component>();
     const auto test2_component = std::make_shared<Test2Component>();
     const auto test3_component = std::make_shared<Test3Component>();
+    const auto test4_component = std::make_shared<Test4Component>();
 
     game_object.add_child(child);
     child->add_child(child_child);
@@ -127,6 +131,7 @@ TEST(GameObjectTest, GetChildComponent) {
     EXPECT_EQ(game_object.get_component_in_children<Test1Component>(), test1_component);
     EXPECT_EQ(game_object.get_component_in_children<Test2Component>(), test2_component);
     EXPECT_EQ(game_object.get_component_in_children<Test3Component>(), test3_component);
+    EXPECT_EQ(game_object.get_component_in_children<Test4Component>(), nullptr);
 }
 
 TEST(GameObjectTest, GetChildComponents) {
