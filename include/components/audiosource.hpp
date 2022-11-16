@@ -7,8 +7,9 @@
 #include <filesystem>
 
 namespace fs = std::filesystem;
-
-/// Component for playback of an audio file
+/**
+ * Component for playback of an audio file.
+ */
 class AudioSource : public Component
 {
 public:
