@@ -2,6 +2,8 @@
 
 #include "fmt/core.h"
 
+namespace fs = std::filesystem;
+
 void AudioSource::set_active(bool is_active)
 {
 	active = is_active;

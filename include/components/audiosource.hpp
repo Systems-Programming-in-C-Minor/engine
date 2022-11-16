@@ -6,7 +6,6 @@
 #include <string>
 #include <filesystem>
 
-namespace fs = std::filesystem;
 /**
  * Component for playback of an audio file.
  */
@@ -47,7 +46,7 @@ public:
 		double volume = 1.0
 	);
 private:
-	fs::path m_audio_clip;
+	std::filesystem::path m_audio_clip;
 	bool _play_on_awake;
 	bool _loop;
 	double _volume;
