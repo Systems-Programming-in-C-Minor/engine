@@ -1,4 +1,5 @@
 #include "gameobject.hpp"
+#include "interfaces/itickable.hpp"
 
 int GameObject::object_counter = 0;
 

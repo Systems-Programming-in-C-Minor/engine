@@ -7,13 +7,14 @@
 #include <list>
 #include "components/component.hpp"
 #include "interfaces/irenderable.hpp"
-#include "interfaces/itickable.hpp"
+
+class ITickable;
 
 #define assert_T_derived_from_component static_assert(std::is_base_of<Component, T>::value, "T not derived from Component")
 
 /**
-     * @brief Any object which should be represented on screen.
-     */
+* @brief Any object which should be represented on screen.
+*/
 class GameObject {
 private:
     int _id;
