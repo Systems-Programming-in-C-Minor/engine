@@ -5,6 +5,7 @@
 #include <render/irenderer.hpp>
 
 class MockRenderer : public IRenderer {
+public:
     MOCK_METHOD(void, render_sprite, (const Sprite &, ITexture &, bool), (override, const));
 };
 
