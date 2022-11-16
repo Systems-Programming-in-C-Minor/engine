@@ -1,7 +1,7 @@
 #ifndef COMPONENTS_AUDIOSOURCE_H_NE8Ak79aUp
 #define COMPONENTS_AUDIOSOURCE_H_NE8Ak79aUp
 
-#include "Component.hpp"
+#include "component.hpp"
 
 #include <string>
 #include <filesystem>
@@ -18,7 +18,7 @@ public:
 	 * 
 	 * @param[in] isActive Sets active state
 	 */
-	virtual void setActive(bool isActive) override;
+	virtual void set_active(bool is_active) override;
 
 	/**
 	 * Plays an audio source

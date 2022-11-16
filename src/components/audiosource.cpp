@@ -2,9 +2,9 @@
 
 #include "fmt/core.h"
 
-void AudioSource::setActive(bool isActive)
+void AudioSource::set_active(bool is_active)
 {
-	active = isActive;
+	active = is_active;
 	if (_play_on_awake && active)
 		play(_loop);
 	return;
