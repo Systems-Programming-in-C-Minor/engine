@@ -41,7 +41,7 @@ void AudioSource::stop()
 	return;
 }
 
-int AudioSource::get_play_count()
+int AudioSource::get_play_count() const
 {
 	return _play_count;
 }

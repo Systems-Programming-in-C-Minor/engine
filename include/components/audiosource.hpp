@@ -37,7 +37,7 @@ public:
 	 * 
 	 * @return Times this audiosource has been played
 	 */
-	int get_play_count();
+	int get_play_count() const;
 
 	AudioSource(
 		const std::string& audio_clip,
