@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "UIObject.hpp"
+#include "uiobject.hpp"
 
 #define test_ui_object UIObject("name", "tag", 10, 10)
 
