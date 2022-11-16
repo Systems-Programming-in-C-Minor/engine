@@ -3,48 +3,47 @@
 
 #include <ostream>
 
-class Vector2d
-{
+class Vector2d {
 public:
-	double x, y;
+    double x, y;
 
-	Vector2d add(const Vector2d& other) const;
-	Vector2d operator+(const Vector2d& other) const;
+    [[nodiscard]] Vector2d add(const Vector2d &other) const;
+    [[nodiscard]] Vector2d operator+(const Vector2d &other) const;
 
-	Vector2d subtract(const Vector2d& other) const;
-	Vector2d operator-(const Vector2d& other) const;
+    [[nodiscard]] Vector2d subtract(const Vector2d &other) const;
+    [[nodiscard]] Vector2d operator-(const Vector2d &other) const;
 
-	Vector2d multiply(const Vector2d& other) const;
-	Vector2d operator*(const Vector2d& other) const;
+    [[nodiscard]] Vector2d multiply(const Vector2d &other) const;
+    [[nodiscard]] Vector2d operator*(const Vector2d &other) const;
 
-	Vector2d divide(const Vector2d& other) const;
-	Vector2d operator/(const Vector2d& other) const;
+    [[nodiscard]] Vector2d divide(const Vector2d &other) const;
+    [[nodiscard]] Vector2d operator/(const Vector2d &other) const;
 
-	/**
-	 * Checks equality of the vector
-	 * 
-	 * @param[in] other Vector2d to check for equality
-	 * 
-	 * @return true if equal
-	 * @return false if not equal
-	 */
-	bool equals(const Vector2d& other) const;
-	bool operator==(const Vector2d& other) const;
+    /**
+     * Checks equality of the vector
+     *
+     * @param[in] other Vector2d to check for equality
+     *
+     * @return true if equal
+     * @return false if not equal
+     */
+    [[nodiscard]] bool equals(const Vector2d &other) const;
+    [[nodiscard]] bool operator==(const Vector2d &other) const;
 
-	/**
-	 * Checks equality of the vector given an epsilon
-	 * 
-	 * @param[in] other Vector2d to check for equality
-	 * @param[in] epsilon Epsilon to be used for the equality check
-	 * 
-	 * @return true if equal 
-	 * @return false if not equal
-	 */
-	bool almost_equals(const Vector2d& other, const double epsilon) const;
+    /**
+     * Checks equality of the vector given an epsilon
+     *
+     * @param[in] other Vector2d to check for equality
+     * @param[in] epsilon Epsilon to be used for the equality check
+     *
+     * @return true if equal
+     * @return false if not equal
+     */
+    [[nodiscard]] bool almost_equals(const Vector2d &other, double epsilon) const;
 
-	Vector2d(const double x=0.0, const double y=0.0);
+    explicit Vector2d(double x = 0.0, double y = 0.0);
 };
 
-std::ostream& operator<<(std::ostream& stream, const Vector2d& vector);
+std::ostream &operator<<(std::ostream &stream, const Vector2d &vector);
 
 #endif // ENGINE_VECTOR2D_H_PgDkltz57P
