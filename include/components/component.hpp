@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ENGINE_COMPONENT_HPP
+#define ENGINE_COMPONENT_HPP
 
 class Component {
 protected:
@@ -10,3 +11,5 @@ public:
 
     virtual ~Component() = default;
 };
+
+#endif //ENGINE_COMPONENT_HPP

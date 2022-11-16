@@ -1,11 +1,11 @@
 #ifndef ENGINE_SPRITE_HPP
 #define ENGINE_SPRITE_HPP
 
-#include "renderer/irenderable.hpp"
+#include "interfaces/irenderable.hpp"
 #include "string"
 #include "component.hpp"
 #include "color.hpp"
-#include "renderer/itexture.hpp"
+#include "render/itexture.hpp"
 #include "memory"
 
 class Sprite : public Component, public IRenderable {

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ENGINE_GAMEOBJECT_HPP
+#define ENGINE_GAMEOBJECT_HPP
 
 #include <string>
 #include <utility>
@@ -192,3 +193,5 @@ public:
 
     virtual ~GameObject();
 };
+
+#endif //ENGINE_GAMEOBJECT_HPP
