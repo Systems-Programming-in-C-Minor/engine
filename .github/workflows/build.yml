@@ -44,6 +44,10 @@ jobs:
       - name: Build
         run: cmake --build build -j
       - name: Tests
-        run: valgrind --tool=memcheck --xml=yes --xml-file=unit_tests_valgrind.xml --gen-suppressions=all --leak-check=full --leak-resolution=med --track-origins=yes --vgdb=no ./build/test/engine-tests --gtest_filter="*" --gtest_color=no > /dev/null
+        working-directory: ./build/test/
+        run: valgrind --tool=memcheck --xml=yes --xml-file=unit_tests_valgrind.xml --gen-suppressions=all --leak-check=full --leak-resolution=med --track-origins=yes --vgdb=no ./engine-tests --gtest_filter="*" --gtest_color=no
       - name: Valgrind
-        run: valgrind-ci unit_tests_valgrind.xml --summary && valgrind-ci unit_tests_valgrind.xml --abort-on-errors
+        working-directory: ./build/test/
+        run: |
+          valgrind-ci unit_tests_valgrind.xml --summary
+          valgrind-ci unit_tests_valgrind.xml --abort-on-errors
