@@ -9,7 +9,6 @@ void AudioSource::set_active(bool is_active)
 	active = is_active;
 	if (_play_on_awake && active)
 		play(_loop);
-	return;
 }
 
 void AudioSource::play(bool looping)
@@ -31,13 +30,11 @@ void AudioSource::play(bool looping)
 	// Play audio file here
 	++_play_count;
 	stop();
-	return;
 }
 
 void AudioSource::stop()
 {
 	_is_playing = false;
-	return;
 }
 
 int AudioSource::get_play_count() const
