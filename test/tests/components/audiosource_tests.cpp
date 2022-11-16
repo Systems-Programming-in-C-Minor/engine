@@ -35,3 +35,10 @@ TEST(AudioSourceTest, HasNotBeenPlayed_NoFile)
 	audio.play();
 	EXPECT_EQ(audio.get_play_count(), 0);
 }
+
+TEST(AudioSourceTest, HasNotBeenPlayed_WrongFileType)
+{
+	AudioSource audio("./assets/sample.mp3");
+	audio.play();
+	EXPECT_EQ(audio.get_play_count(), 0);
+}
