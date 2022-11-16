@@ -30,6 +30,7 @@ gtest_discover_tests(${PROJECT_NAME})
 
 add_custom_command(
         TARGET engine-tests PRE_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-        ${CMAKE_CURRENT_SOURCE_DIR}/assets/sample.wav
-        ${CMAKE_CURRENT_BINARY_DIR}/sample.wav)
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_CURRENT_SOURCE_DIR}/assets
+        ${CMAKE_CURRENT_BINARY_DIR}/assets
+)
