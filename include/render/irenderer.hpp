@@ -7,7 +7,7 @@ class Sprite;
 
 class IRenderer {
 public:
-    virtual void render_sprite(const Sprite &sprite, ITexture &texture, bool is_world_space) = 0;
+    virtual void render_sprite(const Sprite &sprite, ITexture &texture, bool is_world_space) const = 0;
 };
 
 #endif //ENGINE_IRENDERER_HPP

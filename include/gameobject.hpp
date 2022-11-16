@@ -1,10 +1,13 @@
-#pragma once
+#ifndef ENGINE_GAMEOBJECT_HPP
+#define ENGINE_GAMEOBJECT_HPP
 
 #include <string>
 #include <utility>
 #include <memory>
 #include <list>
 #include "components/component.hpp"
+#include "interfaces/irenderable.hpp"
+#include "interfaces/itickable.hpp"
 
 #define assert_T_derived_from_component static_assert(std::is_base_of<Component, T>::value, "T not derived from Component")
 
@@ -20,6 +23,7 @@ protected:
     std::string tag;
     bool active = true;
     int layer = 0;
+    bool is_world_space = true;
 
     std::list<std::shared_ptr<Component>> components;
 
@@ -59,6 +63,19 @@ public:
         assert_T_derived_from_component;
 
         components.push_back(component);
+    }
+
+    /**
+     * @brief Remove a the given Component.
+     * @details This function removes all pointers to the component in
+     *          a suitable container.
+     * @param component Reference to the component.
+     */
+    template<class T>
+    void remove_component(std::shared_ptr<T> component) {
+        assert_T_derived_from_component;
+
+        components.remove(component);
     }
 
     /**
@@ -168,7 +185,13 @@ public:
      */
     [[nodiscard]] bool is_active_in_world() const;
 
-    GameObject(std::string name, std::string tag);
+    void render(IRenderer& renderer) const;
+
+    void tick();
+
+    GameObject(std::string name, std::string tag, bool is_world_space = true);
 
     virtual ~GameObject();
 };
+
+#endif //ENGINE_GAMEOBJECT_HPP
