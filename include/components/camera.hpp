@@ -5,6 +5,10 @@
 
 class Camera : public GameObject
 {
+private:
+    Camera(std::string name, std::string tag, int aspect_width, int aspect_height);
+    ~Camera();
+
     Color _background_color;
     int _aspect_width;
     int _aspect_height;
