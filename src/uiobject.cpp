@@ -1,5 +1,9 @@
 #include "uiobject.hpp"
 
+UIObject::UIObject(const std::string &name, const std::string &tag, double width, double height) : GameObject(name, tag),
+    _width(width),
+    _height(height) {}
+
 double UIObject::get_height() const {
     return _height;
 }

@@ -10,6 +10,7 @@ private:
     double _width;
     double _height;
 public:
+    UIObject(const std::string& name, const std::string& tag, double width, double height);
     void set_width(double new_width);
     [[nodiscard]] double get_width() const;
     void set_height(double new_height);
