@@ -14,8 +14,6 @@ void AudioSource::set_active(bool is_active)
 
 void AudioSource::play(bool looping)
 {
-	// TODO A better way of checking whether a file exists.
-	// Sounds like a job for std::filesystem::exists.
 	if (!is_regular_file(m_audio_clip)) {
         fmt::print("File {} not found\n", m_audio_clip.string());
         stop();
@@ -48,6 +46,7 @@ int AudioSource::get_play_count()
 	return _play_count;
 }
 
+// TODO Relative path should be resolved using executable directory, not working directory
 AudioSource::AudioSource(
 	const std::string& audio_clip,
 	bool play_on_awake,
