@@ -2,10 +2,10 @@
 
 int GameObject::object_counter = 0;
 
-GameObject::GameObject(std::string name, std::string tag, bool is_worldspace) : name(std::move(name)),
+GameObject::GameObject(std::string name, std::string tag, bool is_world_space) : name(std::move(name)),
                                                                                 tag(std::move(tag)),
                                                                                 parent(nullptr),
-                                                                                is_worldspace(is_worldspace),
+                                                                                is_world_space(is_world_space),
                                                                                 _id(object_counter++) {}
 
 void GameObject::add_child(const std::shared_ptr<GameObject> &game_object) {
@@ -58,7 +58,7 @@ void GameObject::render(IRenderer &renderer) const {
     for (const auto &component: get_components_in_children<Component>()) {
         const auto renderable = std::dynamic_pointer_cast<IRenderable>(component);
         if (renderable) {
-            renderable->render(renderer, is_worldspace);
+            renderable->render(renderer, is_world_space);
 
         }
     }

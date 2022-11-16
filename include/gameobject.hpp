@@ -22,7 +22,7 @@ protected:
     std::string tag;
     bool active = true;
     int layer = 0;
-    bool is_worldspace = true;
+    bool is_world_space = true;
 
     std::list<std::shared_ptr<Component>> components;
 
@@ -188,7 +188,7 @@ public:
 
     void tick();
 
-    GameObject(std::string name, std::string tag, bool is_worldspace = true);
+    GameObject(std::string name, std::string tag, bool is_world_space = true);
 
     virtual ~GameObject();
 };
