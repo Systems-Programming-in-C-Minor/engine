@@ -17,8 +17,8 @@ TEST(AudioSourceTest, HasBeenPlayed_Active)
 TEST(AudioSourceTest, HasBeenPlayed_NotActiveToActive)
 {
 	AudioSource audio("sample.wav", true);
-	audio.setActive(false);
-	audio.setActive(true);
+	audio.set_active(false);
+	audio.set_active(true);
 	EXPECT_EQ(audio.get_play_count(), 2);
 }
 
