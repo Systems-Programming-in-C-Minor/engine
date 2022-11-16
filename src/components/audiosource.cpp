@@ -36,8 +36,7 @@ void AudioSource::play(bool looping)
 
 void AudioSource::stop()
 {
-	if(_is_playing)
-		_is_playing = false;
+	_is_playing = false;
 	return;
 }
 
