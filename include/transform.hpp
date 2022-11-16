@@ -17,7 +17,6 @@ public:
 
 	Transform(const Vector2d& position, double angle = 0.0, double scale = 0.0);
 
-	// TODO MUst ask product owner approval for these removed/private members
 private:
 	Vector2d _position;
 	double _angle;
