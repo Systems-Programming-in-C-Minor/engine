@@ -4,6 +4,7 @@
 
 class CircleCollider : public Collider
 {
+private:
     CircleCollider();
     ~CircleCollider();
 

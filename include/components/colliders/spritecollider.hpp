@@ -4,6 +4,7 @@
 
 class SpriteCollider : public Collider
 {
+private:
     SpriteCollider();
     ~SpriteCollider();
 

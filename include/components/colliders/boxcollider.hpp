@@ -4,6 +4,7 @@
 
 class BoxCollider : public Collider
 {
+private:
     BoxCollider();
     ~BoxCollider();
 

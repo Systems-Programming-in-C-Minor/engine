@@ -7,6 +7,7 @@ class IRenderer;
 
 class Collider : public Component
 {
+private:
     Collider();
     ~Collider();
 

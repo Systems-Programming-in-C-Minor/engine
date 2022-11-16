@@ -9,6 +9,7 @@ class Vector2d;
 
 class PolygonCollider : public Collider
 {
+private:
     PolygonCollider();
     ~PolygonCollider();
 
