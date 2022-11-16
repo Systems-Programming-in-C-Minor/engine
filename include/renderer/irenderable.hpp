@@ -4,7 +4,7 @@
 #include "irenderer.hpp"
 
 class IRenderable {
-
+public:
     virtual void render(IRenderer &renderer, bool is_world_space = true) const = 0;
 
 };
