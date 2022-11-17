@@ -5,9 +5,9 @@
 
 #include "gmock/gmock.h"
 
-class MockGameObject : public GameObject {
+class MockGameObject final : public GameObject {
 public:
-	MockGameObject(std::string name, std::string tag, bool is_world_space = true) : GameObject(name, tag, is_world_space) {}
+	MockGameObject(const std::string& name, const std::string& tag, bool is_world_space = true) : GameObject(name, tag, is_world_space) {}
 
 	MOCK_METHOD(void, tick, (), (override));
 	MOCK_METHOD(void, render, (IRenderer&), (override, const));
