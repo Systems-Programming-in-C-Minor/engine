@@ -32,15 +32,14 @@ void Animator::tick(GameObject &object) {
 
     object.remove_component(object.get_component<Sprite>());
 
-    if (!_loop && _current >= _sprites.size())
-        stop();
-    else if (_current >= _sprites.size())
+    _current++;
+    if (_current >= _sprites.size()) {
         _current = 0;
-    else
-        _current++;
+        if (!_loop)
+            stop();
+    }
 
-    // TODO fix add component for test
-    // object.add_component(_sprites[_current]);
+    object.add_component(_sprites[_current]);
 
     _ticks_since_last_animate = 0;
 }
