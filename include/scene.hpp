@@ -15,14 +15,14 @@ public:
 	/**
 	 * Simulates a tick on this scene's gameobjects
 	 */
-	void tick();
+	void tick() const;
 
 	/**
 	 * Calls the render functions on this scene's gameobjects
 	 * 
 	 * @param[in] renderer Reference to the active renderer
 	 */
-	void render(IRenderer& renderer);
+	void render(IRenderer& renderer) const;
 
 	Scene();
 };
