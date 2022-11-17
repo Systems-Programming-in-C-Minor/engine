@@ -17,7 +17,7 @@ public:
      * @param callback The function to register, usually a lambda. But this can be
      *        any kind of callable.
      */
-    void on_click(std::function<void()> callback) { _on_click = callback; }
+    void on_click(std::function<void()> callback);
 
     void set_interactable(bool is_interactable);
 

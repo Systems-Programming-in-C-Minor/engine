@@ -20,3 +20,7 @@ void Button::click() {
         _on_click();
     }
 }
+
+void Button::on_click(std::function<void()> callback) {
+    _on_click = std::move(callback);
+}
