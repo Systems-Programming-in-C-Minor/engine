@@ -35,26 +35,6 @@ TEST(SceneTest, Tick_ThreeGameObjects) {
     scene.tick();
 }
 
-TEST(SceneTest, Tick_TwoGameObjects_Nested) {
-    auto game_object1 = test_game_object;
-    auto game_object2 = test_game_object;
-    auto scene = Scene();
-
-    scene.gameobjects.push_back(game_object1);
-
-    // TODO Questionable design choice. 
-    // Is scene responsible for registering nested gameobjects?
-    scene.gameobjects.push_back(game_object2);
-
-    game_object1->add_child(game_object2);
-
-    EXPECT_CALL(*game_object1, tick()).Times(2);
-    EXPECT_CALL(*game_object2, tick()).Times(2);
-
-    scene.tick();
-    scene.tick();
-}
-
 TEST(SceneTest, Render_OneGameObject) {
     auto game_object1 = test_game_object;
     auto scene = Scene();
@@ -85,25 +65,3 @@ TEST(SceneTest, Render_ThreeGameObjects) {
     scene.render(renderer);
     scene.render(renderer);
 }
-
-TEST(SceneTest, Render_TwoGameObjects_Nested) {
-    auto game_object1 = test_game_object;
-    auto game_object2 = test_game_object;
-    auto scene = Scene();
-    auto renderer = MockRenderer();
-
-    scene.gameobjects.push_back(game_object1);
-
-    // TODO Questionable design choice. 
-    // Is scene responsible for registering nested gameobjects?
-    scene.gameobjects.push_back(game_object2);
-
-    game_object1->add_child(game_object2);
-
-    EXPECT_CALL(*game_object1, render(testing::_)).Times(2);
-    EXPECT_CALL(*game_object2, render(testing::_)).Times(2);
-
-    scene.render(renderer);
-    scene.render(renderer);
-}
-
