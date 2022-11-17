@@ -2,10 +2,11 @@
 
 int GameObject::object_counter = 0;
 
-GameObject::GameObject(std::string name, std::string tag) : name(std::move(name)),
-                                                            tag(std::move(tag)),
-                                                            parent(nullptr),
-                                                            _id(object_counter++) {}
+GameObject::GameObject(std::string name, std::string tag, bool is_world_space) : name(std::move(name)),
+                                                                                tag(std::move(tag)),
+                                                                                parent(nullptr),
+                                                                                is_world_space(is_world_space),
+                                                                                _id(object_counter++) {}
 
 void GameObject::add_child(const std::shared_ptr<GameObject> &game_object) {
     children.push_back(game_object);
@@ -49,6 +50,27 @@ bool GameObject::operator!=(const GameObject &other) const {
 
 bool GameObject::operator==(const GameObject &other) const {
     return _id == other._id;
+}
+
+void GameObject::render(IRenderer &renderer) const {
+    auto renderable_components = std::list<std::shared_ptr<IRenderable>>();
+
+    for (const auto &component: get_components_in_children<Component>()) {
+        const auto renderable = std::dynamic_pointer_cast<IRenderable>(component);
+        if (renderable) {
+            renderable->render(renderer, is_world_space);
+
+        }
+    }
+}
+
+void GameObject::tick() {
+    for (const auto &component: get_components_in_children<Component>()) {
+        auto tickable = std::dynamic_pointer_cast<ITickable>(component);
+        if (tickable) {
+            tickable->tick(*this);
+        }
+    }
 }
 
 GameObject::~GameObject() = default;
