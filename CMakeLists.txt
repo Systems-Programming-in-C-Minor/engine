@@ -6,6 +6,13 @@ option(ENGINE_TEST "Generate the test target." ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CXXFLAGS "-g -O0 -Wall -W -Wshadow -Wunused-variable \
+ -Wunused-parameter -Wunused-function -Wunused -Wno-system-headers \
+ -Wno-deprecated -Woverloaded-virtual -Wwrite-strings -fprofile-arcs -ftest-coverage")
+set(CFLAGS "-g -O0 -Wall -W -fprofile-arcs -ftest-coverage")
+set(LDFLAGS "-fprofile-arcs -ftest-coverage")
+
+
 if (CMAKE_VERSION VERSION_GREATER_EQUAL "3.24.0")
     cmake_policy(SET CMP0135 NEW)
 endif ()
