@@ -39,11 +39,11 @@ FetchContent_Declare(SDL2pp
   GIT_PROGRESS TRUE
 )
 
-FetchContent_MakeAvailable(SDL2pp)
-
-set(SDL2PP_WITH_IMAGE ON) # if you need SDL_image support
+set(SDL2PP_WITH_IMAGE OFF) # if you need SDL_image support
 set(SDL2PP_WITH_MIXER OFF) # if you need SDL_mixer support
 set(SDL2PP_WITH_TTF OFF) # if you need SDL_ttf support
+
+FetchContent_MakeAvailable(SDL2pp)
 
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS ./src/*.cpp)
 file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS ./include/*.hpp)
@@ -56,6 +56,7 @@ endif ()
 
 add_library(engine STATIC ${SOURCE_FILES} ${HEADER_FILES})
 target_include_directories(engine PUBLIC include)
+
 target_link_libraries(engine PRIVATE
         ${SDL2_LIBRARIES}
         ${SDL2_IMAGE_LIBRARIES}
