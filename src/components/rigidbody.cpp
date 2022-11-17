@@ -1,19 +1,19 @@
 #include "components/rigidbody.hpp"
 
-//void RigidBody::apply_force(Vector2d force){ TODO Uncomment code when Vector2d has been implemented
-//
-//}
+void RigidBody::apply_force(Vector2d force){
+}
 void RigidBody::apply_torque(float torque){
 
 }
 
-//void RigidBody::set_linear_velocity(Vector2d velocity) { TODO Uncomment code when Vector2d has been implemented
-//
-//}
-//Vector2d RigidBody::get_linear_velocity(){ TODO Uncomment code when Vector2d has been implemented
-//
-//}
-//
+void RigidBody::set_linear_velocity(Vector2d velocity) {
+
+}
+
+Vector2d RigidBody::get_linear_velocity(){
+
+}
+
 
 void RigidBody::set_angular_velocity(float angle){
 
@@ -22,12 +22,13 @@ float RigidBody::get_angular_velocity(){
     return 0;
 }
 
-//void RigidBody::apply_linear_impulse(Vector2d inpulse){ TODO Uncomment code when Vector2d has been implemented
-//
-//}
-//void RigidBody::apply_angular_impulse(Vector2d impulse){ TODO Uncomment code when Vector2d has been implemented
-//
-//}
+void RigidBody::apply_linear_impulse(Vector2d inpulse){
+
+}
+
+void RigidBody::apply_angular_impulse(Vector2d impulse){
+
+}
 
 double RigidBody::get_mass(){
     return _mass;

@@ -1,6 +1,6 @@
 #pragma once
 #include "component.hpp"
-//#include "Vector2d"  TODO include Vector2d class
+#include "vector2d.hpp"
 
 enum class BodyType
 {
@@ -19,14 +19,14 @@ class RigidBody : public Component
     BodyType _bodytype;
 
 public:
-//    void apply_force(Vector2d force); TODO uncomment code
+    void apply_force(Vector2d force);
     void apply_torque(float torque);
-//    void set_linear_velocity(Vector2d velocity); TODO uncomment code
-//    Vector2d get_linear_velocity(); TODO uncomment code
+    void set_linear_velocity(Vector2d velocity);
+    Vector2d get_linear_velocity();
     void set_angular_velocity(float angle);
     float get_angular_velocity();
-//    void apply_linear_impulse(Vector2d inpulse); TODO uncomment code
-//    void apply_angular_impulse(Vector2d impulse); TODO uncomment code
+    void apply_linear_impulse(Vector2d inpulse);
+    void apply_angular_impulse(Vector2d impulse);
 
     double get_mass();
     void set_mass(double m);
