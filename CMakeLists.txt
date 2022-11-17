@@ -42,4 +42,5 @@ target_link_libraries(engine PRIVATE
 
 if (ENGINE_TEST)
     add_subdirectory(test)
+    enable_testing()
 endif ()
