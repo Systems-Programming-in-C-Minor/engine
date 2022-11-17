@@ -16,4 +16,4 @@ void Scene::render(IRenderer& renderer)
 	}
 }
 
-Scene::Scene() {};
+Scene::Scene() = default;
