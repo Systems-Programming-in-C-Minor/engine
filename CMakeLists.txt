@@ -6,12 +6,6 @@ option(ENGINE_TEST "Generate the test target." ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(CXXFLAGS "-g -O0 -Wall -W -Wshadow -Wunused-variable \
- -Wunused-parameter -Wunused-function -Wunused -Wno-system-headers \
- -Wno-deprecated -Woverloaded-virtual -Wwrite-strings -fprofile-arcs -ftest-coverage")
-set(CFLAGS "-g -O0 -Wall -W -fprofile-arcs -ftest-coverage")
-set(LDFLAGS "-fprofile-arcs -ftest-coverage")
-
 set(BOX2D_BUILD_UNIT_TESTS OFF CACHE BOOL "Build the Box2D unit tests")
 set(BOX2D_BUILD_TESTBED OFF CACHE BOOL "Build the Box2D testbed")
 
