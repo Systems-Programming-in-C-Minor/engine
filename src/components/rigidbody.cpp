@@ -11,13 +11,13 @@ void RigidBody::set_linear_velocity(Vector2d velocity) {
 }
 
 Vector2d RigidBody::get_linear_velocity(){
-
+    return Vector2d(0, 0);
 }
-
 
 void RigidBody::set_angular_velocity(float angle){
 
 }
+
 float RigidBody::get_angular_velocity(){
     return 0;
 }
