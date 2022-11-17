@@ -5,12 +5,15 @@
 class CircleCollider : public Collider
 {
 private:
-    CircleCollider();
-    ~CircleCollider();
+
+
 
     double _radius;
 
 public:
+    CircleCollider() {};
+    ~CircleCollider() = default;
+
     double get_radius();
     void set_radius(double r);
 };

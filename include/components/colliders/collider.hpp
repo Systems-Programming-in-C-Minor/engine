@@ -11,8 +11,8 @@ private:
     bool _ignore_collision_physics;
 
 public:
-    Collider();
-    ~Collider();
+    Collider() {};
+    ~Collider() = default;
 
     std::vector<GameObject> collision_since_previous_tick();
 //    void render(IRenderer renderer);

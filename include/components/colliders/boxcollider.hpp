@@ -6,13 +6,14 @@
 class BoxCollider : public PolygonCollider
 {
 private:
-    BoxCollider();
-    ~BoxCollider();
 
     double _width;
     double _height;
 
 public:
+    BoxCollider() {};
+    ~BoxCollider() = default;
+
     double get_width();
     void set_width(double w);
     double get_height();
