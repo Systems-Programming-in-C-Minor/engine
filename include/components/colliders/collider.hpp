@@ -8,12 +8,12 @@ class IRenderer;
 class Collider : public Component
 {
 private:
-    Collider();
-    ~Collider();
-
     bool _ignore_collision_physics;
 
 public:
+    Collider();
+    ~Collider();
+
     std::vector<GameObject> collision_since_previous_tick();
 //    void render(IRenderer renderer);
 

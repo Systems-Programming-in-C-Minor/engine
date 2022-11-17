@@ -1,6 +1,7 @@
 #pragma once
 
 #include "collider.hpp"
+#include "polygoncollider.hpp"
 
 class BoxCollider : public PolygonCollider
 {
