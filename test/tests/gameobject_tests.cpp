@@ -1,5 +1,9 @@
 #include <gtest/gtest.h>
 #include "gameobject.hpp"
+#include "../mocks/mock_renderable_component.hpp"
+#include "../mocks/mock_tickable_component.hpp"
+#include "../mocks/mock_tickable_renderable_component.hpp"
+#include "../mocks/mock_renderer.hpp"
 
 #define test_game_object GameObject("TestGameObject", "TestTag")
 #define test_game_object_ptr std::make_shared<GameObject>("TestGameObject", "TestTag")
@@ -12,6 +16,9 @@ class Test2Component : public Component {
 };
 
 class Test3Component : public Component {
+};
+
+class Test4Component : public Component {
 };
 
 TEST(GameObjectTest, GetSetActive) {
@@ -34,6 +41,24 @@ TEST(GameObjectTest, AddGetComponent) {
     EXPECT_EQ(game_object.get_component<Test1Component>(), test1_component);
     EXPECT_EQ(game_object.get_component<Test2Component>(), test2_component);
     EXPECT_EQ(game_object.get_component<Test3Component>(), nullptr);
+}
+
+TEST(GameObjectTest, RemoveComponent) {
+    auto game_object = test_game_object;
+
+    const auto test1_component = std::make_shared<Test1Component>();
+    const auto test2_component = std::make_shared<Test2Component>();
+
+    game_object.add_component(test1_component);
+    game_object.add_component(test2_component);
+
+    EXPECT_EQ(game_object.get_component<Test1Component>(), test1_component);
+    EXPECT_EQ(game_object.get_component<Test2Component>(), test2_component);
+
+    game_object.remove_component(test1_component);
+
+    EXPECT_EQ(game_object.get_component<Test1Component>(), nullptr);
+    EXPECT_EQ(game_object.get_component<Test2Component>(), test2_component);
 }
 
 TEST(GameObjectTest, AddGetComponents) {
@@ -94,6 +119,7 @@ TEST(GameObjectTest, GetChildComponent) {
     const auto test1_component = std::make_shared<Test1Component>();
     const auto test2_component = std::make_shared<Test2Component>();
     const auto test3_component = std::make_shared<Test3Component>();
+    const auto test4_component = std::make_shared<Test4Component>();
 
     game_object.add_child(child);
     child->add_child(child_child);
@@ -105,6 +131,7 @@ TEST(GameObjectTest, GetChildComponent) {
     EXPECT_EQ(game_object.get_component_in_children<Test1Component>(), test1_component);
     EXPECT_EQ(game_object.get_component_in_children<Test2Component>(), test2_component);
     EXPECT_EQ(game_object.get_component_in_children<Test3Component>(), test3_component);
+    EXPECT_EQ(game_object.get_component_in_children<Test4Component>(), nullptr);
 }
 
 TEST(GameObjectTest, GetChildComponents) {
@@ -142,6 +169,78 @@ TEST(GameObjectTest, GetChildComponents) {
     const auto test3_components = game_object.get_components_in_children<Test3Component>();
 
     EXPECT_EQ(test3_components.size(), 1);
+}
+
+TEST(GameObjectTest, Render) {
+    auto game_object = test_game_object;
+    const auto child = test_game_object_ptr;
+    const auto child_child = test_game_object_ptr;
+
+    auto renderer = MockRenderer();
+
+    const auto test_component1 = std::make_shared<Test1Component>();
+    const auto render_component1 = std::make_shared<MockRenderableComponent>();
+    const auto render_component2 = std::make_shared<MockRenderableComponent>();
+    const auto render_component3 = std::make_shared<MockRenderableComponent>();
+    const auto tick_render_component = std::make_shared<MockTickableRenderableComponent>();
+
+    EXPECT_CALL(*render_component1, render(testing::_, testing::_))
+            .Times(1);
+
+    EXPECT_CALL(*render_component2, render(testing::_, testing::_))
+            .Times(1);
+
+    EXPECT_CALL(*render_component3, render(testing::_, testing::_))
+            .Times(1);
+
+    EXPECT_CALL(*tick_render_component, render(testing::_, testing::_))
+            .Times(1);
+
+    game_object.add_component(test_component1);
+    game_object.add_component(render_component1);
+    game_object.add_component(tick_render_component);
+    child->add_component(render_component2);
+    child_child->add_component(render_component3);
+
+    game_object.add_child(child);
+    child->add_child(child_child);
+
+    game_object.render(renderer);
+}
+
+TEST(GameObjectTest, Tick) {
+    auto game_object = test_game_object;
+    const auto child = test_game_object_ptr;
+    const auto child_child = test_game_object_ptr;
+
+    const auto test_component1 = std::make_shared<Test1Component>();
+    const auto tick_component1 = std::make_shared<MockTickableComponent>();
+    const auto tick_component2 = std::make_shared<MockTickableComponent>();
+    const auto tick_component3 = std::make_shared<MockTickableComponent>();
+    const auto tick_render_component = std::make_shared<MockTickableRenderableComponent>();
+
+    EXPECT_CALL(*tick_component1, tick(game_object))
+            .Times(1);
+
+    EXPECT_CALL(*tick_component2, tick(game_object))
+            .Times(1);
+
+    EXPECT_CALL(*tick_component3, tick(game_object))
+            .Times(1);
+
+    EXPECT_CALL(*tick_render_component, tick(game_object))
+            .Times(1);
+
+    game_object.add_component(test_component1);
+    game_object.add_component(tick_component1);
+    game_object.add_component(tick_render_component);
+    child->add_component(tick_component2);
+    child_child->add_component(tick_component3);
+
+    game_object.add_child(child);
+    child->add_child(child_child);
+
+    game_object.tick();
 }
 
 TEST(GameObjectTest, ActiveInWorld) {
