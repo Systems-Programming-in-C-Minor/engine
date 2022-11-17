@@ -2,7 +2,7 @@
 
 #include "collider.hpp"
 
-class BoxCollider : public Collider
+class BoxCollider : public PolygonCollider
 {
 private:
     BoxCollider();
