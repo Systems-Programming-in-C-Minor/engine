@@ -1,12 +1,15 @@
-#pragma once
+#ifndef ENGINE_GAMEOBJECT_HPP
+#define ENGINE_GAMEOBJECT_HPP
 
 #include <string>
 #include <utility>
 #include <memory>
 #include <list>
-#include "components/Component.hpp"
+#include "components/component.hpp"
+#include "interfaces/irenderable.hpp"
+#include "interfaces/itickable.hpp"
 
-#define assertTDerivedFromComponent static_assert(std::is_base_of<Component, T>::value, "T not derived from Component")
+#define assert_T_derived_from_component static_assert(std::is_base_of<Component, T>::value, "T not derived from Component")
 
 /**
      * @brief Any object which should be represented on screen.
@@ -14,12 +17,13 @@
 class GameObject {
 private:
     int _id;
-    static int objectCounter;
+    static int object_counter;
 protected:
     std::string name;
     std::string tag;
     bool active = true;
     int layer = 0;
+    bool is_world_space = true;
 
     std::list<std::shared_ptr<Component>> components;
 
@@ -40,11 +44,11 @@ public:
      */
     bool operator==(const GameObject &other) const;
 
-    void addChild(const std::shared_ptr<GameObject> &gameObject);
+    void add_child(const std::shared_ptr<GameObject> &game_object);
 
-    void removeChild(const std::shared_ptr<GameObject> &gameObject);
+    void remove_child(const std::shared_ptr<GameObject> &game_object);
 
-    std::list<std::shared_ptr<GameObject>> getChildren();
+    std::list<std::shared_ptr<GameObject>> get_children();
 
     /**
      * @brief Add a Component of the specified type. Must be a valid
@@ -55,10 +59,23 @@ public:
      * @param component Reference to the component.
      */
     template<class T>
-    void addComponent(std::shared_ptr<T> component) {
-        assertTDerivedFromComponent;
+    void add_component(std::shared_ptr<T> component) {
+        assert_T_derived_from_component;
 
         components.push_back(component);
+    }
+
+    /**
+     * @brief Remove a the given Component.
+     * @details This function removes all pointers to the component in
+     *          a suitable container.
+     * @param component Reference to the component.
+     */
+    template<class T>
+    void remove_component(std::shared_ptr<T> component) {
+        assert_T_derived_from_component;
+
+        components.remove(component);
     }
 
     /**
@@ -67,13 +84,13 @@ public:
      * @return Pointer to Component instance.
      */
     template<class T>
-    [[nodiscard]] std::shared_ptr<T> getComponent() const {
-        assertTDerivedFromComponent;
+    [[nodiscard]] std::shared_ptr<T> get_component() const {
+        assert_T_derived_from_component;
 
         for (const auto &component: components) {
-            auto castedComponent = std::dynamic_pointer_cast<T>(component);
-            if (castedComponent) {
-                return castedComponent;
+            auto casted_component = std::dynamic_pointer_cast<T>(component);
+            if (casted_component) {
+                return casted_component;
             }
         }
 
@@ -87,20 +104,20 @@ public:
      * @return Pointer to Component instance.
      */
     template<class T>
-    [[nodiscard]] std::shared_ptr<T> getComponentInChildren() const {
-        assertTDerivedFromComponent;
+    [[nodiscard]] std::shared_ptr<T> get_component_in_children() const {
+        assert_T_derived_from_component;
 
-        const auto component = getComponent<T>();
+        const auto component = get_component<T>();
 
         if (component) {
             return component;
         }
 
         for (const auto &child: children) {
-            const auto childComponent = child->getComponentInChildren<T>();
+            const auto child_component = child->get_component_in_children<T>();
 
-            if (childComponent) {
-                return childComponent;
+            if (child_component) {
+                return child_component;
             }
         }
 
@@ -113,15 +130,15 @@ public:
      * @return Vector with pointers to Component instances.
      */
     template<class T>
-    [[nodiscard]] std::list<std::shared_ptr<T>> getComponents() const {
-        assertTDerivedFromComponent;
+    [[nodiscard]] std::list<std::shared_ptr<T>> get_components() const {
+        assert_T_derived_from_component;
 
         auto output = std::list<std::shared_ptr<T>>();
 
         for (const auto &component: components) {
-            auto castedComponent = std::dynamic_pointer_cast<T>(component);
-            if (castedComponent) {
-                output.push_back(castedComponent);
+            auto casted_component = std::dynamic_pointer_cast<T>(component);
+            if (casted_component) {
+                output.push_back(casted_component);
             }
         }
 
@@ -135,14 +152,14 @@ public:
      * @return Vector with pointers to Component instances.
      */
     template<class T>
-    [[nodiscard]] std::list<std::shared_ptr<T>> getComponentsInChildren() const {
-        assertTDerivedFromComponent;
+    [[nodiscard]] std::list<std::shared_ptr<T>> get_components_in_children() const {
+        assert_T_derived_from_component;
 
-        auto output = getComponents<T>();
+        auto output = get_components<T>();
 
         for (const auto &child: children) {
-            auto childComponents = child->getComponentsInChildren<T>();
-            output.splice(output.end(), childComponents);
+            auto child_components = child->get_components_in_children<T>();
+            output.splice(output.end(), child_components);
         }
 
         return output;
@@ -152,13 +169,13 @@ public:
      * @brief Activates/Deactivates the GameObject, depending on the given true or false value.
      * @param active Desired value.
      */
-    void setActive(bool isActive);
+    void set_active(bool is_active);
 
     /**
      * @brief Returns whether this game object is itself active.
      * @return true if active, false if not.
      */
-    [[nodiscard]] bool isActive() const;
+    [[nodiscard]] bool is_active() const;
 
     /**
      * @brief Returns whether this game component is active, taking its parents
@@ -166,9 +183,15 @@ public:
      * @return true if game object and all of its parents are active,
      *        false otherwise.
      */
-    [[nodiscard]] bool isActiveInWorld() const;
+    [[nodiscard]] bool is_active_in_world() const;
 
-    GameObject(std::string name, std::string tag);
+    void render(IRenderer& renderer) const;
+
+    void tick();
+
+    GameObject(std::string name, std::string tag, bool is_world_space = true);
 
     virtual ~GameObject();
 };
+
+#endif //ENGINE_GAMEOBJECT_HPP
