@@ -4,10 +4,10 @@
 
 #include "gtest/gtest.h"
 
-#define test_mock_game_object std::make_shared<MockGameObject>("TestGameObject", "TestTag")
+#define mock_game_object std::make_shared<MockGameObject>("TestGameObject", "TestTag")
 
 TEST(SceneTest, Tick_OneGameObject) {
-    auto game_object1 = test_mock_game_object;
+    auto game_object1 = mock_game_object;
     auto scene = Scene();
 
     scene.gameobjects.push_back(game_object1);
@@ -18,9 +18,9 @@ TEST(SceneTest, Tick_OneGameObject) {
 }
 
 TEST(SceneTest, Tick_ThreeGameObjects) {
-    auto game_object1 = test_mock_game_object;
-    auto game_object2 = test_mock_game_object;
-    auto game_object3 = test_mock_game_object;
+    auto game_object1 = mock_game_object;
+    auto game_object2 = mock_game_object;
+    auto game_object3 = mock_game_object;
     auto scene = Scene();
 
     scene.gameobjects.push_back(game_object1);
@@ -36,7 +36,7 @@ TEST(SceneTest, Tick_ThreeGameObjects) {
 }
 
 TEST(SceneTest, Render_OneGameObject) {
-    auto game_object1 = test_mock_game_object;
+    auto game_object1 = mock_game_object;
     auto scene = Scene();
     auto renderer = MockRenderer();
 
@@ -48,9 +48,9 @@ TEST(SceneTest, Render_OneGameObject) {
 }
 
 TEST(SceneTest, Render_ThreeGameObjects) {
-    auto game_object1 = test_mock_game_object;
-    auto game_object2 = test_mock_game_object;
-    auto game_object3 = test_mock_game_object;
+    auto game_object1 = mock_game_object;
+    auto game_object2 = mock_game_object;
+    auto game_object3 = mock_game_object;
     auto scene = Scene();
     auto renderer = MockRenderer();
 
