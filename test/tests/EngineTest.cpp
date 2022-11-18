@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "engine.hpp"
+#include "Engine.hpp"
 
 TEST(EngineTest, ReturnsHelloWorld) {
     EXPECT_EQ(hello(), "Hello, World!");
