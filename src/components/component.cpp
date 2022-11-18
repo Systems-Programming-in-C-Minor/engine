@@ -7,4 +7,3 @@ void Component::set_active(bool is_active) {
 bool Component::get_active() const {
     return active;
 }
-
