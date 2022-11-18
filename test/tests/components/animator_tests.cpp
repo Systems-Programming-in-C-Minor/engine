@@ -22,12 +22,16 @@ TEST(AnimatorTest, Animate) {
     // Check sprite 1
     EXPECT_EQ(game_object.get_component<Sprite>(), sprite_1);
 
-    for (int i = 0; i < 19; i++)
-        game_object.tick();
-    EXPECT_NE(game_object.get_component<Sprite>(), sprite_2);
-
+    // Tick and check sprite 2
     game_object.tick();
     EXPECT_EQ(game_object.get_component<Sprite>(), sprite_2);
+
+    // Last frame
+    game_object.tick();
+    EXPECT_EQ(game_object.get_component<Sprite>(), sprite_3);
+
+    game_object.tick();
+    EXPECT_EQ(game_object.get_component<Sprite>(), sprite_1);
 }
 
 TEST(AnimatorTest, AnimateWithoutPlay) {

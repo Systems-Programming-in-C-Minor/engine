@@ -25,7 +25,7 @@ void Animator::tick(GameObject &object) {
     if (!active || !_play)
         return;
 
-    if (_ticks_since_last_animate >= 0 && _ticks_since_last_animate < animate_per_ticks()) {
+    if (_ticks_since_last_animate >= 0 && _ticks_since_last_animate < animate_per_ticks() - 1) {
         _ticks_since_last_animate++;
         return;
     }
