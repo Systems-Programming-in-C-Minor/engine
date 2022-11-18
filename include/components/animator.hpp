@@ -24,7 +24,7 @@ private:
     const int _fps;
     const Sprites _sprites;
 
-    int _current = 0;
+    unsigned int _current = 0;
     bool _play = false;
     bool _loop = false;
     int _ticks_since_last_animate = -1;
