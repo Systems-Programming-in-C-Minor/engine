@@ -14,10 +14,22 @@ public:
 
     Animator(Sprites sprites, int fps);
 
+    /**
+     * @brief Start the animation on the next tick.
+     * @param looping when the animation is finished start it again automatically.
+     */
     void play(bool looping = false);
 
+    /**
+     * @brief stop the animation.
+     */
     void stop();
 
+    /**
+     * @brief Run the animation every tick.
+     * @details First determine if the Sprite should be swapped this tick. If so, do so.
+     * @param object
+     */
     void tick(GameObject &object) override;
 
 private:
@@ -29,6 +41,10 @@ private:
     bool _loop = false;
     int _ticks_since_last_animate = -1;
 
+    /**
+     * @brief Determines how many ticks there are between swaps.
+     * @return int  number of ticks between sprite swap.
+     */
     [[nodiscard]] int animate_per_ticks() const;
 };
 
