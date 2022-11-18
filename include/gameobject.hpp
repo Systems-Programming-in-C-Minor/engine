@@ -185,9 +185,9 @@ public:
      */
     [[nodiscard]] bool is_active_in_world() const;
 
-    void render(IRenderer& renderer) const;
+    virtual void render(IRenderer& renderer) const;
 
-    void tick();
+    virtual void tick();
 
     GameObject(std::string name, std::string tag, bool is_world_space = true);
 
