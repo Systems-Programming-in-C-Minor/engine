@@ -7,9 +7,10 @@
 #include "sprite.hpp"
 #include "interfaces/itickable.hpp"
 
+typedef std::vector<std::shared_ptr<Sprite>> Sprites;
+
 class Animator : public Component, public ITickable {
 public:
-    typedef std::vector<std::shared_ptr<Sprite>> Sprites;
 
     Animator(Sprites sprites, int fps);
 

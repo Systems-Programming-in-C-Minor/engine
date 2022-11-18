@@ -12,7 +12,7 @@ TEST(AnimatorTest, Animate) {
     const auto sprite_2 = std::make_shared<Sprite>("/path/to", Color(2, 0, 0, 0), false, false, 1, 1);
     const auto sprite_3 = std::make_shared<Sprite>("/path/to", Color(3, 0, 0, 0), false, false, 1, 1);
 
-    const Animator::Sprites sprites{sprite_1, sprite_2, sprite_3};
+    const Sprites sprites{sprite_1, sprite_2, sprite_3};
     const auto animator = std::make_shared<Animator>(sprites, 20);
 
     game_object.add_component(animator);
@@ -42,7 +42,7 @@ TEST(AnimatorTest, AnimateFPS) {
     const auto sprite_2 = std::make_shared<Sprite>("/path/to", Color(2, 0, 0, 0), false, false, 1, 1);
     const auto sprite_3 = std::make_shared<Sprite>("/path/to", Color(3, 0, 0, 0), false, false, 1, 1);
 
-    const Animator::Sprites sprites{sprite_1, sprite_2, sprite_3};
+    const Sprites sprites{sprite_1, sprite_2, sprite_3};
     const auto animator = std::make_shared<Animator>(sprites, 1);
 
     game_object.add_component(animator);
@@ -74,7 +74,7 @@ TEST(AnimatorTest, AnimateWithLoop) {
     const auto sprite_2 = std::make_shared<Sprite>("/path/to", Color(2, 0, 0, 0), false, false, 1, 1);
     const auto sprite_3 = std::make_shared<Sprite>("/path/to", Color(3, 0, 0, 0), false, false, 1, 1);
 
-    const Animator::Sprites sprites{sprite_1, sprite_2, sprite_3};
+    const Sprites sprites{sprite_1, sprite_2, sprite_3};
     const auto animator = std::make_shared<Animator>(sprites, 20);
 
     game_object.add_component(animator);
@@ -118,7 +118,7 @@ TEST(AnimatorTest, AnimateAndStop) {
     const auto sprite_2 = std::make_shared<Sprite>("/path/to", Color(2, 0, 0, 0), false, false, 1, 1);
     const auto sprite_3 = std::make_shared<Sprite>("/path/to", Color(3, 0, 0, 0), false, false, 1, 1);
 
-    const Animator::Sprites sprites{sprite_1, sprite_2, sprite_3};
+    const Sprites sprites{sprite_1, sprite_2, sprite_3};
     const auto animator = std::make_shared<Animator>(sprites, 20);
 
     game_object.add_component(animator);
@@ -148,7 +148,7 @@ TEST(AnimatorTest, AnimateWithoutPlay) {
     const auto sprite_1 = std::make_shared<Sprite>("/path/to", Color(1, 0, 0, 0), false, false, 1, 1);
     const auto sprite_2 = std::make_shared<Sprite>("/path/to", Color(2, 0, 0, 0), false, false, 1, 1);
 
-    const Animator::Sprites sprites{sprite_1, sprite_2};
+    const Sprites sprites{sprite_1, sprite_2};
     const auto animator = std::make_shared<Animator>(sprites, 20);
 
     game_object.add_component(animator);
@@ -170,7 +170,7 @@ TEST(AnimatorTest, AnimateNotActive) {
     const auto sprite_1 = std::make_shared<Sprite>("/path/to", Color(1, 0, 0, 0), false, false, 1, 1);
     const auto sprite_2 = std::make_shared<Sprite>("/path/to", Color(2, 0, 0, 0), false, false, 1, 1);
 
-    const Animator::Sprites sprites{sprite_1, sprite_2};
+    const Sprites sprites{sprite_1, sprite_2};
     const auto animator = std::make_shared<Animator>(sprites, 20);
 
     game_object.add_component(animator);

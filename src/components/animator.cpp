@@ -2,7 +2,7 @@
 
 #include <utility>
 
-Animator::Animator(Animator::Sprites sprites, const int fps) : _sprites(std::move(sprites)), _fps(fps) {}
+Animator::Animator(Sprites sprites, const int fps) : _sprites(std::move(sprites)), _fps(fps) {}
 
 void Animator::play(bool looping) {
     _loop = looping;
