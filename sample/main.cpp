@@ -2,5 +2,5 @@
 
 int main(int argc, char* argv[])
 {
-	SdlRenderer renderer = SdlRenderer();
+	SdlRenderer renderer = SdlRenderer(800, 600);
 }

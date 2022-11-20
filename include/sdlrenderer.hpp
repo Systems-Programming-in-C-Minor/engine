@@ -11,10 +11,10 @@ namespace SDL2pp
 
 class SdlRenderer {
 public:
-	SdlRenderer();
-	~SdlRenderer();;
+	SdlRenderer(int res_x, int res_y);
+	~SdlRenderer();
 private:
-	void init();
+	void init(int rex_x = 800, int res_y = 600);
 
 	std::unique_ptr<SDL2pp::Window> _window;
 	std::unique_ptr<SDL2pp::Renderer> _renderer;
