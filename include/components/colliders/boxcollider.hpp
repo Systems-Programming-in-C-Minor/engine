@@ -11,7 +11,7 @@ private:
     double _height;
 
 public:
-    BoxCollider() {};
+    BoxCollider() = default;
     ~BoxCollider() = default;
 
     double get_width();

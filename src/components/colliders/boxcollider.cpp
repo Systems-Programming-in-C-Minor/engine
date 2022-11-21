@@ -3,6 +3,7 @@
 double BoxCollider::get_width(){
     return _width;
 }
+
 void BoxCollider::set_width(double w){
     _width = w;
 }

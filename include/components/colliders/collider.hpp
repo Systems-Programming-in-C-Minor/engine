@@ -8,7 +8,7 @@ class IRenderer;
 class Collider : public Component
 {
 private:
-    bool _ignore_collision_physics;
+    bool _ignore_collision_physics = false;
 
 public:
     Collider() {};

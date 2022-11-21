@@ -6,12 +6,10 @@ class CircleCollider : public Collider
 {
 private:
 
-
-
     double _radius;
 
 public:
-    CircleCollider() {};
+    CircleCollider() = default;
     ~CircleCollider() = default;
 
     double get_radius();
