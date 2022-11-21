@@ -6,9 +6,9 @@ std::vector<GameObject> Collider::collision_since_previous_tick(){
     return collisions;
 }
 
-//void Collider::render(IRenderer renderer){
-//
-//}
+void Collider::render(IRenderer &renderer, bool is_world_space) const {
+
+}
 
 bool Collider::get_ignore_collision_physics() {
     return _ignore_collision_physics;
