@@ -16,6 +16,7 @@ private:
     unsigned long _fps;
 public:
     Engine();
+    virtual ~Engine();
 
     void start();
 
@@ -23,7 +24,8 @@ public:
 
     void load_scene(std::shared_ptr<Scene> new_scene);
 
-    [[nodiscard]] Scene &get_active_scene() const;
+    [[nodiscard]] virtual Scene &get_active_scene();
+    [[nodiscard]] virtual const Scene &get_active_scene() const;
 
     [[nodiscard]] unsigned long get_fps() const;
 };

@@ -1,5 +1,4 @@
 #include "engine.hpp"
-
 #include <utility>
 #include <chrono>
 #include <cmath>
@@ -26,7 +25,11 @@ void Engine::stop() {
     _should_quit = true;
 }
 
-Scene &Engine::get_active_scene() const {
+Scene &Engine::get_active_scene() {
+    return *_active_scene;
+}
+
+const Scene &Engine::get_active_scene() const {
     return *_active_scene;
 }
 
@@ -35,3 +38,5 @@ unsigned long Engine::get_fps() const {
 }
 
 Engine::Engine() : _should_quit(false), _time_after_last_frame(0), _fps(0) {}
+
+Engine::~Engine() = default;

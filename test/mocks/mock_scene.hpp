@@ -4,7 +4,7 @@
 #include "gmock/gmock.h"
 #include "scene.hpp"
 
-class MockScene final : public Scene {
+class MockScene : public Scene {
 public:
 	MOCK_METHOD(void, tick, (), (override));
 	MOCK_METHOD(void, render, (IRenderer&), (override, const));
