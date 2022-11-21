@@ -6,7 +6,11 @@
 
 class MockRenderer : public IRenderer {
 public:
-    MOCK_METHOD(void, render_sprite, (const Sprite &, ITexture &, bool), (override, const));
+	MOCK_METHOD(void, render_collider, (), (const, override));
+	MOCK_METHOD(void, render_text, (Text&), (const, override));
+	MOCK_METHOD(void, clear, (const Color&), (const, override));
+	MOCK_METHOD(void, push_to_screen, (), (const, override));
+	MOCK_METHOD(void, render_sprite, (const Sprite &, ITexture &, bool), (override, const));
 };
 
 #endif //ENGINE_MOCK_RENDERER_HPP
