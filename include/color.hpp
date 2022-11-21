@@ -9,5 +9,8 @@ public:
     int _g;
     int _b;
     int _a;
+
+[[nodiscard]] bool equals(const Color &other) const;
+[[nodiscard]] bool operator==(const Color &other) const;
 };
 

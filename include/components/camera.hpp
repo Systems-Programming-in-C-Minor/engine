@@ -6,14 +6,14 @@
 class Camera : public GameObject
 {
 private:
-    Camera(std::string name, std::string tag, int aspect_width, int aspect_height);
-    ~Camera() = default;
-
     Color _background_color;
     int _aspect_width;
     int _aspect_height;
 
 public:
+    Camera(int aspect_width, int aspect_height);
+    ~Camera() = default;
+
     Color get_background_color();
     void set_background_color(Color c);
     int get_aspect_width();

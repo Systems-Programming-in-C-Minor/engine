@@ -1,11 +1,7 @@
 #include "components/camera.hpp"
 #include "color.hpp"
 
-Camera::Camera(std::string name, std::string tag, int aspect_width, int aspect_height)  : GameObject(name, tag){
-    _background_color = *new Color;
-    _aspect_width = aspect_width;
-    _aspect_height  =aspect_height;
-}
+Camera::Camera(int aspect_width, int aspect_height): GameObject("camera", "camera"), _background_color(*new Color), _aspect_width(aspect_width), _aspect_height(aspect_height){ }
 
 Color Camera::get_background_color(){
     return _background_color;
