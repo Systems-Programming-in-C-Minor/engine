@@ -18,41 +18,37 @@ class Scene;
 
 class RigidBody : public Component {
 public:
-
-    /**
-    * @param body
-    */
     RigidBody(Scene &scene, BodyType type, Vector2d vector, float gravity_scale);
 
-    void apply_force(Vector2d force);
+    void apply_force(Vector2d force, Vector2d point) const;
 
-    void apply_torque(float torque);
+    void apply_torque(float torque) const;
 
-    void set_linear_velocity(Vector2d velocity);
+    void set_linear_velocity(Vector2d velocity) const;
 
-    Vector2d get_linear_velocity();
+    [[nodiscard]] Vector2d get_linear_velocity() const;
 
-    void set_angular_velocity(float angle);
+    void set_angular_velocity(float angle) const;
 
-    float get_angular_velocity();
+    [[nodiscard]] float get_angular_velocity() const;
 
-    void apply_linear_impulse(Vector2d impulse, Vector2d point);
+    void apply_linear_impulse(Vector2d impulse, Vector2d point) const;
 
-    void apply_angular_impulse(float impulse);
+    void apply_angular_impulse(float impulse) const;
 
-    float get_mass();
+    [[nodiscard]] float get_mass() const;
 
-    float get_inertia();
+    [[nodiscard]] float get_inertia() const;
 
-    void set_mass(float mass);
+    void set_mass(float mass) const;
 
-    float get_gravity_scale();
+    [[nodiscard]] float get_gravity_scale() const;
 
-    void set_gravity_scale(float gravity_scale);
+    void set_gravity_scale(float gravity_scale) const;
 
-    BodyType get_body_type();
+    [[nodiscard]] BodyType get_body_type() const;
 
-    void set_body_type(BodyType bt);
+    void set_body_type(BodyType bt) const;
 
 private:
     b2Body *_body;
