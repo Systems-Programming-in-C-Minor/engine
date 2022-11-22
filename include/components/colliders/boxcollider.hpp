@@ -1,4 +1,5 @@
-#pragma once
+#ifndef COLLIDERS_BOXCOLLIDER_HPP
+#define COLLIDERS_BOXCOLLIDER_HPP
 
 #include "collider.hpp"
 #include "polygoncollider.hpp"
@@ -16,3 +17,4 @@ public:
     void set_height(double h);
 
 };
+#endif //COLLIDERS_BOXCOLLIDER_HPP

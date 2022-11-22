@@ -1,4 +1,5 @@
-#pragma once
+#ifndef COLLIDERS_COLLIDER_HPP
+#define COLLIDERS_COLLIDER_HPP
 #include "gameobject.hpp"
 #include "render/irenderer.hpp"
 #include <vector>
@@ -18,3 +19,5 @@ public:
     [[nodiscard]] bool get_ignore_collision_physics() const;
     void set_ignore_collision_physics(bool icp);
 };
+
+#endif //COLLIDERS_COLLIDER_HPP

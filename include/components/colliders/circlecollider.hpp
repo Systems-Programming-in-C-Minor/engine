@@ -1,4 +1,5 @@
-#pragma once
+#ifndef COLLIDERS_CIRCLECOLLIDER_HPP
+#define COLLIDERS_CIRCLECOLLIDER_HPP
 
 #include "collider.hpp"
 
@@ -12,3 +13,4 @@ public:
     void set_radius(double r);
 };
 
+#endif //COLLIDERS_CIRCLECOLLIDER_HPP

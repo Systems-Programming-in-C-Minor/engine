@@ -1,6 +1,6 @@
 #include "components/colliders/spritecollider.hpp"
 SpriteCollider::SpriteCollider(std::string path) {
-    _path = path;
+    _path = std::move(path);
 }
 
 std::string SpriteCollider::get_path() const {

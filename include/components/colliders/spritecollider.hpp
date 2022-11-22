@@ -1,4 +1,5 @@
-#pragma once
+#ifndef COLLIDERS_SPRITECOLLIDER_HPP
+#define COLLIDERS_SPRITECOLLIDER_HPP
 
 #include "collider.hpp"
 
@@ -14,3 +15,5 @@ public:
     [[nodiscard]] std::string get_path() const;
     void set_path(std::string p);
 };
+
+#endif //COLLIDERS_SPRITECOLLIDER_HPP

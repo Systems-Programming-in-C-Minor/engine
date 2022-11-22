@@ -3,7 +3,7 @@
 PolygonCollider::PolygonCollider() : Collider() {}
 
 PolygonCollider::PolygonCollider(std::vector<Vector2d> points) : Collider(){
-    set_points(points);
+    _points = std::move(points);
 }
 
 std::vector<Vector2d> PolygonCollider::get_points() const {

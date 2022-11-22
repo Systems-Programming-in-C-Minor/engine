@@ -1,4 +1,5 @@
-#pragma once
+#ifndef COLLIDERS_POLYGONCOLLIDER_HPP
+#define COLLIDERS_POLYGONCOLLIDER_HPP
 
 #include "vector2d.hpp"
 #include "collider.hpp"
@@ -19,3 +20,5 @@ public:
     [[nodiscard]] std::vector<Vector2d> get_points() const;
     void set_points(std::vector<Vector2d> p);
 };
+
+#endif //COLLIDERS_POLYGONCOLLIDER_HPP
