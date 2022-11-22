@@ -13,7 +13,6 @@ private:
 
 public:
     Camera(int aspect_width, int aspect_height);
-    ~Camera() = default;
 
     [[nodiscard]] Color get_background_color() const ;
     void set_background_color(Color c);
