@@ -1,11 +1,11 @@
 #ifndef ENGINE_ITICKABLE_HPP
 #define ENGINE_ITICKABLE_HPP
 
-class GameObject;
+#include "gameobject.hpp"
 
 class ITickable {
 public:
-    virtual void tick(GameObject &object) const = 0;
+    virtual void tick(GameObject &object) = 0;
 };
 
 #endif //ENGINE_ITICKABLE_HPP

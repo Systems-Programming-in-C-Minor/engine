@@ -7,13 +7,14 @@
 #include <list>
 #include "components/component.hpp"
 #include "interfaces/irenderable.hpp"
-#include "interfaces/itickable.hpp"
+
+class ITickable;
 
 #define assert_T_derived_from_component static_assert(std::is_base_of<Component, T>::value, "T not derived from Component")
 
 /**
-     * @brief Any object which should be represented on screen.
-     */
+* @brief Any object which should be represented on screen.
+*/
 class GameObject {
 private:
     int _id;
@@ -185,9 +186,9 @@ public:
      */
     [[nodiscard]] bool is_active_in_world() const;
 
-    void render(IRenderer& renderer) const;
+    virtual void render(IRenderer& renderer) const;
 
-    void tick();
+    virtual void tick();
 
     GameObject(std::string name, std::string tag, bool is_world_space = true);
 
