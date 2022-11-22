@@ -12,6 +12,8 @@ enum class BodyType {
 
 class b2Body;
 
+class b2Vec2;
+
 class Scene;
 
 class RigidBody : public Component {
@@ -20,7 +22,7 @@ public:
     /**
     * @param body
     */
-    RigidBody(Scene &scene, BodyType type, Vector2d vector, double gravity_scale);
+    RigidBody(Scene &scene, BodyType type, Vector2d vector, float gravity_scale);
 
     void apply_force(Vector2d force);
 
@@ -34,22 +36,28 @@ public:
 
     float get_angular_velocity();
 
-    void apply_linear_impulse(Vector2d inpulse);
+    void apply_linear_impulse(Vector2d impulse, Vector2d point);
 
-    void apply_angular_impulse(Vector2d impulse);
+    void apply_angular_impulse(float impulse);
 
-    double get_mass();
+    float get_mass();
 
-    void set_mass(double m);
+    float get_inertia();
 
-    double get_gravity_scale();
+    void set_mass(float mass);
 
-    void set_gravity_scale(double gs);
+    float get_gravity_scale();
 
-    BodyType get_bodytype();
+    void set_gravity_scale(float gravity_scale);
 
-    void set_bodytype(BodyType bt);
+    BodyType get_body_type();
+
+    void set_body_type(BodyType bt);
 
 private:
     b2Body *_body;
+
+    static b2Vec2 get_b2vec(Vector2d vector);
+
+    static Vector2d get_vec(b2Vec2 vector);
 };
