@@ -5,6 +5,8 @@
 
 class Vector2d {
 public:
+    // TODO convert to float easier to use
+    // TODO castable to box2d
     double x, y;
 
     [[nodiscard]] Vector2d add(const Vector2d &other) const;
