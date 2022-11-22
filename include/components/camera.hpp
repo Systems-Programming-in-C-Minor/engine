@@ -1,4 +1,5 @@
-#pragma once
+#ifndef COMPONENTS_CAMERA_HPP
+#define COMPONENT_CAMERA_HPP
 
 #include "gameobject.hpp"
 #include "color.hpp"
@@ -14,10 +15,12 @@ public:
     Camera(int aspect_width, int aspect_height);
     ~Camera() = default;
 
-    Color get_background_color();
+    [[nodiscard]] Color get_background_color() const ;
     void set_background_color(Color c);
-    int get_aspect_width();
+    [[nodiscard]] int get_aspect_width() const ;
     void set_aspect_width(int w);
-    int get_aspect_height();
+    [[nodiscard]] int get_aspect_height() const ;
     void set_aspect_height(int h);
 };
+
+#endif //COMPONENTS_CAMERA_HPP

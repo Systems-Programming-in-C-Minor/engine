@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ENGINE_COLOR_HPP
+#define ENGINE_COLOR_HPP
 
 class Color {
 public:
@@ -14,3 +15,4 @@ public:
 [[nodiscard]] bool operator==(const Color &other) const;
 };
 
+#endif //ENGINE_COLOR_HPP
