@@ -12,12 +12,9 @@ private:
     bool _ignore_collision_physics = false;
 
 public:
-    Collider() {};
-    ~Collider() = default;
-
     std::vector<GameObject> collision_since_previous_tick();
     void render(IRenderer &renderer, bool is_world_space) const override;
 
-    bool get_ignore_collision_physics();
+    [[nodiscard]] bool get_ignore_collision_physics() const;
     void set_ignore_collision_physics(bool icp);
 };

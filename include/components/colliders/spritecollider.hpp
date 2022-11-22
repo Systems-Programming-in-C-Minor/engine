@@ -8,10 +8,9 @@ private:
     std::string _path;
 
 public:
-    SpriteCollider() = default;
+    SpriteCollider() { };
     explicit SpriteCollider(std::string path);
 
-    ~SpriteCollider() = default;
-    std::string get_path();
+    [[nodiscard]] std::string get_path() const;
     void set_path(std::string p);
 };

@@ -3,7 +3,7 @@ SpriteCollider::SpriteCollider(std::string path) {
     _path = path;
 }
 
-std::string SpriteCollider::get_path(){
+std::string SpriteCollider::get_path() const {
     return _path;
 }
 

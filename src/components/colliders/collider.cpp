@@ -10,7 +10,7 @@ void Collider::render(IRenderer &renderer, bool is_world_space) const {
 
 }
 
-bool Collider::get_ignore_collision_physics() {
+bool Collider::get_ignore_collision_physics() const {
     return _ignore_collision_physics;
 }
 

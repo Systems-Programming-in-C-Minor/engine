@@ -6,7 +6,7 @@ PolygonCollider::PolygonCollider(std::vector<Vector2d> points) : Collider(){
     set_points(points);
 }
 
-std::vector<Vector2d> PolygonCollider::get_points(){
+std::vector<Vector2d> PolygonCollider::get_points() const {
     return _points;
 }
 

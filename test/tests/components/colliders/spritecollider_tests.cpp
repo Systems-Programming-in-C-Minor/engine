@@ -1,8 +1,6 @@
 #include <gtest/gtest.h>
 #include "components/colliders/spritecollider.hpp"
 
-
-
 TEST(SpriteColliderTest, GetAndSetPath){
     SpriteCollider test_spritecollider {};
     std::string test_value = "test";
