@@ -1,5 +1,5 @@
 #ifndef COMPONENTS_CAMERA_HPP
-#define COMPONENT_CAMERA_HPP
+#define COMPONENTS_CAMERA_HPP
 
 #include "gameobject.hpp"
 #include "color.hpp"
