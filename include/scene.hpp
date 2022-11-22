@@ -4,10 +4,12 @@
 #include <vector>
 #include <memory>
 #include "box2d/box2d.h"
+#include "components/rigidbody.hpp"
 
 class IRenderer;
 
 class GameObject;
+
 
 class Scene {
 public:
@@ -29,6 +31,8 @@ public:
 
 private:
     const std::unique_ptr<b2World> _world = std::make_unique<b2World>(b2Vec2(0.0f, 0.0f));
+
+    friend class RigidBody;
 };
 
 #endif // ENGINE_SCENE_H_Kh3IZygul2
