@@ -1,11 +1,5 @@
 #include "components/colliders/collider.hpp"
 
-std::vector<GameObject> Collider::collision_since_previous_tick(){
-    std::vector<GameObject> collisions;
-
-    return collisions;
-}
-
 void Collider::render(IRenderer &renderer, bool is_world_space) const {
 
 }

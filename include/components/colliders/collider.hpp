@@ -13,7 +13,6 @@ private:
     bool _ignore_collision_physics = false;
 
 public:
-    std::vector<GameObject> collision_since_previous_tick();
     void render(IRenderer &renderer, bool is_world_space) const override;
 
     [[nodiscard]] bool get_ignore_collision_physics() const;
