@@ -11,8 +11,8 @@ class Vector2d;
 class PolygonCollider : public Collider
 {
 public:
-    PolygonCollider(std::vector<Vector2d> points);
-    PolygonCollider(const std::string& path);
+    explicit PolygonCollider(std::vector<Vector2d> points);
+    explicit PolygonCollider(const std::string& path);
 
     [[nodiscard]] std::vector<Vector2d> get_points() const;
 

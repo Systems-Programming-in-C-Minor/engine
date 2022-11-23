@@ -9,10 +9,9 @@ private:
     double _radius;
 
 public:
-    CircleCollider(double radius);
+    explicit CircleCollider(double radius);
 
     [[nodiscard]] double get_radius() const;
-    void set_radius(double r);
 };
 
 #endif //COLLIDERS_CIRCLECOLLIDER_HPP
