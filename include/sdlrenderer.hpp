@@ -43,7 +43,6 @@ public:
 	 * @brief Clears the backbuffer and applies a default colour
 	 */
 	void clear(const Color& color) const override;
-	// TODO Update in UML diagram
 
 	/**
 	 * @brief Presents the composed backbuffer
@@ -54,9 +53,7 @@ public:
 	virtual ~SdlRenderer();
 private:
 	void init(int res_x = 800, int res_y = 600);
-	// TODO Update in UML diagram
 	void handle_exception(const SDL2pp::Exception& e) const;
-	// TODO Update in UML diagram 
 
 	std::unique_ptr<SDL2pp::Window> _window;
 	std::unique_ptr<SDL2pp::Renderer> _renderer;
