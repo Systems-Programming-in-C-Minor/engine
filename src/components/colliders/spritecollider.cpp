@@ -8,5 +8,5 @@ std::string SpriteCollider::get_path() const {
 }
 
 void SpriteCollider::set_path(std::string p){
-    _path = p;
+    _path = std::move(p);
 }

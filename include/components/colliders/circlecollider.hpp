@@ -9,6 +9,8 @@ private:
     double _radius;
 
 public:
+    CircleCollider(double radius);
+
     [[nodiscard]] double get_radius() const;
     void set_radius(double r);
 };

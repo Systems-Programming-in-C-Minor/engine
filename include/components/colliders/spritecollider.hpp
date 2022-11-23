@@ -1,16 +1,16 @@
 #ifndef COLLIDERS_SPRITECOLLIDER_HPP
 #define COLLIDERS_SPRITECOLLIDER_HPP
 
-#include "collider.hpp"
+#include "polygoncollider.hpp"
 
-class SpriteCollider : public Collider
+class SpriteCollider : public PolygonCollider
 {
 private:
     std::string _path;
 
 public:
     SpriteCollider() = default;
-    explicit SpriteCollider(std::string path);
+    SpriteCollider(std::string path);
 
     [[nodiscard]] std::string get_path() const;
     void set_path(std::string p);

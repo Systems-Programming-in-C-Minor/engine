@@ -11,6 +11,8 @@ private:
     double _height;
 
 public:
+    BoxCollider(double width, double height);
+
     [[nodiscard]] double get_width() const;
     void set_width(double w);
     [[nodiscard]] double get_height() const;

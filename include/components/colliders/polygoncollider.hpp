@@ -14,7 +14,7 @@ private:
     std::vector<Vector2d> _points;
 
 public:
-    PolygonCollider();
+    PolygonCollider() = default;
     explicit PolygonCollider(std::vector<Vector2d> points);
 
     [[nodiscard]] std::vector<Vector2d> get_points() const;

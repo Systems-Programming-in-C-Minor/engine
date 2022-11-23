@@ -2,7 +2,7 @@
 #include "components/colliders/circlecollider.hpp"
 
 TEST(CircleColliderTest, GetAndSetWidth){
-    CircleCollider test_circle_collider {};
+    CircleCollider test_circle_collider {0};
     double test_value = 1;
     test_circle_collider.set_radius(test_value);
 
