@@ -10,7 +10,7 @@ private:
     double _height;
 
 public:
-    BoxCollider(double width = 1.0, double height = 1.0);
+    BoxCollider(double width, double height);
 
     [[nodiscard]] double get_width() const;
     [[nodiscard]] double get_height() const;
