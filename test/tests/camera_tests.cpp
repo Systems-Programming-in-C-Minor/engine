@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "components/camera.hpp"
+#include "camera.hpp"
 
 TEST(CameraTest, GetAndSetBackgroundColor){
     Camera test_camera {1280, 720};

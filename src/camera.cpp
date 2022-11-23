@@ -1,4 +1,4 @@
-#include "components/camera.hpp"
+#include "camera.hpp"
 #include "color.hpp"
 
 Camera::Camera(int aspect_width, int aspect_height): GameObject("camera", "camera"), _background_color(Color {}), _aspect_width(aspect_width), _aspect_height(aspect_height){ }
