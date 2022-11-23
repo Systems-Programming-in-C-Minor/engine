@@ -10,7 +10,7 @@ private:
 
 public:
     SpriteCollider() = default;
-    SpriteCollider(std::string path);
+    SpriteCollider(const std::string path);
 
     [[nodiscard]] std::string get_path() const;
     void set_path(std::string p);
