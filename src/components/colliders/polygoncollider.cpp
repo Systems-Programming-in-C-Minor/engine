@@ -4,16 +4,18 @@ PolygonCollider::PolygonCollider(std::vector<Vector2d> points) : Collider(){
     _points = std::move(points);
 }
 
-PolygonCollider::PolygonCollider(std::string path): Collider() {
-    _points = construct_points(std::move(path));
+PolygonCollider::PolygonCollider(const std::string& path): Collider() {
+    construct_points(path);
 }
 
 std::vector<Vector2d> PolygonCollider::get_points() const {
     return _points;
 }
 
-std::vector<Vector2d> PolygonCollider::construct_points(std::string path) {
-    std::vector<Vector2d> vec;
-    return vec;
-
+void PolygonCollider::construct_points(const std::string& path) {
+    /*
+     * TODO Task: Implement SpriteCollider
+     * https://app.clickup.com/t/377pt9y
+     */
+    _points = std::vector<Vector2d>{Vector2d{}};
 }

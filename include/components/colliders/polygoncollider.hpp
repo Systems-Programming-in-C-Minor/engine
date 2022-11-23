@@ -10,16 +10,16 @@ class Vector2d;
 
 class PolygonCollider : public Collider
 {
-private:
-    std::vector<Vector2d> _points;
-
 public:
     PolygonCollider(std::vector<Vector2d> points);
-    PolygonCollider(std::string path);
+    PolygonCollider(const std::string& path);
 
     [[nodiscard]] std::vector<Vector2d> get_points() const;
 
-    std::vector<Vector2d> construct_points(std::string path);
+private:
+    std::vector<Vector2d> _points;
+
+    void construct_points(const std::string& path);
 };
 
 #endif //COLLIDERS_POLYGONCOLLIDER_HPP
