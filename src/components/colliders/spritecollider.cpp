@@ -1,5 +1,5 @@
 #include "components/colliders/spritecollider.hpp"
-SpriteCollider::SpriteCollider(std::string path) {
+SpriteCollider::SpriteCollider(const std::string path) {
     _path = std::move(path);
 }
 
