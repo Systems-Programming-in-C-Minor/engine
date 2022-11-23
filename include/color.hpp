@@ -3,12 +3,16 @@
 
 class Color {
 public:
-    Color(double red, double green, double blue, double alpha);
+    Color(int r = 0, int g = 0, int b = 0, int a = 0);
+    ~Color() = default;
 
-    const double r;
-    const double g;
-    const double b;
-    const double a;
+    int _r;
+    int _g;
+    int _b;
+    int _a;
+
+[[nodiscard]] bool equals(const Color &other) const;
+[[nodiscard]] bool operator==(const Color &other) const;
 };
 
 #endif //ENGINE_COLOR_HPP
