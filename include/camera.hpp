@@ -1,5 +1,5 @@
-#ifndef COMPONENTS_CAMERA_HPP
-#define COMPONENTS_CAMERA_HPP
+#ifndef ENGINE_CAMERA_HPP
+#define ENGINE_CAMERA_HPP
 
 #include "gameobject.hpp"
 #include "color.hpp"
@@ -22,4 +22,4 @@ public:
     void set_aspect_height(int h);
 };
 
-#endif //COMPONENTS_CAMERA_HPP
+#endif //ENGINE_CAMERA_HPP
