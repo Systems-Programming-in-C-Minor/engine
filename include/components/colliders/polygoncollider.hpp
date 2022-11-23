@@ -14,11 +14,12 @@ private:
     std::vector<Vector2d> _points;
 
 public:
-    PolygonCollider() = default;
-    explicit PolygonCollider(std::vector<Vector2d> points);
+    PolygonCollider(std::vector<Vector2d> points);
+    PolygonCollider(std::string path);
 
     [[nodiscard]] std::vector<Vector2d> get_points() const;
-    void set_points(std::vector<Vector2d> p);
+
+    std::vector<Vector2d> construct_points(std::string path);
 };
 
 #endif //COLLIDERS_POLYGONCOLLIDER_HPP

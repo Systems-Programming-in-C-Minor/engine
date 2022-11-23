@@ -4,7 +4,7 @@
 #include "collider.hpp"
 #include "polygoncollider.hpp"
 
-class BoxCollider : public PolygonCollider
+class BoxCollider : Collider
 {
 private:
     double _width;
@@ -14,9 +14,7 @@ public:
     BoxCollider(double width, double height);
 
     [[nodiscard]] double get_width() const;
-    void set_width(double w);
     [[nodiscard]] double get_height() const;
-    void set_height(double h);
-
 };
+
 #endif //COLLIDERS_BOXCOLLIDER_HPP

@@ -1,10 +1,9 @@
 #include <gtest/gtest.h>
 #include "components/colliders/circlecollider.hpp"
 
-TEST(CircleColliderTest, GetAndSetWidth){
-    CircleCollider test_circle_collider {0};
-    double test_value = 1;
-    test_circle_collider.set_radius(test_value);
+TEST(CircleColliderTest, GetWidth){
+    double test_value = 1.0;
+    CircleCollider test_circle_collider {test_value};
 
     EXPECT_EQ(1.0, test_circle_collider.get_radius());
 }
