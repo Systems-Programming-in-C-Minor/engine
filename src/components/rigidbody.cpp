@@ -30,12 +30,30 @@ void RigidBody::apply_angular_impulse(Vector2d impulse){
 
 }
 
-double RigidBody::get_mass(){
-    return _mass;
+float RigidBody::get_mass() const {
+    return _mass->mass;
 }
-void RigidBody::set_mass(double m){
-    _mass = m;
+
+void RigidBody::set_mass(float m){
+    _mass->mass = m;
 }
+
+b2Vec2 RigidBody::get_center() const {
+    return _mass->center;
+}
+
+void RigidBody::set_center(b2Vec2 center) {
+    _mass->center = center;
+}
+
+float RigidBody::get_rotational_inertia() const {
+    return _mass->I;
+}
+
+void RigidBody::set_rotational_inertia(float i) {
+    _mass->I = i;
+}
+
 double RigidBody::get_gravity_scale(){
     return _gravity_scale;
 }
