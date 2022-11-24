@@ -5,8 +5,13 @@
 #include "sdlrenderer.hpp"
 
 #include "SDL.h"
-#include "SDL2pp/SDL2pp.hh"
+#include "SDL2pp/SDL.hh"
+#include "SDL2pp/Renderer.hh"
+#include "SDL2pp/Window.hh"
 #include "SDL2pp/Color.hh"
+#include "SDL2pp/SDLImage.hh"
+#include "SDL2pp/Exception.hh"
+#include "SDL2pp/SDL2pp.hh"
 #include "fmt/ostream.h"
 
 #include <ostream>
