@@ -8,6 +8,10 @@
 
 class Vector2d;
 
+/**
+ * Collider class for polygonal objects
+ */
+
 class PolygonCollider : public Collider
 {
 public:
