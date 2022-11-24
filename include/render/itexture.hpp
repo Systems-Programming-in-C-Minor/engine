@@ -7,6 +7,7 @@ class IRenderer;
 
 class ITexture {
 public:
+    // TODO Possibly remove renderer param in favour of renderer in global singleton
     ITexture(const std::string& path, IRenderer& renderer) {}
 };
 
