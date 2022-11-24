@@ -6,14 +6,14 @@
 class BoxCollider : public PolygonCollider
 {
 private:
-    double _width;
-    double _height;
+    float _width;
+    float _height;
 
 public:
-    BoxCollider(double width, double height);
+    BoxCollider(float width, float height);
 
-    [[nodiscard]] double get_width() const;
-    [[nodiscard]] double get_height() const;
+    [[nodiscard]] float get_width() const;
+    [[nodiscard]] float get_height() const;
 };
 
 #endif //COLLIDERS_BOXCOLLIDER_HPP
