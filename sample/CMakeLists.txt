@@ -10,7 +10,12 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 # Links libstd statically, but still doesn't work. Must supply libstdc++-6.dll
 # target_link_options(${PROJECT_NAME} PRIVATE -static-libgcc -static-libstdc++)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE engine)
+target_link_libraries(${PROJECT_NAME} PRIVATE
+        fmt::fmt
+        box2d
+        SDL2pp::SDL2pp
+        engine
+        )
 
 install(TARGETS engine_sample RUNTIME DESTINATION bin)
 
