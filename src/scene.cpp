@@ -1,11 +1,12 @@
 #include "gameobject.hpp"
 #include "scene.hpp"
-
+#include "global.hpp"
 
 void Scene::tick()
 {
 	for (auto& gameobject : gameobjects) {
 		gameobject->tick();
+        Global::get_instance()->time.tick();
 	}
 }
 
