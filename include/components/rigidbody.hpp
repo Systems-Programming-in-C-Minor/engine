@@ -18,7 +18,7 @@ class Scene;
 
 class RigidBody : public Component {
 public:
-    RigidBody(Scene &scene, BodyType type, Vector2d vector, float gravity_scale);
+    RigidBody(const Scene &scene, BodyType type, Vector2d vector, float gravity_scale);
 
     void apply_force(Vector2d force, Vector2d point) const;
 
