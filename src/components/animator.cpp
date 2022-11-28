@@ -1,6 +1,7 @@
 #include "components/animator.hpp"
 
 #include <utility>
+#include "global.hpp"
 
 Animator::Animator(Sprites sprites, const int fps) : _sprites(std::move(sprites)), _fps(fps) {}
 
@@ -17,7 +18,9 @@ void Animator::stop() {
 
 int Animator::animate_per_ticks() const {
     // TODO get the TICKS_PER_SECOND dynamically use time delta
-    const int TICKS_PER_SECOND = 20;
+    const double delta_time = Global::get_instance()->time.delta_time();
+
+    const int TICKS_PER_SECOND = delta_time;
     return TICKS_PER_SECOND / _fps;
 }
 
