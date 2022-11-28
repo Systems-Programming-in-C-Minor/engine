@@ -16,7 +16,7 @@ public:
 private:
     time_point<steady_clock> _time_since_call;
 
-    static double _time_scale;
+    double _time_scale;
 };
 
 #endif //ENGINE_TIME_HPP

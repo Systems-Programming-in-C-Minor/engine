@@ -1,10 +1,12 @@
 #include "gameobject.hpp"
 #include "scene.hpp"
+#include "global.hpp"
 #include "box2d/box2d.h"
 
 void Scene::tick() {
     for (auto &gameobject: gameobjects) {
         gameobject->tick();
+        Global::get_instance()->time.tick();
     }
 }
 
