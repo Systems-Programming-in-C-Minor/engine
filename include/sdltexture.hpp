@@ -11,7 +11,7 @@ namespace SDL2pp {
 
 class SdlRenderer;
 
-class SdlTexture : ITexture
+class SdlTexture : public ITexture
 {
 public:
 	SdlTexture(SdlRenderer& renderer, const std::string& path);
