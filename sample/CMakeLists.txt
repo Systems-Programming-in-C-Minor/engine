@@ -12,10 +12,10 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE engine)
 
-install(TARGETS engine_sample RUNTIME DESTINATION bin)
-
-# TODO Unsure whether this needs to be done on POSIX
-install(FILES ${FETCHCONTENT_BASE_DIR}/sdl2pp-build/libSDL2pp.dll DESTINATION bin)
+if(WIN32
+    install(TARGETS engine_sample RUNTIME DESTINATION bin)
+    install(FILES ${FETCHCONTENT_BASE_DIR}/sdl2pp-build/libSDL2pp.dll DESTINATION bin)
+endif()
 
 add_custom_command(
         TARGET engine_sample PRE_BUILD
