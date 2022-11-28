@@ -12,11 +12,11 @@ public:
     double time_scale();
     void time_scale(double new_time_scale);
     void tick();
+    double _time_scale;
 
 private:
     time_point<steady_clock> _time_since_call;
 
-    static double _time_scale;
 };
 
 #endif //ENGINE_TIME_HPP
