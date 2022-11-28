@@ -12,7 +12,7 @@ private:
     std::shared_ptr<Scene> _active_scene;
     std::unique_ptr<IRenderer> _renderer;
 
-    long _time_after_last_frame;
+    long long _time_after_last_frame;
     unsigned long _fps;
 public:
     void start();

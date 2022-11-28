@@ -6,6 +6,10 @@
 #define mock_scene std::make_shared<MockScene>()
 #define test_engine Engine()
 
+using testing::AllOf;
+using testing::Ge;
+using testing::Le;
+
 TEST(EngineTest, LoadScene) {
     auto engine = test_engine;
     auto scene = mock_scene;
@@ -60,5 +64,6 @@ TEST(EngineTest, Fps) {
 
     engine.start();
 
-    EXPECT_LE(engine.get_fps() - 10, 1); // Allow for a small difference in case the computer is very slow.
+    // Allow for a small difference in case the computer is slow.
+    EXPECT_THAT(engine.get_fps(), AllOf(Ge(9), Le(11)));
 }
