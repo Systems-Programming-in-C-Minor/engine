@@ -5,6 +5,7 @@
 #include "engine.hpp"
 #include "storage/iproperties.hpp"
 #include "scene.hpp"
+#include "time.hpp"
 
 class Global {
 private:
@@ -14,6 +15,7 @@ private:
 
     std::unique_ptr<Engine> _engine;
     std::unique_ptr<IProperties> _properties;
+
 public:
     static Global *get_instance();
 
@@ -31,6 +33,7 @@ public:
     [[nodiscard]] const Scene& get_active_scene() const;
 
     void operator=(const Global &) = delete;
+    Time time;
 };
 
 #endif //ENGINE_GLOBAL_HPP
