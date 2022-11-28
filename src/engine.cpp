@@ -3,6 +3,7 @@
 #include <utility>
 #include <chrono>
 #include <cmath>
+#include <SDL_keyboard.h>
 #include "gameobject.hpp"
 
 
@@ -33,3 +34,11 @@ Scene &Engine::get_active_scene() const {
 unsigned long Engine::get_fps() const {
     return _fps;
 }
+
+void Engine::listenKeyboardState() {
+    const Uint8 *currentKeyStates = SDL_GetKeyboardState(nullptr);
+
+    if (currentKeyStates[SDL_SCANCODE_0])
+        return;
+}
+
