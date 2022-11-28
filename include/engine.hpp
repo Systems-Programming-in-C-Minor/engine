@@ -15,7 +15,7 @@ private:
     long _time_after_last_frame;
     unsigned long _fps;
 
-    void listenKeyboardState();
+    static void listen_keyboard_state();
 public:
     void start();
 
