@@ -19,7 +19,6 @@ void Animator::stop() {
 int Animator::animate_per_ticks() const {
     // TODO get the TICKS_PER_SECOND dynamically use time delta
     const double delta_time = Global::get_instance()->time.delta_time();
-
     const int TICKS_PER_SECOND = delta_time;
     return TICKS_PER_SECOND / _fps;
 }

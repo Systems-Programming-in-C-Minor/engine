@@ -3,9 +3,7 @@
 
 using namespace std::chrono;
 
-Time::Time(){
-    _time_scale = 1;
-}
+Time::Time(): _time_scale(1) {}
 
 double Time::delta_time(){
     const auto dur = steady_clock::now() - _time_since_call;
