@@ -12,7 +12,7 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE engine)
 
-if(WIN32
+if(WIN32)
     install(TARGETS engine_sample RUNTIME DESTINATION bin)
     install(FILES ${FETCHCONTENT_BASE_DIR}/sdl2pp-build/libSDL2pp.dll DESTINATION bin)
 endif()
