@@ -48,7 +48,7 @@ public:
 
     [[nodiscard]] BodyType get_body_type() const;
 
-    void set_body_type(BodyType bt) const;
+    void set_body_type(BodyType body_type) const;
 
 private:
     b2Body *_body;

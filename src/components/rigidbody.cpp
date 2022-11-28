@@ -50,7 +50,7 @@ float RigidBody::get_inertia() const {
 }
 
 void RigidBody::set_mass(const float mass) const {
-    b2MassData *data;
+    b2MassData *data {};
     _body->GetMassData(data);
     data->mass = mass;
     _body->SetMassData(data);
