@@ -1,8 +1,31 @@
 #ifndef ENGINE_ENGINE_HPP
 #define ENGINE_ENGINE_HPP
 
-#include <string>
+#include <memory>
+#include "scene.hpp"
+#include "render/irenderer.hpp"
 
-std::string hello();
+
+class Engine {
+private:
+    bool _should_quit;
+    std::shared_ptr<Scene> _active_scene;
+    std::unique_ptr<IRenderer> _renderer;
+
+    long long _time_after_last_frame;
+    unsigned long _fps;
+public:
+    Engine();
+
+    void start();
+
+    void stop();
+
+    void load_scene(std::shared_ptr<Scene> new_scene);
+
+    [[nodiscard]] Scene &get_active_scene() const;
+
+    [[nodiscard]] unsigned long get_fps() const;
+};
 
 #endif //ENGINE_ENGINE_HPP
