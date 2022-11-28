@@ -10,7 +10,7 @@ TEST(AudioSourceTest, HasNotBeenPlayed_Active)
 
 TEST(AudioSourceTest, HasBeenPlayed_Active)
 {
-	AudioSource audio("./assets/sample.wav", true);
+	const AudioSource audio("./assets/sample.wav", true);
 	EXPECT_EQ(audio.get_play_count(), 1);
 }
 

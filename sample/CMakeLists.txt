@@ -17,7 +17,14 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
         engine
         )
 
-install(TARGETS engine_sample RUNTIME DESTINATION bin)
+if(WIN32)
+    install(TARGETS engine_sample RUNTIME DESTINATION bin)
+    install(FILES ${FETCHCONTENT_BASE_DIR}/sdl2pp-build/libSDL2pp.dll DESTINATION bin)
+endif()
 
-# TODO Unsure whether this needs to be done on POSIX
-install(FILES ${FETCHCONTENT_BASE_DIR}/sdl2pp-build/libSDL2pp.dll DESTINATION bin)
+add_custom_command(
+        TARGET engine_sample PRE_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_CURRENT_SOURCE_DIR}/assets
+        ${CMAKE_CURRENT_BINARY_DIR}/assets
+)
