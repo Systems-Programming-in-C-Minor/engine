@@ -33,3 +33,5 @@ Scene &Engine::get_active_scene() const {
 unsigned long Engine::get_fps() const {
     return _fps;
 }
+
+Engine::Engine() : _should_quit(false), _time_after_last_frame(0), _fps(0) {}

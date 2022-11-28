@@ -15,6 +15,8 @@ private:
     long long _time_after_last_frame;
     unsigned long _fps;
 public:
+    Engine();
+
     void start();
 
     void stop();
