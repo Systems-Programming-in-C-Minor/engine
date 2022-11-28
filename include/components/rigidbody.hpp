@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RIGID_BODY_HPP
+#define RIGID_BODY_HPP
 
 #include "component.hpp"
 #include "vector2d.hpp"
@@ -17,9 +18,6 @@ class Scene;
 class RigidBody : public Component {
 public:
 
-    /**
-    * @param body
-    */
     RigidBody(Scene &scene, BodyType type, Vector2d vector, double gravity_scale);
 
     void apply_force(Vector2d force);
@@ -53,3 +51,5 @@ public:
 private:
     b2Body *_body;
 };
+
+#endif //RIGID_BODY_HPP
