@@ -3,7 +3,7 @@
 
 int GameObject::object_counter = 0;
 
-GameObject::GameObject(std::string name, std::string tag, bool is_world_space) : name(std::move(name)),
+GameObject::GameObject(std::string name, std::string tag, bool is_world_space, Transform transform) : name(std::move(name)),
                                                                                 tag(std::move(tag)),
                                                                                 parent(nullptr),
                                                                                 is_world_space(is_world_space),
