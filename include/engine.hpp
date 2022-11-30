@@ -10,7 +10,7 @@ class Engine {
 private:
     bool _should_quit;
     std::shared_ptr<Scene> _active_scene;
-    std::unique_ptr<IRenderer> _renderer;
+    std::shared_ptr<IRenderer> _renderer;
 
     long long _time_after_last_frame;
     unsigned long _fps;
