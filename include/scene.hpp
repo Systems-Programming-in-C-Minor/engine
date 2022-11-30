@@ -22,10 +22,8 @@ public:
 
     /**
      * Calls the render functions on this scene's gameobjects
-     *
-     * @param[in] renderer Reference to the active renderer
      */
-    virtual void render(IRenderer &renderer) const;
+    virtual void render() const;
 
     Scene();
 

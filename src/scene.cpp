@@ -9,10 +9,10 @@ void Scene::tick()
 	}
 }
 
-void Scene::render(IRenderer& renderer) const
+void Scene::render() const
 {
 	for (auto& gameobject : gameobjects) {
-		gameobject->render(renderer);
+		gameobject->render();
 	}
 }
 
