@@ -16,6 +16,7 @@ class Sprite;
 class ITexture;
 class Text;
 class Color;
+class Transform;
 
 class SdlRenderer : public IRenderer {
 public:
@@ -26,7 +27,7 @@ public:
 	 * @param texture Texture to be rendered, belonging to the same sprite
 	 * @param is_world_space Whether this sprite should be rendered in world space or screen space
 	 */
-	void render_sprite(const Sprite& sprite, ITexture& texture, bool is_world_space) const override;
+	void render_sprite(const Sprite& sprite, ITexture& texture, Transform& transform,  bool is_world_space) const override;
 
 	/**
 	 * @brief Renders a collider
