@@ -27,6 +27,8 @@ public:
     [[nodiscard]] virtual const Scene &get_active_scene() const;
 
     [[nodiscard]] unsigned long get_fps() const;
+
+    [[nodiscard]] virtual std::shared_ptr<IRenderer> get_renderer() const;
 };
 
 #endif //ENGINE_ENGINE_HPP
