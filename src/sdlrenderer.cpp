@@ -25,7 +25,7 @@ void SdlRenderer::render_sprite(const Sprite& sprite, ITexture& texture, Transfo
 	 * TODO Task: Render sprite
 	 * https://app.clickup.com/t/358vf6w
 	 */
-
+	_renderer->Copy(*texture.get_texture());
 	//SDL2pp::Texture sprite2(*_renderer, texture);
 }
 
