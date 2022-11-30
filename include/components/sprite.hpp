@@ -15,14 +15,15 @@ public:
 
     void render(bool is_world_space) const override;
 private:
-    std::string sprite;
+    std::string _sprite;
     Color color;
     bool flip_x;
     bool flip_y;
     int sorting_layer;
     int order_in_layer;
+    std::shared_ptr<ITexture> _texture;
 
-    std::unique_ptr<ITexture> texture;
+    void load_texture();
 };
 
 #endif //ENGINE_SPRITE_HPP
