@@ -62,15 +62,15 @@ catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
 
 void SdlRenderer::init(int res_x, int res_y) try 
 {
-	SDL2pp::SDL sdl(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
-	SDL2pp::SDLImage sdl_image;
+	_sdl = std::make_unique<SDL2pp::SDL>(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+	_sdl_image = std::make_unique<SDL2pp::SDLImage>();
 
-	_window = std::make_unique<SDL2pp::Window>("UnEngine",
-		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+	_window = std::make_shared<SDL2pp::Window>("UnEngine",
+		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 		res_x, res_y,
 		SDL_WINDOW_RESIZABLE);
 
-	_renderer = std::make_unique<SDL2pp::Renderer>(*_window, -1, SDL_RENDERER_ACCELERATED);
+	_renderer = std::make_shared<SDL2pp::Renderer>(*_window, -1, SDL_RENDERER_ACCELERATED);
 }
 catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
 
