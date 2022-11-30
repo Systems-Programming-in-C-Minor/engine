@@ -54,13 +54,13 @@ bool GameObject::operator==(const GameObject &other) const {
     return _id == other._id;
 }
 
-void GameObject::render(IRenderer &renderer) const {
+void GameObject::render() const {
     auto renderable_components = std::list<std::shared_ptr<IRenderable>>();
 
     for (const auto &component: get_components_in_children<Component>()) {
         const auto renderable = std::dynamic_pointer_cast<IRenderable>(component);
         if (renderable) {
-            renderable->render(renderer, is_world_space);
+            renderable->render(is_world_space);
 
         }
     }
