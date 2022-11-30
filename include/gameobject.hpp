@@ -7,6 +7,7 @@
 #include <list>
 #include "components/component.hpp"
 #include "interfaces/irenderable.hpp"
+#include "transform.hpp"
 
 class ITickable;
 
@@ -31,6 +32,7 @@ protected:
     GameObject *parent;
     std::list<std::shared_ptr<GameObject>> children;
 public:
+    Transform transform;
     /**
      * @brief Compare two GameObjects.
      * @param other The other object to compare this one with.
