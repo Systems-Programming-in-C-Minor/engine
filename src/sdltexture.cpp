@@ -10,17 +10,16 @@
 
 namespace fs = std::filesystem;
 
-/**
- * @brief A texture used by SDL
- * @param renderer Reference to an active SdlRenderer instance
- * @param path (Relative) path to a texture
- */
-SdlTexture::SdlTexture(SdlRenderer& renderer, const std::string& path) :
-	ITexture(path, renderer)
+SdlTexture::SdlTexture(const std::string& path) :
+	ITexture(path)
 {
-	load_texture(path, renderer);
+	load_texture(path);
 }
 
+std::shared_ptr<SDL2pp::Texture> SdlTexture::get_texture() const
+{
+	return _texture;
+}
 
 void SdlTexture::load_texture(const std::string& path, SdlRenderer& renderer)
 try {
