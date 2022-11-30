@@ -7,6 +7,8 @@
 
 namespace SDL2pp 
 {
+	class SDLImage;
+	class SDL;
 	class Window;
 	class Renderer;
 	class Exception;
@@ -62,6 +64,8 @@ public:
 private:
 	void init(int res_x = 800, int res_y = 600);
 
+	std::unique_ptr<SDL2pp::SDL> _sdl;
+	std::unique_ptr<SDL2pp::SDLImage> _sdl_image;
 	std::shared_ptr<SDL2pp::Window> _window;
 	std::shared_ptr<SDL2pp::Renderer> _renderer;
 };
