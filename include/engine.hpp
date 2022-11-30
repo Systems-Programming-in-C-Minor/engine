@@ -3,8 +3,6 @@
 
 #include <memory>
 #include "scene.hpp"
-#include "render/irenderer.hpp"
-
 
 class Engine {
 private:
