@@ -1,6 +1,7 @@
 #include "sdlrenderer.hpp"
 #include "sdltexture.hpp"
 #include "utils/exceptionhandlers.hpp"
+#include "global.hpp"
 
 #include "SDL2pp/Texture.hh"
 #include "fmt/core.h"
@@ -21,7 +22,7 @@ std::shared_ptr<SDL2pp::Texture> SdlTexture::get_texture() const
 	return _texture;
 }
 
-void SdlTexture::load_texture(const std::string& path, SdlRenderer& renderer)
+void SdlTexture::load_texture(const std::string& path)
 try {
 	const fs::path texture = fs::current_path().append(path);
 

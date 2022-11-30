@@ -25,7 +25,7 @@ public:
 private:
 	std::shared_ptr<SDL2pp::Texture> _texture;
 
-	void load_texture(const std::string& path, SdlRenderer& renderer);
+	void load_texture(const std::string& path);
 };
 
 #endif // ENGINE_SDLTEXTURE_H_rv0FzK8Lx6
