@@ -14,8 +14,14 @@ class SdlRenderer;
 class SdlTexture : public ITexture
 {
 public:
-	SdlTexture(SdlRenderer& renderer, const std::string& path);
+	/**
+	 * @brief A texture used by SDL
+	 * @param renderer Reference to an active SdlRenderer instance
+	 * @param path (Relative) path to a texture
+	 */
+	SdlTexture(const std::string& path);
 
+	[[nodiscard]] std::shared_ptr<SDL2pp::Texture> get_texture() const override;
 private:
 	std::shared_ptr<SDL2pp::Texture> _texture;
 
