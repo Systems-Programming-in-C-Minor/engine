@@ -35,6 +35,12 @@ try {
 		return;
 	}
 
-	_texture = std::make_shared<SDL2pp::Texture>(SDL2pp::Texture(*renderer.get_renderer(), texture.string()));
+	auto renderer = Global::get_instance()->get_engine().get_renderer();
+	auto sdl_renderer = std::dynamic_pointer_cast<SdlRenderer>(renderer);
+	if (sdl_renderer) {
+		_texture = std::make_shared<SDL2pp::Texture>(SDL2pp::Texture(*sdl_renderer->get_renderer(), texture.string()));
+	} else {
+		fmt::print(std::cerr, "SDL Renderer could not be found, texture not loaded");
+	}
 }
 catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
