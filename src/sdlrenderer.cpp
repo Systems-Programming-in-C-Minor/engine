@@ -19,7 +19,7 @@
 
 
 
-void SdlRenderer::render_sprite(const Sprite& sprite, ITexture& texture, bool is_world_space) const
+void SdlRenderer::render_sprite(const Sprite& sprite, ITexture& texture, Transform& transform, bool is_world_space) const
 {
 	/** 
 	 * TODO Task: Render sprite
