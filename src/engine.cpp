@@ -1,8 +1,13 @@
+#include "color.hpp"
 #include "engine.hpp"
 #include <utility>
 #include <chrono>
 #include <cmath>
 #include "gameobject.hpp"
+#include "global.hpp"
+#include "sdlrenderer.hpp"
+#include "SDL.h"
+
 
 
 void Engine::load_scene(std::shared_ptr<Scene> new_scene) {
@@ -37,6 +42,15 @@ unsigned long Engine::get_fps() const {
     return _fps;
 }
 
-Engine::Engine() : _should_quit(false), _time_after_last_frame(0), _fps(0) {}
+std::shared_ptr<IRenderer> Engine::get_renderer() const
+{
+    return _renderer;
+}
+
+Engine::Engine() : Engine(std::make_shared<SdlRenderer>())
+{}
+
+Engine::Engine(std::shared_ptr<IRenderer> renderer) : _should_quit(false), _time_after_last_frame(0), _fps(0), _renderer(std::move(renderer))
+{}
 
 Engine::~Engine() = default;

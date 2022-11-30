@@ -14,6 +14,7 @@ private:
     unsigned long _fps;
 public:
     Engine();
+    explicit Engine(std::shared_ptr<IRenderer> renderer);
     virtual ~Engine();
 
     void start();
