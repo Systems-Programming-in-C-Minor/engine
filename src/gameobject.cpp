@@ -7,7 +7,8 @@ GameObject::GameObject(std::string name, std::string tag, bool is_world_space) :
                                                                                 tag(std::move(tag)),
                                                                                 parent(nullptr),
                                                                                 is_world_space(is_world_space),
-                                                                                _id(object_counter++) {}
+                                                                                _id(object_counter++),
+                                                                                 transform(transform){}
 
 void GameObject::add_child(const std::shared_ptr<GameObject> &game_object) {
     children.push_back(game_object);
