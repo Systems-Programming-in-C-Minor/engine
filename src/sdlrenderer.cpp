@@ -1,3 +1,4 @@
+#include "transform.hpp"
 #include "render/itexture.hpp"
 #include "uiobjects/text.hpp"
 #include "components/sprite.hpp"
@@ -26,12 +27,11 @@ void SdlRenderer::render_sprite(const Sprite& sprite, ITexture& texture, Transfo
 	 * https://app.clickup.com/t/358vf6w
 	 */
 	_renderer->Copy(*texture.get_texture());
-	//SDL2pp::Texture sprite2(*_renderer, texture);
 }
 
 void SdlRenderer::render_collider() const
 {
-	//TODO Params for this func undefined in API
+	// TODO Params for this func undefined in API
 	/**
 	 * TODO Task: Debug draw for colliders (vertex renderer)
 	 * https://app.clickup.com/t/34xa6tw
