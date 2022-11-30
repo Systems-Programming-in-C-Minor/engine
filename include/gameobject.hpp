@@ -66,6 +66,7 @@ public:
         assert_T_derived_from_component;
 
         components.push_back(component);
+        std::dynamic_pointer_cast<Component>(component)->game_object = this;
     }
 
     /**
@@ -79,6 +80,7 @@ public:
         assert_T_derived_from_component;
 
         components.remove(component);
+        std::dynamic_pointer_cast<Component>(component)->game_object = nullptr;
     }
 
     /**
@@ -188,11 +190,11 @@ public:
      */
     [[nodiscard]] bool is_active_in_world() const;
 
-    virtual void render(IRenderer& renderer) const;
+    virtual void render() const;
 
     virtual void tick();
 
-    GameObject(std::string name, std::string tag, bool is_world_space = true);
+    GameObject(std::string name, std::string tag, bool is_world_space = true, Transform transform = Transform{Vector2d{}});
 
     virtual ~GameObject();
 };
