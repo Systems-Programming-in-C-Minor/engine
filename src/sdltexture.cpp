@@ -17,6 +17,13 @@ SdlTexture::SdlTexture(const std::string& path) :
 	load_texture(path);
 }
 
+SdlTexture::SdlTexture(const std::string& path, unsigned int* res_x, unsigned int* res_y) :
+	ITexture(path)
+{
+	load_texture(path);
+	get_resolution(res_x, res_y);
+}
+
 std::shared_ptr<SDL2pp::Texture> SdlTexture::get_texture() const
 {
 	return _texture;
@@ -45,3 +52,11 @@ try {
 	}
 }
 catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
+
+void SdlTexture::get_resolution(unsigned int * res_x, unsigned int * res_y) const
+try {
+	*res_x = _texture->GetWidth();
+	*res_y = _texture->GetHeight();
+}
+catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
+
