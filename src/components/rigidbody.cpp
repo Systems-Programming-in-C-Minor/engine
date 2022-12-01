@@ -1,65 +1,81 @@
 #include "components/rigidbody.hpp"
 #include "scene.hpp"
 
-void RigidBody::apply_force(Vector2d force) {
+RigidBody::RigidBody(const Scene &scene, const BodyType type, const Vector2d vector, const float gravity_scale) {
+    b2BodyDef body_def;
+    body_def.type = static_cast<b2BodyType>(type);
+    body_def.position.Set(vector.x, vector.y);
+    body_def.gravityScale = gravity_scale;
+    _body = scene._world->CreateBody(&body_def);
 }
 
-void RigidBody::apply_torque(float torque) {
-
+void RigidBody::apply_force(const Vector2d force, const Vector2d point) const {
+    _body->ApplyForce(get_b2vec(force), get_b2vec(point), false);
 }
 
-void RigidBody::set_linear_velocity(Vector2d velocity) {
-
+void RigidBody::apply_torque(const float torque) const {
+    _body->ApplyTorque(torque, false);
 }
 
-Vector2d RigidBody::get_linear_velocity() {
-    return Vector2d(0, 0);
+void RigidBody::set_linear_velocity(const Vector2d velocity) const {
+    _body->SetLinearVelocity(get_b2vec(velocity));
 }
 
-void RigidBody::set_angular_velocity(float angle) {
-
+Vector2d RigidBody::get_linear_velocity() const {
+    return get_vec(_body->GetLinearVelocity());
 }
 
-float RigidBody::get_angular_velocity() {
-    return 0;
+void RigidBody::set_angular_velocity(const float angle) const {
+    _body->SetAngularVelocity(angle);
 }
 
-void RigidBody::apply_linear_impulse(Vector2d inpulse) {
-
+float RigidBody::get_angular_velocity() const {
+    return _body->GetAngularVelocity();
 }
 
-void RigidBody::apply_angular_impulse(Vector2d impulse) {
-
+void RigidBody::apply_linear_impulse(const Vector2d impulse, const Vector2d point) const {
+    _body->ApplyLinearImpulse(get_b2vec(impulse), get_b2vec(point), false);
 }
 
-double RigidBody::get_mass() {
-    return 0;
+void RigidBody::apply_angular_impulse(const float impulse) const {
+    _body->ApplyAngularImpulse(impulse, false);
 }
 
-void RigidBody::set_mass(double m) {
-
+float RigidBody::get_mass() const {
+    return _body->GetMass();
 }
 
-double RigidBody::get_gravity_scale() {
-    return 0;
+float RigidBody::get_inertia() const {
+    return _body->GetInertia();
 }
 
-void RigidBody::set_gravity_scale(double gs) {
-
+void RigidBody::set_mass(const float mass) const {
+    b2MassData *data {};
+    _body->GetMassData(data);
+    data->mass = mass;
+    _body->SetMassData(data);
 }
 
-BodyType RigidBody::get_bodytype() {
+float RigidBody::get_gravity_scale() const {
+    return _body->GetGravityScale();
+}
+
+void RigidBody::set_gravity_scale(const float gravity_scale) const {
+    _body->SetGravityScale(gravity_scale);
+}
+
+BodyType RigidBody::get_body_type() const {
     return static_cast<BodyType>(_body->GetType());
 }
 
-void RigidBody::set_bodytype(BodyType bt) {
-
+void RigidBody::set_body_type(const BodyType body_type) const {
+    _body->SetType(static_cast<b2BodyType>(body_type));
 }
 
-RigidBody::RigidBody(Scene &scene, BodyType type, Vector2d vector, double gravity_scale) {
-    b2BodyDef body_def;
-    body_def.type = static_cast<b2BodyType>(type);
-    body_def.position.Set(static_cast<float>(vector.x), static_cast<float>(vector.y));
-    body_def.gravityScale = static_cast<float>(gravity_scale);
-    _body = scene._world->CreateBody(&body_def);
+b2Vec2 RigidBody::get_b2vec(const Vector2d vector) {
+    return {vector.x, vector.y};
+}
+
+Vector2d RigidBody::get_vec(const b2Vec2 vector) {
+    return Vector2d(vector.x, vector.y);
 }

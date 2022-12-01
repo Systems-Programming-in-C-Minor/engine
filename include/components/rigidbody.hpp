@@ -13,43 +13,50 @@ enum class BodyType {
 
 class b2Body;
 
+class b2Vec2;
+
 class Scene;
 
 class RigidBody : public Component {
 public:
+    RigidBody(const Scene &scene, BodyType type, Vector2d vector, float gravity_scale);
 
-    RigidBody(Scene &scene, BodyType type, Vector2d vector, double gravity_scale);
+    void apply_force(Vector2d force, Vector2d point) const;
 
-    void apply_force(Vector2d force);
+    void apply_torque(float torque) const;
 
-    void apply_torque(float torque);
+    void set_linear_velocity(Vector2d velocity) const;
 
-    void set_linear_velocity(Vector2d velocity);
+    [[nodiscard]] Vector2d get_linear_velocity() const;
 
-    Vector2d get_linear_velocity();
+    void set_angular_velocity(float angle) const;
 
-    void set_angular_velocity(float angle);
+    [[nodiscard]] float get_angular_velocity() const;
 
-    float get_angular_velocity();
+    void apply_linear_impulse(Vector2d impulse, Vector2d point) const;
 
-    void apply_linear_impulse(Vector2d inpulse);
+    void apply_angular_impulse(float impulse) const;
 
-    void apply_angular_impulse(Vector2d impulse);
+    [[nodiscard]] float get_mass() const;
 
-    double get_mass();
+    [[nodiscard]] float get_inertia() const;
 
-    void set_mass(double m);
+    void set_mass(float mass) const;
 
-    double get_gravity_scale();
+    [[nodiscard]] float get_gravity_scale() const;
 
-    void set_gravity_scale(double gs);
+    void set_gravity_scale(float gravity_scale) const;
 
-    BodyType get_bodytype();
+    [[nodiscard]] BodyType get_body_type() const;
 
-    void set_bodytype(BodyType bt);
+    void set_body_type(BodyType body_type) const;
 
 private:
     b2Body *_body;
+
+    static b2Vec2 get_b2vec(Vector2d vector);
+
+    static Vector2d get_vec(b2Vec2 vector);
 };
 
 #endif //RIGID_BODY_HPP

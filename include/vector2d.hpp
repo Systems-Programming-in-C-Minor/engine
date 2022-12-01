@@ -5,9 +5,7 @@
 
 class Vector2d {
 public:
-    // TODO convert to float easier to use
-    // TODO castable to box2d
-    double x, y;
+    float x, y;
 
     [[nodiscard]] Vector2d add(const Vector2d &other) const;
     [[nodiscard]] Vector2d operator+(const Vector2d &other) const;
@@ -43,7 +41,7 @@ public:
      */
     [[nodiscard]] bool almost_equals(const Vector2d &other, double epsilon) const;
 
-    explicit Vector2d(double x = 0.0, double y = 0.0);
+    explicit Vector2d(float x = 0.0f, float y = 0.0f);
 };
 
 std::ostream &operator<<(std::ostream &stream, const Vector2d &vector);

@@ -1,19 +1,19 @@
 #include "components/colliders/boxcollider.hpp"
 
-BoxCollider::BoxCollider(double width, double height) :
+BoxCollider::BoxCollider(float width, float height) :
 	PolygonCollider(std::vector<Vector2d>{
-		Vector2d{-width * .5, height * .5 },
-		Vector2d{width * .5, height * .5 },
-		Vector2d{width * .5, -height * .5},
-		Vector2d{-width * .5, -height * .5}
+		Vector2d{-width * .5f, height * .5f },
+		Vector2d{width * .5f, height * .5f },
+		Vector2d{width * .5f, -height * .5f},
+		Vector2d{-width * .5f, -height * .5f}
 	}),
 	_width(width), _height(height) {}
 	
-double BoxCollider::get_width() const {
+float BoxCollider::get_width() const {
     return _width;
 }
 
-double BoxCollider::get_height() const {
+float BoxCollider::get_height() const {
     return _height;
 }
 
