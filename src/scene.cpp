@@ -1,7 +1,7 @@
 #include "gameobject.hpp"
 #include "scene.hpp"
 
-void Scene::tick() const {
+void Scene::tick() {
     for (auto &gameobject: gameobjects) {
         gameobject->tick();
     }
