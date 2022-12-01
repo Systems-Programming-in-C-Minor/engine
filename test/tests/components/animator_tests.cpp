@@ -223,4 +223,5 @@ TEST(AnimatorTest, AnimateNotActive) {
     }
 
     glob = nullptr;
+    delete glob;
 }
