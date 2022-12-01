@@ -3,6 +3,9 @@
 
 #include "collider.hpp"
 
+/**
+ * Collider class for circular objects
+ */
 class CircleCollider : public Collider
 {
 private:

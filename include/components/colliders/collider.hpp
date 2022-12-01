@@ -7,6 +7,9 @@
 
 class IRenderer;
 
+/**
+ * Component class for colliders
+ */
 class Collider : public Component, public IRenderable
 {
 private:
