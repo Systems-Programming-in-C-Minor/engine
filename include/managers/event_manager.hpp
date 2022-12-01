@@ -9,7 +9,7 @@
 
 class EventManager {
 public:
-    void register_listener(std::string, void(*)());
+    void register_listener(const std::string& event, void(*function)());
 
     void notify(IEvent event);
 
