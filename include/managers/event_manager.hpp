@@ -4,18 +4,18 @@
 
 #include <memory>
 #include <map>
-#include "../interfaces/ievent.hpp"
 #include <vector>
 #include <functional>
+#include "../interfaces/ievent.hpp"
 
 class EventManager {
 public:
-    void register_listener(const std::string &event, const std::function<void(const IEvent &event)> &function);
+    void register_listener(const std::string &event, const std::function<void(const IEvent &event)>& function);
 
-    void notify(IEvent event);
+    void notify(const IEvent& event);
 
 private:
-    std::map<std::string, std::vector<const std::function<void(const IEvent &event)> &>> listeners;
+    std::map<std::string, std::vector<std::function<void(const IEvent &event)>>> listeners;
 };
 
 #endif //ENGINE_EVENT_MANAGER_HPP
