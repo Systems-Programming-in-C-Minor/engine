@@ -1,5 +1,4 @@
 #include "../../include/managers/event_manager.hpp"
-#include "typeinfo"
 
 void EventManager::register_listener(const std::string &event, void (*function)()) {
     auto listener = listeners.find(event);
