@@ -1,6 +1,8 @@
 #include "components/rigidbody.hpp"
 #include "scene.hpp"
 
+#include "box2d/box2d.h"
+
 RigidBody::RigidBody(const Scene &scene, const BodyType type, const Vector2d vector, const float gravity_scale) {
     b2BodyDef body_def;
     body_def.type = static_cast<b2BodyType>(type);
