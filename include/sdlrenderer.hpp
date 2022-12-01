@@ -49,14 +49,20 @@ public:
 	 */
 	void push_to_screen() const override;
 
-	SdlRenderer(int res_x, int res_y);
+
+	/**
+	 * @brief Returns the SDL_Renderer instance
+	 * @return A pointer to the SDL_Renderer instance
+	 */
+	std::shared_ptr<SDL2pp::Renderer> get_renderer();
+
+	explicit SdlRenderer(int res_x = 800, int res_y = 600);
 	virtual ~SdlRenderer();
 private:
 	void init(int res_x = 800, int res_y = 600);
-	void handle_exception(const SDL2pp::Exception& e) const;
 
-	std::unique_ptr<SDL2pp::Window> _window;
-	std::unique_ptr<SDL2pp::Renderer> _renderer;
+	std::shared_ptr<SDL2pp::Window> _window;
+	std::shared_ptr<SDL2pp::Renderer> _renderer;
 };
 
 #endif // SDL_RENDERER_H_Hbcayj12iU

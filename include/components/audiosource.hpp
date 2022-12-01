@@ -46,7 +46,7 @@ public:
 		double volume = 1.0
 	);
 private:
-	std::filesystem::path m_audio_clip;
+	std::filesystem::path _audio_clip;
 	bool _play_on_awake;
 	bool _loop;
 	double _volume;
