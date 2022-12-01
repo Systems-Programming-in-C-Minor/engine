@@ -8,6 +8,14 @@
 class SDL_Event;
 
 class Input {
+private:
+    std::string parse_key(Key key);
+    std::string parse_numeric_keys(Key key);
+    std::string parse_alpha_keys(Key key);
+    std::string parse_function_keys(Key key);
+
+    std::string parse_mouseinput(MouseInput input);
+
 public:
     Input() = default;
     ~Input();
