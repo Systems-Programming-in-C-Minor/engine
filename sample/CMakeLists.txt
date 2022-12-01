@@ -11,9 +11,6 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 # target_link_options(${PROJECT_NAME} PRIVATE -static-libgcc -static-libstdc++)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-        fmt::fmt
-        box2d
-        SDL2pp::SDL2pp
         engine
         )
 
