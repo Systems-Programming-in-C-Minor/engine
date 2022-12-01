@@ -3,12 +3,26 @@
 
 #include <utility>
 
+enum Event {
+    MouseMoved,
+    MouseClicked,
+    MouseButton,
+    MousePressed,
+    MouseReleased,
+    KeyPressed,
+    KeyReleased,
+    ColliderExit,
+    ColliderEntry,
+    ColliderStay,
+    SceneLoaded,
+};
+
 class IEvent {
 protected:
-    explicit IEvent(std::string name) : name(std::move(name)) {}
+    explicit IEvent(Event event) : event(event) {}
 
 public:
-    const std::string name;
+    const Event event;
 
     virtual ~IEvent() = default;
 };
