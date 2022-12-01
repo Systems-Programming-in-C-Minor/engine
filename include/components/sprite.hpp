@@ -21,6 +21,7 @@ private:
     bool flip_y;
     int sorting_layer;
     int order_in_layer;
+    unsigned int _res_x, _res_y;
     std::shared_ptr<ITexture> _texture;
 
     void load_texture();
