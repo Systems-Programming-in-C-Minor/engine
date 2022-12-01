@@ -3,6 +3,9 @@
 
 #include "polygoncollider.hpp"
 
+/**
+ * Collider class for rectangular objects
+ */
 class BoxCollider : public PolygonCollider
 {
 private:

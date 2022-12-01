@@ -1,11 +1,10 @@
 #ifndef ENGINE_IRENDERER_HPP
 #define ENGINE_IRENDERER_HPP
 
-#include "itexture.hpp"
-
 class Sprite;
 class Text;
 class Color;
+class ITexture;
 
 class IRenderer {
 public:
@@ -14,6 +13,8 @@ public:
 	virtual void render_text(Text& text) const = 0;
 	virtual void clear(const Color& color) const = 0;
 	virtual void push_to_screen() const = 0;
+
+    virtual ~IRenderer() = default;
 };
 
 #endif //ENGINE_IRENDERER_HPP

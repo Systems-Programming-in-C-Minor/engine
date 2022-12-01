@@ -3,11 +3,12 @@
 #include "uiobjects/text.hpp"
 #include "uiobject.hpp"
 
-Text::Text(const std::string& name, const std::string& tag, double width, double height, const std::string& text, const std::string& font, int size, Alignment alignment) : UIObject(name, tag, width, height),
+Text::Text(const std::string& name, const std::string& tag, double width, double height, const std::string& text, const std::string& font, int size, Alignment alignment, Color color) : UIObject(name, tag, width, height),
     _text(text),
     _font(font),
     _size(size),
-    _alignment(alignment)
+    _alignment(alignment),
+    _color(color)
 {
 }
 
@@ -27,6 +28,10 @@ Alignment Text::get_alignment() const {
     return _alignment;
 }
 
+Color Text::get_color() const {
+    return _color;
+}
+
 void Text::set_text(std::string new_text) {
     _text = std::move(new_text);
 }
@@ -41,4 +46,8 @@ void Text::set_size(int new_size) {
 
 void Text::set_alignment(Alignment new_alignment) {
     _alignment = new_alignment;
+}
+
+void Text::set_color(Color new_color) {
+    _color = new_color;
 }

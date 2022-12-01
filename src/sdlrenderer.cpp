@@ -3,10 +3,16 @@
 #include "components/sprite.hpp"
 #include "color.hpp"
 #include "sdlrenderer.hpp"
+#include "utils/exceptionhandlers.hpp"
 
 #include "SDL.h"
-#include "SDL2pp/SDL2pp.hh"
+#include "SDL2pp/SDL.hh"
+#include "SDL2pp/Renderer.hh"
+#include "SDL2pp/Window.hh"
 #include "SDL2pp/Color.hh"
+#include "SDL2pp/SDLImage.hh"
+#include "SDL2pp/Exception.hh"
+#include "SDL2pp/SDL2pp.hh"
 #include "fmt/ostream.h"
 
 #include <ostream>
@@ -46,13 +52,13 @@ void SdlRenderer::clear(const Color& color) const try
 	constexpr SDL2pp::Color _color = { 0, 0, 0, 255 };
 	_renderer->SetDrawColor(_color).Clear();
 }
-catch (SDL2pp::Exception& e) { handle_exception(e); }
+catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
 
 void SdlRenderer::push_to_screen() const try
 {
 	_renderer->Present();
 }
-catch (SDL2pp::Exception& e) { handle_exception(e); }
+catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
 
 void SdlRenderer::init(int res_x, int res_y) try 
 {
@@ -66,12 +72,11 @@ void SdlRenderer::init(int res_x, int res_y) try
 
 	_renderer = std::make_unique<SDL2pp::Renderer>(*_window, -1, SDL_RENDERER_ACCELERATED);
 }
-catch (SDL2pp::Exception& e) { handle_exception(e); }
+catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
 
-void SdlRenderer::handle_exception(const SDL2pp::Exception& e) const
+std::shared_ptr<SDL2pp::Renderer> SdlRenderer::get_renderer()
 {
-	fmt::print(std::cerr, "SDL error in: {}\n", e.GetSDLFunction());
-	fmt::print(std::cerr, "SDL error: {}\n", e.GetSDLError());
+	return _renderer;
 }
 
 SdlRenderer::SdlRenderer(int res_x, int res_y)

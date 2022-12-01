@@ -28,8 +28,6 @@ FetchContent_Declare(box2d
         GIT_PROGRESS TRUE
 )
 
-FetchContent_MakeAvailable(fmt box2d)
-
 FetchContent_Declare(SDL2pp
   GIT_REPOSITORY https://github.com/libSDL2pp/libSDL2pp.git
   GIT_TAG 0.17.0
@@ -45,7 +43,7 @@ set(SDL2PP_WITH_IMAGE ON) # if you need SDL_image support
 set(SDL2PP_WITH_MIXER OFF) # if you need SDL_mixer support
 set(SDL2PP_WITH_TTF OFF) # if you need SDL_ttf support
 
-FetchContent_MakeAvailable(SDL2pp)
+FetchContent_MakeAvailable(fmt box2d SDL2pp)
 
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS ./src/*.cpp)
 file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS ./include/*.hpp)

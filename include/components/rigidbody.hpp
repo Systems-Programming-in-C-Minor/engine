@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RIGID_BODY_HPP
+#define RIGID_BODY_HPP
 
 #include "component.hpp"
 #include "vector2d.hpp"
@@ -57,3 +58,5 @@ private:
 
     static Vector2d get_vec(b2Vec2 vector);
 };
+
+#endif //RIGID_BODY_HPP
