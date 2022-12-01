@@ -9,10 +9,13 @@ TEST(EventManagerTest, Register) {
     auto event_manager = test_event_manager;
     auto event = test_event;
 
-    void (*function)() {};
+    bool has_run = false;
 
-    event_manager.register_listener(typeid(event).name(), function);
+    event_manager.register_listener(typeid(event).name(), [&has_run](auto event){
+        has_run = true;
+    });
 
-//     How to test?
+    event_manager.notify(event);
+
 //    EXPECT_CALL(event_manager, notify(event));
 }

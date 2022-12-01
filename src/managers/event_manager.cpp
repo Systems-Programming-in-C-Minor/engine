@@ -1,7 +1,7 @@
 #include "../../include/managers/event_manager.hpp"
 
-void EventManager::register_listener(const std::string &event, void (*function)()) {
-    auto listener = listeners.find(event);
+void EventManager::register_listener(const std::string &event, const std::function<void(const IEvent &)> &function) {
+    auto &listener = listeners.find(event);
     if (listener == listeners.end()) {
         auto functions = {function};
         listeners.emplace(event, functions);
