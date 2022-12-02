@@ -5,8 +5,6 @@
 
 #define test_game_object GameObject("TestGameObject", "TestTag")
 
-Global *glob = nullptr;
-
 TEST(AnimatorTest, Animate) {
     auto game_object = test_game_object;
 
@@ -20,7 +18,7 @@ TEST(AnimatorTest, Animate) {
     game_object.add_component(animator);
     game_object.add_component(sprite_1);
 
-    glob = Global::get_instance();
+    Global *glob = Global::get_instance();
 
     animator->play();
 
@@ -45,7 +43,7 @@ TEST(AnimatorTest, Animate) {
 }
 
 TEST(AnimatorTest, AnimateFPS) {
-    glob = Global::get_instance();
+    Global *glob = Global::get_instance();
     auto game_object = test_game_object;
 
     const auto sprite_1 = std::make_shared<Sprite>("/path/to", Color(1, 0, 0, 0), false, false, 1, 1);
@@ -82,7 +80,7 @@ TEST(AnimatorTest, AnimateFPS) {
 }
 
 TEST(AnimatorTest, AnimateWithLoop) {
-    glob = Global::get_instance();
+    Global *glob = Global::get_instance();
     auto game_object = test_game_object;
 
     const auto sprite_1 = std::make_shared<Sprite>("/path/to", Color(1, 0, 0, 0), false, false, 1, 1);
@@ -135,7 +133,7 @@ TEST(AnimatorTest, AnimateWithLoop) {
 }
 
 TEST(AnimatorTest, AnimateAndStop) {
-    glob = Global::get_instance();
+    Global *glob = Global::get_instance();
     auto game_object = test_game_object;
 
     const auto sprite_1 = std::make_shared<Sprite>("/path/to", Color(1, 0, 0, 0), false, false, 1, 1);
@@ -171,7 +169,7 @@ TEST(AnimatorTest, AnimateAndStop) {
 }
 
 TEST(AnimatorTest, AnimateWithoutPlay) {
-    glob = Global::get_instance();
+    Global *glob = Global::get_instance();
     auto game_object = test_game_object;
 
     const auto sprite_1 = std::make_shared<Sprite>("/path/to", Color(1, 0, 0, 0), false, false, 1, 1);
@@ -197,7 +195,7 @@ TEST(AnimatorTest, AnimateWithoutPlay) {
 
 
 TEST(AnimatorTest, AnimateNotActive) {
-    glob = Global::get_instance();
+    Global *glob = Global::get_instance();
     auto game_object = test_game_object;
 
     const auto sprite_1 = std::make_shared<Sprite>("/path/to", Color(1, 0, 0, 0), false, false, 1, 1);
@@ -223,5 +221,6 @@ TEST(AnimatorTest, AnimateNotActive) {
     }
 
     glob = nullptr;
-    delete glob;
 }
+
+
