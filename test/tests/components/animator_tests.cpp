@@ -40,6 +40,7 @@ TEST(AnimatorTest, Animate) {
     EXPECT_EQ(game_object.get_component<Sprite>(), sprite_1);
 
     glob = nullptr;
+    delete glob;
 }
 
 TEST(AnimatorTest, AnimateFPS) {
@@ -77,6 +78,7 @@ TEST(AnimatorTest, AnimateFPS) {
     EXPECT_EQ(game_object.get_component<Sprite>(), sprite_1);
 
     glob = nullptr;
+    delete glob;
 }
 
 TEST(AnimatorTest, AnimateWithLoop) {
@@ -130,6 +132,7 @@ TEST(AnimatorTest, AnimateWithLoop) {
     EXPECT_EQ(game_object.get_component<Sprite>(), sprite_1);
 
     glob = nullptr;
+    delete glob;
 }
 
 TEST(AnimatorTest, AnimateAndStop) {
@@ -166,6 +169,7 @@ TEST(AnimatorTest, AnimateAndStop) {
     }
 
     glob = nullptr;
+    delete glob;
 }
 
 TEST(AnimatorTest, AnimateWithoutPlay) {
@@ -190,7 +194,8 @@ TEST(AnimatorTest, AnimateWithoutPlay) {
         EXPECT_EQ(game_object.get_component<Sprite>(), sprite_1);
     }
 
-    glob == nullptr;
+    glob = nullptr;
+    delete glob;
 }
 
 
