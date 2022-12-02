@@ -7,61 +7,67 @@
 
 class Collider;
 
-class MouseMovedEvent : IEvent {};
-
-class MouseClickedEvent : IEvent {
+class MouseMovedEvent : public IEvent {
 public:
-    MouseClickedEvent(MouseInput btn): button(btn) {}
+    MouseMovedEvent() : IEvent(MouseMoved) {}
+};
+
+class MouseClickedEvent : public IEvent {
+public:
+    explicit MouseClickedEvent(MouseInput btn): IEvent(MouseClicked), button(btn) {}
     MouseInput button;
 };
 
-class MouseButtonEvent : IEvent {
+class MouseButtonEvent : public IEvent {
 public:
-    MouseButtonEvent(MouseInput btn): button(btn) {}
+    explicit MouseButtonEvent(MouseInput btn): IEvent(MouseButton), button(btn) {}
     MouseInput button;
 };
 
-class MousePressedEvent : IEvent {
+class MousePressedEvent : public IEvent {
 public:
-    MousePressedEvent(MouseInput btn): button(btn) {}
+    explicit MousePressedEvent(MouseInput btn): IEvent(MousePressed), button(btn) {}
     MouseInput button;
 };
 
-class MouseReleasedEvent : IEvent {
+class MouseReleasedEvent : public IEvent {
 public:
-    MouseReleasedEvent(MouseInput btn): button(btn) {}
+    explicit MouseReleasedEvent(MouseInput btn): IEvent(MouseReleased), button(btn) {}
     MouseInput button;
 };
 
-class KeyPressedEvent : IEvent {
+class KeyPressedEvent : public IEvent {
 public:
-    KeyPressedEvent(Key key): key(key) {};
+    explicit KeyPressedEvent(Key key): IEvent(KeyPressed), key(key) {};
     Key key;
 };
 
-class KeyReleasedEvent : IEvent {
+class KeyReleasedEvent : public IEvent {
 public:
-    KeyReleasedEvent(Key key): key(key) {};
+    explicit KeyReleasedEvent(Key key): IEvent(KeyReleased), key(key) {};
     Key key;
 };
 
-class ColliderExitEvent : IEvent {
+class ColliderExitEvent : public IEvent {
 public:
-    ColliderExitEvent(Collider& col): collider(col) {};
+    explicit ColliderExitEvent(Collider& col): IEvent(ColliderExit), collider(col) {};
     Collider& collider;
 };
 
-class ColliderEntryEvent : IEvent {
+class ColliderEntryEvent : public IEvent {
 public:
-    ColliderEntryEvent(Collider& col): collider(col) {};
+    explicit ColliderEntryEvent(Collider& col): IEvent(ColliderEntry), collider(col) {};
     Collider& collider;
 };
 
-class ColliderStayEvent : IEvent {
+class ColliderStayEvent : public IEvent {
 public:
-    ColliderStayEvent(Collider& col): collider(col) {};
+    explicit ColliderStayEvent(Collider& col): IEvent(ColliderStay), collider(col) {};
     Collider& collider;
 };
 
-class SceneLoadedEvent : IEvent {};
+class SceneLoadedEvent : public IEvent {
+public:
+    SceneLoadedEvent() : IEvent(SceneLoaded) {}
+};
 #endif //ENGINE_EVENTS_HPP
