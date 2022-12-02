@@ -225,7 +225,6 @@ TEST(AnimatorTest, AnimateNotActive) {
         EXPECT_EQ(game_object.get_component<Sprite>(), sprite_1);
     }
 
-    glob = nullptr;
     delete glob;
 }
 
