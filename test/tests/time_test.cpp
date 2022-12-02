@@ -2,26 +2,26 @@
 #include "time.hpp"
 #include <thread>
 
-TEST(TimeTest, DeltaTimeTest5x){
-    for(int i; i<5; ++i){
+using namespace std::chrono;
+
+TEST(TimeTest, DeltaTimeTest) {
+    for (int i = 0; i < 2; ++i) {
         Time test_time;
         test_time.tick();
-        std::this_thread::sleep_for(1s);
 
+        std::this_thread::sleep_for(0.3s);
         auto res = test_time.delta_time();
 
-        EXPECT_NEAR(1, res, 0.2);
+        EXPECT_NEAR(0.3, res, 0.02);
     }
-}
 
-TEST(TimeTest, DeltaTimeTest10x){
-    for(int i; i<10; ++i){
+    for (int i = 0; i < 2; ++i) {
         Time test_time;
         test_time.tick();
-        std::this_thread::sleep_for(0.5s);
 
+        std::this_thread::sleep_for(0.1s);
         auto res = test_time.delta_time();
 
-        EXPECT_NEAR(0.5, res, 0.1);
+        EXPECT_NEAR(0.1, res, 0.01);
     }
 }
