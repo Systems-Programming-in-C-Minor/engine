@@ -12,6 +12,7 @@ namespace SDL2pp
 	class Window;
 	class Renderer;
 	class Exception;
+	class Point;
 }
 
 class Sprite;
@@ -19,6 +20,7 @@ class ITexture;
 class Text;
 class Color;
 class Transform;
+class Vector2d;
 
 class SdlRenderer : public IRenderer {
 public:
@@ -63,11 +65,15 @@ public:
 	virtual ~SdlRenderer();
 private:
 	void init(int res_x = 800, int res_y = 600);
+	[[nodiscard]] SDL2pp::Point world_to_screen(const Vector2d& position) const;
 
 	std::unique_ptr<SDL2pp::SDL> _sdl;
 	std::unique_ptr<SDL2pp::SDLImage> _sdl_image;
 	std::shared_ptr<SDL2pp::Window> _window;
 	std::shared_ptr<SDL2pp::Renderer> _renderer;
+
+	// Todo move to something which gamedev can set
+	double _mtp = 100.0;
 };
 
 #endif // SDL_RENDERER_H_Hbcayj12iU
