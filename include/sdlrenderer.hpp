@@ -29,6 +29,7 @@ public:
 	 * @brief Renders a sprite
 	 * @param sprite Sprite to be rendered
 	 * @param texture Texture to be rendered, belonging to the same sprite
+	 * @param transform Transform of the to be renderer gameobject
 	 * @param is_world_space Whether this sprite should be rendered in world space or screen space
 	 */
 	void render_sprite(const Sprite& sprite, ITexture& texture, Transform& transform,  bool is_world_space) const override;
