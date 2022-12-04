@@ -5,6 +5,8 @@
 #include "color.hpp"
 #include "sdlrenderer.hpp"
 #include "utils/exceptionhandlers.hpp"
+#include "vector2d.hpp"
+#include "utils/trigonometry.hpp"
 
 #include "SDL.h"
 #include "SDL2pp/SDL.hh"
@@ -13,20 +15,36 @@
 #include "SDL2pp/Color.hh"
 #include "SDL2pp/SDLImage.hh"
 #include "SDL2pp/Exception.hh"
-#include "SDL2pp/SDL2pp.hh"
+#include "SDL2pp/Point.hh"
 #include "fmt/ostream.h"
 
+#include <cmath>
 #include <ostream>
 
 
 
 void SdlRenderer::render_sprite(const Sprite& sprite, ITexture& texture, Transform& transform, bool is_world_space) const
 {
-	/** 
-	 * TODO Task: Render sprite
-	 * https://app.clickup.com/t/358vf6w
+	/*
+	 * TODO Open PR for SDL2pp
+	 * Segfaults, SDL2pp needs to fix this
+	 * int x = _renderer->GetOutputWidth();
+	 * int x, y = 0;
+	 * SDL_GetRendererOutputSize(_renderer->Get(), &x, nullptr);
 	 */
-	_renderer->Copy(*texture.get_texture());
+
+	const double left_corner_x = -(transform.get_position().x + sprite.get_size_x() * transform.get_scale() / 2.0);
+	const double left_corner_y = transform.get_position().y + sprite.get_size_y() * transform.get_scale() / 2.0;
+
+	const auto center = world_to_screen(transform.get_position());
+	const auto left_corner = world_to_screen(Vector2d{ left_corner_x, left_corner_y });
+
+	const int size_x = static_cast<int>(round(sprite.get_size_x() * transform.get_scale() * _mtp));
+	const int size_y = static_cast<int>(round(sprite.get_size_y() * transform.get_scale() * _mtp));
+	const auto size = SDL2pp::Point{ size_x, size_y };
+
+	auto rect = SDL2pp::Rect{ left_corner, size };
+	_renderer->Copy(*texture.get_texture(), SDL2pp::NullOpt, rect, radians_to_degrees(transform.get_angle()));
 }
 
 void SdlRenderer::render_collider() const
@@ -51,14 +69,12 @@ void SdlRenderer::clear(const Color& color) const try
 	// TODO Preferably implement cast from Color to SDL2pp::Color/SDL_Color
 	constexpr SDL2pp::Color _color = { 0, 0, 0, 255 };
 	_renderer->SetDrawColor(_color).Clear();
-}
-catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
+} catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
 
 void SdlRenderer::push_to_screen() const try
 {
 	_renderer->Present();
-}
-catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
+} catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
 
 void SdlRenderer::init(int res_x, int res_y) try 
 {
@@ -71,8 +87,18 @@ void SdlRenderer::init(int res_x, int res_y) try
 		SDL_WINDOW_RESIZABLE);
 
 	_renderer = std::make_shared<SDL2pp::Renderer>(*_window, -1, SDL_RENDERER_ACCELERATED);
+} catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
+
+SDL2pp::Point SdlRenderer::world_to_screen(const Vector2d& position) const
+{
+	// TODO Optimization: only retrieve when resolution changes
+	SDL2pp::Point res = _renderer->GetOutputSize();
+	const SDL2pp::Point return_pos{
+		static_cast<int>(round(res.GetX() * 0.5 + position.x * _mtp)),
+		static_cast<int>(round(res.GetY() * 0.5 - position.y * _mtp))
+	};
+	return return_pos;
 }
-catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
 
 std::shared_ptr<SDL2pp::Renderer> SdlRenderer::get_renderer()
 {
