@@ -10,10 +10,14 @@
 
 class Sprite : public Component, public IRenderable {
 public:
-    Sprite(std::string sprite, Color color, bool flip_x, bool flip_y, int sorting_layer, int order_in_layer);
+    unsigned int res_x, res_y;
+    unsigned int pixels_to_meters;
 
+    Sprite(std::string sprite, Color color, bool flip_x, bool flip_y, int sorting_layer, int order_in_layer, int pixels_to_meters = 100);
 
     void render(bool is_world_space) const override;
+    unsigned int get_size_x() const;
+    unsigned int get_size_y() const;
 private:
     std::string _sprite;
     Color color;
@@ -21,7 +25,6 @@ private:
     bool flip_y;
     int sorting_layer;
     int order_in_layer;
-    unsigned int _res_x, _res_y;
     std::shared_ptr<ITexture> _texture;
 
     void load_texture();
