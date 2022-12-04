@@ -15,7 +15,7 @@ public:
 	[[nodiscard]] Vector2d get_position();
 	void set_position(Vector2d& position);
 
-	Transform(const Vector2d& position, double angle = 0.0, double scale = 0.0);
+	Transform(const Vector2d& position, double angle = 0.0, double scale = 1.0);
 
 private:
 	Vector2d _position;
