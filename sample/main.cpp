@@ -14,9 +14,9 @@ int main(int argc, char* argv[])
 	Engine& engine_ref = global->get_engine();
 
 	// Create gameobject with sprite component
-	const auto game_object1 = std::make_shared<GameObject>("TestGameObject", "TestTag", true, Transform{ Vector2d{ 0.0, 0.0 }, 0.0, 0.2 });
-	const auto game_object2 = std::make_shared<GameObject>("TestGameObject", "TestTag", true, Transform{ Vector2d{ 1.0, 1.0 }, 1.1, 0.5 });
-	const auto game_object3 = std::make_shared<GameObject>("TestGameObject", "TestTag", true, Transform{ Vector2d{ -1.5, -1.5 }, 2.0, 0.7 });
+	const auto game_object1 = std::make_shared<GameObject>("TestGameObject", "TestTag", true, Transform{ Vector2d{ 0.f, 0.f }, 0.0, 0.2 });
+	const auto game_object2 = std::make_shared<GameObject>("TestGameObject", "TestTag", true, Transform{ Vector2d{ 1.f, 1.f }, 1.1, 0.5 });
+	const auto game_object3 = std::make_shared<GameObject>("TestGameObject", "TestTag", true, Transform{ Vector2d{ -1.f, -1.f }, 2.0, 0.7 });
 	Sprite sprite1{ "./assets/sample.png", Color(0,0,0,255.0), false, false, 1, 1 };
 	Sprite sprite2{ "./assets/sample.png", Color(0,0,0,255.0), false, false, 1, 1 };
 	Sprite sprite3{ "./assets/sample.png", Color(0,0,0,255.0), false, false, 1, 1 };
