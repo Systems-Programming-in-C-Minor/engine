@@ -11,13 +11,13 @@
 class Sprite : public Component, public IRenderable {
 public:
     unsigned int res_x, res_y;
-    double pixels_to_meters;
+    float pixels_to_meters;
 
-    Sprite(std::string sprite, Color color, bool flip_x, bool flip_y, int sorting_layer, int order_in_layer, double pixels_to_meters = 100.0);
+    Sprite(std::string sprite, Color color, bool flip_x, bool flip_y, int sorting_layer, int order_in_layer, float pixels_to_meters = 100.f);
 
     void render(bool is_world_space) const override;
-    [[nodiscard]] double get_size_x() const;
-    [[nodiscard]] double get_size_y() const;
+    [[nodiscard]] float get_size_x() const;
+    [[nodiscard]] float get_size_y() const;
 private:
     std::string _sprite;
     Color color;

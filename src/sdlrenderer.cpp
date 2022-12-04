@@ -33,8 +33,8 @@ void SdlRenderer::render_sprite(const Sprite& sprite, ITexture& texture, Transfo
 	 * SDL_GetRendererOutputSize(_renderer->Get(), &x, nullptr);
 	 */
 
-	const double left_corner_x = -(transform.get_position().x + sprite.get_size_x() * transform.get_scale() / 2.0);
-	const double left_corner_y = transform.get_position().y + sprite.get_size_y() * transform.get_scale() / 2.0;
+	const float left_corner_x = -(transform.get_position().x + sprite.get_size_x() * transform.get_scale() / 2.f);
+	const float left_corner_y = transform.get_position().y + sprite.get_size_y() * transform.get_scale() / 2.f;
 
 	const auto center = world_to_screen(transform.get_position());
 	const auto left_corner = world_to_screen(Vector2d{ left_corner_x, left_corner_y });
@@ -92,10 +92,10 @@ void SdlRenderer::init(int res_x, int res_y) try
 SDL2pp::Point SdlRenderer::world_to_screen(const Vector2d& position) const
 {
 	// TODO Optimization: only retrieve when resolution changes
-	SDL2pp::Point res = _renderer->GetOutputSize();
+	const SDL2pp::Point res = _renderer->GetOutputSize();
 	const SDL2pp::Point return_pos{
-		static_cast<int>(round(res.GetX() * 0.5 + position.x * _mtp)),
-		static_cast<int>(round(res.GetY() * 0.5 - position.y * _mtp))
+		static_cast<int>(round(static_cast<float>(res.GetX()) * 0.5f + position.x * _mtp)),
+		static_cast<int>(round(static_cast<float>(res.GetY()) * 0.5f - position.y * _mtp))
 	};
 	return return_pos;
 }

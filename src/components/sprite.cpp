@@ -7,7 +7,7 @@
 #include "sdlrenderer.hpp"
 
 
-Sprite::Sprite(std::string sprite, Color color, bool flip_x, bool flip_y, int sorting_layer, int order_in_layer, double pixels_to_meters) :
+Sprite::Sprite(std::string sprite, Color color, bool flip_x, bool flip_y, int sorting_layer, int order_in_layer, float pixels_to_meters) :
 		res_x(0),
 		res_y(0),
 		pixels_to_meters(pixels_to_meters),
@@ -26,16 +26,14 @@ void Sprite::render(bool is_world_space) const {
 	renderer->render_sprite(*this, *_texture, game_object->transform, is_world_space);
 }
 
-double Sprite::get_size_x() const
+float Sprite::get_size_x() const
 {
-	return res_x / pixels_to_meters;
+	return static_cast<float>(res_x) / pixels_to_meters;
 }
-double Sprite::get_size_y() const
+float Sprite::get_size_y() const
 {
-	return res_y / pixels_to_meters;
+	return static_cast<float>(res_y) / pixels_to_meters;
 }
-
-
 
 void Sprite::load_texture()
 {

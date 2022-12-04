@@ -74,7 +74,7 @@ private:
 	std::shared_ptr<SDL2pp::Renderer> _renderer;
 
 	// Todo move to something which gamedev can set
-	double _mtp = 100.0;
+	float _mtp = 100.f;
 };
 
 #endif // SDL_RENDERER_H_Hbcayj12iU
