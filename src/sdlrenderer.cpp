@@ -33,7 +33,7 @@ void SdlRenderer::render_sprite(const Sprite& sprite, ITexture& texture, Transfo
 	 * SDL_GetRendererOutputSize(_renderer->Get(), &x, nullptr);
 	 */
 
-	const float left_corner_x = -(transform.get_position().x + sprite.get_size_x() * transform.get_scale() / 2.f);
+	const float left_corner_x = transform.get_position().x + -sprite.get_size_x() * transform.get_scale() / 2.f;
 	const float left_corner_y = transform.get_position().y + sprite.get_size_y() * transform.get_scale() / 2.f;
 
 	const auto center = world_to_screen(transform.get_position());
