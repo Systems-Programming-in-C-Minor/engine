@@ -1,6 +1,6 @@
 #include "components/colliders/collider.hpp"
 
-void Collider::render(IRenderer &renderer, bool is_world_space) const {
+void Collider::render(bool is_world_space) const {
 
 }
 

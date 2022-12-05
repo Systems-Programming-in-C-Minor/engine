@@ -1,13 +1,41 @@
+#include "gameobject.hpp"
+
 #include "components/sprite.hpp"
 
-Sprite::Sprite(std::string sprite, Color color, bool flip_x, bool flip_y, int sorting_layer, int order_in_layer) :
-        sprite(std::move(sprite)),
-        color(color),
-        flip_x(flip_x),
-        flip_y(flip_y),
-        sorting_layer(sorting_layer),
-        order_in_layer(order_in_layer) {}
+#include "global.hpp"
+#include "sdltexture.hpp"
+#include "sdlrenderer.hpp"
 
-void Sprite::render(IRenderer &renderer, bool is_world_space) const {
-    renderer.render_sprite(*this, *texture, is_world_space);
+
+Sprite::Sprite(std::string sprite, Color color, bool flip_x, bool flip_y, int sorting_layer, int order_in_layer, float pixels_to_meters) :
+		res_x(0),
+		res_y(0),
+		pixels_to_meters(pixels_to_meters),
+		_sprite(std::move(sprite)),
+		color(color),
+		flip_x(flip_x),
+		flip_y(flip_y),
+		sorting_layer(sorting_layer),
+		order_in_layer(order_in_layer)
+{
+	load_texture();
+}
+
+void Sprite::render(bool is_world_space) const {
+	const auto renderer = Global::get_instance()->get_engine().get_renderer();
+	renderer->render_sprite(*this, *_texture, game_object->transform, is_world_space);
+}
+
+float Sprite::get_size_x() const
+{
+	return static_cast<float>(res_x) / pixels_to_meters;
+}
+float Sprite::get_size_y() const
+{
+	return static_cast<float>(res_y) / pixels_to_meters;
+}
+
+void Sprite::load_texture()
+{
+	_texture = std::make_shared<SdlTexture>(_sprite, &res_x, &res_y);
 }

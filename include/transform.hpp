@@ -9,19 +9,19 @@
 class Transform : public ITickable {
 private:
     Vector2d _position;
-    double _angle;
-    double _scale;
+    float _angle;
+    float _scale;
 
 public:
-    explicit Transform(const Vector2d &position, double angle = 0.0, double scale = 0.0);
+    explicit Transform(const Vector2d &position, float angle = 0.f, float scale = 1.f);
 
-    [[nodiscard]] double get_angle() const;
+    [[nodiscard]] float get_angle() const;
 
-    void set_angle(double angle = 0.0);
+    void set_angle(float angle = 0.f);
 
-    [[nodiscard]] double get_scale() const;
+    [[nodiscard]] float get_scale() const;
 
-    void set_scale(double scale = 1.0);
+    void set_scale(float scale = 1.f);
 
     [[nodiscard]] Vector2d get_position() const;
 

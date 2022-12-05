@@ -8,10 +8,11 @@ void Scene::tick() {
     }
 }
 
-void Scene::render(IRenderer &renderer) const {
-    for (auto &gameobject: gameobjects) {
-        gameobject->render(renderer);
-    }
+void Scene::render() const
+{
+	for (auto& gameobject : gameobjects) {
+		gameobject->render();
+	}
 }
 
 Scene::~Scene() = default;

@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "components/sprite.hpp"
 #include "components/animator.hpp"
+#include "gameobject.hpp"
 
 #define test_game_object GameObject("TestGameObject", "TestTag")
 

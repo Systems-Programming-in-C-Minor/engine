@@ -1,25 +1,26 @@
 #include "transform.hpp"
 #include "box2d/box2d.h"
 #include "components/rigidbody.hpp"
+#include "gameobject.hpp"
 
-Transform::Transform(const Vector2d &position, double angle, double scale) :
+Transform::Transform(const Vector2d &position, float angle, float scale) :
         _position(position),
         _angle(angle),
         _scale(scale) {}
 
-double Transform::get_angle() const {
+float Transform::get_angle() const {
     return _angle;
 }
 
-void Transform::set_angle(double angle) {
+void Transform::set_angle(float angle) {
     _angle = angle;
 }
 
-double Transform::get_scale() const {
+float Transform::get_scale() const {
     return _scale;
 }
 
-void Transform::set_scale(double scale) {
+void Transform::set_scale(float scale) {
     _scale = scale;
 }
 

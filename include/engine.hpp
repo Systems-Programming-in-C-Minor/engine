@@ -3,19 +3,18 @@
 
 #include <memory>
 #include "scene.hpp"
-#include "render/irenderer.hpp"
-
 
 class Engine {
 private:
     bool _should_quit;
     std::shared_ptr<Scene> _active_scene;
-    std::unique_ptr<IRenderer> _renderer;
+    std::shared_ptr<IRenderer> _renderer;
 
     long long _time_after_last_frame;
     unsigned long _fps;
 public:
     Engine();
+    explicit Engine(std::shared_ptr<IRenderer> renderer);
     virtual ~Engine();
 
     void start();
@@ -28,6 +27,8 @@ public:
     [[nodiscard]] virtual const Scene &get_active_scene() const;
 
     [[nodiscard]] unsigned long get_fps() const;
+
+    [[nodiscard]] virtual std::shared_ptr<IRenderer> get_renderer() const;
 };
 
 #endif //ENGINE_ENGINE_HPP
