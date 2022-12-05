@@ -11,6 +11,7 @@ Input::~Input() {
 }
 
 bool Input::any_key(){
+    SDL_PollEvent(_event);
     if(_event->type == SDL_KEYDOWN || _event->type == SDL_MOUSEBUTTONDOWN){
         return true;
     }
@@ -37,6 +38,7 @@ double Input::get_axis() {
 }
 
 bool Input::get_key(Key key) {
+    SDL_PollEvent(_event);
     if(_event->type == SDL_KEYDOWN){
         std::string str = ""+_event->key.keysym.sym;
         return str == parse_key(key);
@@ -45,6 +47,7 @@ bool Input::get_key(Key key) {
 }
 
 bool Input::get_key_down(Key key) {
+    SDL_PollEvent(_event);
     if(_event->type == SDL_KEYDOWN){
         std::string str = ""+_event->key.keysym.sym;
      return str == parse_key(key);
@@ -52,6 +55,7 @@ bool Input::get_key_down(Key key) {
 }
 
 bool Input::get_key_up(Key key) {
+    SDL_PollEvent(_event);
     if(_event->type == SDL_KEYUP){
         std::string str = ""+_event->key.keysym.sym;
         return str == parse_key(key);
@@ -59,6 +63,7 @@ bool Input::get_key_up(Key key) {
 }
 
 bool Input::get_mouse_button(MouseInput which) {
+    SDL_PollEvent(_event);
     if(_event->type == SDL_MOUSEBUTTONDOWN){
         std::string str = ""+_event->key.keysym.sym;
         return str == parse_mouseinput(which);
@@ -66,6 +71,7 @@ bool Input::get_mouse_button(MouseInput which) {
 }
 
 bool Input::get_mouse_button_down(MouseInput which) {
+    SDL_PollEvent(_event);
     if(_event->type == SDL_MOUSEBUTTONDOWN){
         std::string str = ""+_event->key.keysym.sym;
         return str == parse_mouseinput(which);
@@ -73,6 +79,7 @@ bool Input::get_mouse_button_down(MouseInput which) {
 }
 
 bool Input::get_mouse_button_up(MouseInput which) {
+    SDL_PollEvent(_event);
     if(_event->type == SDL_MOUSEBUTTONUP){
         std::string str = ""+_event->key.keysym.sym;
         return str == parse_mouseinput(which);
