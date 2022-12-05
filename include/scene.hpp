@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include "components/rigidbody.hpp"
+#include "managers/event_manager.hpp"
 
 class IRenderer;
 class b2World;
@@ -13,6 +14,7 @@ class GameObject;
 
 class Scene {
 private:
+    const std::unique_ptr<EventManager> _event_manager;
     const std::unique_ptr<b2World> _world;
     friend class RigidBody;
 
