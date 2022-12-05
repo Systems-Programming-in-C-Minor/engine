@@ -42,7 +42,7 @@ void SdlRenderer::render_text(Text& text) const
 
 void SdlRenderer::clear(const Color& color) const try
 {
-    const auto _color = static_cast<SDL2pp::Color>(color);
+	const auto _color = static_cast<SDL2pp::Color>(color);
 	_renderer->SetDrawColor(_color).Clear();
 }
 catch (SDL2pp::Exception& e) { handle_exception(e); }
