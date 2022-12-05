@@ -1,6 +1,7 @@
 #include "transform.hpp"
 #include "box2d/box2d.h"
 #include "components/rigidbody.hpp"
+#include "gameobject.hpp"
 
 Transform::Transform(const Vector2d &position, float angle, float scale) :
         _position(position),

@@ -1,4 +1,5 @@
 #include "components/animator.hpp"
+#include "gameobject.hpp"
 
 #include <utility>
 
