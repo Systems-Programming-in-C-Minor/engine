@@ -32,7 +32,7 @@ protected:
     GameObject *parent;
     std::list<std::shared_ptr<GameObject>> children;
 public:
-    std::unique_ptr<Transform> transform;
+    Transform transform;
     /**
      * @brief Compare two GameObjects.
      * @param other The other object to compare this one with.
@@ -194,7 +194,7 @@ public:
 
     virtual void tick();
 
-    GameObject(std::string name, std::string tag, bool is_world_space = true, std::unique_ptr<Transform> transform = std::make_unique<Transform>(Vector2d{}));
+    GameObject(std::string name, std::string tag, bool is_world_space = true, Transform transform = Transform{Vector2d{}});
 
     virtual ~GameObject();
 };

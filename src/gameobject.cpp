@@ -3,14 +3,14 @@
 
 int GameObject::object_counter = 0;
 
-GameObject::GameObject(std::string name, std::string tag, bool is_world_space, std::unique_ptr<Transform> _transform) :
+GameObject::GameObject(std::string name, std::string tag, bool is_world_space, Transform _transform) :
 	_id(object_counter++),
 	name(std::move(name)),
 	tag(std::move(tag)),
     is_world_space(is_world_space),
 	parent(nullptr),
-    transform(std::move(_transform)){
-    transform->_game_object = this;
+    transform(_transform){
+    transform._game_object = this;
 }
 
 void GameObject::add_child(const std::shared_ptr<GameObject> &game_object) {

@@ -4,15 +4,16 @@
 #include <memory>
 
 #include "vector2d.hpp"
-#include "gameobject.hpp"
 #include "components/rigidbody.hpp"
+
+class GameObject;
 
 class Transform {
 private:
     Vector2d _position;
     float _angle;
     float _scale;
-    GameObject* _game_object;
+    GameObject* _game_object = nullptr;
 
     friend class GameObject;
 

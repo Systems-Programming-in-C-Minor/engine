@@ -35,7 +35,7 @@ Vector2d Transform::get_position() const {
 void Transform::set_position(Vector2d &position) {
     auto rigid_body = get_rigid_body();
     if (rigid_body) {
-//        rigid_body->();
+//        rigid_body->get_world_position();
         return;
     }
 
