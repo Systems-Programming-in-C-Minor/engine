@@ -25,17 +25,26 @@ void Transform::set_scale(float scale) {
 }
 
 Vector2d Transform::get_position() const {
+    auto rigid_body = get_rigid_body();
+    if (rigid_body)
+        return rigid_body->get_world_position();
+
     return _position;
 }
 
 void Transform::set_position(Vector2d &position) {
+    auto rigid_body = get_rigid_body();
+    if (rigid_body) {
+//        rigid_body->();
+        return;
+    }
+
     _position = position;
 }
 
+std::shared_ptr<RigidBody> Transform::get_rigid_body() const {
+    if (!_game_object)
+        return nullptr;
 
-void Transform::tick(GameObject &object) {
-    const auto rigid_body = object.get_component<RigidBody>();
-
-    if (rigid_body)
-        _position = rigid_body->get_world_position();
+    return _game_object->get_component<RigidBody>();
 }

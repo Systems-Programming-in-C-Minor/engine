@@ -4,13 +4,19 @@
 #include <memory>
 
 #include "vector2d.hpp"
-#include "interfaces/itickable.hpp"
+#include "gameobject.hpp"
+#include "components/rigidbody.hpp"
 
-class Transform : public ITickable {
+class Transform {
 private:
     Vector2d _position;
     float _angle;
     float _scale;
+    GameObject* _game_object;
+
+    friend class GameObject;
+
+    [[nodiscard]] std::shared_ptr<RigidBody> get_rigid_body() const;
 
 public:
     explicit Transform(const Vector2d &position, float angle = 0.f, float scale = 1.f);
@@ -26,8 +32,6 @@ public:
     [[nodiscard]] Vector2d get_position() const;
 
     void set_position(Vector2d &position);
-
-    void tick(GameObject &object) override;
 };
 
 #endif // ENGINE_TRANSFORM_H_sZYCcKEA4x
