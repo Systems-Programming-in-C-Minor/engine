@@ -3,29 +3,32 @@
 
 #include <memory>
 #include "scene.hpp"
-#include "render/irenderer.hpp"
-
 
 class Engine {
 private:
     bool _should_quit;
     std::shared_ptr<Scene> _active_scene;
-    std::unique_ptr<IRenderer> _renderer;
+    std::shared_ptr<IRenderer> _renderer;
 
-    long _time_after_last_frame;
+    long long _time_after_last_frame;
     unsigned long _fps;
-
-    static void listen_keyboard_state();
 public:
+    Engine();
+    explicit Engine(std::shared_ptr<IRenderer> renderer);
+    virtual ~Engine();
+
     void start();
 
     void stop();
 
     void load_scene(std::shared_ptr<Scene> new_scene);
 
-    [[nodiscard]] Scene &get_active_scene() const;
+    [[nodiscard]] virtual Scene &get_active_scene();
+    [[nodiscard]] virtual const Scene &get_active_scene() const;
 
     [[nodiscard]] unsigned long get_fps() const;
+
+    [[nodiscard]] virtual std::shared_ptr<IRenderer> get_renderer() const;
 };
 
 #endif //ENGINE_ENGINE_HPP

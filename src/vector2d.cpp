@@ -58,7 +58,7 @@ bool Vector2d::almost_equals(const Vector2d& other, const double epsilon) const
     return (std::abs(x - other.x) < epsilon && std::abs(y - other.y) < epsilon);
 }
 
-Vector2d::Vector2d(const double x, const double y)
+Vector2d::Vector2d(const float x, const float y)
     : x(x),	y(y) {}
 
 

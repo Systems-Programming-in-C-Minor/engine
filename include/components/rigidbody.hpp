@@ -1,38 +1,70 @@
-#pragma once
+#ifndef RIGID_BODY_HPP
+#define RIGID_BODY_HPP
+
 #include "component.hpp"
 #include "vector2d.hpp"
+#include "memory"
 
-enum class BodyType
-{
-    static_body,
-    dynamic_body,
-    kinematic_body
+enum class BodyType {
+    static_body = 0,
+    kinematic_body,
+    dynamic_body
 };
 
-class RigidBody : public Component
-{
-    RigidBody();
-    ~RigidBody();
+class b2Body;
 
-    double _mass;
-    double _gravity_scale;
-    BodyType _bodytype;
+class b2Vec2;
 
+class Scene;
+
+class RigidBody : public Component {
 public:
-    void apply_force(Vector2d force);
-    void apply_torque(float torque);
-    void set_linear_velocity(Vector2d velocity);
-    Vector2d get_linear_velocity();
-    void set_angular_velocity(float angle);
-    float get_angular_velocity();
-    void apply_linear_impulse(Vector2d inpulse);
-    void apply_angular_impulse(Vector2d impulse);
+    RigidBody(const Scene &scene, BodyType type, Vector2d vector, float gravity_scale);
 
-    double get_mass();
-    void set_mass(double m);
-    double get_gravity_scale();
-    void set_gravity_scale(double gs);
-    BodyType get_bodytype();
-    void set_bodytype(BodyType bt);
+    void apply_force(Vector2d force, Vector2d point) const;
 
+    void apply_torque(float torque) const;
+
+    void set_linear_velocity(Vector2d velocity) const;
+
+    [[nodiscard]] Vector2d get_linear_velocity() const;
+
+    void set_angular_velocity(float angle) const;
+
+    [[nodiscard]] float get_angular_velocity() const;
+
+    void apply_linear_impulse(Vector2d impulse, Vector2d point) const;
+
+    void apply_angular_impulse(float impulse) const;
+
+    [[nodiscard]] float get_mass() const;
+
+    [[nodiscard]] float get_inertia() const;
+
+    void set_mass(float mass) const;
+
+    [[nodiscard]] float get_gravity_scale() const;
+
+    void set_gravity_scale(float gravity_scale) const;
+
+    [[nodiscard]] BodyType get_body_type() const;
+
+    void set_body_type(BodyType body_type) const;
+
+    void set_position(Vector2d vector) const;
+
+    [[nodiscard]] Vector2d get_position() const;
+
+    void set_angle(float angle) const;
+
+    [[nodiscard]] float get_angle() const;
+
+private:
+    b2Body *_body;
+
+    static b2Vec2 get_b2vec(Vector2d vector);
+
+    static Vector2d get_vec(b2Vec2 vector);
 };
+
+#endif //RIGID_BODY_HPP

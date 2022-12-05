@@ -22,7 +22,6 @@ add_executable(${PROJECT_NAME} ${TEST_SOURCE_FILES} ${TEST_HEADER_FILES})
 target_link_libraries(${PROJECT_NAME} PRIVATE
         GTest::gmock
         GTest::gtest_main
-        box2d
         engine
         )
 

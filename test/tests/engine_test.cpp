@@ -1,13 +1,20 @@
 #include <gtest/gtest.h>
 #include "engine.hpp"
 #include "../mocks/mock_scene.hpp"
+#include "../mocks/mock_renderer.hpp"
 #include <chrono>
+#include <memory>
 
 #define mock_scene std::make_shared<MockScene>()
-#define test_engine Engine()
+#define test_engine(renderer) Engine(renderer)
+
+using testing::AllOf;
+using testing::Ge;
+using testing::Le;
 
 TEST(EngineTest, LoadScene) {
-    auto engine = test_engine;
+    auto renderer = std::make_shared<MockRenderer>();
+    auto engine = test_engine(renderer);
     auto scene = mock_scene;
 
     engine.load_scene(scene);
@@ -16,10 +23,15 @@ TEST(EngineTest, LoadScene) {
 }
 
 TEST(EngineTest, TickRenderLoopAndStop) {
-    auto engine = test_engine;
+    auto renderer = std::make_shared<MockRenderer>();
+    auto engine = test_engine(renderer);
     auto scene = mock_scene;
 
-    engine.load_scene(scene);
+    EXPECT_CALL(*renderer, clear(testing::_))
+            .Times(3);
+
+    EXPECT_CALL(*renderer, push_to_screen())
+            .Times(3);
 
     unsigned int counter = 0;
 
@@ -31,15 +43,24 @@ TEST(EngineTest, TickRenderLoopAndStop) {
                 }
             });
 
-    EXPECT_CALL(*scene, render(testing::_))
+    EXPECT_CALL(*scene, render())
             .Times(3);
+
+    engine.load_scene(scene);
 
     engine.start();
 }
 
 TEST(EngineTest, Fps) {
-    auto engine = test_engine;
+    auto renderer = std::make_shared<MockRenderer>();
+    auto engine = test_engine(renderer);
     auto scene = mock_scene;
+
+    EXPECT_CALL(*renderer, clear(testing::_))
+            .Times(3);
+
+    EXPECT_CALL(*renderer, push_to_screen())
+            .Times(3);
 
     engine.load_scene(scene);
 
@@ -55,10 +76,11 @@ TEST(EngineTest, Fps) {
                 std::this_thread::sleep_for(std::chrono::milliseconds(100));
             });
 
-    EXPECT_CALL(*scene, render(testing::_))
+    EXPECT_CALL(*scene, render())
             .Times(3);
 
     engine.start();
 
-    EXPECT_LE(engine.get_fps() - 10, 1); // Allow for a small difference in case the computer is very slow.
+    // Allow for a small difference in case the computer is slow.
+    EXPECT_THAT(engine.get_fps(), AllOf(Ge(9), Le(11)));
 }

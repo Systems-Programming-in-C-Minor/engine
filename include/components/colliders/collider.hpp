@@ -16,7 +16,7 @@ private:
     bool _ignore_collision_physics = false;
 
 public:
-    void render(IRenderer &renderer, bool is_world_space) const override;
+    void render(bool is_world_space) const override;
 
     [[nodiscard]] bool get_ignore_collision_physics() const;
     void set_ignore_collision_physics(bool icp);

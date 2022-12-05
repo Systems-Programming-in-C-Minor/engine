@@ -13,14 +13,14 @@ void AudioSource::set_active(bool is_active)
 
 void AudioSource::play(bool looping)
 {
-	if (!is_regular_file(m_audio_clip)) {
-		fmt::print("File {} not found\n", m_audio_clip.string());
+	if (!is_regular_file(_audio_clip)) {
+		fmt::print("File {} not found\n", _audio_clip.string());
 		stop();
 		return;
 	}
 
-	if (m_audio_clip.extension() != ".wav") {
-		fmt::print("Unsupported audio format {}\n", m_audio_clip.extension().string());
+	if (_audio_clip.extension() != ".wav") {
+		fmt::print("Unsupported audio format {}\n", _audio_clip.extension().string());
 		stop();
 		return;
 	}
@@ -48,7 +48,7 @@ AudioSource::AudioSource(
 	bool play_on_awake,
 	bool loop,
 	double volume) :
-	m_audio_clip(fs::current_path().append(audio_clip)),
+	_audio_clip(fs::current_path().append(audio_clip)),
 	_play_on_awake(play_on_awake),
 	_loop(loop),
 	_volume(volume) 

@@ -42,9 +42,9 @@ TEST(SceneTest, Render_OneGameObject) {
 
     scene.gameobjects.push_back(game_object1);
 
-    EXPECT_CALL(*game_object1, render(testing::_)).Times(1);
+    EXPECT_CALL(*game_object1, render()).Times(1);
 
-    scene.render(renderer);
+    scene.render();
 }
 
 TEST(SceneTest, Render_ThreeGameObjects) {
@@ -58,10 +58,10 @@ TEST(SceneTest, Render_ThreeGameObjects) {
     scene.gameobjects.push_back(game_object2);
     scene.gameobjects.push_back(game_object3);
 
-    EXPECT_CALL(*game_object1, render(testing::_)).Times(2);
-    EXPECT_CALL(*game_object2, render(testing::_)).Times(2);
-    EXPECT_CALL(*game_object3, render(testing::_)).Times(2);
+    EXPECT_CALL(*game_object1, render()).Times(2);
+    EXPECT_CALL(*game_object2, render()).Times(2);
+    EXPECT_CALL(*game_object3, render()).Times(2);
 
-    scene.render(renderer);
-    scene.render(renderer);
+    scene.render();
+    scene.render();
 }

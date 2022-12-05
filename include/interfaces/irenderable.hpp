@@ -5,7 +5,7 @@
 
 class IRenderable {
 public:
-    virtual void render(IRenderer& renderer, bool is_world_space) const = 0;
+    virtual void render(bool is_world_space) const = 0;
 };
 
 #endif //ENGINE_IRENDERABLE_HPP

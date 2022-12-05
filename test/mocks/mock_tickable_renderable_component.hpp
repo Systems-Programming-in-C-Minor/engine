@@ -8,7 +8,7 @@
 class MockTickableRenderableComponent : public Component, public ITickable, public IRenderable {
 public:
     MOCK_METHOD(void, tick, (GameObject &), (override));
-    MOCK_METHOD(void, render, (IRenderer &, bool), (override, const));
+    MOCK_METHOD(void, render, (bool), (override, const));
 };
 
 #endif //ENGINE_MOCK_TICKABLE_RENDERABLE_COMPONENT_HPP
