@@ -17,13 +17,10 @@ void Animator::stop() {
 }
 
 int Animator::animate_per_ticks() const {
-    // TODO get the TICKS_PER_SECOND dynamically use time delta
     Global *global = Global::get_instance();
     const double delta_time = global->time.delta_time();
-    const int TICKS_PER_SECOND = delta_time;
-    delete global;
-    return TICKS_PER_SECOND / _fps;
 
+    return static_cast<int>(delta_time) / _fps;
 }
 
 void Animator::tick(GameObject &object) {

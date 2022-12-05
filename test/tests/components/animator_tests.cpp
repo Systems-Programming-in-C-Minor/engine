@@ -18,7 +18,7 @@ TEST(AnimatorTest, Animate) {
     game_object.add_component(animator);
     game_object.add_component(sprite_1);
 
-    Global *glob = Global::get_instance();
+    auto *glob = Global::get_instance();
 
     animator->play();
 
@@ -38,13 +38,10 @@ TEST(AnimatorTest, Animate) {
     game_object.tick();
     glob->time.tick();
     EXPECT_EQ(game_object.get_component<Sprite>(), sprite_1);
-
-    glob = nullptr;
-    delete glob;
 }
 
 TEST(AnimatorTest, AnimateFPS) {
-    Global *glob = Global::get_instance();
+    auto *glob = Global::get_instance();
     auto game_object = test_game_object;
 
     const auto sprite_1 = std::make_shared<Sprite>("/path/to", Color(1, 0, 0, 0), false, false, 1, 1);
@@ -76,13 +73,10 @@ TEST(AnimatorTest, AnimateFPS) {
     game_object.tick();
     glob->time.tick();
     EXPECT_EQ(game_object.get_component<Sprite>(), sprite_1);
-
-    glob = nullptr;
-    delete glob;
 }
 
 TEST(AnimatorTest, AnimateWithLoop) {
-    Global *glob = Global::get_instance();
+    auto *glob = Global::get_instance();
     auto game_object = test_game_object;
 
     const auto sprite_1 = std::make_shared<Sprite>("/path/to", Color(1, 0, 0, 0), false, false, 1, 1);
@@ -130,13 +124,10 @@ TEST(AnimatorTest, AnimateWithLoop) {
     game_object.tick();
     glob->time.tick();
     EXPECT_EQ(game_object.get_component<Sprite>(), sprite_1);
-
-    glob = nullptr;
-    delete glob;
 }
 
 TEST(AnimatorTest, AnimateAndStop) {
-    Global *glob = Global::get_instance();
+    auto *glob = Global::get_instance();
     auto game_object = test_game_object;
 
     const auto sprite_1 = std::make_shared<Sprite>("/path/to", Color(1, 0, 0, 0), false, false, 1, 1);
@@ -167,13 +158,10 @@ TEST(AnimatorTest, AnimateAndStop) {
         glob->time.tick();
         EXPECT_EQ(game_object.get_component<Sprite>(), sprite_2);
     }
-
-    glob = nullptr;
-    delete glob;
 }
 
 TEST(AnimatorTest, AnimateWithoutPlay) {
-    Global *glob = Global::get_instance();
+    auto *glob = Global::get_instance();
     auto game_object = test_game_object;
 
     const auto sprite_1 = std::make_shared<Sprite>("/path/to", Color(1, 0, 0, 0), false, false, 1, 1);
@@ -193,14 +181,11 @@ TEST(AnimatorTest, AnimateWithoutPlay) {
         glob->time.tick();
         EXPECT_EQ(game_object.get_component<Sprite>(), sprite_1);
     }
-
-    glob = nullptr;
-    delete glob;
 }
 
 
 TEST(AnimatorTest, AnimateNotActive) {
-    Global *glob = Global::get_instance();
+    auto *glob = Global::get_instance();
     auto game_object = test_game_object;
 
     const auto sprite_1 = std::make_shared<Sprite>("/path/to", Color(1, 0, 0, 0), false, false, 1, 1);
@@ -224,8 +209,6 @@ TEST(AnimatorTest, AnimateNotActive) {
         glob->time.tick();
         EXPECT_EQ(game_object.get_component<Sprite>(), sprite_1);
     }
-
-    delete glob;
 }
 
 
