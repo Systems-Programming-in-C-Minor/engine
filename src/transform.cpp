@@ -9,10 +9,20 @@ Transform::Transform(const Vector2d &position, float angle, float scale) :
         _scale(scale) {}
 
 float Transform::get_angle() const {
+    auto rigid_body = get_rigid_body();
+    if (rigid_body)
+        return rigid_body->get_angle();
+
     return _angle;
 }
 
 void Transform::set_angle(float angle) {
+    auto rigid_body = get_rigid_body();
+    if (rigid_body) {
+        rigid_body->set_angle(angle);
+        return;
+    }
+
     _angle = angle;
 }
 
@@ -27,7 +37,7 @@ void Transform::set_scale(float scale) {
 Vector2d Transform::get_position() const {
     auto rigid_body = get_rigid_body();
     if (rigid_body)
-        return rigid_body->get_world_position();
+        return rigid_body->get_position();
 
     return _position;
 }
@@ -35,7 +45,7 @@ Vector2d Transform::get_position() const {
 void Transform::set_position(Vector2d &position) {
     auto rigid_body = get_rigid_body();
     if (rigid_body) {
-//        rigid_body->get_world_position();
+        rigid_body->set_position(position);
         return;
     }
 
