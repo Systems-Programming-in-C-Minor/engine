@@ -8,14 +8,14 @@
 class ColliderListener {
 
 private:
-    ColliderListener(EventManager manager);
+    explicit ColliderListener(EventManager &manager);
 
 public:
-    virtual void on_collider_entry(const ColliderEntryEvent event) = 0;
+    virtual void on_collider_entry(const ColliderEntryEvent &event) = 0;
 
-    virtual void on_collider_exit(ColliderExitEvent event) = 0;
+    virtual void on_collider_exit(const ColliderExitEvent &event) = 0;
 
-    virtual void on_collider_stay(ColliderStayEvent event) = 0;
+    virtual void on_collider_stay(const ColliderStayEvent &event) = 0;
 
 };
 
