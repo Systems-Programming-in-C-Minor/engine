@@ -1,7 +1,10 @@
 #ifndef ENGINE_COLOR_HPP
 #define ENGINE_COLOR_HPP
 
-#include "SDL2pp/Color.hh"
+namespace SDL2pp
+{
+    class Color;
+}
 
 class Color {
 public:
