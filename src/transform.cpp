@@ -9,10 +9,20 @@ Transform::Transform(const Vector2d &position, float angle, float scale) :
         _scale(scale) {}
 
 float Transform::get_angle() const {
+    auto rigid_body = get_rigid_body();
+    if (rigid_body)
+        return rigid_body->get_angle();
+
     return _angle;
 }
 
 void Transform::set_angle(float angle) {
+    auto rigid_body = get_rigid_body();
+    if (rigid_body) {
+        rigid_body->set_angle(angle);
+        return;
+    }
+
     _angle = angle;
 }
 
@@ -25,17 +35,26 @@ void Transform::set_scale(float scale) {
 }
 
 Vector2d Transform::get_position() const {
+    auto rigid_body = get_rigid_body();
+    if (rigid_body)
+        return rigid_body->get_position();
+
     return _position;
 }
 
 void Transform::set_position(Vector2d &position) {
+    auto rigid_body = get_rigid_body();
+    if (rigid_body) {
+        rigid_body->set_position(position);
+        return;
+    }
+
     _position = position;
 }
 
+std::shared_ptr<RigidBody> Transform::get_rigid_body() const {
+    if (!_game_object)
+        return nullptr;
 
-void Transform::tick(GameObject &object) {
-    const auto rigid_body = object.get_component<RigidBody>();
-
-    if (rigid_body)
-        _position = rigid_body->get_world_position();
+    return _game_object->get_component<RigidBody>();
 }

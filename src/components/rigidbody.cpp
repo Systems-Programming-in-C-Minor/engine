@@ -52,7 +52,7 @@ float RigidBody::get_inertia() const {
 }
 
 void RigidBody::set_mass(const float mass) const {
-    b2MassData *data {};
+    b2MassData *data{};
     _body->GetMassData(data);
     data->mass = mass;
     _body->SetMassData(data);
@@ -74,14 +74,26 @@ void RigidBody::set_body_type(const BodyType body_type) const {
     _body->SetType(static_cast<b2BodyType>(body_type));
 }
 
-Vector2d RigidBody::get_world_position() const {
-    return get_vec(_body->GetPosition());
-}
-
 b2Vec2 RigidBody::get_b2vec(const Vector2d vector) {
     return {vector.x, vector.y};
 }
 
 Vector2d RigidBody::get_vec(const b2Vec2 vector) {
     return Vector2d(vector.x, vector.y);
+}
+
+void RigidBody::set_position(Vector2d vector) const {
+    _body->SetTransform(get_b2vec(vector), _body->GetAngle());
+}
+
+Vector2d RigidBody::get_position() const {
+    return get_vec(_body->GetPosition());
+}
+
+void RigidBody::set_angle(float angle) const {
+    _body->SetTransform(_body->GetPosition(), angle);
+}
+
+float RigidBody::get_angle() const {
+    return _body->GetAngle();
 }
