@@ -51,6 +51,8 @@ public:
 
     void set_body_type(BodyType body_type) const;
 
+    [[nodiscard]] Vector2d get_world_position() const;
+
 private:
     b2Body *_body;
 
