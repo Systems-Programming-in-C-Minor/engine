@@ -2,7 +2,6 @@
 #include "scene.hpp"
 #include "global.hpp"
 #include "box2d/box2d.h"
-#include "global.hpp"
 
 void Scene::tick() {
     Global::get_instance()->time.tick();

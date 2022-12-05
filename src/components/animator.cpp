@@ -17,8 +17,7 @@ void Animator::stop() {
 }
 
 int Animator::animate_per_ticks() const {
-    Global *global = Global::get_instance();
-    const double delta_time = global->time.delta_time();
+    const double delta_time = Global::get_instance()->time.delta_time();
 
     return static_cast<int>(delta_time) / _fps;
 }
