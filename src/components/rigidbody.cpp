@@ -74,6 +74,10 @@ void RigidBody::set_body_type(const BodyType body_type) const {
     _body->SetType(static_cast<b2BodyType>(body_type));
 }
 
+Vector2d RigidBody::get_world_position() const {
+    return get_vec(_body->GetPosition());
+}
+
 b2Vec2 RigidBody::get_b2vec(const Vector2d vector) {
     return {vector.x, vector.y};
 }
