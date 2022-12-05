@@ -33,8 +33,8 @@ void Transform::set_position(Vector2d &position) {
 
 
 void Transform::tick(GameObject &object) {
-    auto rigid_body = object.get_component<RigidBody>();
+    const auto rigid_body = object.get_component<RigidBody>();
 
-    if (rigid_body != nullptr)
+    if (rigid_body)
         _position = rigid_body->get_world_position();
 }
