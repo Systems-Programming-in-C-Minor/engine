@@ -55,6 +55,9 @@ else ()
 endif ()
 
 add_library(engine STATIC ${SOURCE_FILES} ${HEADER_FILES})
+
+target_compile_definitions(engine PRIVATE _USE_MATH_DEFINES)
+
 target_include_directories(engine PUBLIC include)
 
 target_link_libraries(engine PRIVATE

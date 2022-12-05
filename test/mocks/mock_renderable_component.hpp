@@ -6,7 +6,7 @@
 
 class MockRenderableComponent : public Component, public IRenderable {
 public:
-    MOCK_METHOD(void, render, (IRenderer & , bool), (override, const));
+    MOCK_METHOD(void, render, (bool), (override, const));
 };
 
 #endif //ENGINE_MOCK_RENDERABLE_COMPONENT_HPP
