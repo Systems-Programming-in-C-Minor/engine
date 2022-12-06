@@ -4,6 +4,7 @@
 #include "components/sprite.hpp"
 #include "global.hpp"
 #include "scene.hpp"
+#include "input.hpp"
 
 int main(int argc, char* argv[])
 {

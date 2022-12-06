@@ -5,10 +5,13 @@
 #include "enums/mouse_input.hpp"
 #include "transform.hpp"
 
+typedef uint8_t Uint8;
 class Input {
 
 public:
     Input() = default;
+
+    const Uint8* fetch_state();
 
     /**
      * @brief Is any key or mouse button currently held down?
@@ -18,7 +21,7 @@ public:
     /**
      * @brief Returns true the first frame the user hits any key or mouse button.
      */
-    bool any_key_down();
+//    bool any_key_down();
 
     /**
      * @brief Returns the current mouse position in pixel coordinates
