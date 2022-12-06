@@ -22,6 +22,6 @@ TEST(TimeTest, DeltaTimeTest) {
         std::this_thread::sleep_for(0.1s);
         auto res = test_time.delta_time();
 
-        EXPECT_NEAR(0.1, res, 0.01);
+        EXPECT_NEAR(0.1, res, 0.02);
     }
 }
