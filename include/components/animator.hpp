@@ -39,13 +39,13 @@ private:
     unsigned int _current = 0;
     bool _play = false;
     bool _loop = false;
-    int _ticks_since_last_animate = -1;
+    double _time_since_last_animate = -1;
 
     /**
-     * @brief Determines how many ticks there are between swaps.
-     * @return int  number of ticks between sprite swap.
+     * @brief Determines is the sprite should be changed
+     * @return bool True if needs changing
      */
-    [[nodiscard]] int animate_per_ticks() const;
+    [[nodiscard]] bool should_animate();
 };
 
 #endif //ENGINE_ANIMATOR_HPP

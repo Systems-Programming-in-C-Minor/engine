@@ -7,12 +7,19 @@ class Time {
 public:
     Time();
 
+    /**
+     * Get the time from the previous tick to time of call
+     * @return
+     */
     [[nodiscard]] double delta_time() const;
 
     [[nodiscard]] double time_scale() const;
 
     void time_scale(double new_time_scale);
 
+    /**
+     *
+     */
     void tick();
 
 private:

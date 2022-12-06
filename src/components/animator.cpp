@@ -2,6 +2,7 @@
 
 #include <utility>
 #include "global.hpp"
+#include "fmt/core.h"
 
 Animator::Animator(Sprites sprites, const int fps) : _sprites(std::move(sprites)), _fps(fps) {}
 
@@ -16,18 +17,22 @@ void Animator::stop() {
     _current = 0;
 }
 
-int Animator::animate_per_ticks() const {
-    const double delta_time = Global::get_instance()->time.delta_time();
-
-    return static_cast<int>(delta_time) / _fps;
+bool Animator::should_animate() {
+    const auto delta_time = Global::get_instance()->time.delta_time();
+    _time_since_last_animate += delta_time;
+    fmt::print("Time: {}", _time_since_last_animate);
+    if (_time_since_last_animate > (1000.0/_fps)){ // Time at least necessary for sprite change
+        _time_since_last_animate = 0;
+        return true;
+    }
+    return false;
 }
 
 void Animator::tick(GameObject &object) {
     if (!active || !_play)
         return;
 
-    if (_ticks_since_last_animate >= 0 && _ticks_since_last_animate < animate_per_ticks() - 1) {
-        _ticks_since_last_animate++;
+    if(!should_animate()){
         return;
     }
 
@@ -42,5 +47,5 @@ void Animator::tick(GameObject &object) {
 
     object.add_component(_sprites[_current]);
 
-    _ticks_since_last_animate = 0;
+    _time_since_last_animate = 0;
 }

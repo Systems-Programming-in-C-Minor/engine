@@ -7,7 +7,7 @@ Time::Time(): _time_scale(1) {}
 
 double Time::delta_time() const {
     const auto dur = steady_clock::now() - _time_since_call;
-    return duration<double>(dur).count();
+    return duration_cast<milliseconds>(dur).count();
 }
 
 double Time::time_scale() const {
