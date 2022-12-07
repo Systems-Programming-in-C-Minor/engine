@@ -32,6 +32,8 @@ public:
     Scene& get_active_scene();
     [[nodiscard]] const Scene& get_active_scene() const;
 
+    void  notify_event_manager(const IEvent& event);
+
     void operator=(const Global &) = delete;
     Time time;
 };
