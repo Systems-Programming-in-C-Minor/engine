@@ -10,7 +10,10 @@ Global *Global::get_instance() {
     return _instance;
 }
 
-Global::Global(std::unique_ptr<Engine> engine, std::unique_ptr<IProperties> properties) : _engine(std::move(engine)), _properties(std::move(properties)) {}
+Global::Global(std::unique_ptr<Engine> engine, std::unique_ptr<IProperties> properties) :
+        _engine(std::move(engine)),
+        _properties(std::move(
+                properties)) {}
 
 void Global::set_engine(std::unique_ptr<Engine> engine) {
     _engine = std::move(engine);
@@ -42,4 +45,8 @@ Scene &Global::get_active_scene() {
 
 const Scene &Global::get_active_scene() const {
     return _engine->get_active_scene();
+}
+
+void Global::notify_event_manager(const IEvent &event) {
+    _engine->get_active_scene().get_event_manager().notify(event);
 }

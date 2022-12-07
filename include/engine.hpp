@@ -3,15 +3,18 @@
 
 #include <memory>
 #include "scene.hpp"
+#include "handlers/key_handler.hpp"
 
 class Engine {
 private:
     bool _should_quit;
+    std::unique_ptr<KeyHandler> _key_handler;
     std::shared_ptr<Scene> _active_scene;
     std::shared_ptr<IRenderer> _renderer;
 
     long long _time_after_last_frame;
     unsigned long _fps;
+
 public:
     Engine();
     explicit Engine(std::shared_ptr<IRenderer> renderer);

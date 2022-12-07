@@ -31,6 +31,8 @@ public:
      */
     virtual void render() const;
 
+    [[nodiscard]] EventManager &get_event_manager() const;
+
     Scene();
 
     virtual ~Scene();
