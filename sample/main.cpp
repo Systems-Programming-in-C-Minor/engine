@@ -13,7 +13,6 @@ class InputScript : public ITickable, public Component {
     Input input;
 
     void tick(GameObject &object){
-
         if(input.get_mouse_button(Left)){
             std::cout << input.mouse_position() << std::endl;
         }
@@ -22,7 +21,6 @@ class InputScript : public ITickable, public Component {
             std::cout << "A key pressed" << count << std::endl;
             count++;
         }
-
     }
 };
 
@@ -45,6 +43,7 @@ int main(int argc, char* argv[])
 	game_object2->add_component(std::make_shared<Sprite>(sprite2));
 	game_object3->add_component(std::make_shared<Sprite>(sprite3));
 
+    // Example for Input
     game_object3->add_component(std::make_shared<InputScript>());
 
 	const auto scene = std::make_shared<Scene>();
