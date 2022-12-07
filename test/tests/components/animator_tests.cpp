@@ -25,19 +25,19 @@ TEST(AnimatorTest, Animate) {
 
     // Check sprite 1
     EXPECT_EQ(game_object.get_component<Sprite>(), sprite_1);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::this_thread::sleep_for(std::chrono::milliseconds(120));
 
     // Tick and check sprite 2
     game_object.tick();
     glob->time.tick();
     EXPECT_EQ(game_object.get_component<Sprite>(), sprite_2);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::this_thread::sleep_for(std::chrono::milliseconds(120));
 
     // Last frame
     game_object.tick();
     glob->time.tick();
     EXPECT_EQ(game_object.get_component<Sprite>(), sprite_3);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::this_thread::sleep_for(std::chrono::milliseconds(120));
 
     game_object.tick();
     glob->time.tick();
