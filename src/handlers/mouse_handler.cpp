@@ -25,7 +25,7 @@ void MouseHandler::tick() {
     auto input_pressed = fetch_input();
 
     for (const auto pressed_key: input_pressed) {
-        if (std::find(_input_active.begin(), _input_active.end(), pressed_key) == _input_active.end())
+        if (std::find(_input_active.begin(), _input_active.end(), pressed_key) != _input_active.end())
             continue;
 
         auto pressed_event = MousePressedEvent(pressed_key);
@@ -33,7 +33,7 @@ void MouseHandler::tick() {
     }
 
     for (const auto active_key: _input_active) {
-        if (std::find(input_pressed.begin(), input_pressed.end(), active_key) == input_pressed.end())
+        if (std::find(input_pressed.begin(), input_pressed.end(), active_key) != input_pressed.end())
             continue;
 
         auto release_event = MouseReleasedEvent(active_key);
