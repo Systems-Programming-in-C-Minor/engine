@@ -63,20 +63,20 @@ TEST(AnimatorTest, AnimateFPS) {
 
     // Check sprite 1
     EXPECT_EQ(game_object.get_component<Sprite>(), sprite_1);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::this_thread::sleep_for(std::chrono::milliseconds(120));
 
     // Tick and check sprite 2
     game_object.tick();
     glob->time.tick();
     EXPECT_EQ(game_object.get_component<Sprite>(), sprite_2);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::this_thread::sleep_for(std::chrono::milliseconds(120));
 
     // Last frame
     game_object.tick();
     glob->time.tick();
 
     EXPECT_EQ(game_object.get_component<Sprite>(), sprite_3);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::this_thread::sleep_for(std::chrono::milliseconds(120));
 
     game_object.tick();
     glob->time.tick();
@@ -160,13 +160,13 @@ TEST(AnimatorTest, AnimateAndStop) {
 
     // Check sprite 1
     EXPECT_EQ(game_object.get_component<Sprite>(), sprite_1);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::this_thread::sleep_for(std::chrono::milliseconds(120));
 
     // Tick and check sprite 2
     game_object.tick();
     glob->time.tick();
     EXPECT_EQ(game_object.get_component<Sprite>(), sprite_2);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::this_thread::sleep_for(std::chrono::milliseconds(120));
 
     // Stop
     animator->stop();
@@ -175,7 +175,7 @@ TEST(AnimatorTest, AnimateAndStop) {
         game_object.tick();
         glob->time.tick();
         EXPECT_EQ(game_object.get_component<Sprite>(), sprite_2);
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(120));
     }
 }
 
@@ -195,13 +195,13 @@ TEST(AnimatorTest, AnimateWithoutPlay) {
 
     // Check sprite 1
     EXPECT_EQ(game_object.get_component<Sprite>(), sprite_1);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::this_thread::sleep_for(std::chrono::milliseconds(120));
 
     for (int i = 0; i < 5; i++) {
         game_object.tick();
         glob->time.tick();
         EXPECT_EQ(game_object.get_component<Sprite>(), sprite_1);
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(120));
     }
 }
 
@@ -226,13 +226,13 @@ TEST(AnimatorTest, AnimateNotActive) {
 
     // Check sprite 1
     EXPECT_EQ(game_object.get_component<Sprite>(), sprite_1);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::this_thread::sleep_for(std::chrono::milliseconds(120));
 
     for (int i = 0; i < 5; i++) {
         game_object.tick();
         glob->time.tick();
         EXPECT_EQ(game_object.get_component<Sprite>(), sprite_1);
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(120));
     }
 }
 
