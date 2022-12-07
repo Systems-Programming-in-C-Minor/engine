@@ -8,3 +8,5 @@ KeyListener::KeyListener(EventManager &manager) {
         on_key_released(dynamic_cast<const KeyReleasedEvent &>(event));
     });
 }
+
+KeyListener::KeyListener() = default;
