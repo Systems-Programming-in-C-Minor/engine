@@ -7,8 +7,7 @@
 
 class MouseHandler {
 private:
-    int *_x;
-    int *_y;
+    int _x, _y;
     std::vector<MouseInput> _input_active;
 
     std::vector<MouseInput> fetch_input() ;
