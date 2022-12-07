@@ -9,7 +9,9 @@ class Collider;
 
 class MouseMovedEvent : public IEvent {
 public:
-    MouseMovedEvent() : IEvent(MouseMoved) {}
+    MouseMovedEvent(const int x, const int y) : IEvent(MouseMoved), x(x), y(y) {}
+    int x;
+    int y;
 };
 
 class MouseClickedEvent : public IEvent {

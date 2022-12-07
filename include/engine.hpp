@@ -4,11 +4,13 @@
 #include <memory>
 #include "scene.hpp"
 #include "handlers/key_handler.hpp"
+#include "handlers/mouse_handler.hpp"
 
 class Engine {
 private:
     bool _should_quit;
     std::unique_ptr<KeyHandler> _key_handler;
+    std::unique_ptr<MouseHandler> _mouse_handler;
     std::shared_ptr<Scene> _active_scene;
     std::shared_ptr<IRenderer> _renderer;
 
