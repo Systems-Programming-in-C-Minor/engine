@@ -18,6 +18,8 @@ private:
     unsigned long _fps;
 
 public:
+    std::unique_ptr<EventManager> event_manager;
+
     Engine();
     explicit Engine(std::shared_ptr<IRenderer> renderer);
     virtual ~Engine();

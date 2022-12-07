@@ -5,17 +5,14 @@
 #include "events.hpp"
 
 class MouseListener {
-
-private:
-    explicit MouseListener(EventManager &manager);
-
 public:
+    explicit MouseListener();
+
     virtual void on_mouse_moved(const MouseMovedEvent &event) = 0;
 
     virtual void on_mouse_pressed(const MousePressedEvent &event) = 0;
 
     virtual void on_mouse_released(const MouseReleasedEvent &event) = 0;
-
 };
 
 #endif //ENGINE_IMOUSELISTENER_HPP

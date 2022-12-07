@@ -53,6 +53,7 @@ Engine::Engine(std::shared_ptr<IRenderer> renderer) : _should_quit(false), _time
                                                       _renderer(std::move(renderer)) {
     _key_handler = std::make_unique<KeyHandler>();
     _mouse_handler = std::make_unique<MouseHandler>();
+    event_manager = std::make_unique<EventManager>();
 }
 
 Engine::~Engine() = default;

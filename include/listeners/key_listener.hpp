@@ -7,16 +7,12 @@
 
 class KeyListener {
 
-private:
-    explicit KeyListener(EventManager &manager);
-
 public:
-    KeyListener();
+    explicit KeyListener();
 
     virtual void on_key_pressed(const KeyPressedEvent &event) = 0;
 
     virtual void on_key_released(const KeyReleasedEvent &event) = 0;
-
 };
 
 #endif //ENGINE_IKEYLISTENER_HPP

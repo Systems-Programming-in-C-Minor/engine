@@ -1,12 +1,13 @@
 #include "../include/listeners/key_listener.hpp"
+#include "global.hpp"
 
-KeyListener::KeyListener(EventManager &manager) {
-    manager.register_listener(KeyPressed, [this](const IEvent &event) {
+KeyListener::KeyListener() {
+    Global::get_instance()->get_engine()
+            .event_manager->register_listener(KeyPressed, [this](const IEvent &event) {
         on_key_pressed(dynamic_cast<const KeyPressedEvent &>(event));
     });
-    manager.register_listener(KeyReleased, [this](const IEvent &event) {
+    Global::get_instance()->get_engine()
+            .event_manager->register_listener(KeyReleased, [this](const IEvent &event) {
         on_key_released(dynamic_cast<const KeyReleasedEvent &>(event));
     });
 }
-
-KeyListener::KeyListener() = default;
