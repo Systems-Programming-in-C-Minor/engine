@@ -13,9 +13,9 @@ public:
 
     explicit INetworkable(std::string id) : _id(std::move(id)) {}
 
-    virtual std::string serialize() = 0;
+    virtual const std::string& serialize() = 0;
 
-    virtual void deserialize(const std::string &import) = 0;
+    virtual void deserialize(const std::string &import_json) = 0;
 
     [[nodiscard]] std::string get_id() const {
         return _id;
