@@ -1,7 +1,8 @@
 #ifndef ENGINE_INETWORKABLE_HPP
 #define ENGINE_INETWORKABLE_HPP
 
-#include "string"
+#include <string>
+#include <utility>
 #include "../components/component.hpp"
 
 class INetworkable : public Component {
@@ -10,13 +11,13 @@ private:
 
 public:
 
-    INetworkable(const std::string id) : _id(id) {}
+    explicit INetworkable(std::string id) : _id(std::move(id)) {}
 
     virtual std::string serialize() = 0;
 
-    virtual void deserialize(std::string import) = 0;
+    virtual void deserialize(const std::string &import) = 0;
 
-    std::string get_id() const {
+    [[nodiscard]] std::string get_id() const {
         return _id;
     }
 };
