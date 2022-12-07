@@ -3,6 +3,9 @@
 
 #include <ostream>
 
+struct b2Vec2;
+class PolygonCollider;
+
 class Vector2d {
 public:
     float x, y;
@@ -42,6 +45,10 @@ public:
     [[nodiscard]] bool almost_equals(const Vector2d &other, double epsilon) const;
 
     explicit Vector2d(float x = 0.0f, float y = 0.0f);
+private:
+    friend class PolygonCollider;
+    explicit Vector2d(const b2Vec2& b2vec);
+    explicit operator b2Vec2() const;
 };
 
 std::ostream &operator<<(std::ostream &stream, const Vector2d &vector);
