@@ -5,6 +5,7 @@
 #include <cmath>
 #include "gameobject.hpp"
 #include "sdlrenderer.hpp"
+#include "SDL.h"
 
 void Engine::load_scene(std::shared_ptr<Scene> new_scene) {
     _active_scene = std::move(new_scene);
