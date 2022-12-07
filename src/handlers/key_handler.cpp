@@ -1,5 +1,6 @@
 #include "handlers/key_handler.hpp"
 #include <algorithm>
+#include <iostream>
 #include "../include/global.hpp"
 #include "SDL.h"
 #include "events.hpp"

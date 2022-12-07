@@ -6,7 +6,7 @@
 
 class MouseListener {
 public:
-    explicit MouseListener();
+    explicit MouseListener(EventManager &event_manager);
 
     virtual void on_mouse_moved(const MouseMovedEvent &event) = 0;
 

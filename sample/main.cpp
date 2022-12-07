@@ -6,18 +6,40 @@
 #include "global.hpp"
 #include "scene.hpp"
 #include "listeners/key_listener.hpp"
+#include "listeners/mouse_listener.hpp"
 
-class MouseListenerComponent : public Component, public KeyListener {
+class KeyListenerComponent : public Component, public KeyListener {
 public:
+    explicit KeyListenerComponent(EventManager &event_manager) : KeyListener(event_manager) {}
+
     void on_key_pressed(const KeyPressedEvent &event) override {
-        std::cout << "Pressed: " << event.key << "\n";
+        std::cout << "Pressed key: " << event.key << "\n";
     }
 
     void on_key_released(const KeyReleasedEvent &event) override {
-        std::cout << "Pressed: " << event.key << "\n";
+        std::cout << "Released key: " << event.key << "\n";
     }
 };
 
+class MouseListenerComponent : public Component, public MouseListener {
+public:
+    explicit MouseListenerComponent(EventManager &event_manager) : MouseListener(event_manager) {}
+
+    void on_mouse_moved(const MouseMovedEvent &event) override {
+        std::cout << "Moved mouse: " << event.x << " " << event.y << "\n";
+
+    }
+
+    void on_mouse_pressed(const MousePressedEvent &event) override {
+        std::cout << "Pressed mouse: " << event.button << "\n";
+
+    }
+
+    void on_mouse_released(const MouseReleasedEvent &event) override {
+        std::cout << "Released mouse: " << event.button << "\n";
+
+    }
+};
 
 int main(int argc, char *argv[]) {
     // Setup engine
@@ -51,10 +73,15 @@ int main(int argc, char *argv[]) {
     scene->gameobjects.push_back(game_object3);
 
     // Add listeners
-    const auto key_listener = std::make_shared<GameObject>("MouseListener", "TestTag", true);
-    MouseListenerComponent mouse_listener{};
-    key_listener->add_component(std::make_shared<MouseListenerComponent>(mouse_listener));
-    scene->gameobjects.push_back(key_listener);
+    const auto key_listener_object = std::make_shared<GameObject>("KeyListener", "TestTag", true);
+    KeyListenerComponent key_listener{scene->get_event_manager()};
+    key_listener_object->add_component(std::make_shared<KeyListenerComponent>(key_listener));
+    scene->gameobjects.push_back(key_listener_object);
+
+    const auto mouse_listener_object = std::make_shared<GameObject>("MouseListener", "TestTag", true);
+    MouseListenerComponent mouse_listener{scene->get_event_manager()};
+    mouse_listener_object->add_component(std::make_shared<MouseListenerComponent>(mouse_listener));
+    scene->gameobjects.push_back(mouse_listener_object);
 
     engine_ref.load_scene(scene);
 

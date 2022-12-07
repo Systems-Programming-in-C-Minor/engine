@@ -8,7 +8,7 @@
 class KeyListener {
 
 public:
-    explicit KeyListener();
+    explicit KeyListener(EventManager &event_manager);
 
     virtual void on_key_pressed(const KeyPressedEvent &event) = 0;
 
