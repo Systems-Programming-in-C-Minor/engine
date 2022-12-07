@@ -12,6 +12,7 @@ void Engine::load_scene(std::shared_ptr<Scene> new_scene) {
 
 void Engine::start() {
     while (!_should_quit) {
+        SDL_PumpEvents();
         _renderer->clear(Color(0.0, 0.0, 0.0, 255.0));
         _key_handler->tick();
         _active_scene->tick();

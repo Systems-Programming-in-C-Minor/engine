@@ -1,3 +1,4 @@
+#include <iostream>
 #include "sdlrenderer.hpp"
 #include "color.hpp"
 #include "gameobject.hpp"
@@ -5,6 +6,25 @@
 #include "global.hpp"
 #include "scene.hpp"
 #include "input.hpp"
+#include "interfaces/itickable.hpp"
+
+class InputScript : public ITickable, public Component {
+    int count=0;
+    Input input;
+
+    void tick(GameObject &object){
+
+        if(input.get_mouse_button(Left)){
+            std::cout << input.mouse_position() << std::endl;
+        }
+
+        if(input.get_key_down(A)){
+            std::cout << "A key pressed" << count << std::endl;
+            count++;
+        }
+
+    }
+};
 
 int main(int argc, char* argv[])
 {
@@ -24,6 +44,9 @@ int main(int argc, char* argv[])
 	game_object1->add_component(std::make_shared<Sprite>(sprite1));
 	game_object2->add_component(std::make_shared<Sprite>(sprite2));
 	game_object3->add_component(std::make_shared<Sprite>(sprite3));
+
+    game_object3->add_component(std::make_shared<InputScript>());
+
 	const auto scene = std::make_shared<Scene>();
 	scene->gameobjects.push_back(game_object1);
 	scene->gameobjects.push_back(game_object2);

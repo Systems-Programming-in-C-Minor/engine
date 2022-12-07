@@ -4,14 +4,17 @@
 #include "enums/key.hpp"
 #include "enums/mouse_input.hpp"
 #include "transform.hpp"
+#include <vector>
 
-typedef uint8_t Uint8;
 class Input {
 
 public:
-    Input() = default;
+    std::vector<Key> _previous_keystate;
+    std::vector<MouseInput> _previous_mousestate;
 
-    const Uint8* fetch_state();
+    Input() = default;
+    std::vector<Key> fetch_keystate();
+    std::vector<MouseInput> fetch_mousestate();
 
     /**
      * @brief Is any key or mouse button currently held down?
@@ -21,17 +24,12 @@ public:
     /**
      * @brief Returns true the first frame the user hits any key or mouse button.
      */
-//    bool any_key_down();
+    bool any_key_down();
 
     /**
      * @brief Returns the current mouse position in pixel coordinates
      */
     Vector2d mouse_position();
-
-    /**
-     * @brief Returns the value of the virtual axis identified by axisName.
-     */
-    double get_axis();
 
     /**
      * @brief Returns true while the user holds down the key identified by keycode.
