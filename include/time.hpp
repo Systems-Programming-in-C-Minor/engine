@@ -8,7 +8,7 @@ public:
     Time();
 
     /**
-     * Get the time from the previous tick to time of call
+     * Get the time from the previous tick to time of call in milliseconds
      * @return
      */
     [[nodiscard]] double delta_time() const;
