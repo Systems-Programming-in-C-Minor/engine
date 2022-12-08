@@ -1,0 +1,9 @@
+
+#ifndef ENGINE_MULTIPLAYER_MANAGER_HPP
+#define ENGINE_MULTIPLAYER_MANAGER_HPP
+
+class MultiplayerManager {
+
+};
+
+#endif //ENGINE_MULTIPLAYER_MANAGER_HPP
