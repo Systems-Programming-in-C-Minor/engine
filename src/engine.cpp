@@ -54,6 +54,8 @@ std::shared_ptr<IRenderer> Engine::get_renderer() const {
     return _renderer;
 }
 
+Engine::Engine(): Engine(std::make_shared<SdlRenderer>()) {}
+
 Engine::Engine(std::shared_ptr<IRenderer> renderer) : Engine(std::move(renderer), "engine-host") {}
 
 Engine::Engine(const std::string &user_id, bool is_host) : Engine(std::make_shared<SdlRenderer>(), user_id, is_host) {}

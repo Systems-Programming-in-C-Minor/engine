@@ -22,6 +22,8 @@ private:
     unsigned long _fps;
 
 public:
+    Engine();
+
     explicit Engine(std::shared_ptr<IRenderer> renderer);
 
     explicit Engine(const std::string& user_id, bool is_host = true);
