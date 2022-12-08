@@ -6,6 +6,8 @@
 #include <SDL.h>
 #include "gameobject.hpp"
 #include "sdlrenderer.hpp"
+#include "managers/host_multiplayer_manager.hpp"
+#include "managers/client_multiplayer_manager.hpp"
 
 void Engine::load_scene(std::shared_ptr<Scene> new_scene) {
     _active_scene = std::move(new_scene);
@@ -49,12 +51,19 @@ std::shared_ptr<IRenderer> Engine::get_renderer() const {
     return _renderer;
 }
 
-Engine::Engine() : Engine(std::make_shared<SdlRenderer>()) {}
+Engine::Engine(std::shared_ptr<IRenderer> renderer) : Engine(std::move(renderer), "engine-host") {}
 
-Engine::Engine(std::shared_ptr<IRenderer> renderer) : _should_quit(false), _time_after_last_frame(0), _fps(0),
-                                                      _renderer(std::move(renderer)),
-                                                      _key_handler(std::make_unique<KeyHandler>()),
-                                                      _mouse_handler(std::make_unique<MouseHandler>()) {
+Engine::Engine(const std::string &user_id, bool is_host) : Engine(std::make_shared<SdlRenderer>(), user_id, is_host) {}
+
+Engine::Engine(std::shared_ptr<IRenderer> renderer, const std::string &user_id, bool is_host) :
+        _should_quit(false), _time_after_last_frame(0), _fps(0),
+        _renderer(std::move(renderer)),
+        _key_handler(std::make_unique<KeyHandler>()),
+        _mouse_handler(std::make_unique<MouseHandler>()) {
+    if (is_host)
+        _multiplayer_manager = std::make_unique<HostMultiplayerManager>(user_id);
+    else
+        _multiplayer_manager = std::make_unique<ClientMultiplayerManager>(user_id);
 }
 
 Engine::~Engine() = default;
