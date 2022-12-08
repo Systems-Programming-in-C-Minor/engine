@@ -1,6 +1,6 @@
 #include "../include/managers/host_multiplayer_manager.hpp"
 
-HostMultiplayerManager::HostMultiplayerManager(std::string  user_id) : MultiplayerManager(user_id) {}
+HostMultiplayerManager::HostMultiplayerManager(std::string  user_id) : IMultiplayer(user_id) {}
 
 void HostMultiplayerManager::initialize() {
 
