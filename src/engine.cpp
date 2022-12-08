@@ -14,12 +14,15 @@ void Engine::load_scene(std::shared_ptr<Scene> new_scene) {
 }
 
 void Engine::start() {
+    _multiplayer_manager->initialize();
+
     while (!_should_quit) {
         SDL_PumpEvents();
         _renderer->clear(Color(0.0, 0.0, 0.0, 255.0));
         _key_handler->tick();
         _mouse_handler->tick();
         _active_scene->tick();
+        _multiplayer_manager->tick();
         _active_scene->render();
         _renderer->push_to_screen();
 
