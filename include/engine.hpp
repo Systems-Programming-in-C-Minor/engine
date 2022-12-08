@@ -4,7 +4,7 @@
 #include <memory>
 #include "scene.hpp"
 #include "render/irenderer.hpp"
-#include "managers/multiplayer_manager.hpp"
+#include "interfaces/imultiplayer.hpp"
 
 #include "handlers/key_handler.hpp"
 #include "handlers/mouse_handler.hpp"
@@ -14,7 +14,7 @@ private:
     bool _should_quit;
     const std::unique_ptr<KeyHandler> _key_handler;
     const std::unique_ptr<MouseHandler> _mouse_handler;
-    std::unique_ptr<MultiplayerManager> _multiplayer_manager;
+    std::unique_ptr<IMultiplayer> _multiplayer_manager;
     std::shared_ptr<Scene> _active_scene;
     std::shared_ptr<IRenderer> _renderer;
 

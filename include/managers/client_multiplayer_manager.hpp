@@ -2,9 +2,9 @@
 #ifndef ENGINE_CLIENT_MULTIPLAYER_MANAGER_HPP
 #define ENGINE_CLIENT_MULTIPLAYER_MANAGER_HPP
 
-#include "./multiplayer_manager.hpp"
+#include "interfaces/imultiplayer.hpp"
 
-class ClientMultiplayerManager : public MultiplayerManager {
+class ClientMultiplayerManager : public IMultiplayer {
 public:
     explicit ClientMultiplayerManager(std::string  user_id);
 

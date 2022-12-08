@@ -1,18 +1,18 @@
 
-#ifndef ENGINE_MULTIPLAYER_MANAGER_HPP
-#define ENGINE_MULTIPLAYER_MANAGER_HPP
+#ifndef ENGINE_IMULTIPLAYER_HPP
+#define ENGINE_IMULTIPLAYER_HPP
 
 #include <string>
 #include <memory>
 #include <vector>
-#include "../interfaces/inetworkable.hpp"
+#include "inetworkable.hpp"
 
-class MultiplayerManager {
+class IMultiplayer {
 private:
     std::vector<std::shared_ptr<INetworkable>> _networkables;
 
 protected:
-    explicit MultiplayerManager(std::string  user_id);
+    explicit IMultiplayer(std::string  user_id);
 
 public:
     const std::string user_id;
@@ -29,4 +29,4 @@ public:
     virtual void disconnect() = 0;
 };
 
-#endif //ENGINE_MULTIPLAYER_MANAGER_HPP
+#endif //ENGINE_IMULTIPLAYER_HPP
