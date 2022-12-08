@@ -3,11 +3,3 @@
 void Collider::render(bool is_world_space) const {
 
 }
-
-bool Collider::get_ignore_collision_physics() const {
-    return _ignore_collision_physics;
-}
-
-void Collider::set_ignore_collision_physics(bool icp) {
-    _ignore_collision_physics = icp;
-}

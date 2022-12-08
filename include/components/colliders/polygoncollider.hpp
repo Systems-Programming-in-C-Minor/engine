@@ -8,7 +8,7 @@
 #include <vector>
 
 class b2ChainShape;
-
+class b2Body;
 class Vector2d;
 
 /**
@@ -18,17 +18,16 @@ class Vector2d;
 class PolygonCollider : public Collider
 {
 public:
-    explicit PolygonCollider(std::vector<Vector2d> points, ColliderNormal collider_normal = ColliderNormal::outwards);
-    explicit PolygonCollider(const std::string& path, ColliderNormal collider_normal = ColliderNormal::outwards);
+    explicit PolygonCollider(std::vector<Vector2d> points, bool ignore_collision_physics = false, ColliderNormal collider_normal = ColliderNormal::outwards);
+    explicit PolygonCollider(const std::string& path, bool ignore_collision_physics = false, ColliderNormal collider_normal = ColliderNormal::outwards);
 
     [[nodiscard]] std::vector<Vector2d> get_points() const;
-
+protected:
+    void set_fixture(b2Body& body, float friction, float restitution) override;
 private:
-    std::shared_ptr<b2ChainShape> _shape;
-    std::vector<Vector2d> _points;
+    ColliderNormal _collider_normal;
 
     void get_points_from_file(const std::string& path);
-    void set_shape(ColliderNormal collider_normal);
 };
 
 #endif //COLLIDERS_POLYGONCOLLIDER_HPP

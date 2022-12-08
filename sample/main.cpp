@@ -19,15 +19,14 @@ public:
     void on_key_released(const KeyReleasedEvent &event) override {
         std::cout << "Released key: " << event.key << "\n";
     }
-};
 
 class MouseListenerComponent : public Component, public MouseListener {
 public:
     explicit MouseListenerComponent(EventManager &event_manager) : MouseListener(event_manager) {}
 
-    void on_mouse_moved(const MouseMovedEvent &event) override {
-        std::cout << "Moved mouse: " << event.x << " " << event.y << "\n";
+	const auto scene = std::make_shared<Scene>();
 
+	auto collider = std::make_shared<BoxCollider>(4.f, 4.f);
     }
 
     void on_mouse_pressed(const MousePressedEvent &event) override {
