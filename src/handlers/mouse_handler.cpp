@@ -9,11 +9,11 @@ std::vector<MouseInput> MouseHandler::fetch_input() {
 
     std::vector<MouseInput> button_pressed;
 
-    if (current_mouse_states & SDL_BUTTON_LEFT)
+    if (current_mouse_states & SDL_BUTTON_LMASK)
         button_pressed.emplace_back(BUTTON_LEFT);
-    if (current_mouse_states & SDL_BUTTON_MIDDLE)
+    if (current_mouse_states & SDL_BUTTON_MMASK)
         button_pressed.emplace_back(BUTTON_MIDDLE);
-    if (current_mouse_states & SDL_BUTTON_RIGHT)
+    if (current_mouse_states & SDL_BUTTON_RMASK)
         button_pressed.emplace_back(BUTTON_RIGHT);
 
     return button_pressed;
