@@ -17,7 +17,6 @@ protected:
 public:
     const std::string user_id;
 
-
     void register_networkable(const std::shared_ptr<INetworkable>& networkable);
 
     virtual void initialize() = 0;
@@ -27,6 +26,8 @@ public:
     virtual void connect() = 0;
 
     virtual void disconnect() = 0;
+
+    virtual ~IMultiplayer() = default;
 };
 
 #endif //ENGINE_IMULTIPLAYER_HPP
