@@ -3,18 +3,20 @@
 
 #include <memory>
 #include "scene.hpp"
+#include "interfaces/isound_engine.hpp"
 
 class Engine {
 private:
     bool _should_quit;
     std::shared_ptr<Scene> _active_scene;
     std::shared_ptr<IRenderer> _renderer;
+    std::shared_ptr<ISoundEngine> _sound_engine;
 
     long long _time_after_last_frame;
     unsigned long _fps;
 public:
     Engine();
-    explicit Engine(std::shared_ptr<IRenderer> renderer);
+    explicit Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine);
     virtual ~Engine();
 
     void start();

@@ -6,6 +6,7 @@
 #include "gameobject.hpp"
 #include "global.hpp"
 #include "sdlrenderer.hpp"
+#include "audio/soloud_sound_engine.hpp"
 #include "SDL.h"
 
 
@@ -49,10 +50,10 @@ std::shared_ptr<IRenderer> Engine::get_renderer() const
     return _renderer;
 }
 
-Engine::Engine() : Engine(std::make_shared<SdlRenderer>())
+Engine::Engine() : Engine(std::make_shared<SdlRenderer>(), std::make_shared<SoloudSoundEngine>())
 {}
 
-Engine::Engine(std::shared_ptr<IRenderer> renderer) : _should_quit(false), _time_after_last_frame(0), _fps(0), _renderer(std::move(renderer))
+Engine::Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine) : _should_quit(false), _time_after_last_frame(0), _fps(0), _renderer(std::move(renderer)), _sound_engine(std::move(sound_engine))
 {}
 
 Engine::~Engine() = default;
