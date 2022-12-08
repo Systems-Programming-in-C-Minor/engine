@@ -11,9 +11,3 @@ TEST(PolygonColliderTest, GetPoints){
 
     EXPECT_EQ(test_points, test_polygon_collider.get_points());
 }
-
-TEST(PolygonColliderTest, GetICP_Test){
-    PolygonCollider test_polygon_collider {"test"};
-    test_polygon_collider.set_ignore_collision_physics(true);
-    EXPECT_TRUE(test_polygon_collider.get_ignore_collision_physics());
-}
