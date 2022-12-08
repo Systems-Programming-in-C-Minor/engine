@@ -45,18 +45,15 @@ enum Key {
     SPACE,
     ENTER,
     MIN,
-    PLUS,
     EQUAL,
-    LOWER_DASH,
     SHIFT_RIGHT,
     SHIFT_LEFT,
     CTRL_RIGHT,
     CTRL_LEFT,
-    ALT,
+    ALT_RIGHT,
+    ALT_LEFT,
     TAB,
     ESC,
-    SUPER,
-    FUNCTION,
 };
 
 #endif //ENGINE_KEY_HPP

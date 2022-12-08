@@ -5,8 +5,6 @@
 
 enum Event {
     MouseMoved,
-    MouseClicked,
-    MouseButton,
     MousePressed,
     MouseReleased,
     KeyPressed,
