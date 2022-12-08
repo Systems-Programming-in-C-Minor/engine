@@ -10,15 +10,11 @@ SoloudSoundEngine::SoloudSoundEngine() : _soLoud_instance(std::make_shared<SoLou
 
 void SoloudSoundEngine::play(const std::string &path)  {
 
-    if(_audio_files.contains(path))
-    {
-        _soLoud_instance->play(*_audio_files[path]);
-    }
-    else
+    if(!_audio_files.contains(path))
     {
         auto audio_file = std::make_shared<SoLoud::Wav>();
         audio_file->load(path.c_str());
         _audio_files[path] = audio_file;
-        _soLoud_instance->play(*audio_file);
     }
+    _soLoud_instance->play(*_audio_files[path]);
 }
