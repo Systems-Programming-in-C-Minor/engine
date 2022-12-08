@@ -54,11 +54,11 @@ std::shared_ptr<IRenderer> Engine::get_renderer() const {
 Engine::Engine() : Engine(std::make_shared<SdlRenderer>(), std::make_shared<SoloudSoundEngine>())
 {}
 
-Engine::Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine) : _should_quit(false), _time_after_last_frame(0), _fps(0), _renderer(std::move(renderer)), _sound_engine(std::move(sound_engine))
-{}
-
-Engine::Engine(std::shared_ptr<IRenderer> renderer) : _should_quit(false), _time_after_last_frame(0), _fps(0),
+Engine::Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine) : _should_quit(false),
+                                                      _time_after_last_frame(0),
+                                                      _fps(0),
                                                       _renderer(std::move(renderer)),
+                                                      _sound_engine(std::move(sound_engine)),
                                                       _key_handler(std::make_unique<KeyHandler>()),
                                                       _mouse_handler(std::make_unique<MouseHandler>()) {
 }
