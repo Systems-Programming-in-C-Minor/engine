@@ -51,6 +51,14 @@ public:
 
     void set_body_type(BodyType body_type) const;
 
+    void set_position(Vector2d vector) const;
+
+    [[nodiscard]] Vector2d get_position() const;
+
+    void set_angle(float angle) const;
+
+    [[nodiscard]] float get_angle() const;
+
 private:
     b2Body *_body;
 

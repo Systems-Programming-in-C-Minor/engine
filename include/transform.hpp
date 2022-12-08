@@ -4,23 +4,35 @@
 #include <memory>
 
 #include "vector2d.hpp"
+#include "components/rigidbody.hpp"
 
-class Transform
-{
-public:
-	[[nodiscard]] double get_angle();
-	void set_angle(double angle = 0.0);
-	[[nodiscard]] double get_scale();
-	void set_scale(double scale = 1.0);
-	[[nodiscard]] Vector2d get_position();
-	void set_position(Vector2d& position);
+class GameObject;
 
-	Transform(const Vector2d& position, double angle = 0.0, double scale = 0.0);
-
+class Transform {
 private:
-	Vector2d _position;
-	double _angle;
-	double _scale;
+    Vector2d _position;
+    float _angle;
+    float _scale;
+    GameObject* _game_object = nullptr;
+
+    friend class GameObject;
+
+    [[nodiscard]] std::shared_ptr<RigidBody> get_rigid_body() const;
+
+public:
+    explicit Transform(const Vector2d &position, float angle = 0.f, float scale = 1.f);
+
+    [[nodiscard]] float get_angle() const;
+
+    void set_angle(float angle = 0.f);
+
+    [[nodiscard]] float get_scale() const;
+
+    void set_scale(float scale = 1.f);
+
+    [[nodiscard]] Vector2d get_position() const;
+
+    void set_position(Vector2d &position);
 };
 
 #endif // ENGINE_TRANSFORM_H_sZYCcKEA4x

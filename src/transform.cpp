@@ -1,37 +1,60 @@
 #include "transform.hpp"
+#include "box2d/box2d.h"
+#include "components/rigidbody.hpp"
+#include "gameobject.hpp"
 
+Transform::Transform(const Vector2d &position, float angle, float scale) :
+        _position(position),
+        _angle(angle),
+        _scale(scale) {}
 
-double Transform::get_angle()
-{
-	return _angle;
+float Transform::get_angle() const {
+    auto rigid_body = get_rigid_body();
+    if (rigid_body)
+        return rigid_body->get_angle();
+
+    return _angle;
 }
 
-void Transform::set_angle(double angle)
-{
-	_angle = angle;
+void Transform::set_angle(float angle) {
+    auto rigid_body = get_rigid_body();
+    if (rigid_body) {
+        rigid_body->set_angle(angle);
+        return;
+    }
+
+    _angle = angle;
 }
 
-double Transform::get_scale()
-{
-	return _scale;
+float Transform::get_scale() const {
+    return _scale;
 }
 
-void Transform::set_scale(double scale)
-{
-	_scale = scale;
+void Transform::set_scale(float scale) {
+    _scale = scale;
 }
 
-Vector2d Transform::get_position()
-{
-	return _position;
+Vector2d Transform::get_position() const {
+    auto rigid_body = get_rigid_body();
+    if (rigid_body)
+        return rigid_body->get_position();
+
+    return _position;
 }
 
-void Transform::set_position(Vector2d & position)
-{
-	_position = position;
+void Transform::set_position(Vector2d &position) {
+    auto rigid_body = get_rigid_body();
+    if (rigid_body) {
+        rigid_body->set_position(position);
+        return;
+    }
+
+    _position = position;
 }
 
-Transform::Transform(const Vector2d& position, double angle, double scale):
-	_position(position),
-	_angle(angle),
-	_scale(scale) {}
+std::shared_ptr<RigidBody> Transform::get_rigid_body() const {
+    if (!_game_object)
+        return nullptr;
+
+    return _game_object->get_component<RigidBody>();
+}

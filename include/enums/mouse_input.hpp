@@ -2,9 +2,9 @@
 #define ENGINE_MOUSEINPUT_HPP
 
 enum MouseInput {
-    Left,
-    Right,
-    Middle,
+    BUTTON_LEFT,
+    BUTTON_MIDDLE,
+    BUTTON_RIGHT,
 };
 
 #endif //ENGINE_MOUSEINPUT_HPP

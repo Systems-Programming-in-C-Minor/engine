@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include "components/rigidbody.hpp"
+#include "managers/event_manager.hpp"
 
 class IRenderer;
 class b2World;
@@ -13,6 +14,7 @@ class GameObject;
 
 class Scene {
 private:
+    const std::unique_ptr<EventManager> _event_manager;
     const std::unique_ptr<b2World> _world;
     friend class RigidBody;
 
@@ -26,10 +28,10 @@ public:
 
     /**
      * Calls the render functions on this scene's gameobjects
-     *
-     * @param[in] renderer Reference to the active renderer
      */
-    virtual void render(IRenderer &renderer) const;
+    virtual void render() const;
+
+    [[nodiscard]] EventManager &get_event_manager() const;
 
     Scene();
 
