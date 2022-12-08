@@ -3,6 +3,7 @@
 #include <utility>
 #include <chrono>
 #include <cmath>
+#include <SDL.h>
 #include "gameobject.hpp"
 #include "sdlrenderer.hpp"
 
@@ -12,8 +13,10 @@ void Engine::load_scene(std::shared_ptr<Scene> new_scene) {
 
 void Engine::start() {
     while (!_should_quit) {
+        SDL_PumpEvents();
         _renderer->clear(Color(0.0, 0.0, 0.0, 255.0));
         _key_handler->tick();
+        _mouse_handler->tick();
         _active_scene->tick();
         _active_scene->render();
         _renderer->push_to_screen();
@@ -49,8 +52,9 @@ std::shared_ptr<IRenderer> Engine::get_renderer() const {
 Engine::Engine() : Engine(std::make_shared<SdlRenderer>()) {}
 
 Engine::Engine(std::shared_ptr<IRenderer> renderer) : _should_quit(false), _time_after_last_frame(0), _fps(0),
-                                                      _renderer(std::move(renderer)) {
-    _key_handler = std::make_unique<KeyHandler>();
+                                                      _renderer(std::move(renderer)),
+                                                      _key_handler(std::make_unique<KeyHandler>()),
+                                                      _mouse_handler(std::make_unique<MouseHandler>()) {
 }
 
 Engine::~Engine() = default;

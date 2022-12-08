@@ -1,5 +1,6 @@
 #include "handlers/key_handler.hpp"
 #include <algorithm>
+#include <iostream>
 #include "../include/global.hpp"
 #include "SDL.h"
 #include "events.hpp"
@@ -120,18 +121,20 @@ std::vector<Key> KeyHandler::fetch_keys() {
 void KeyHandler::tick() {
     auto keys_pressed = fetch_keys();
 
+    for (const auto pressed_key: keys_pressed) {
+        if (std::find(_keys_active.begin(), _keys_active.end(), pressed_key) != _keys_active.end())
+            continue;
+
+        auto pressed_event = KeyPressedEvent(pressed_key);
+        Global::get_instance()->notify_event_manager(pressed_event);
+    }
+
     for (const auto active_key: _keys_active) {
-        if (std::find(keys_pressed.begin(), keys_pressed.end(), active_key) == keys_pressed.end())
+        if (std::find(keys_pressed.begin(), keys_pressed.end(), active_key) != keys_pressed.end())
             continue;
 
         auto release_event = KeyReleasedEvent(active_key);
         Global::get_instance()->notify_event_manager(release_event);
-    }
-
-
-    for (const auto pressed_key: keys_pressed) {
-        auto pressed_event = KeyPressedEvent(pressed_key);
-        Global::get_instance()->notify_event_manager(pressed_event);
     }
 
     _keys_active = keys_pressed;
