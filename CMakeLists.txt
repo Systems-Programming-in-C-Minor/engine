@@ -34,16 +34,31 @@ FetchContent_Declare(SDL2pp
   GIT_PROGRESS TRUE
 )
 
+FetchContent_Declare(
+        soloud
+        GIT_REPOSITORY https://github.com/jarikomppa/soloud.git
+        GIT_TAG 1157475
+        GIT_PROGRESS TRUE
+        SOURCE_SUBDIR contrib
+)
+
 # This allows libSDL2pp to find the local SDL2 libraries.
 list(APPEND CMAKE_PREFIX_PATH $ENV{CMAKE_PREFIX_PATH}/SDL2)
 list(APPEND CMAKE_PREFIX_PATH $ENV{CMAKE_PREFIX_PATH}/SDL2_image/x86_64-w64-mingw32/include)
 list(APPEND CMAKE_PREFIX_PATH $ENV{CMAKE_PREFIX_PATH}/SDL2_image/x86_64-w64-mingw32/lib)
 
+FIND_PATH(MY_SDL2_INCLUDE_DIR SDL.h
+        HINTS
+        PATH_SUFFIXES include/SDL2 include
+        )
+
+set(SDL2_INCLUDE_DIR ${MY_SDL2_INCLUDE_DIR})
+
 set(SDL2PP_WITH_IMAGE ON) # if you need SDL_image support
 set(SDL2PP_WITH_MIXER OFF) # if you need SDL_mixer support
 set(SDL2PP_WITH_TTF OFF) # if you need SDL_ttf support
 
-FetchContent_MakeAvailable(fmt box2d SDL2pp)
+FetchContent_MakeAvailable(fmt box2d SDL2pp soloud)
 
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS ./src/*.cpp)
 file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS ./include/*.hpp)
@@ -59,11 +74,13 @@ add_library(engine STATIC ${SOURCE_FILES} ${HEADER_FILES})
 target_compile_definitions(engine PRIVATE _USE_MATH_DEFINES)
 
 target_include_directories(engine PUBLIC include)
+target_include_directories(engine PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/_deps/soloud-src/include)
 
 target_link_libraries(engine PRIVATE
         fmt::fmt
         box2d
         SDL2pp::SDL2pp
+        soloud
         )
 
 if (ENGINE_TEST)
