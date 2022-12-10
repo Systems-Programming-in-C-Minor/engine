@@ -6,6 +6,7 @@
 #include <SDL.h>
 #include "gameobject.hpp"
 #include "sdlrenderer.hpp"
+#include "global.hpp"
 
 void Engine::load_scene(std::shared_ptr<Scene> new_scene) {
     _active_scene = std::move(new_scene);
@@ -20,6 +21,7 @@ void Engine::start() {
         _active_scene->tick();
         _active_scene->render();
         _renderer->push_to_screen();
+        Global::get_instance()->time.tick();
 
         const auto current_nanos = std::chrono::system_clock::now().time_since_epoch().count();
 

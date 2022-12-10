@@ -5,6 +5,7 @@
 #include "engine.hpp"
 #include "storage/iproperties.hpp"
 #include "scene.hpp"
+#include "time.hpp"
 
 class Global {
 private:
@@ -33,6 +34,8 @@ public:
     void  notify_event_manager(const IEvent& event);
 
     void operator=(const Global &) = delete;
+
+    Time time;
 };
 
 #endif //ENGINE_GLOBAL_HPP
