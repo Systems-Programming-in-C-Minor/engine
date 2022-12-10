@@ -122,11 +122,16 @@ void KeyHandler::tick() {
     auto keys_pressed = fetch_keys();
 
     for (const auto pressed_key: keys_pressed) {
-        if (std::find(_keys_active.begin(), _keys_active.end(), pressed_key) != _keys_active.end())
+        auto hold_event = KeyHoldEvent(pressed_key);
+
+        if (std::find(_keys_active.begin(), _keys_active.end(), pressed_key) != _keys_active.end()) {
+            Global::get_instance()->notify_event_manager(hold_event);
             continue;
+        }
 
         auto pressed_event = KeyPressedEvent(pressed_key);
         Global::get_instance()->notify_event_manager(pressed_event);
+        Global::get_instance()->notify_event_manager(hold_event);
     }
 
     for (const auto active_key: _keys_active) {
