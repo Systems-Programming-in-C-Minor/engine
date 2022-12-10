@@ -5,14 +5,14 @@
 void Scene::tick() {
     _world->Step(1.f/60.f, 6.0f, 2.0f);
 
-    for (auto &gameobject: gameobjects) {
-        gameobject->tick();
+    for (auto &game_object: gameobjects) {
+        game_object->tick();
     }
 }
 
 void Scene::render() const {
-    for (auto &gameobject: gameobjects) {
-        gameobject->render();
+    for (auto &game_object: gameobjects) {
+        game_object->render();
     }
 }
 
@@ -22,5 +22,5 @@ EventManager &Scene::get_event_manager() const {
 
 Scene::~Scene() = default;
 
-Scene::Scene() : _world(std::make_unique<b2World>(b2Vec2(0.0f, 0.0f))),
-                 _event_manager(std::make_unique<EventManager>()) {}
+Scene::Scene() : _event_manager(std::make_unique<EventManager>()),
+                 _world(std::make_unique<b2World>(b2Vec2(0.0f, 0.0f))) {}
