@@ -3,7 +3,7 @@
 
 #include "vector2d.hpp"
 #include "collider.hpp"
-#include "utils/collidernormalenum.hpp"
+#include "enums/collidernormal.hpp"
 
 #include <vector>
 
