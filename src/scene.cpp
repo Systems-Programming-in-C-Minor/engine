@@ -3,6 +3,8 @@
 #include "box2d/box2d.h"
 
 void Scene::tick() {
+    _world->Step(1.f/60.f, 6.0f, 2.0f);
+
     for (auto &gameobject: gameobjects) {
         gameobject->tick();
     }
