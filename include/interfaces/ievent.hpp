@@ -8,6 +8,7 @@ enum Event {
     MousePressed,
     MouseReleased,
     KeyPressed,
+    KeyHold,
     KeyReleased,
     ColliderExit,
     ColliderEntry,

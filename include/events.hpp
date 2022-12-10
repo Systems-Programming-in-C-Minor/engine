@@ -31,6 +31,12 @@ public:
     Key key;
 };
 
+class KeyHoldEvent : public IEvent {
+public:
+    explicit KeyHoldEvent(Key key): IEvent(KeyHold), key(key) {};
+    Key key;
+};
+
 class KeyReleasedEvent : public IEvent {
 public:
     explicit KeyReleasedEvent(Key key): IEvent(KeyReleased), key(key) {};

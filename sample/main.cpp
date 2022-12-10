@@ -16,6 +16,10 @@ public:
         std::cout << "Pressed key: " << event.key << "\n";
     }
 
+    void on_key_hold(const KeyHoldEvent &event) override {
+        std::cout << "Hold key: " << event.key << "\n";
+    }
+
     void on_key_released(const KeyReleasedEvent &event) override {
         std::cout << "Released key: " << event.key << "\n";
     }
