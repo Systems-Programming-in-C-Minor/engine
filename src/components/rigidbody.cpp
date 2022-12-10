@@ -1,9 +1,19 @@
+#include "components/colliders/collider.hpp"
 #include "components/rigidbody.hpp"
 #include "scene.hpp"
 
 #include "box2d/box2d.h"
 
-RigidBody::RigidBody(const Scene &scene, const BodyType type, const Vector2d vector, const float gravity_scale) {
+RigidBody::RigidBody(const Scene &scene,
+    const BodyType type,
+    const Vector2d vector,
+    const float gravity_scale,
+    const float restitution,
+    const float friction
+) :
+	_restitution(restitution),
+	_friction(friction)
+{
     b2BodyDef body_def;
     body_def.type = static_cast<b2BodyType>(type);
     body_def.position.Set(vector.x, vector.y);
@@ -96,4 +106,9 @@ void RigidBody::set_angle(float angle) const {
 
 float RigidBody::get_angle() const {
     return _body->GetAngle();
+}
+
+void RigidBody::set_collider(std::shared_ptr<Collider> collider) {
+    _collider = collider;
+    collider->set_fixture(*_body, _friction, _restitution);
 }

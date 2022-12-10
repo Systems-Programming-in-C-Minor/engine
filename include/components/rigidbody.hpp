@@ -16,10 +16,17 @@ class b2Body;
 class b2Vec2;
 
 class Scene;
+class Collider;
 
 class RigidBody : public Component {
 public:
-    RigidBody(const Scene &scene, BodyType type, Vector2d vector, float gravity_scale);
+    RigidBody(const Scene &scene, 
+        const BodyType type, 
+        const Vector2d vector, 
+        const float gravity_scale, 
+        float restitution = 0.5f, 
+        float friction = 0.5f
+    );
 
     void apply_force(Vector2d force, Vector2d point) const;
 
@@ -59,8 +66,13 @@ public:
 
     [[nodiscard]] float get_angle() const;
 
+    void set_collider(std::shared_ptr<Collider> collider);
+
 private:
     b2Body *_body;
+    std::shared_ptr<Collider> _collider;    
+    float _restitution;
+    float _friction;
 
     static b2Vec2 get_b2vec(Vector2d vector);
 

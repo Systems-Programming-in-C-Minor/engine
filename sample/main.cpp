@@ -5,6 +5,7 @@
 #include "components/sprite.hpp"
 #include "global.hpp"
 #include "scene.hpp"
+#include "components/colliders/boxcollider.hpp"
 #include "listeners/key_listener.hpp"
 #include "listeners/mouse_listener.hpp"
 
@@ -72,6 +73,13 @@ int main(int argc, char *argv[]) {
     game_object3->add_component(std::make_shared<Sprite>(sprite3));
 
     const auto scene = std::make_shared<Scene>();
+
+    // Try colliders
+    auto collider = std::make_shared<BoxCollider>(4.f, 4.f);
+    auto rigid_body = std::make_shared<RigidBody>(*scene, BodyType::static_body, Vector2d{ 0.f, 0.f }, 1.0f);
+    rigid_body->set_collider(collider);
+    game_object1->add_component(rigid_body);
+
     scene->gameobjects.push_back(game_object1);
     scene->gameobjects.push_back(game_object2);
     scene->gameobjects.push_back(game_object3);
