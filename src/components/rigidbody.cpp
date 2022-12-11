@@ -5,15 +5,14 @@
 #include "box2d/box2d.h"
 
 RigidBody::RigidBody(const Scene &scene,
-    const BodyType type,
-    const Vector2d vector,
-    const float gravity_scale,
-    const float restitution,
-    const float friction
+                     const BodyType type,
+                     const Vector2d vector,
+                     const float gravity_scale,
+                     const float restitution,
+                     const float friction
 ) :
-	_restitution(restitution),
-	_friction(friction)
-{
+        _restitution(restitution),
+        _friction(friction) {
     b2BodyDef body_def;
     body_def.type = static_cast<b2BodyType>(type);
     body_def.position.Set(vector.x, vector.y);
@@ -51,6 +50,24 @@ void RigidBody::apply_linear_impulse(const Vector2d impulse, const Vector2d poin
 
 void RigidBody::apply_angular_impulse(const float impulse) const {
     _body->ApplyAngularImpulse(impulse, true);
+}
+
+Vector2d RigidBody::get_world_vector(const Vector2d vector) const {
+    return get_vec(_body->GetWorldVector(get_b2vec(vector)));
+}
+
+Vector2d RigidBody::get_lateral_velocity() {
+    b2Vec2 current_right_normal = _body->GetWorldVector(b2Vec2(1, 0));
+    return get_vec(b2Dot(current_right_normal, _body->GetLinearVelocity()) * current_right_normal);
+}
+
+Vector2d RigidBody::get_forward_velocity() {
+    b2Vec2 currentForwardNormal = _body->GetWorldVector(b2Vec2(0, 1));
+    return get_vec(b2Dot(currentForwardNormal, _body->GetLinearVelocity()) * currentForwardNormal);
+}
+
+Vector2d RigidBody::get_direction() {
+    return get_vec(_body->GetWorldVector(b2Vec2(0, 1)));
 }
 
 float RigidBody::get_mass() const {
