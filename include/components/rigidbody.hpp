@@ -55,6 +55,8 @@ public:
 
     float get_current_speed();
 
+    Vector2d get_world_center();
+
     [[nodiscard]] float get_mass() const;
 
     [[nodiscard]] float get_inertia() const;

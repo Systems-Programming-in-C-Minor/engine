@@ -75,6 +75,10 @@ float RigidBody::get_current_speed() {
     return b2Dot(get_b2vec(get_forward_velocity()), get_b2vec(currentForwardNormal));
 }
 
+Vector2d RigidBody::get_world_center() {
+    return get_vec(_body->GetWorldCenter());
+}
+
 float RigidBody::get_mass() const {
     return _body->GetMass();
 }
