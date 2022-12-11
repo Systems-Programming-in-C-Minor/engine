@@ -44,6 +44,17 @@ TEST(Vector2dTest, MultiplyTestOverload)
 	EXPECT_TRUE(vec3.almost_equals(vec4, 0.0001));
 }
 
+TEST(Vector2dTest, MultiplyFloatTestOverload)
+{
+    Vector2d vec1(0.3, 0.3);
+    float flo = 0.3f;
+
+    Vector2d vec3 = vec1 * flo;
+    Vector2d vec4(0.09, 0.09);
+
+    EXPECT_TRUE(vec3.almost_equals(vec4, 0.0001));
+}
+
 TEST(Vector2dTest, DivideTestOverload)
 {
 	Vector2d vec1(1.0, 1.0);
@@ -109,6 +120,17 @@ TEST(Vector2dTest, MultiplyTestFunc)
 	Vector2d vec4(-0.09, 0.06);
 
 	EXPECT_TRUE(vec3.almost_equals(vec4, 0.0001));
+}
+
+TEST(Vector2dTest, MultiplyFloatTestFunc)
+{
+    Vector2d vec1(0.3, 0.3);
+    float flo = 0.3f;
+
+    Vector2d vec3 = vec1.multiply(flo);
+    Vector2d vec4(0.09, 0.09);
+
+    EXPECT_TRUE(vec3.almost_equals(vec4, 0.0001));
 }
 
 TEST(Vector2dTest, DivideTestFunc)

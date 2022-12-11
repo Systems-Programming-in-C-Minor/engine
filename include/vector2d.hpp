@@ -23,6 +23,9 @@ public:
     [[nodiscard]] Vector2d divide(const Vector2d &other) const;
     [[nodiscard]] Vector2d operator/(const Vector2d &other) const;
 
+    [[nodiscard]] Vector2d multiply(float other) const;
+    [[nodiscard]] Vector2d operator*(float other) const;
+
     /**
      * Checks equality of the vector
      *
