@@ -5,6 +5,7 @@
 
 struct b2Vec2;
 class PolygonCollider;
+class ChainCollider;
 
 class Vector2d {
 public:
@@ -47,6 +48,7 @@ public:
     explicit Vector2d(float x = 0.0f, float y = 0.0f);
 private:
     friend class PolygonCollider;
+    friend class ChainCollider;
     explicit Vector2d(const b2Vec2& b2vec);
     explicit operator b2Vec2() const;
 };

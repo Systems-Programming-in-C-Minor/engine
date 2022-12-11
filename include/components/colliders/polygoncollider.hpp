@@ -18,15 +18,13 @@ class Vector2d;
 class PolygonCollider : public Collider
 {
 public:
-    explicit PolygonCollider(std::vector<Vector2d> points, bool ignore_collision_physics = false, ColliderNormal collider_normal = ColliderNormal::outwards);
-    explicit PolygonCollider(const std::string& path, bool ignore_collision_physics = false, ColliderNormal collider_normal = ColliderNormal::outwards);
+    explicit PolygonCollider(std::vector<Vector2d> points, bool ignore_collision_physics = false);
+    explicit PolygonCollider(const std::string& path, bool ignore_collision_physics = false);
 
     [[nodiscard]] std::vector<Vector2d> get_points() const;
 protected:
     void set_fixture(b2Body& body, float friction, float restitution) override;
 private:
-    ColliderNormal _collider_normal;
-
     void get_points_from_file(const std::string& path);
 };
 
