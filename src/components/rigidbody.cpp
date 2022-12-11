@@ -70,6 +70,11 @@ Vector2d RigidBody::get_direction() {
     return get_vec(_body->GetWorldVector(b2Vec2(0, 1)));
 }
 
+float RigidBody::get_current_speed() {
+    Vector2d currentForwardNormal = get_world_vector(Vector2d { 0 , 1});
+    return b2Dot(get_b2vec(get_forward_velocity()), get_b2vec(currentForwardNormal));
+}
+
 float RigidBody::get_mass() const {
     return _body->GetMass();
 }

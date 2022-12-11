@@ -53,6 +53,8 @@ public:
 
     Vector2d get_direction();
 
+    float get_current_speed();
+
     [[nodiscard]] float get_mass() const;
 
     [[nodiscard]] float get_inertia() const;
