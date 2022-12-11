@@ -45,6 +45,8 @@ public:
      */
     [[nodiscard]] bool almost_equals(const Vector2d &other, double epsilon) const;
 
+    [[nodiscard]] float length() const;
+
     explicit Vector2d(float x = 0.0f, float y = 0.0f);
 private:
     friend class PolygonCollider;
