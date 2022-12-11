@@ -47,6 +47,8 @@ public:
 
     [[nodiscard]] float length() const;
 
+    [[nodiscard]] float normalize() const;
+
     explicit Vector2d(float x = 0.0f, float y = 0.0f);
 private:
     friend class PolygonCollider;
