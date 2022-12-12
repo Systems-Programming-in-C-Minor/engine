@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+{% for body in bodies %}
+{% for fixture in body.fixtures %}
+                <points numVertexes="{{fixture.hull|length}}">
+{% for point in fixture.hull %}
+                    <vertex x="{{point.x|floatformat:0}}" y="{{point.y|floatformat:0}}" />
+{% endfor %}
+                </points>
+{% endfor %}
+{% endfor %}
+
+
+<ptm_ratio>{{global.ptm_ratio}}</ptm_ratio>

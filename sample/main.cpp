@@ -6,8 +6,10 @@
 #include "global.hpp"
 #include "scene.hpp"
 #include "components/colliders/boxcollider.hpp"
+#include "components/colliders/chaincollider.hpp"
 #include "listeners/key_listener.hpp"
 #include "listeners/mouse_listener.hpp"
+#include "utils/xmlreader.hpp"
 
 class KeyListenerComponent : public Component, public KeyListener {
 public:
@@ -94,6 +96,12 @@ int main(int argc, char *argv[]) {
     MouseListenerComponent mouse_listener{scene->get_event_manager()};
     mouse_listener_object->add_component(std::make_shared<MouseListenerComponent>(mouse_listener));
     scene->gameobjects.push_back(mouse_listener_object);
+
+    auto chaincollider = std::make_shared<ChainCollider>("./assets/track1_outer.xml");
+    auto chain_rigidbody = std::make_shared<RigidBody>(*scene, BodyType::static_body, Vector2d{ 2.f, 2.f }, 1.0f);
+    chain_rigidbody->set_collider(chaincollider);
+
+    game_object2->add_component(chain_rigidbody);
 
     engine_ref.load_scene(scene);
 

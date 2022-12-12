@@ -44,6 +44,16 @@ Vector2d Vector2d::operator*(const float other) const
     return multiply(other);
 }
 
+Vector2d Vector2d::divide(const float other) const
+{
+    return Vector2d(x / other, y / other);
+}
+
+Vector2d Vector2d::operator/(const float other) const
+{
+    return divide(other);
+}
+
 Vector2d Vector2d::divide(const Vector2d& other) const
 {
     if (other.x == 0.0 || other.y == 0.0)
