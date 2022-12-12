@@ -56,17 +56,17 @@ int main(int argc, char *argv[]) {
     // Create gameobject with sprite component
     const auto game_object1 = std::make_shared<GameObject>(
             "TestGameObject", "TestTag", true,
-            Transform{Vector2d{0.f, 0.f}, 0.0f, 0.4f});
+            Transform{Vector2d{0.f, 0.f}, 0.0f, 0.5f});
     const auto game_object2 = std::make_shared<GameObject>(
             "TestGameObject", "TestTag", true,
-            Transform{Vector2d{1.f, 1.f}, 1.1f, 0.2f});
+            Transform{Vector2d{1.f, 1.f}, 1.1f, 0.3f});
     const auto game_object3 = std::make_shared<GameObject>(
             "TestGameObject", "TestTag", true,
-            Transform{Vector2d{-1.f, -1.f}, 2.0f, 0.3f});
+            Transform{Vector2d{-1.f, -1.f}, 2.0f, 0.4f});
 
-    Sprite sprite1{"./assets/sample.png", Color(0, 0, 0, 255.0), false, false, 1, 1};
-    Sprite sprite2{"./assets/sample.png", Color(0, 0, 0, 255.0), false, false, 1, 1};
-    Sprite sprite3{"./assets/sample.png", Color(0, 0, 0, 255.0), false, false, 1, 1};
+    Sprite sprite1{"./assets/sample.png", Color(0, 0, 0, 255.0), false, false, 1, 5};
+    Sprite sprite2{"./assets/sample.png", Color(0, 0, 0, 255.0), false, false, 1, 2};
+    Sprite sprite3{"./assets/sample.png", Color(0, 0, 0, 255.0), false, false, 1, -1};
 
     game_object1->add_component(std::make_shared<Sprite>(sprite1));
     game_object2->add_component(std::make_shared<Sprite>(sprite2));

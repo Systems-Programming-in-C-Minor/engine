@@ -7,6 +7,7 @@
 #include "utils/exceptionhandlers.hpp"
 #include "vector2d.hpp"
 #include "utils/trigonometry.hpp"
+#include "rendercall.hpp"
 
 #include "SDL.h"
 #include "SDL2pp/SDL.hh"
@@ -20,8 +21,7 @@
 
 #include <cmath>
 #include <ostream>
-
-
+#include <utility>
 
 void SdlRenderer::render_sprite(const Sprite& sprite, ITexture& texture, Transform& transform, bool is_world_space) const
 {
@@ -70,8 +70,16 @@ void SdlRenderer::clear(const Color& color) const try
 	_renderer->SetDrawColor(_color).Clear();
 } catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
 
-void SdlRenderer::push_to_screen() const try
+void SdlRenderer::push_to_screen() try
 {
+    _render_queue.sort([](const RenderCall& p1, const RenderCall& p2)
+        {
+            return p1.order_in_layer < p2.order_in_layer;
+        });
+
+    for (const auto& render_call : _render_queue) {
+        render_call.render_callback();
+    }
 	_renderer->Present();
 } catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
 
@@ -87,6 +95,10 @@ void SdlRenderer::init(int res_x, int res_y) try
 
 	_renderer = std::make_shared<SDL2pp::Renderer>(*_window, -1, SDL_RENDERER_ACCELERATED);
 } catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
+
+void SdlRenderer::add_render_call(RenderCall& render_call) {
+    _render_queue.push_back(render_call);
+}
 
 SDL2pp::Point SdlRenderer::world_to_screen(const Vector2d& position) const
 {

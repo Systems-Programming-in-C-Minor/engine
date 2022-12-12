@@ -6,6 +6,7 @@ class Text;
 class Color;
 class ITexture;
 class Transform;
+class RenderCall;
 
 class IRenderer {
 public:
@@ -13,7 +14,8 @@ public:
 	virtual void render_collider() const = 0;
 	virtual void render_text(Text& text) const = 0;
 	virtual void clear(const Color& color) const = 0;
-	virtual void push_to_screen() const = 0;
+	virtual void push_to_screen() = 0;
+    virtual void add_render_call(RenderCall& render_call) = 0;
 
     virtual ~IRenderer() = default;
 };

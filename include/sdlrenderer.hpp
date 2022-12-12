@@ -4,6 +4,9 @@
 #include "render/irenderer.hpp"
 
 #include <memory>
+#include <list>
+
+class RenderCall;
 
 namespace SDL2pp 
 {
@@ -53,9 +56,9 @@ public:
 	/**
 	 * @brief Presents the composed backbuffer
 	 */
-	void push_to_screen() const override;
+	void push_to_screen() override;
 
-
+    void add_render_call(RenderCall& render_call) override;
 	/**
 	 * @brief Returns the SDL_Renderer instance
 	 * @return A pointer to the SDL_Renderer instance
@@ -72,6 +75,7 @@ private:
 	std::unique_ptr<SDL2pp::SDLImage> _sdl_image;
 	std::shared_ptr<SDL2pp::Window> _window;
 	std::shared_ptr<SDL2pp::Renderer> _renderer;
+    std::list<RenderCall> _render_queue;
 
 	// Todo move to something which gamedev can set
 	float _mtp = 100.f;
