@@ -6,10 +6,6 @@
 class IRenderable {
 public:
     virtual void render(bool is_world_space) const = 0;
-    inline bool operator<(const IRenderable& p1) const
-    {
-        return p1._order_in_layer < this->_order_in_layer;
-    }
     virtual ~IRenderable() = default;
     virtual int get_order_in_layer()
     {
