@@ -97,7 +97,7 @@ int main(int argc, char *argv[]) {
     mouse_listener_object->add_component(std::make_shared<MouseListenerComponent>(mouse_listener));
     scene->gameobjects.push_back(mouse_listener_object);
 
-    auto chaincollider = std::make_shared<ChainCollider>("./assets/track1_outer_test.xml");
+    auto chaincollider = std::make_shared<ChainCollider>("./assets/track1_outer.xml");
     auto chain_rigidbody = std::make_shared<RigidBody>(*scene, BodyType::static_body, Vector2d{ 2.f, 2.f }, 1.0f);
     chain_rigidbody->set_collider(chaincollider);
 
