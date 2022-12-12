@@ -7,6 +7,8 @@
 #include "scene.hpp"
 #include "listeners/key_listener.hpp"
 #include "listeners/mouse_listener.hpp"
+#include <unistd.h>
+#include "audio/soloud_sound_engine.hpp"
 
 class KeyListenerComponent : public Component, public KeyListener {
 public:
@@ -40,6 +42,17 @@ public:
 
     }
 };
+
+void play_sound() {
+    auto engine = SoloudSoundEngine();
+    engine.play("./assets/sample2.wav");
+    sleep(1);
+    engine.play("./assets/sample.wav");
+    sleep(1);
+    engine.play("./assets/sample.wav");
+    sleep(1);
+}
+
 
 int main(int argc, char *argv[]) {
     // Setup engine
@@ -86,4 +99,7 @@ int main(int argc, char *argv[]) {
     engine_ref.load_scene(scene);
 
     engine_ref.start();
+
+    // Test soloud
+//    play_sound();
 }
