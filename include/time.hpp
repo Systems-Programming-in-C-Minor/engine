@@ -17,9 +17,6 @@ public:
 
     void time_scale(double new_time_scale);
 
-    /**
-     *
-     */
     void tick();
 
 private:
