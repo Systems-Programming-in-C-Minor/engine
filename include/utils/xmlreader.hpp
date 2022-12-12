@@ -7,17 +7,16 @@
 #include "vector2d.hpp"
 
 namespace tinyxml2 {
-    class XMLElement;
     class XMLDocument;
 }
 
 class XmlReader {
 private:
-    tinyxml2::XMLDocument *_document;
+    std::unique_ptr<tinyxml2::XMLDocument> _document;
 
 public:
     XmlReader(const std::string file_path);
-    ~XmlReader();
+    virtual ~XmlReader();
 
     std::vector<Vector2d> get_points_vec2d();
 };

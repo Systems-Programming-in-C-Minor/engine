@@ -16,16 +16,17 @@ class b2Body;
 class b2Vec2;
 
 class Scene;
+
 class Collider;
 
 class RigidBody : public Component {
 public:
-    RigidBody(const Scene &scene, 
-        const BodyType type, 
-        const Vector2d vector, 
-        const float gravity_scale, 
-        float restitution = 0.5f, 
-        float friction = 0.5f
+    RigidBody(const Scene &scene,
+              BodyType type,
+              Vector2d vector,
+              float gravity_scale,
+              float restitution = 0.5f,
+              float friction = 0.5f
     );
 
     void apply_force(Vector2d force, Vector2d point) const;
@@ -43,6 +44,18 @@ public:
     void apply_linear_impulse(Vector2d impulse, Vector2d point) const;
 
     void apply_angular_impulse(float impulse) const;
+
+    [[nodiscard]] Vector2d get_world_vector(Vector2d vector) const;
+
+    Vector2d get_lateral_velocity();
+
+    Vector2d get_forward_velocity();
+
+    Vector2d get_direction();
+
+    float get_current_speed();
+
+    Vector2d get_world_center();
 
     [[nodiscard]] float get_mass() const;
 
@@ -70,7 +83,7 @@ public:
 
 private:
     b2Body *_body;
-    std::shared_ptr<Collider> _collider;    
+    std::shared_ptr<Collider> _collider;
     float _restitution;
     float _friction;
 

@@ -1,21 +1,18 @@
 #include "fmt/core.h"
-#include "utils/xmlreader.hpp"
 #include "tinyxml2.h"
+#include "utils/xmlreader.hpp"
 #include "vector2d.hpp"
 
 using namespace tinyxml2;
 
 XmlReader::XmlReader(const std::string file_path){
-    _document = new XMLDocument;
+    _document = std::make_unique<XMLDocument>();
     if(_document->LoadFile(file_path.c_str()) == XML_SUCCESS) {
         fmt::print("Loaded file correctly \n");
     }
 }
 
-XmlReader::~XmlReader() {
-    delete _document;
-    _document = nullptr;
-}
+XmlReader::~XmlReader() = default;
 
 std::vector<Vector2d> XmlReader::get_points_vec2d(){
     XMLElement *points = _document->FirstChildElement("points");
@@ -26,9 +23,15 @@ std::vector<Vector2d> XmlReader::get_points_vec2d(){
         double x = point->FindAttribute("x")->DoubleValue();
         double y = point->FindAttribute("y")->DoubleValue();
 
-        res.push_back(Vector2d(x,y));
+        res.emplace_back(Vector2d(x,y));
     }
 
-    points = nullptr;
+    XMLElement *ptm = _document->FirstChildElement("ptm_ratio");
+
+    for(auto& vec : res) {
+        float p2m = ptm->FloatText();
+        vec = vec / p2m;
+    }
+
     return res;
 }

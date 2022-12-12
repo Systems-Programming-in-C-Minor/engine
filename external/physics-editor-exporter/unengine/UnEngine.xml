@@ -10,3 +10,4 @@
 {% endfor %}
 
 
+<ptm_ratio>{{global.ptm_ratio}}</ptm_ratio>
