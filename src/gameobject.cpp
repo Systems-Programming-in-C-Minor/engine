@@ -63,17 +63,9 @@ void GameObject::render() const {
     for (const auto &component: get_components_in_children<Component>()) {
         const auto renderable = std::dynamic_pointer_cast<IRenderable>(component);
         if (renderable) {
-            renderable_components.push_back(renderable);
+            renderable->render(is_world_space);
+
         }
-    }
-
-    renderable_components.sort([](const std::shared_ptr<IRenderable>& p1, const std::shared_ptr<IRenderable>& p2)
-        {
-            return p1->get_order_in_layer() < p2->get_order_in_layer();
-        });
-
-    for (const auto& renderable : renderable_components) {
-        renderable->render(is_world_space);
     }
 }
 
