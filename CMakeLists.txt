@@ -36,7 +36,7 @@ FetchContent_Declare(SDL2pp
 
 FetchContent_Declare(tinyxml2
         GIT_REPOSITORY https://github.com/leethomason/tinyxml2.git
-        GIT_TAG origin/master
+        GIT_TAG 9.0.0
         GIT_PROGRESS TRUE
 )
 
