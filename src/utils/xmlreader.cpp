@@ -29,8 +29,7 @@ std::vector<Vector2d> XmlReader::get_points_vec2d(){
     XMLElement *ptm = _document->FirstChildElement("ptm_ratio");
 
     for(auto& vec : res) {
-        float p2m = ptm->FloatText();
-        vec = vec / p2m;
+        vec = vec / ptm->FloatText();
     }
 
     return res;

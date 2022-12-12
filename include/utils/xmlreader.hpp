@@ -4,7 +4,8 @@
 #include <string>
 #include <memory>
 #include <vector>
-#include "vector2d.hpp"
+
+class Vector2d;
 
 namespace tinyxml2 {
     class XMLDocument;
