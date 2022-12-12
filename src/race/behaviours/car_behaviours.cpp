@@ -6,7 +6,7 @@
 
 void CarBehaviour::tick(GameObject &object) {
     friction();
-    fmt::print("D: {}\n",  Global::get_instance()->get_delta_time());
+//    fmt::print("D: {}\n",  Global::get_instance()->get_delta_time());
 }
 
 void CarBehaviour::friction() {
@@ -51,14 +51,20 @@ void CarBehaviour::drive(float desired_speed) {
     }
 }
 
-void CarBehaviour::turn_left() {
+void CarBehaviour::turn(float steering) {
+    if (game_object->get_component<RigidBody>()->get_current_speed() < 0)
+        steering *= -1;
+
     game_object->get_component<RigidBody>()->apply_angular_impulse(
-            steering_impulse * Global::get_instance()->get_delta_time());
+            steering * Global::get_instance()->get_delta_time());
+}
+
+void CarBehaviour::turn_left() {
+    turn(steering_impulse);
 }
 
 void CarBehaviour::turn_right() {
-    game_object->get_component<RigidBody>()->apply_angular_impulse(
-            -steering_impulse * Global::get_instance()->get_delta_time());
+    turn(-steering_impulse);
 }
 
 void CarBehaviour::drive_forwards() {
