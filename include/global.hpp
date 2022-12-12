@@ -31,11 +31,11 @@ public:
     Scene& get_active_scene();
     [[nodiscard]] const Scene& get_active_scene() const;
 
+    float get_delta_time();
+
     void  notify_event_manager(const IEvent& event);
 
     void operator=(const Global &) = delete;
-
-    Time time;
 };
 
 #endif //ENGINE_GLOBAL_HPP

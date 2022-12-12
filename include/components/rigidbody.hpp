@@ -61,8 +61,6 @@ public:
 
     [[nodiscard]] float get_inertia() const;
 
-    void set_mass(float mass) const;
-
     [[nodiscard]] float get_gravity_scale() const;
 
     void set_gravity_scale(float gravity_scale) const;

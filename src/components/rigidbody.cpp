@@ -1,7 +1,7 @@
 #include "components/colliders/collider.hpp"
 #include "components/rigidbody.hpp"
 #include "scene.hpp"
-
+#include "global.hpp"
 #include "box2d/box2d.h"
 
 RigidBody::RigidBody(const Scene &scene,
@@ -85,13 +85,6 @@ float RigidBody::get_mass() const {
 
 float RigidBody::get_inertia() const {
     return _body->GetInertia();
-}
-
-void RigidBody::set_mass(const float mass) const {
-    b2MassData *data{};
-    _body->GetMassData(data);
-    data->mass = mass;
-    _body->SetMassData(data);
 }
 
 float RigidBody::get_gravity_scale() const {

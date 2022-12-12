@@ -5,13 +5,14 @@
 #include "scene.hpp"
 #include "render/irenderer.hpp"
 #include "interfaces/imultiplayer.hpp"
-
 #include "handlers/key_handler.hpp"
 #include "handlers/mouse_handler.hpp"
+#include "time.hpp"
 
 class Engine {
 private:
     bool _should_quit;
+    const std::unique_ptr<Time> _time;
     const std::unique_ptr<KeyHandler> _key_handler;
     const std::unique_ptr<MouseHandler> _mouse_handler;
     std::unique_ptr<IMultiplayer> _multiplayer_manager;
@@ -45,6 +46,8 @@ public:
     [[nodiscard]] unsigned long get_fps() const;
 
     [[nodiscard]] virtual std::shared_ptr<IRenderer> get_renderer() const;
+
+    [[nodiscard]] Time &get_time() const;
 };
 
 #endif //ENGINE_ENGINE_HPP

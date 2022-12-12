@@ -33,8 +33,6 @@ public:
     float drag_modifier = 8.f;
     float steering_impulse = 20.f;
 
-    explicit CarBehaviour();
-
     void tick(GameObject &object) override;
 };
 

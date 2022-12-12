@@ -1,10 +1,12 @@
 #include "race/behaviours/car_behaviour.hpp"
 #include <gameobject.hpp>
-
-CarBehaviour::CarBehaviour() {}
+#include <iostream>
+#include "global.hpp"
+#include "fmt/core.h"
 
 void CarBehaviour::tick(GameObject &object) {
     friction();
+    fmt::print("D: {}\n",  Global::get_instance()->get_delta_time());
 }
 
 void CarBehaviour::friction() {
@@ -16,17 +18,22 @@ void CarBehaviour::friction() {
         impulse = impulse * (max_lateral_impulse / impulse.length());
 
     // apply the impulse
-    body.apply_linear_impulse(impulse * drift_friction, body.get_world_center());
+    body.apply_linear_impulse(impulse * drift_friction * Global::get_instance()->get_delta_time(),
+                              body.get_world_center());
 
     //angular velocity
-    body.apply_angular_impulse(angular_friction * body.get_inertia() * -body.get_angular_velocity());
+    body.apply_angular_impulse(angular_friction * body.get_inertia() * -body.get_angular_velocity() *
+                               Global::get_instance()->get_delta_time());
 
     //forward linear velocity
     Vector2d currentForwardNormal = body.get_forward_velocity();
     float currentForwardSpeed = currentForwardNormal.normalize();
     float dragForceMagnitude = -2 * currentForwardSpeed * drag_modifier;
 
-    body.apply_force(currentForwardNormal * current_traction * dragForceMagnitude, body.get_world_center());
+    auto force_vec =
+            currentForwardNormal * current_traction * dragForceMagnitude * Global::get_instance()->get_delta_time();
+
+    body.apply_force(force_vec, body.get_world_center());
 }
 
 void CarBehaviour::drive(float desired_speed) {
@@ -38,17 +45,20 @@ void CarBehaviour::drive(float desired_speed) {
     //apply necessary force
     float force = (desired_speed > current_speed) ? max_drive_force : -max_drive_force;
     if (desired_speed != current_speed) {
-        auto force_vec = body.get_world_vector(Vector2d{0, 1}) * current_traction * force;
+        auto force_vec = body.get_world_vector(Vector2d{0, 1}) * current_traction * force *
+                         Global::get_instance()->get_delta_time();
         body.apply_force(force_vec, body.get_world_center());
     }
 }
 
 void CarBehaviour::turn_left() {
-    game_object->get_component<RigidBody>()->apply_angular_impulse(steering_impulse);
+    game_object->get_component<RigidBody>()->apply_angular_impulse(
+            steering_impulse * Global::get_instance()->get_delta_time());
 }
 
 void CarBehaviour::turn_right() {
-    game_object->get_component<RigidBody>()->apply_angular_impulse(-steering_impulse);
+    game_object->get_component<RigidBody>()->apply_angular_impulse(
+            -steering_impulse * Global::get_instance()->get_delta_time());
 }
 
 void CarBehaviour::drive_forwards() {
