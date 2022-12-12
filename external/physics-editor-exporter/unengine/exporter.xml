@@ -1,0 +1,140 @@
+<exporter>
+
+    <!-- identifier of the exporter -->
+    <name>UnEngine</name>
+
+    <!-- name for the dropbox -->
+    <displayName>UnEngine Exporter (XML)</displayName>
+
+    <!-- description of the exporter -->
+    <description>Compatible with provided importer</description>
+
+    <!-- exporter version -->
+    <version>1.0</version>
+
+    <!-- direction of the y axis: up / down -->
+    <yAxisDirection>down</yAxisDirection>
+
+    <!-- physics engine to use: box2d, chipmunk -->
+    <physicsEngine>box2d</physicsEngine>
+
+    <!-- name of the template file -->
+    <template>UnEngine.xml</template>
+
+    <!-- file exension for the data file -->
+    <fileExtension>xml</fileExtension>
+
+    <!-- anchor point settings -->
+    <anchorPoint>
+        <!-- are anchor points supported ? yes/no -->
+        <enabled>no</enabled>
+
+        <!-- relative position of the default anchor point -->
+        <relX>0.5</relX>
+        <relY>0.5</relY>
+    </anchorPoint>
+
+    <origin>
+        <relX>0.5</relX>
+        <relY>0.5</relY>
+        <type>fixed</type>
+    </origin>
+
+    <!-- custom global parameters -->
+    <global>
+		<parameter>
+			<name>ptm_ratio</name>
+			<displayName>PTM-Ratio</displayName>
+			<description>PTM ratio of the sprites. Must be multiplied by 2 when working with hd (retina display) sprites</description>
+			<shortDescription>PTM ratio of the sprites. Must be multiplied by 2 when working with hd (retina display) sprites.</shortDescription>
+			<type>float</type>
+                        <default>32.0</default>
+		</parameter>
+    </global>
+
+    <!-- custom body parameters -->
+    <body>
+        <parameter>
+			<name>dynamic</name>
+			<displayName>Is Dynamic</displayName>
+			<description>If this is unchecked, body will be static, and will not move.</description>
+			<type>bool</type>
+			<default>true</default>
+		</parameter>
+    </body>
+
+    <!-- custom fixture parameters -->
+    <fixture>
+        <parameter>
+			<name>isSensor</name>
+			<displayName>Is Sensor</displayName>
+			<description>Sometimes game logic needs to know when two fixtures overlap yet there should be no collision response. This is done by using sensors. A sensor is a fixture that detects collision but does not produce a response.
+                        You can flag any fixture as being a sensor. Sensors may be static or dynamic.</description>
+            <shortDescription>Is sensor?</shortDescription>
+			<type>bool</type>
+			<default>false</default>
+		</parameter>
+        <parameter>
+            <name>density</name>
+            <displayName>Density</displayName>
+            <description>The fixture density is used to compute the mass properties of the parent body. The density can be zero or positive. You should generally use similar densities for all your fixtures. This will improve stacking stability.</description>
+            <shortDescription>Density</shortDescription>
+            <type>float</type>
+            <min>-1000</min>
+            <max>1000</max>
+            <default>2.0</default>
+        </parameter>
+        <parameter>
+            <name>restitution</name>
+            <displayName>Restitution</displayName>
+            <description>Restitution is used to make objects bounce. The restitution value is usually set to be between 0 and 1. Consider dropping a ball on a table. A value of zero means the ball won't bounce. This is called an inelastic collision. A value of one means the ball's velocity will be exactly reflected. This is called a perfectly elastic collision. </description>
+            <shortDescription>Restitution</shortDescription>
+            <type>float</type>
+            <min>0</min>
+            <max>1000</max>
+            <default>0.0</default>
+        </parameter>
+        <parameter>
+            <name>friction</name>
+            <displayName>Friction</displayName>
+            <description>Friction is used to make objects slide along each other realistically. Box2D supports static and dynamic friction, but uses the same parameter for both.</description>
+            <shortDescription>Friction</shortDescription>
+            <type>float</type>
+            <min>0</min>
+            <max>1000</max>
+            <default>0.0</default>
+        </parameter>
+        <parameter>
+            <name>filter_groupIndex</name>
+            <displayName>Group</displayName>
+            <description>Collision group. Collision filtering is a system for preventing collision between fixtures. For example, say you make a character that rides a bicycle. You want the bicycle to collide with the terrain and the character to collide with the terrain, but you don't want the character to collide with the bicycle (because they must overlap). Box2D supports such collision filtering using categories and groups.</description>
+            <shortDescription>Collision group</shortDescription>
+            <type>int</type>
+            <default>0</default>
+        </parameter>
+        <parameter>
+            <name>filter_bitfield</name>
+            <type>bitfield</type>
+            <size>16</size>
+        </parameter>
+        <parameter>
+            <name>filter_categoryBits</name>
+            <displayName>Cat.</displayName>
+            <description>Collision category</description>
+            <shortDescription>Collision category. Collision filtering is a system for preventing collision between fixtures. For example, say you make a character that rides a bicycle. You want the bicycle to collide with the terrain and the character to collide with the terrain, but you don't want the character to collide with the bicycle (because they must overlap). Box2D supports such collision filtering using categories and groups.</shortDescription>
+            <type>uint16</type>
+            <default>1</default>
+            <bitfield>yes</bitfield>
+        </parameter>
+        <parameter>
+            <name>filter_maskBits</name>
+            <displayName>Mask</displayName>
+            <description>Collision mask. Collision filtering is a system for preventing collision between fixtures. For example, say you make a character that rides a bicycle. You want the bicycle to collide with the terrain and the character to collide with the terrain, but you don't want the character to collide with the bicycle (because they must overlap). Box2D supports such collision filtering using categories and groups.</description>
+            <shortDescription>Collision mask</shortDescription>
+            <type>uint16</type>
+            <default>65535</default>
+            <bitfield>yes</bitfield>
+        </parameter>
+    </fixture>
+</exporter>
+
