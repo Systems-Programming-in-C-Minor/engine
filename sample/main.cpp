@@ -8,6 +8,7 @@
 #include "components/colliders/boxcollider.hpp"
 #include "listeners/key_listener.hpp"
 #include "listeners/mouse_listener.hpp"
+#include "utils/xmlreader.hpp"
 
 class KeyListenerComponent : public Component, public KeyListener {
 public:
@@ -94,6 +95,12 @@ int main(int argc, char *argv[]) {
     MouseListenerComponent mouse_listener{scene->get_event_manager()};
     mouse_listener_object->add_component(std::make_shared<MouseListenerComponent>(mouse_listener));
     scene->gameobjects.push_back(mouse_listener_object);
+
+    auto polygoncollider = std::make_shared<PolygonCollider>("./assets/track1_outer_test.xml", false);
+    auto polygon_rigidbody = std::make_shared<RigidBody>(*scene, BodyType::static_body, Vector2d{ 0.f, 0.f }, 1.0f);
+    polygon_rigidbody->set_collider(polygoncollider);
+
+    game_object2->add_component(polygon_rigidbody);
 
     engine_ref.load_scene(scene);
 
