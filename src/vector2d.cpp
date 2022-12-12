@@ -34,6 +34,16 @@ Vector2d Vector2d::operator*(const Vector2d& other) const
     return multiply(other);
 }
 
+Vector2d Vector2d::multiply(const float other) const
+{
+    return Vector2d(x * other, y * other);
+}
+
+Vector2d Vector2d::operator*(const float other) const
+{
+    return multiply(other);
+}
+
 Vector2d Vector2d::divide(const Vector2d& other) const
 {
     if (other.x == 0.0 || other.y == 0.0)
@@ -59,6 +69,14 @@ bool Vector2d::operator==(const Vector2d& other) const
 bool Vector2d::almost_equals(const Vector2d& other, const double epsilon) const
 {
     return (std::abs(x - other.x) < epsilon && std::abs(y - other.y) < epsilon);
+}
+
+float Vector2d::length() const {
+    return b2Vec2(x, y).Length();
+}
+
+float Vector2d::normalize() const {
+    return b2Vec2(x, y).Normalize();
 }
 
 Vector2d::Vector2d(const float x, const float y)

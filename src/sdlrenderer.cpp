@@ -44,7 +44,7 @@ void SdlRenderer::render_sprite(const Sprite& sprite, ITexture& texture, Transfo
 	const auto size = SDL2pp::Point{ size_x, size_y };
 
 	auto rect = SDL2pp::Rect{ left_corner, size };
-	_renderer->Copy(*texture.get_texture(), SDL2pp::NullOpt, rect, radians_to_degrees(transform.get_angle()));
+	_renderer->Copy(*texture.get_texture(), SDL2pp::NullOpt, rect, -radians_to_degrees(transform.get_angle()));
 }
 
 void SdlRenderer::render_collider() const
