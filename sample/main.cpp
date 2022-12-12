@@ -43,18 +43,12 @@ public:
     }
 };
 
-void play_sound() {
-    auto engine = SoloudSoundEngine();
-    engine.play("./assets/sample2.wav");
-    sleep(1);
-    engine.play("./assets/sample.wav");
-    sleep(1);
-    engine.play("./assets/sample.wav");
-    sleep(1);
-}
-
 
 int main(int argc, char *argv[]) {
+    // Setup sound engine
+    auto sound_engine = SoloudSoundEngine();
+    sound_engine.play("./assets/sample2.wav");
+
     // Setup engine
     const auto global = Global::get_instance();
     auto engine = std::make_unique<Engine>();
@@ -99,7 +93,4 @@ int main(int argc, char *argv[]) {
     engine_ref.load_scene(scene);
 
     engine_ref.start();
-
-    // Test soloud
-//    play_sound();
 }
