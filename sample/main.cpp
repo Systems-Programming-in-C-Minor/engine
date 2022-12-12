@@ -66,7 +66,7 @@ public:
         auto rigid_body = std::make_shared<RigidBody>(*scene, BodyType::dynamic_body, Vector2d{0.f, 1.5f}, 1.f);
         rigid_body->set_collider(collider);
         add_component(rigid_body);
-        transform.set_scale(0.03f);
+        transform.set_scale(0.06f);
         transform.set_angle(degrees_to_radians(90));
     }
 };
@@ -102,6 +102,10 @@ public:
             }
             case D: {
                 turn_right();
+                break;
+            }
+            case SPACE: {
+                brake();
                 break;
             }
             case UP: {

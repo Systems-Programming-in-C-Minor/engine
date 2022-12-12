@@ -1,12 +1,9 @@
 #include "race/behaviours/car_behaviour.hpp"
 #include <gameobject.hpp>
-#include <iostream>
 #include "global.hpp"
-#include "fmt/core.h"
 
 void CarBehaviour::tick(GameObject &object) {
     friction();
-//    fmt::print("D: {}\n",  Global::get_instance()->get_delta_time());
 }
 
 void CarBehaviour::friction() {
@@ -52,11 +49,17 @@ void CarBehaviour::drive(float desired_speed) {
 }
 
 void CarBehaviour::turn(float steering) {
-    if (game_object->get_component<RigidBody>()->get_current_speed() < 0)
+    auto &body = *game_object->get_component<RigidBody>();
+    auto speed = body.get_current_speed();
+
+    if (speed < 0.001f && speed > -0.001f)
+        return;
+
+    if (speed < 0)
         steering *= -1;
 
-    game_object->get_component<RigidBody>()->apply_angular_impulse(
-            steering * Global::get_instance()->get_delta_time());
+    body.apply_angular_impulse(
+            steering * 2 *  Global::get_instance()->get_delta_time());
 }
 
 void CarBehaviour::turn_left() {
@@ -73,4 +76,8 @@ void CarBehaviour::drive_forwards() {
 
 void CarBehaviour::drive_backwards() {
     drive(max_speed_backwards);
+}
+
+void CarBehaviour::brake() {
+    drive(0.f);
 }
