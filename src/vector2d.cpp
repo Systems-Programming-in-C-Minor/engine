@@ -1,4 +1,7 @@
+#include "box2d/b2_math.h"
+
 #include "vector2d.hpp"
+
 
 Vector2d Vector2d::add(const Vector2d& other) const
 {
@@ -61,6 +64,14 @@ bool Vector2d::almost_equals(const Vector2d& other, const double epsilon) const
 Vector2d::Vector2d(const float x, const float y)
     : x(x),	y(y) {}
 
+Vector2d::Vector2d(const b2Vec2& b2vec)
+	: x(b2vec.x), y(b2vec.y)
+{}
+
+Vector2d::operator b2Vec2() const
+{
+    return b2Vec2{ x, y };
+}
 
 std::ostream& operator<<(std::ostream& stream, const Vector2d& vector)
 {

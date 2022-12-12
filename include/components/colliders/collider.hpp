@@ -6,20 +6,23 @@
 #include "render/itexture.hpp"
 
 class IRenderer;
+class b2Shape;
+class RigidBody;
 
 /**
  * Component class for colliders
  */
 class Collider : public Component, public IRenderable
 {
-private:
-    bool _ignore_collision_physics = false;
+protected:
+    friend class RigidBody;
 
+    std::vector<Vector2d> _points;
+    bool _ignore_collision_physics;
+
+    virtual void set_fixture(b2Body& body, float friction, float restitution) = 0;
 public:
     void render(bool is_world_space) const override;
-
-    [[nodiscard]] bool get_ignore_collision_physics() const;
-    void set_ignore_collision_physics(bool icp);
 };
 
 #endif //COLLIDERS_COLLIDER_HPP

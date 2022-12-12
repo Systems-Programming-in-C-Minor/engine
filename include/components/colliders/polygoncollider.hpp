@@ -3,9 +3,12 @@
 
 #include "vector2d.hpp"
 #include "collider.hpp"
+#include "enums/collidernormal.hpp"
 
 #include <vector>
 
+class b2ChainShape;
+class b2Body;
 class Vector2d;
 
 /**
@@ -15,15 +18,14 @@ class Vector2d;
 class PolygonCollider : public Collider
 {
 public:
-    explicit PolygonCollider(std::vector<Vector2d> points);
-    explicit PolygonCollider(const std::string& path);
+    explicit PolygonCollider(std::vector<Vector2d> points, bool ignore_collision_physics = false);
+    explicit PolygonCollider(const std::string& path, bool ignore_collision_physics = false);
 
     [[nodiscard]] std::vector<Vector2d> get_points() const;
-
+protected:
+    void set_fixture(b2Body& body, float friction, float restitution) override;
 private:
-    std::vector<Vector2d> _points;
-
-    void construct_points(const std::string& path);
+    void get_points_from_file(const std::string& path);
 };
 
 #endif //COLLIDERS_POLYGONCOLLIDER_HPP

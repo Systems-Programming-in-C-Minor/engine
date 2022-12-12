@@ -1,9 +1,19 @@
+#include "components/colliders/collider.hpp"
 #include "components/rigidbody.hpp"
 #include "scene.hpp"
 
 #include "box2d/box2d.h"
 
-RigidBody::RigidBody(const Scene &scene, const BodyType type, const Vector2d vector, const float gravity_scale) {
+RigidBody::RigidBody(const Scene &scene,
+    const BodyType type,
+    const Vector2d vector,
+    const float gravity_scale,
+    const float restitution,
+    const float friction
+) :
+	_restitution(restitution),
+	_friction(friction)
+{
     b2BodyDef body_def;
     body_def.type = static_cast<b2BodyType>(type);
     body_def.position.Set(vector.x, vector.y);
@@ -12,11 +22,11 @@ RigidBody::RigidBody(const Scene &scene, const BodyType type, const Vector2d vec
 }
 
 void RigidBody::apply_force(const Vector2d force, const Vector2d point) const {
-    _body->ApplyForce(get_b2vec(force), get_b2vec(point), false);
+    _body->ApplyForce(get_b2vec(force), get_b2vec(point), true);
 }
 
 void RigidBody::apply_torque(const float torque) const {
-    _body->ApplyTorque(torque, false);
+    _body->ApplyTorque(torque, true);
 }
 
 void RigidBody::set_linear_velocity(const Vector2d velocity) const {
@@ -36,11 +46,11 @@ float RigidBody::get_angular_velocity() const {
 }
 
 void RigidBody::apply_linear_impulse(const Vector2d impulse, const Vector2d point) const {
-    _body->ApplyLinearImpulse(get_b2vec(impulse), get_b2vec(point), false);
+    _body->ApplyLinearImpulse(get_b2vec(impulse), get_b2vec(point), true);
 }
 
 void RigidBody::apply_angular_impulse(const float impulse) const {
-    _body->ApplyAngularImpulse(impulse, false);
+    _body->ApplyAngularImpulse(impulse, true);
 }
 
 float RigidBody::get_mass() const {
@@ -96,4 +106,9 @@ void RigidBody::set_angle(float angle) const {
 
 float RigidBody::get_angle() const {
     return _body->GetAngle();
+}
+
+void RigidBody::set_collider(std::shared_ptr<Collider> collider) {
+    _collider = collider;
+    collider->set_fixture(*_body, _friction, _restitution);
 }

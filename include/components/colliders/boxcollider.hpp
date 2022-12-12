@@ -13,7 +13,7 @@ private:
     float _height;
 
 public:
-    BoxCollider(float width, float height);
+    BoxCollider(float width, float height, bool ignore_collision_physics = false);
 
     [[nodiscard]] float get_width() const;
     [[nodiscard]] float get_height() const;
