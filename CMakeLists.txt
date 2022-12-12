@@ -47,6 +47,7 @@ FetchContent_MakeAvailable(fmt box2d SDL2pp)
 
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS ./src/*.cpp)
 file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS ./include/*.hpp)
+file(GLOB_RECURSE PRIVATE_HEADER_FILES CONFIGURE_DEPENDS ./src/*.hpp)
 
 if (WIN32)
     set(SDL2_IMAGE_LIBRARIES SDL2_image::SDL2_image)
@@ -54,7 +55,7 @@ else ()
     set(SDL2_IMAGE_LIBRARIES SDL2_image)
 endif ()
 
-add_library(engine STATIC ${SOURCE_FILES} ${HEADER_FILES})
+add_library(engine STATIC ${SOURCE_FILES} ${HEADER_FILES} ${PRIVATE_HEADER_FILES})
 
 target_compile_definitions(engine PRIVATE _USE_MATH_DEFINES)
 
