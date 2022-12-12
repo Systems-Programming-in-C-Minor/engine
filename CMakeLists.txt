@@ -6,6 +6,7 @@ option(ENGINE_SAMPLE "Generate a sample UnEngine project." ON)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_WARN_DEPRECATED OFF CACHE BOOL "" FORCE)
 
 set(BOX2D_BUILD_UNIT_TESTS OFF CACHE BOOL "Build the Box2D unit tests")
 set(BOX2D_BUILD_TESTBED OFF CACHE BOOL "Build the Box2D testbed")
