@@ -36,6 +36,7 @@ FetchContent_Declare(SDL2pp
 
 FetchContent_Declare(tinyxml2
         GIT_REPOSITORY git@github.com:leethomason/tinyxml2.git
+        GIT_TAG origin/master
 )
 
 # This allows libSDL2pp to find the local SDL2 libraries.
