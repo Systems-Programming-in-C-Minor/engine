@@ -37,6 +37,8 @@ jobs:
         with:
           path: ${{ github.workspace }}/build
           key: ${{ runner.OS }}-build-cache
+      - name: Set warnings as errors for CI
+        run: echo -e "set(CMAKE_COMPILE_WARNING_AS_ERROR true)\n$(cat CMakeLists.txt)" > CMakeLists.txt
       - name: Setup project build system
         run: cmake -S . -B build -Werror=dev
       - name: Build
