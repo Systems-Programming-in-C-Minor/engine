@@ -13,10 +13,10 @@ namespace tinyxml2 {
 class XmlReader {
 private:
     std::unique_ptr<tinyxml2::XMLDocument> _document;
-//    tinyxml2::XMLDocument *_document;
 
 public:
     XmlReader(const std::string file_path);
+    virtual ~XmlReader();
 
     std::vector<Vector2d> get_points_vec2d();
 };
