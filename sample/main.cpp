@@ -1,5 +1,4 @@
 #include <iostream>
-#include "sdlrenderer.hpp"
 #include "color.hpp"
 #include "gameobject.hpp"
 #include "components/sprite.hpp"
@@ -8,6 +7,23 @@
 #include "components/colliders/boxcollider.hpp"
 #include "listeners/key_listener.hpp"
 #include "listeners/mouse_listener.hpp"
+#include "input.hpp"
+#include "interfaces/itickable.hpp"
+
+class InputScript : public Component, public ITickable {
+    Input input;
+
+    void tick(GameObject &gameobject){
+
+        if(input.get_mouse_button(BUTTON_LEFT)){
+            std::cout << input.mouse_position() << std::endl;
+        }
+
+        if (input.get_key_down(A)){
+            std::cout << "Pressed A key" << std::endl;
+        }
+    }
+};
 
 class KeyListenerComponent : public Component, public KeyListener {
 public:
@@ -71,6 +87,7 @@ int main(int argc, char *argv[]) {
     game_object1->add_component(std::make_shared<Sprite>(sprite1));
     game_object2->add_component(std::make_shared<Sprite>(sprite2));
     game_object3->add_component(std::make_shared<Sprite>(sprite3));
+    game_object3->add_component(std::make_shared<InputScript>());
 
     const auto scene = std::make_shared<Scene>();
 
