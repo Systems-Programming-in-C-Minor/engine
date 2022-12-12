@@ -6,6 +6,7 @@
 #include "global.hpp"
 #include "scene.hpp"
 #include "components/colliders/boxcollider.hpp"
+#include "components/colliders/chaincollider.hpp"
 #include "listeners/key_listener.hpp"
 #include "listeners/mouse_listener.hpp"
 #include "utils/xmlreader.hpp"
@@ -96,11 +97,11 @@ int main(int argc, char *argv[]) {
     mouse_listener_object->add_component(std::make_shared<MouseListenerComponent>(mouse_listener));
     scene->gameobjects.push_back(mouse_listener_object);
 
-    auto polygoncollider = std::make_shared<PolygonCollider>("./assets/track1_outer_test.xml", false);
-    auto polygon_rigidbody = std::make_shared<RigidBody>(*scene, BodyType::static_body, Vector2d{ 0.f, 0.f }, 1.0f);
-    polygon_rigidbody->set_collider(polygoncollider);
+    auto chaincollider = std::make_shared<ChainCollider>("./assets/track1_outer_test.xml");
+    auto chain_rigidbody = std::make_shared<RigidBody>(*scene, BodyType::static_body, Vector2d{ 2.f, 2.f }, 1.0f);
+    chain_rigidbody->set_collider(chaincollider);
 
-    game_object2->add_component(polygon_rigidbody);
+    game_object2->add_component(chain_rigidbody);
 
     engine_ref.load_scene(scene);
 

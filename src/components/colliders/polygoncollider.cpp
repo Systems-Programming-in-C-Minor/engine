@@ -9,9 +9,9 @@ PolygonCollider::PolygonCollider(std::vector<Vector2d> points, bool ignore_colli
 	_points = std::move(points);
 }
 
-PolygonCollider::PolygonCollider(const std::string& path, bool ignore_collision_physics) : Collider()
-{
-	_ignore_collision_physics = ignore_collision_physics;
+PolygonCollider::PolygonCollider(const std::string& path, bool ignore_collision_physics) : Collider() {
+
+    _ignore_collision_physics = ignore_collision_physics;
 	get_points_from_file(path);
 }
 
