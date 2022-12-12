@@ -6,6 +6,7 @@
 #include <SDL.h>
 #include "gameobject.hpp"
 #include "sdlrenderer.hpp"
+#include "global.hpp"
 #include "managers/host_multiplayer_manager.hpp"
 #include "managers/client_multiplayer_manager.hpp"
 
@@ -25,6 +26,7 @@ void Engine::start() {
         _multiplayer_manager->tick();
         _active_scene->render();
         _renderer->push_to_screen();
+        Global::get_instance()->time.tick();
 
         const auto current_nanos = std::chrono::system_clock::now().time_since_epoch().count();
 
