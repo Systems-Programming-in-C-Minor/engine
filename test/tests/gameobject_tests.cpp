@@ -179,10 +179,10 @@ TEST(GameObjectTest, Render) {
     auto renderer = MockRenderer();
 
     const auto test_component1 = std::make_shared<Test1Component>();
-    const auto render_component1 = std::make_shared<MockRenderableComponent>();
-    const auto render_component2 = std::make_shared<MockRenderableComponent>();
-    const auto render_component3 = std::make_shared<MockRenderableComponent>();
-    const auto tick_render_component = std::make_shared<MockTickableRenderableComponent>();
+    const auto render_component1 = std::make_shared<MockRenderableComponent>(1);
+    const auto render_component2 = std::make_shared<MockRenderableComponent>(1);
+    const auto render_component3 = std::make_shared<MockRenderableComponent>(1);
+    const auto tick_render_component = std::make_shared<MockTickableRenderableComponent>(1);
 
     EXPECT_CALL(*render_component1, render(testing::_))
             .Times(1);
@@ -217,7 +217,7 @@ TEST(GameObjectTest, Tick) {
     const auto tick_component1 = std::make_shared<MockTickableComponent>();
     const auto tick_component2 = std::make_shared<MockTickableComponent>();
     const auto tick_component3 = std::make_shared<MockTickableComponent>();
-    const auto tick_render_component = std::make_shared<MockTickableRenderableComponent>();
+    const auto tick_render_component = std::make_shared<MockTickableRenderableComponent>(1);
 
     EXPECT_CALL(*tick_component1, tick(game_object))
             .Times(1);

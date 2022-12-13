@@ -4,6 +4,7 @@
 #include "component.hpp"
 #include "vector2d.hpp"
 #include "memory"
+#include "interfaces/irenderable.hpp"
 
 enum class BodyType {
     static_body = 0,
@@ -18,15 +19,18 @@ class b2Vec2;
 class Scene;
 
 class Collider;
+class SdlRenderer;
 
-class RigidBody : public Component {
+class RigidBody : public Component, public IRenderable {
+    friend class SdlRenderer;
 public:
     RigidBody(const Scene &scene,
-              BodyType type,
-              Vector2d vector,
-              float gravity_scale,
-              float restitution = 0.5f,
-              float friction = 0.5f
+        int order_in_layer,
+        const BodyType type, 
+        const Vector2d vector, 
+        const float gravity_scale, 
+        float restitution = 0.5f, 
+        float friction = 0.5f
     );
 
     void apply_force(Vector2d force, Vector2d point) const;
@@ -79,11 +83,15 @@ public:
 
     void set_collider(std::shared_ptr<Collider> collider);
 
+    void render(bool is_world_space) const override;
+
 private:
     b2Body *_body;
     std::shared_ptr<Collider> _collider;
     float _restitution;
     float _friction;
+
+    [[nodiscard]] b2Body* get_body() const;
 
     static b2Vec2 get_b2vec(Vector2d vector);
 

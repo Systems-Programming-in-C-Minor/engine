@@ -7,6 +7,7 @@
 
 class MockTickableRenderableComponent : public Component, public ITickable, public IRenderable {
 public:
+	explicit MockTickableRenderableComponent(int order_in_layer) : IRenderable(order_in_layer) {}
     MOCK_METHOD(void, tick, (GameObject &), (override));
     MOCK_METHOD(void, render, (bool), (override, const));
 };
