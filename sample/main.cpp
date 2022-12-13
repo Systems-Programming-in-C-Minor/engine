@@ -10,6 +10,7 @@
 #include "listeners/key_listener.hpp"
 #include "listeners/mouse_listener.hpp"
 #include "utils/xmlreader.hpp"
+#include "uiobjects/text.hpp"
 
 class KeyListenerComponent : public Component, public KeyListener {
 public:
@@ -74,6 +75,10 @@ int main(int argc, char *argv[]) {
     game_object2->add_component(std::make_shared<Sprite>(sprite2));
     game_object3->add_component(std::make_shared<Sprite>(sprite3));
 
+    const auto ui_object1 = std::make_shared<UIObject>("TestUIObject", "UIObjectTag", 100, 100);
+    Text text1{"name", "tag", 100, 100, "text", "./assets/Sans.ttf", 100, Alignment::CENTER, Color(200, 0, 0, 0)};
+    ui_object1->add_child(std::make_shared<Text>(text1));
+
     const auto scene = std::make_shared<Scene>();
 
     // Try colliders
@@ -85,6 +90,7 @@ int main(int argc, char *argv[]) {
     scene->gameobjects.push_back(game_object1);
     scene->gameobjects.push_back(game_object2);
     scene->gameobjects.push_back(game_object3);
+    scene->gameobjects.push_back(ui_object1);
 
     // Add listeners
     const auto key_listener_object = std::make_shared<GameObject>("KeyListener", "TestTag", true);

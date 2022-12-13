@@ -43,7 +43,7 @@ public:
 	 * @brief Renders a text object
 	 * @param text The text to be rendered
 	 */
-	void render_text(Text& text) const override;
+	void render_text(const Text& text) const override;
 
 	/**
 	 * @brief Clears the backbuffer and applies a default colour

@@ -2,6 +2,7 @@
 
 #include "uiobjects/text.hpp"
 #include "uiobject.hpp"
+#include "global.hpp"
 
 Text::Text(const std::string& name, const std::string& tag, double width, double height, const std::string& text, const std::string& font, int size, Alignment alignment, Color color) : UIObject(name, tag, width, height),
     _text(text),
@@ -50,4 +51,9 @@ void Text::set_alignment(Alignment new_alignment) {
 
 void Text::set_color(Color new_color) {
     _color = new_color;
+}
+
+void Text::render() const {
+    const auto renderer = Global::get_instance()->get_engine().get_renderer();
+    renderer->render_text(*this);
 }

@@ -27,4 +27,5 @@ public:
     void set_size(int new_size);
     void set_alignment(Alignment new_alignment);
     void set_color(Color new_color);
+    void render() const override;
 };

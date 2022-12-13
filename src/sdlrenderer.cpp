@@ -16,6 +16,9 @@
 #include "SDL2pp/SDLImage.hh"
 #include "SDL2pp/Exception.hh"
 #include "SDL2pp/Point.hh"
+#include "SDL2pp/Font.hh"
+#include "SDL2pp/Surface.hh"
+#include "SDL2pp/Texture.hh"
 #include "fmt/ostream.h"
 
 #include <cmath>
@@ -56,12 +59,25 @@ void SdlRenderer::render_collider() const
 	 */
 }
 
-void SdlRenderer::render_text(Text& text) const
+void SdlRenderer::render_text(const Text& text) const
 {
-	/**
-	 * TODO Task: Render text
-	 * https://app.clickup.com/t/358vh7v
-	 */
+    SDL2pp::Color color(text.get_color()._r, text.get_color()._g, text.get_color()._b, text.get_color()._a);
+
+    TTF_Init();
+    TTF_Font* font = TTF_OpenFont(text.get_font().c_str(), 24);
+    if (!font)
+        std::cout << TTF_GetError() << std::endl;
+
+    SDL2pp::Surface surface {TTF_RenderText_Solid(font, text.get_text().c_str(), color)};
+    SDL2pp::Texture texture {SDL_CreateTextureFromSurface(_renderer->Get(), surface.Get())};
+
+    SDL2pp::Rect rect;
+    rect.SetW(static_cast<int>(text.get_width()));
+    rect.SetH(static_cast<int>(text.get_height()));
+
+    _renderer->Copy(texture, rect);
+
+    TTF_Quit();
 }
 
 void SdlRenderer::clear(const Color& color) const try
