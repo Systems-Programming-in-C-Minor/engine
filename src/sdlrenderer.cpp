@@ -137,6 +137,8 @@ void SdlRenderer::render_text(const Text& text) const
     SDL2pp::Rect rect;
     rect.SetW(text.get_width());
     rect.SetH(text.get_height());
+    rect.SetX(static_cast<int>(text.transform.get_position().x));
+    rect.SetY(static_cast<int>(text.transform.get_position().y));
 
     _renderer->Copy(texture, SDL2pp::NullOpt, rect);
 

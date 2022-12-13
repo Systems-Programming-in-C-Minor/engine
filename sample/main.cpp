@@ -186,8 +186,8 @@ int main() {
     game_object3->add_component(std::make_shared<Sprite>(sprite3));
     game_object3->add_component(std::make_shared<InputScript>());
 
-    const auto ui_object1 = std::make_shared<UIObject>("TestUIObject", "UIObjectTag", 100, 100);
-    Text text1{"name", "tag", 100, 100, "text", "./assets/Sans.ttf", 100, Alignment::CENTER, Color(200, 0, 0, 0)};
+    const auto ui_object1 = std::make_shared<UIObject>("TestUIObject", "UIObjectTag", true, Transform{Vector2d{400.f, -10.f}, 20.0f, 0.49f}, 100, 100);
+    Text text1{"name", "tag", true, Transform{Vector2d{200.f, -10.f}, 20.0f, 0.49f}, 300, 300, "text", "./assets/Sans.ttf", 100, Alignment::CENTER, Color(200, 0, 0, 0)};
     ui_object1->add_child(std::make_shared<Text>(text1));
 
     const auto scene = std::make_shared<Scene>();

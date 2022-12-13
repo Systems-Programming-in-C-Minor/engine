@@ -1,7 +1,7 @@
 #include "uiobjects/button.hpp"
 #include "uiobject.hpp"
 
-Button::Button(const std::string& name, const std::string& tag, int width, int height, bool interactable) : UIObject(name, tag, width, height),
+Button::Button(const std::string& name, const std::string& tag, bool is_world_space, Transform transform, int width, int height, bool interactable) : UIObject(name, tag, is_world_space, transform, width, height),
     _on_click({[]() {}}),
     _interactable(interactable)
 {}
