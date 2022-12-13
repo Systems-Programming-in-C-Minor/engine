@@ -8,6 +8,7 @@
 #include <list>
 
 class b2PolygonShape;
+class b2ChainShape;
 class RenderCall;
 
 namespace SDL2pp 
@@ -76,6 +77,7 @@ private:
 	void init(int res_x = 800, int res_y = 600);
 	[[nodiscard]] SDL2pp::Point world_to_screen(const Vector2d& position) const;
 	void render_ngon(b2Body* body, b2PolygonShape* shape) const;
+	void render_ngon(b2Body* body, b2ChainShape* shape) const;
 
 	std::unique_ptr<SDL2pp::SDL> _sdl;
 	std::unique_ptr<SDL2pp::SDLImage> _sdl_image;

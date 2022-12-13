@@ -62,7 +62,7 @@ void SdlRenderer::render_rigid_body(const RigidBody& rigid_body, Transform& tran
 			}
 		case b2Shape::Type::e_chain:
 			{
-				render_ngon(body, dynamic_cast<b2PolygonShape*>(shape));
+				render_ngon(body, dynamic_cast<b2ChainShape*>(shape));
 				break;
 			}
 		case b2Shape::e_edge: break;
@@ -73,6 +73,23 @@ void SdlRenderer::render_rigid_body(const RigidBody& rigid_body, Transform& tran
 }
 
 void SdlRenderer::render_ngon(b2Body* body, b2PolygonShape* shape) const
+{
+	const int vertex_count = shape->m_count;
+
+	std::vector<Vector2d> vectors;
+	vectors.reserve(vertex_count);
+
+	for (int i = 0; i < vertex_count; ++i) {
+		vectors.push_back(static_cast<Vector2d>(body->GetWorldPoint(shape->m_vertices[i])));
+	}
+
+	const Vector2d start_vertex = vectors[0];
+	vectors.push_back(start_vertex);
+
+	render_lines(vectors, Color{ 255, 255,0,0 });
+}
+
+void SdlRenderer::render_ngon(b2Body* body, b2ChainShape* shape) const
 {
 	const int vertex_count = shape->m_count;
 
