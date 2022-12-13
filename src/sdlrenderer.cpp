@@ -138,7 +138,7 @@ void SdlRenderer::render_text(const Text& text) const
     rect.SetW(text.get_width());
     rect.SetH(text.get_height());
 
-    _renderer->Copy(texture, rect);
+    _renderer->Copy(texture, SDL2pp::NullOpt, rect);
 
     TTF_Quit();
 }
