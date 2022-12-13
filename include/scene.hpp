@@ -26,6 +26,8 @@ public:
      */
     virtual void tick();
 
+    void tick_world();
+
     /**
      * Calls the render functions on this scene's gameobjects
      */

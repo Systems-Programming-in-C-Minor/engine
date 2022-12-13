@@ -4,9 +4,10 @@
 #include <chrono>
 #include <cmath>
 #include <SDL.h>
+#include <thread>
+#include <iostream>
 #include "gameobject.hpp"
 #include "sdlrenderer.hpp"
-#include "global.hpp"
 #include "managers/host_multiplayer_manager.hpp"
 #include "managers/client_multiplayer_manager.hpp"
 #include "fmt/core.h"
@@ -17,6 +18,13 @@ void Engine::load_scene(std::shared_ptr<Scene> new_scene) {
 
 void Engine::start() {
     _multiplayer_manager->initialize();
+
+    std::thread world_thread ([](const std::shared_ptr<Scene>& scene) {
+        while (true) {
+            scene->tick_world();
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        }
+    }, _active_scene);
 
     while (!_should_quit) {
         SDL_PumpEvents();
