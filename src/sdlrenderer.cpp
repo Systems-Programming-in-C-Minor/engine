@@ -124,7 +124,7 @@ void SdlRenderer::render_lines(std::vector<Vector2d>& vectors, const Color& colo
 
 void SdlRenderer::render_text(const Text& text) const
 {
-    SDL2pp::Color color(text.get_color()._r, text.get_color()._g, text.get_color()._b, text.get_color()._a);
+    SDL2pp::Color color = static_cast<SDL2pp::Color>(text.get_color());
 
     TTF_Init();
     TTF_Font* font = TTF_OpenFont(text.get_font().c_str(), 24);
