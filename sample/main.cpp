@@ -58,17 +58,17 @@ int main(int argc, char *argv[]) {
     // Create gameobject with sprite component
     const auto game_object1 = std::make_shared<GameObject>(
             "TestGameObject", "TestTag", true,
-            Transform{Vector2d{0.f, 0.f}, 0.0f, 0.4f});
+            Transform{Vector2d{0.f, 0.f}, 0.0f, 0.5f});
     const auto game_object2 = std::make_shared<GameObject>(
             "TestGameObject", "TestTag", true,
-            Transform{Vector2d{1.f, 1.f}, 1.1f, 0.2f});
+            Transform{Vector2d{1.f, 1.f}, 1.1f, 0.3f});
     const auto game_object3 = std::make_shared<GameObject>(
             "TestGameObject", "TestTag", true,
-            Transform{Vector2d{-1.f, -1.f}, 2.0f, 0.3f});
+            Transform{Vector2d{-1.f, -1.f}, 2.0f, 0.4f});
 
-    Sprite sprite1{"./assets/sample.png", Color(0, 0, 0, 255.0), false, false, 1, 1};
-    Sprite sprite2{"./assets/sample.png", Color(0, 0, 0, 255.0), false, false, 1, 1};
-    Sprite sprite3{"./assets/sample.png", Color(0, 0, 0, 255.0), false, false, 1, 1};
+    Sprite sprite1{"./assets/sample.png", Color(0, 0, 0, 255.0), false, false, 1, 5};
+    Sprite sprite2{"./assets/sample.png", Color(0, 0, 0, 255.0), false, false, 1, 2};
+    Sprite sprite3{"./assets/sample.png", Color(0, 0, 0, 255.0), false, false, 1, -1};
 
     game_object1->add_component(std::make_shared<Sprite>(sprite1));
     game_object2->add_component(std::make_shared<Sprite>(sprite2));
@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) {
 
     // Try colliders
     auto collider = std::make_shared<BoxCollider>(4.f, 4.f);
-    auto rigid_body = std::make_shared<RigidBody>(*scene, BodyType::static_body, Vector2d{ 0.f, 0.f }, 1.0f);
+    auto rigid_body = std::make_shared<RigidBody>(*scene, -2, BodyType::static_body, Vector2d{ 0.f, 0.f }, 1.0f);
     rigid_body->set_collider(collider);
     game_object1->add_component(rigid_body);
 
@@ -98,7 +98,7 @@ int main(int argc, char *argv[]) {
     scene->gameobjects.push_back(mouse_listener_object);
 
     auto chaincollider = std::make_shared<ChainCollider>("./assets/track1_outer.xml");
-    auto chain_rigidbody = std::make_shared<RigidBody>(*scene, BodyType::static_body, Vector2d{ 2.f, 2.f }, 1.0f);
+    auto chain_rigidbody = std::make_shared<RigidBody>(*scene, 6, BodyType::static_body, Vector2d{ 2.f, 2.f }, 1.0f);
     chain_rigidbody->set_collider(chaincollider);
 
     game_object2->add_component(chain_rigidbody);

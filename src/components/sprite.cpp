@@ -5,9 +5,11 @@
 #include "global.hpp"
 #include "sdltexture.hpp"
 #include "sdlrenderer.hpp"
+#include "../rendercall.hpp"
 
 
 Sprite::Sprite(std::string sprite, Color color, bool flip_x, bool flip_y, int sorting_layer, int order_in_layer, float pixels_to_meters) :
+		IRenderable(order_in_layer),
 		res_x(0),
 		res_y(0),
 		pixels_to_meters(pixels_to_meters),
@@ -23,7 +25,10 @@ Sprite::Sprite(std::string sprite, Color color, bool flip_x, bool flip_y, int so
 
 void Sprite::render(bool is_world_space) const {
 	const auto renderer = Global::get_instance()->get_engine().get_renderer();
-	renderer->render_sprite(*this, *_texture, game_object->transform, is_world_space);
+    auto render_call = RenderCall([this, renderer, texture = _texture, transform = game_object->transform, is_world_space](){
+        renderer->render_sprite(*this, *texture, game_object->transform, is_world_space);
+        }, _order_in_layer);
+	renderer->add_render_call(render_call);
 }
 
 float Sprite::get_size_x() const

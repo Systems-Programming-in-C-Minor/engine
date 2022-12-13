@@ -12,7 +12,7 @@ class RigidBody;
 /**
  * Component class for colliders
  */
-class Collider : public Component, public IRenderable
+class Collider
 {
 protected:
     friend class RigidBody;
@@ -21,8 +21,6 @@ protected:
     bool _ignore_collision_physics;
 
     virtual void set_fixture(b2Body& body, float friction, float restitution) = 0;
-public:
-    void render(bool is_world_space) const override;
 };
 
 #endif //COLLIDERS_COLLIDER_HPP
