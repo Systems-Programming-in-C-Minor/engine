@@ -184,10 +184,10 @@ int main() {
     car->add_component(behaviour);
     scene->gameobjects.push_back(car);
 
-//    auto chaincollider = std::make_shared<ChainCollider>("./assets/track1_outer.xml");
-//    auto chain_rigidbody = std::make_shared<RigidBody>(*scene, 6, BodyType::static_body, Vector2d{ 2.f, 2.f }, 1.0f);
-//    chain_rigidbody->set_collider(chaincollider);
-//    game_object2->add_component(chain_rigidbody);
+    auto chaincollider = std::make_shared<ChainCollider>("./assets/track1_outer.xml");
+    auto chain_rigidbody = std::make_shared<RigidBody>(*scene, 6, BodyType::static_body, Vector2d{ 2.f, 2.f }, 1.0f);
+    chain_rigidbody->set_collider(chaincollider);
+    game_object2->add_component(chain_rigidbody);
 
 
     engine_ref.load_scene(scene);
