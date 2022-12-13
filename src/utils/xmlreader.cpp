@@ -30,6 +30,7 @@ std::vector<Vector2d> XmlReader::get_points_vec2d(){
 
     for(auto& vec : res) {
         vec = vec / ptm->FloatText();
+        vec = Vector2d{ vec.x, -vec.y };
     }
 
     return res;
