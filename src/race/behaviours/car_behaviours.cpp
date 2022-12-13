@@ -52,14 +52,14 @@ void CarBehaviour::turn(float steering) {
     auto &body = *game_object->get_component<RigidBody>();
     auto speed = body.get_current_speed();
 
-    if (speed < 0.001f && speed > -0.001f)
+    if (speed < 0.5f && speed > -0.5f)
         return;
 
     if (speed < 0)
         steering *= -1;
 
     body.apply_angular_impulse(
-            steering * 2 *  Global::get_instance()->get_delta_time());
+            steering *  Global::get_instance()->get_delta_time());
 }
 
 void CarBehaviour::turn_left() {
