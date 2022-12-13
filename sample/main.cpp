@@ -186,7 +186,6 @@ int main(int argc, char *argv[]) {
     auto chaincollider = std::make_shared<ChainCollider>("./assets/track1_outer.xml");
     auto chain_rigidbody = std::make_shared<RigidBody>(*scene, BodyType::static_body, Vector2d{ 2.f, 2.f }, 1.0f);
     chain_rigidbody->set_collider(chaincollider);
-
     game_object2->add_component(chain_rigidbody);
 
     engine_ref.load_scene(scene);
