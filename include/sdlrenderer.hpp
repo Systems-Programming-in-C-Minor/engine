@@ -95,7 +95,7 @@ private:
     std::list<RenderCall> _render_queue;
 
 	// Todo move to something which gamedev can set
-	float _mtp = 100.f;
+	float _mtp = 6.f;
 };
 
 #endif // SDL_RENDERER_H_Hbcayj12iU

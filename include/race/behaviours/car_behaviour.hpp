@@ -27,15 +27,15 @@ protected:
     void brake();
 
 public:
-    float max_speed_forwards = 6.f;
-    float max_speed_backwards = -2.0f;
-    float max_drive_force = 3.2f;
-    float current_traction = 1.f;
+    float max_speed_forwards = 3200.f;
+    float max_speed_backwards = -800.f;
+    float max_drive_force = 400.f;
+    float current_traction = 2.5f;
     float max_lateral_impulse = 1.f;
-    float drift_friction = 1.f;
-    float angular_friction = 1.f;
-    float drag_modifier = 8.f;
-    float steering_impulse = 8.f;
+    float drift_friction = 1.6f;
+    float angular_friction = 1.6f;
+    float drag_modifier = 1.f;
+    float steering_impulse = 32.f;
 
     void tick(GameObject &object) override;
 };

@@ -58,17 +58,18 @@ private:
 
 class Car : public GameObject {
 public:
-    Car(const std::string &name, const std::string &tag, std::string sprite_path, const std::shared_ptr<Scene> &scene)
+    Car(const std::string &name, const std::string &tag, std::string sprite_path, const std::shared_ptr<Scene> &scene, const int order_in_layer = 10)
             : GameObject(name, tag) {
         auto sprite =
-                std::make_shared<Sprite>(std::move(sprite_path), Color(0, 0, 0, 0), false, false, 1, 1);
+                std::make_shared<Sprite>(std::move(sprite_path), Color(0, 0, 0, 0), false, false, 1, 10);
         add_component(sprite);
 
-        auto collider = std::make_shared<BoxCollider>(4.f, 4.f);
-        auto rigid_body = std::make_shared<RigidBody>(*scene, BodyType::dynamic_body, Vector2d{0.f, 1.5f}, 1.f);
+        auto collider = std::make_shared<BoxCollider>(1.65f, 4.f);
+        auto rigid_body = std::make_shared<RigidBody>(*scene, order_in_layer, BodyType::dynamic_body, Vector2d{0.f, 1.5f}, 1.f);
+        rigid_body->set_mass(1600.f);
         rigid_body->set_collider(collider);
         add_component(rigid_body);
-        transform.set_scale(0.06f);
+        transform.set_scale(.5f);
         transform.set_angle(degrees_to_radians(90));
     }
 };
@@ -140,7 +141,7 @@ public:
     void on_key_released(const KeyReleasedEvent &event) override {}
 };
 
-int main(int argc, char *argv[]) {
+int main() {
     // Setup engine
     const auto global = Global::get_instance();
     auto engine = std::make_unique<Engine>();
@@ -168,12 +169,6 @@ int main(int argc, char *argv[]) {
 
     const auto scene = std::make_shared<Scene>();
 
-    // Try colliders
-    auto collider = std::make_shared<BoxCollider>(4.f, 4.f);
-    auto rigid_body = std::make_shared<RigidBody>(*scene, -2, BodyType::static_body, Vector2d{ 0.f, 0.f }, 1.0f);
-    rigid_body->set_collider(collider);
-    game_object1->add_component(rigid_body);
-
     scene->gameobjects.push_back(game_object1);
     scene->gameobjects.push_back(game_object2);
     scene->gameobjects.push_back(game_object3);
@@ -189,10 +184,11 @@ int main(int argc, char *argv[]) {
     car->add_component(behaviour);
     scene->gameobjects.push_back(car);
 
-    auto chaincollider = std::make_shared<ChainCollider>("./assets/track1_outer.xml");
-    auto chain_rigidbody = std::make_shared<RigidBody>(*scene, 6, BodyType::static_body, Vector2d{ 2.f, 2.f }, 1.0f);
-    chain_rigidbody->set_collider(chaincollider);
-    game_object2->add_component(chain_rigidbody);
+//    auto chaincollider = std::make_shared<ChainCollider>("./assets/track1_outer.xml");
+//    auto chain_rigidbody = std::make_shared<RigidBody>(*scene, 6, BodyType::static_body, Vector2d{ 2.f, 2.f }, 1.0f);
+//    chain_rigidbody->set_collider(chaincollider);
+//    game_object2->add_component(chain_rigidbody);
+
 
     engine_ref.load_scene(scene);
 

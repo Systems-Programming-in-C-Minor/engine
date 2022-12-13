@@ -84,6 +84,13 @@ Vector2d RigidBody::get_world_center() {
     return get_vec(_body->GetWorldCenter());
 }
 
+void RigidBody::set_mass(const float mass) const {
+    auto data = b2MassData {};
+    _body->GetMassData(&data);
+    data.mass = mass;
+    _body->SetMassData(&data);
+}
+
 float RigidBody::get_mass() const {
     return _body->GetMass();
 }
