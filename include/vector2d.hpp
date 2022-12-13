@@ -6,6 +6,7 @@
 struct b2Vec2;
 class PolygonCollider;
 class ChainCollider;
+class SdlRenderer;
 
 class Vector2d {
 public:
@@ -49,6 +50,7 @@ public:
 private:
     friend class PolygonCollider;
     friend class ChainCollider;
+    friend class SdlRenderer;
     explicit Vector2d(const b2Vec2& b2vec);
     explicit operator b2Vec2() const;
 };

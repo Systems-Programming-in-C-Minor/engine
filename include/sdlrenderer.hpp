@@ -2,10 +2,12 @@
 #define SDL_RENDERER_H_Hbcayj12iU
 
 #include "render/irenderer.hpp"
+#include "components/colliders/collider.hpp"
 
 #include <memory>
 #include <list>
 
+class b2PolygonShape;
 class RenderCall;
 
 namespace SDL2pp 
@@ -40,7 +42,10 @@ public:
 	/**
 	 * @brief Renders a collider
 	 */
-	void render_collider() const override;
+	void render_rigid_body(const RigidBody& rigid_body, Transform& transform, bool is_world_space) const override;
+
+
+	void render_lines(std::vector<Vector2d>& vectors, const Color& color) const override;
 
 	/**
 	 * @brief Renders a text object
@@ -70,6 +75,7 @@ public:
 private:
 	void init(int res_x = 800, int res_y = 600);
 	[[nodiscard]] SDL2pp::Point world_to_screen(const Vector2d& position) const;
+	void render_ngon(b2Body* body, b2PolygonShape* shape) const;
 
 	std::unique_ptr<SDL2pp::SDL> _sdl;
 	std::unique_ptr<SDL2pp::SDLImage> _sdl_image;

@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
 
     // Try colliders
     auto collider = std::make_shared<BoxCollider>(4.f, 4.f);
-    auto rigid_body = std::make_shared<RigidBody>(*scene, BodyType::static_body, Vector2d{ 0.f, 0.f }, 1.0f);
+    auto rigid_body = std::make_shared<RigidBody>(*scene, -2, BodyType::static_body, Vector2d{ 0.f, 0.f }, 1.0f);
     rigid_body->set_collider(collider);
     game_object1->add_component(rigid_body);
 

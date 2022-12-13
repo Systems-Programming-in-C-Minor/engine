@@ -17,7 +17,7 @@
 #include "SDL2pp/SDLImage.hh"
 #include "SDL2pp/Exception.hh"
 #include "SDL2pp/Point.hh"
-#include "fmt/ostream.h"
+#include "box2d/box2d.h"
 
 #include <cmath>
 #include <ostream>
@@ -47,13 +47,58 @@ void SdlRenderer::render_sprite(const Sprite& sprite, ITexture& texture, Transfo
 	_renderer->Copy(*texture.get_texture(), SDL2pp::NullOpt, rect, radians_to_degrees(transform.get_angle()));
 }
 
-void SdlRenderer::render_collider() const
+void SdlRenderer::render_rigid_body(const RigidBody& rigid_body, Transform& transform, bool is_world_space) const
 {
-	// TODO Params for this func undefined in API
-	/**
-	 * TODO Task: Debug draw for colliders (vertex renderer)
-	 * https://app.clickup.com/t/34xa6tw
-	 */
+	b2Body* body = rigid_body.get_body();
+	b2Shape* shape = body->GetFixtureList()->GetShape();
+	switch(shape->GetType())
+	{
+		// NOLINTBEGIN(bugprone-branch-clone)
+		case b2Shape::Type::e_circle: break;
+		case b2Shape::Type::e_polygon:
+			{
+				render_ngon(body, dynamic_cast<b2PolygonShape*>(shape));
+				break;
+			}
+		case b2Shape::Type::e_chain:
+			{
+				render_ngon(body, dynamic_cast<b2PolygonShape*>(shape));
+				break;
+			}
+		case b2Shape::e_edge: break;
+		case b2Shape::e_typeCount: break;
+		// NOLINTEND(bugprone-branch-clone)
+	}
+
+}
+
+void SdlRenderer::render_ngon(b2Body* body, b2PolygonShape* shape) const
+{
+	const int vertex_count = shape->m_count;
+
+	std::vector<Vector2d> vectors;
+	vectors.reserve(vertex_count);
+
+	for (int i = 0; i < vertex_count; ++i) {
+		vectors.push_back(static_cast<Vector2d>(body->GetWorldPoint(shape->m_vertices[i])));
+	}
+
+	const Vector2d start_vertex = vectors[0];
+	vectors.push_back(start_vertex);
+
+	render_lines(vectors, Color{ 255, 255,0,0 });
+}
+
+void SdlRenderer::render_lines(std::vector<Vector2d>& vectors, const Color& color) const
+{
+	std::vector<SDL2pp::Point> points;
+	points.reserve(vectors.size());
+
+	for(auto& vector : vectors) {
+		points.push_back(world_to_screen(vector));
+	}
+	_renderer->SetDrawColor(static_cast<SDL2pp::Color>(color));
+	_renderer->DrawLines(points.data(), static_cast<int>(points.size()));
 }
 
 void SdlRenderer::render_text(Text& text) const
@@ -72,14 +117,14 @@ void SdlRenderer::clear(const Color& color) const try
 
 void SdlRenderer::push_to_screen() try
 {
-    _render_queue.sort([](const RenderCall& p1, const RenderCall& p2)
-        {
-            return p1.order_in_layer < p2.order_in_layer;
-        });
+	_render_queue.sort([](const RenderCall& p1, const RenderCall& p2)
+		{
+			return p1.order_in_layer < p2.order_in_layer;
+		});
 
-    for (const auto& render_call : _render_queue) {
-        render_call.render_callback();
-    }
+	for (const auto& render_call : _render_queue) {
+		render_call.render_callback();
+	}
 	_renderer->Present();
 } catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
 
@@ -97,7 +142,7 @@ void SdlRenderer::init(int res_x, int res_y) try
 } catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
 
 void SdlRenderer::add_render_call(RenderCall& render_call) {
-    _render_queue.push_back(render_call);
+	_render_queue.push_back(render_call);
 }
 
 SDL2pp::Point SdlRenderer::world_to_screen(const Vector2d& position) const

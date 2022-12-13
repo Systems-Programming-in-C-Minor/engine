@@ -4,10 +4,16 @@
 #include <gmock/gmock.h>
 #include <render/irenderer.hpp>
 
+#include <vector>
+
+class Vector2d;
+class Color;
+
 class MockRenderer : public IRenderer {
 public:
+	MOCK_METHOD(void, render_lines, (std::vector<Vector2d>&, const Color&), (const, override));
+	MOCK_METHOD(void, render_rigid_body, (const RigidBody&, Transform&, bool), (const, override));
 	MOCK_METHOD(void, add_render_call, (RenderCall&), (override));
-	MOCK_METHOD(void, render_collider, (), (const, override));
 	MOCK_METHOD(void, render_text, (Text&), (const, override));
 	MOCK_METHOD(void, clear, (const Color&), (const, override));
 	MOCK_METHOD(void, push_to_screen, (), (override));

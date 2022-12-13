@@ -1,16 +1,20 @@
 #include "components/colliders/collider.hpp"
 #include "components/rigidbody.hpp"
+#include "global.hpp"
 #include "scene.hpp"
+#include "../rendercall.hpp"
 
 #include "box2d/box2d.h"
 
 RigidBody::RigidBody(const Scene &scene,
+    int order_in_layer,
     const BodyType type,
     const Vector2d vector,
     const float gravity_scale,
     const float restitution,
     const float friction
 ) :
+    IRenderable(order_in_layer),
 	_restitution(restitution),
 	_friction(friction)
 {
@@ -111,4 +115,19 @@ float RigidBody::get_angle() const {
 void RigidBody::set_collider(std::shared_ptr<Collider> collider) {
     _collider = collider;
     collider->set_fixture(*_body, _friction, _restitution);
+}
+
+b2Body *RigidBody::get_body() const
+{
+    return _body;
+}
+
+void RigidBody::render(bool is_world_space) const {
+    const auto renderer = Global::get_instance()->get_engine().get_renderer();
+    renderer->render_rigid_body(*this, game_object->transform, true);
+
+    auto render_call = RenderCall([this, renderer, transform = game_object->transform, is_world_space]() {
+        renderer->render_rigid_body(*this, game_object->transform, is_world_space);
+        }, _order_in_layer);
+    renderer->add_render_call(render_call);
 }
