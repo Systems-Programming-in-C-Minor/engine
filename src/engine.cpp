@@ -9,6 +9,7 @@
 #include "global.hpp"
 #include "managers/host_multiplayer_manager.hpp"
 #include "managers/client_multiplayer_manager.hpp"
+#include "fmt/core.h"
 
 void Engine::load_scene(std::shared_ptr<Scene> new_scene) {
     _active_scene = std::move(new_scene);
@@ -26,13 +27,18 @@ void Engine::start() {
         _multiplayer_manager->tick();
         _active_scene->render();
         _renderer->push_to_screen();
-        Global::get_instance()->time.tick();
+        _time->tick();
 
         const auto current_nanos = std::chrono::system_clock::now().time_since_epoch().count();
 
         _fps = static_cast<unsigned long>(round(
                 1.0 / static_cast<double>(current_nanos - _time_after_last_frame) * 1e9));
         _time_after_last_frame = current_nanos;
+
+        SDL_Event event;
+        SDL_PollEvent(&event);
+        if (event.type == SDL_QUIT || event.type == SDL_APP_TERMINATING)
+            stop();
     }
 }
 
@@ -52,11 +58,15 @@ unsigned long Engine::get_fps() const {
     return _fps;
 }
 
+Time &Engine::get_time() const {
+    return *_time;
+}
+
 std::shared_ptr<IRenderer> Engine::get_renderer() const {
     return _renderer;
 }
 
-Engine::Engine(): Engine(std::make_shared<SdlRenderer>()) {}
+Engine::Engine() : Engine(std::make_shared<SdlRenderer>()) {}
 
 Engine::Engine(std::shared_ptr<IRenderer> renderer) : Engine(std::move(renderer), "engine-host") {}
 
@@ -64,6 +74,7 @@ Engine::Engine(const std::string &user_id, bool is_host) : Engine(std::make_shar
 
 Engine::Engine(std::shared_ptr<IRenderer> renderer, const std::string &user_id, bool is_host) :
         _should_quit(false), _time_after_last_frame(0), _fps(0),
+        _time(std::make_unique<Time>()),
         _renderer(std::move(renderer)),
         _key_handler(std::make_unique<KeyHandler>()),
         _mouse_handler(std::make_unique<MouseHandler>()) {

@@ -4,7 +4,7 @@
 #include <string>
 #include <memory>
 
-class IRenderer;
+class SdlRenderer;
 
 namespace SDL2pp {
     class Texture;
@@ -12,9 +12,10 @@ namespace SDL2pp {
 
 class ITexture {
 public:
-    // TODO Possibly remove renderer param in favour of renderer in global singleton
     ITexture(const std::string& path) {}
 
+private:
+    friend class SdlRenderer;
     [[nodiscard]] virtual std::shared_ptr<SDL2pp::Texture> get_texture() const = 0;
 };
 

@@ -2,8 +2,14 @@
 #define SDL_RENDERER_H_Hbcayj12iU
 
 #include "render/irenderer.hpp"
+#include "components/colliders/collider.hpp"
 
 #include <memory>
+#include <list>
+
+class b2PolygonShape;
+class b2ChainShape;
+class RenderCall;
 
 namespace SDL2pp 
 {
@@ -37,7 +43,15 @@ public:
 	/**
 	 * @brief Renders a collider
 	 */
-	void render_collider() const override;
+	void render_rigid_body(const RigidBody& rigid_body, Transform& transform, bool is_world_space) const override;
+
+
+	/**
+	 * @brief Renders a line from points in world space
+	 * @param vectors Vector of points (Vector2d), to be  drawn as a line
+	 * @param color Color of the to-be-drawn line
+	 */
+	void render_lines(std::vector<Vector2d>& vectors, const Color& color) const override;
 
 	/**
 	 * @brief Renders a text object
@@ -53,9 +67,13 @@ public:
 	/**
 	 * @brief Presents the composed backbuffer
 	 */
-	void push_to_screen() const override;
+	void push_to_screen() override;
 
-
+	/**
+     * @brief Adds a render call to the renderqueue
+     * @param render_call The render call
+     */
+    void add_render_call(RenderCall& render_call) override;
 	/**
 	 * @brief Returns the SDL_Renderer instance
 	 * @return A pointer to the SDL_Renderer instance
@@ -67,14 +85,17 @@ public:
 private:
 	void init(int res_x = 800, int res_y = 600);
 	[[nodiscard]] SDL2pp::Point world_to_screen(const Vector2d& position) const;
+	void render_ngon(b2Body* body, b2PolygonShape* shape) const;
+	void render_ngon(b2Body* body, b2ChainShape* shape) const;
 
 	std::unique_ptr<SDL2pp::SDL> _sdl;
 	std::unique_ptr<SDL2pp::SDLImage> _sdl_image;
 	std::shared_ptr<SDL2pp::Window> _window;
 	std::shared_ptr<SDL2pp::Renderer> _renderer;
+    std::list<RenderCall> _render_queue;
 
 	// Todo move to something which gamedev can set
-	float _mtp = 100.f;
+	float _mtp = 6.f;
 };
 
 #endif // SDL_RENDERER_H_Hbcayj12iU

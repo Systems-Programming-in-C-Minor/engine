@@ -6,6 +6,7 @@
 struct b2Vec2;
 class PolygonCollider;
 class ChainCollider;
+class SdlRenderer;
 
 class Vector2d {
 public:
@@ -25,6 +26,9 @@ public:
 
     [[nodiscard]] Vector2d multiply(float other) const;
     [[nodiscard]] Vector2d operator*(float other) const;
+
+    [[nodiscard]] Vector2d divide(float other) const;
+    [[nodiscard]] Vector2d operator/(float other) const;
 
     /**
      * Checks equality of the vector
@@ -56,6 +60,7 @@ public:
 private:
     friend class PolygonCollider;
     friend class ChainCollider;
+    friend class SdlRenderer;
     explicit Vector2d(const b2Vec2& b2vec);
     explicit operator b2Vec2() const;
 };

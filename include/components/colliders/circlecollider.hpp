@@ -15,7 +15,7 @@ protected:
     void set_fixture(b2Body& body, float friction, float restitution) override;
 
 public:
-    explicit CircleCollider(double radius);
+    explicit CircleCollider(Vector2d point, float radius);
 
     [[nodiscard]] double get_radius() const;
 };

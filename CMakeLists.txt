@@ -34,6 +34,12 @@ FetchContent_Declare(SDL2pp
   GIT_PROGRESS TRUE
 )
 
+FetchContent_Declare(tinyxml2
+        GIT_REPOSITORY https://github.com/leethomason/tinyxml2.git
+        GIT_TAG 9.0.0
+        GIT_PROGRESS TRUE
+)
+
 # This allows libSDL2pp to find the local SDL2 libraries.
 list(APPEND CMAKE_PREFIX_PATH $ENV{CMAKE_PREFIX_PATH}/SDL2)
 list(APPEND CMAKE_PREFIX_PATH $ENV{CMAKE_PREFIX_PATH}/SDL2_image/x86_64-w64-mingw32/include)
@@ -43,10 +49,11 @@ set(SDL2PP_WITH_IMAGE ON) # if you need SDL_image support
 set(SDL2PP_WITH_MIXER OFF) # if you need SDL_mixer support
 set(SDL2PP_WITH_TTF OFF) # if you need SDL_ttf support
 
-FetchContent_MakeAvailable(fmt box2d SDL2pp)
+FetchContent_MakeAvailable(fmt box2d SDL2pp tinyxml2)
 
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS ./src/*.cpp)
 file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS ./include/*.hpp)
+file(GLOB_RECURSE PRIVATE_HEADER_FILES CONFIGURE_DEPENDS ./src/*.hpp)
 
 if (WIN32)
     set(SDL2_IMAGE_LIBRARIES SDL2_image::SDL2_image)
@@ -54,7 +61,7 @@ else ()
     set(SDL2_IMAGE_LIBRARIES SDL2_image)
 endif ()
 
-add_library(engine STATIC ${SOURCE_FILES} ${HEADER_FILES})
+add_library(engine STATIC ${SOURCE_FILES} ${HEADER_FILES} ${PRIVATE_HEADER_FILES})
 
 target_compile_definitions(engine PRIVATE _USE_MATH_DEFINES)
 
@@ -64,6 +71,7 @@ target_link_libraries(engine PRIVATE
         fmt::fmt
         box2d
         SDL2pp::SDL2pp
+        tinyxml2::tinyxml2
         )
 
 if (ENGINE_TEST)

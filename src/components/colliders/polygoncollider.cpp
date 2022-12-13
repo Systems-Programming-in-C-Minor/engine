@@ -1,6 +1,7 @@
 #include "box2d/box2d.h"
 #include "components/colliders/polygoncollider.hpp"
 #include "fmt/core.h"
+#include "utils/xmlreader.hpp"
 
 PolygonCollider::PolygonCollider(std::vector<Vector2d> points, bool ignore_collision_physics) : Collider()
 {
@@ -8,9 +9,9 @@ PolygonCollider::PolygonCollider(std::vector<Vector2d> points, bool ignore_colli
 	_points = std::move(points);
 }
 
-PolygonCollider::PolygonCollider(const std::string& path, bool ignore_collision_physics) : Collider()
-{
-	_ignore_collision_physics = ignore_collision_physics;
+PolygonCollider::PolygonCollider(const std::string& path, bool ignore_collision_physics) : Collider() {
+
+    _ignore_collision_physics = ignore_collision_physics;
 	get_points_from_file(path);
 }
 
@@ -19,11 +20,8 @@ std::vector<Vector2d> PolygonCollider::get_points() const {
 }
 
 void PolygonCollider::get_points_from_file(const std::string& path) {
-	/*
-	 * TODO Task: Implement SpriteCollider
-	 * https://app.clickup.com/t/377pt9y
-	 */
-	_points = std::vector<Vector2d>{Vector2d{}};
+    XmlReader xmlreader(path);
+    _points = xmlreader.get_points_vec2d();
 }
 
 void PolygonCollider::set_fixture(b2Body& body, float friction, float restitution) {

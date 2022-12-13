@@ -156,3 +156,23 @@ TEST(Vector2dTest, DivideByZeroTestFunc)
 	EXPECT_EQ(vec1, vec4);
 	EXPECT_EQ(vec1, vec5);
 }
+
+TEST(Vector2dTest, DivideTest_Test)
+{
+    Vector2d vec1(1.0, 1.0);
+    Vector2d vec2(2.0, 2.0);
+
+    Vector2d vec3 = vec2.divide(2.f);
+
+    EXPECT_TRUE(vec1.almost_equals(vec3, 0.001));
+}
+
+TEST(Vector2dTest, DivideTestOverload_Test)
+{
+    Vector2d vec1(1.0, 1.0);
+    Vector2d vec2(2.0, 2.0);
+
+    Vector2d vec3 = vec2 / 2.f;
+
+    EXPECT_TRUE(vec1.almost_equals(vec3, 0.001));
+}

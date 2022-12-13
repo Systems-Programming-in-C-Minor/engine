@@ -50,3 +50,7 @@ const Scene &Global::get_active_scene() const {
 void Global::notify_event_manager(const IEvent &event) {
     _engine->get_active_scene().get_event_manager().notify(event);
 }
+
+float Global::get_delta_time() {
+    return get_engine().get_time().delta_time();
+}
