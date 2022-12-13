@@ -23,6 +23,7 @@ RigidBody::RigidBody(const Scene &scene,
     body_def.position.Set(vector.x, vector.y);
     body_def.gravityScale = gravity_scale;
     _body = scene._world->CreateBody(&body_def);
+//    _body->SetUserData( this );
 }
 
 void RigidBody::apply_force(const Vector2d force, const Vector2d point) const {

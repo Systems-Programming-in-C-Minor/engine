@@ -15,8 +15,6 @@ public:
 
     virtual void on_collider_exit(const ColliderExitEvent &event) = 0;
 
-    virtual void on_collider_stay(const ColliderStayEvent &event) = 0;
-
 };
 
 #endif //ENGINE_COLLIDER_LISTENER_HPP

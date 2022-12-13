@@ -43,21 +43,15 @@ public:
     Key key;
 };
 
-class ColliderExitEvent : public IEvent {
-public:
-    explicit ColliderExitEvent(Collider& col): IEvent(ColliderExit), collider(col) {};
-    Collider& collider;
-};
-
 class ColliderEntryEvent : public IEvent {
 public:
     explicit ColliderEntryEvent(Collider& col): IEvent(ColliderEntry), collider(col) {};
     Collider& collider;
 };
 
-class ColliderStayEvent : public IEvent {
+class ColliderExitEvent : public IEvent {
 public:
-    explicit ColliderStayEvent(Collider& col): IEvent(ColliderStay), collider(col) {};
+    explicit ColliderExitEvent(Collider& col): IEvent(ColliderExit), collider(col) {};
     Collider& collider;
 };
 
