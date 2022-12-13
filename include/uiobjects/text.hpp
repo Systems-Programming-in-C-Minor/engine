@@ -16,7 +16,7 @@ private:
     Alignment _alignment;
     Color _color;
 public:
-    Text(const std::string& name, const std::string& tag, double width, double height, const std::string& text, const std::string& font, int size, Alignment alignment, Color color);
+    Text(const std::string& name, const std::string& tag, int width, int height, std::string  text, std::string  font, int size, Alignment alignment, Color color);
     [[nodiscard]] std::string get_text() const;
     [[nodiscard]] std::string get_font() const;
     [[nodiscard]] int get_size() const;

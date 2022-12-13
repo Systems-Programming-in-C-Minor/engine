@@ -4,9 +4,9 @@
 #include "uiobject.hpp"
 #include "global.hpp"
 
-Text::Text(const std::string& name, const std::string& tag, double width, double height, const std::string& text, const std::string& font, int size, Alignment alignment, Color color) : UIObject(name, tag, width, height),
-    _text(text),
-    _font(font),
+Text::Text(const std::string& name, const std::string& tag, int width, int height, std::string text, std::string font, int size, Alignment alignment, Color color) : UIObject(name, tag, width, height),
+    _text(std::move(text)),
+    _font(std::move(font)),
     _size(size),
     _alignment(alignment),
     _color(color)

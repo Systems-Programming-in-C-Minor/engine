@@ -5,7 +5,7 @@
 
 class Button : public UIObject {
 public:
-    Button(const std::string& name, const std::string& tag, double width, double height, bool interactable);
+    Button(const std::string& name, const std::string& tag, int width, int height, bool interactable);
     /**
      * @brief This function is called when the button is clicked, which
      *        will trigger a call to the registered onClick member.

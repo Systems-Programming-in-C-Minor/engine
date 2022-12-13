@@ -135,8 +135,8 @@ void SdlRenderer::render_text(const Text& text) const
     SDL2pp::Texture texture {SDL_CreateTextureFromSurface(_renderer->Get(), surface.Get())};
 
     SDL2pp::Rect rect;
-    rect.SetW(static_cast<int>(text.get_width()));
-    rect.SetH(static_cast<int>(text.get_height()));
+    rect.SetW(text.get_width());
+    rect.SetH(text.get_height());
 
     _renderer->Copy(texture, rect);
 
