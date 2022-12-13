@@ -6,10 +6,12 @@
 #include "global.hpp"
 #include "scene.hpp"
 #include "components/colliders/boxcollider.hpp"
+#include "components/colliders/chaincollider.hpp"
 #include "listeners/key_listener.hpp"
 #include "listeners/mouse_listener.hpp"
 #include "race/behaviours/car_behaviour.hpp"
 #include "utils/trigonometry.hpp"
+#include "utils/xmlreader.hpp"
 
 class KeyMouseListenerComponent : public Component, public KeyListener, public MouseListener {
 public:
@@ -180,6 +182,12 @@ int main(int argc, char *argv[]) {
     auto behaviour = std::make_shared<PlayerCarBehaviour>(scene->get_event_manager());
     car->add_component(behaviour);
     scene->gameobjects.push_back(car);
+
+    auto chaincollider = std::make_shared<ChainCollider>("./assets/track1_outer.xml");
+    auto chain_rigidbody = std::make_shared<RigidBody>(*scene, BodyType::static_body, Vector2d{ 2.f, 2.f }, 1.0f);
+    chain_rigidbody->set_collider(chaincollider);
+
+    game_object2->add_component(chain_rigidbody);
 
     engine_ref.load_scene(scene);
 
