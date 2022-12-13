@@ -5,13 +5,11 @@
 
 class Time {
 public:
-    Time();
-
     /**
      * Get the time from the previous tick to time of call in milliseconds
      * @return
      */
-    [[nodiscard]] double delta_time() const;
+    [[nodiscard]] float delta_time() const;
 
     [[nodiscard]] double time_scale() const;
 
@@ -22,7 +20,7 @@ public:
 private:
     std::chrono::steady_clock::time_point _time_since_call;
 
-    double _time_scale;
+    double _time_scale = 1;
 };
 
 #endif //ENGINE_TIME_HPP

@@ -19,7 +19,7 @@ void Animator::stop() {
 }
 
 bool Animator::should_animate() {
-    const auto delta_time = Global::get_instance()->time.delta_time();
+    const auto delta_time = Global::get_instance()->get_delta_time();
     _time_since_last_animate += delta_time;
     fmt::print("Time: {}", _time_since_last_animate);
     if (_time_since_last_animate > (1000.0/_fps)){ // Time at least necessary for sprite change

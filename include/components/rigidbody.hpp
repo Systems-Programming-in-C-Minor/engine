@@ -26,9 +26,9 @@ class RigidBody : public Component, public IRenderable {
 public:
     RigidBody(const Scene &scene,
         int order_in_layer,
-        const BodyType type, 
-        const Vector2d vector, 
-        const float gravity_scale, 
+        BodyType type,
+        Vector2d vector,
+        float gravity_scale,
         float restitution = 0.5f, 
         float friction = 0.5f
     );
@@ -61,11 +61,11 @@ public:
 
     Vector2d get_world_center();
 
+    void set_mass(float mass) const;
+
     [[nodiscard]] float get_mass() const;
 
     [[nodiscard]] float get_inertia() const;
-
-    void set_mass(float mass) const;
 
     [[nodiscard]] float get_gravity_scale() const;
 
