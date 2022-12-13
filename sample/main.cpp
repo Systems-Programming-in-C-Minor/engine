@@ -1,5 +1,4 @@
 #include <iostream>
-#include "sdlrenderer.hpp"
 #include "color.hpp"
 #include "gameobject.hpp"
 #include "components/sprite.hpp"
@@ -12,6 +11,23 @@
 #include "race/behaviours/car_behaviour.hpp"
 #include "utils/trigonometry.hpp"
 #include "utils/xmlreader.hpp"
+#include "input.hpp"
+#include "interfaces/itickable.hpp"
+
+class InputScript : public Component, public ITickable {
+    Input input;
+
+    void tick(GameObject &gameobject){
+
+        if(input.get_mouse_button(BUTTON_LEFT)){
+            std::cout << input.mouse_position() << std::endl;
+        }
+
+        if (input.get_key_down(A)){
+            std::cout << "Pressed A key" << std::endl;
+        }
+    }
+};
 
 class KeyMouseListenerComponent : public Component, public KeyListener, public MouseListener {
 public:
@@ -166,6 +182,7 @@ int main() {
     const auto car = std::make_shared<Car>("player_car", "car", "./assets/blue_car.png", scene);
     const auto car_behaviour = std::make_shared<PlayerCarBehaviour>(scene->get_event_manager());
     car->add_component(car_behaviour);
+    car->add_component(std::make_shared<InputScript>());
 
     scene->gameobjects.push_back(track_outer);
     scene->gameobjects.push_back(track_inner);
