@@ -4,6 +4,8 @@
 #include "enums/mouse_input.hpp"
 #include "transform.hpp"
 
+#include <algorithm>
+
 std::vector<Key> Input::fetch_keystate() {
     const Uint8 *current_key_states = SDL_GetKeyboardState(nullptr);
 
