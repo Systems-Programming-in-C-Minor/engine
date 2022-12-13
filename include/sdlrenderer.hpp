@@ -46,6 +46,11 @@ public:
 	void render_rigid_body(const RigidBody& rigid_body, Transform& transform, bool is_world_space) const override;
 
 
+	/**
+	 * @brief Renders a line from points in world space
+	 * @param vectors Vector of points (Vector2d), to be  drawn as a line
+	 * @param color Color of the to-be-drawn line
+	 */
 	void render_lines(std::vector<Vector2d>& vectors, const Color& color) const override;
 
 	/**
@@ -64,6 +69,10 @@ public:
 	 */
 	void push_to_screen() override;
 
+	/**
+     * @brief Adds a render call to the renderqueue
+     * @param render_call The render call
+     */
     void add_render_call(RenderCall& render_call) override;
 	/**
 	 * @brief Returns the SDL_Renderer instance
