@@ -33,6 +33,11 @@ void Engine::start() {
         _fps = static_cast<unsigned long>(round(
                 1.0 / static_cast<double>(current_nanos - _time_after_last_frame) * 1e9));
         _time_after_last_frame = current_nanos;
+
+        SDL_Event event;
+        SDL_PollEvent(&event);
+        if (event.type == SDL_QUIT || event.type == SDL_APP_TERMINATING)
+            stop();
     }
 }
 
@@ -56,7 +61,7 @@ std::shared_ptr<IRenderer> Engine::get_renderer() const {
     return _renderer;
 }
 
-Engine::Engine(): Engine(std::make_shared<SdlRenderer>()) {}
+Engine::Engine() : Engine(std::make_shared<SdlRenderer>()) {}
 
 Engine::Engine(std::shared_ptr<IRenderer> renderer) : Engine(std::move(renderer), "engine-host") {}
 
