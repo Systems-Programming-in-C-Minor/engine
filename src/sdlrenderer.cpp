@@ -143,6 +143,7 @@ void SdlRenderer::push_to_screen() try
 		render_call.render_callback();
 	}
 	_renderer->Present();
+	_render_queue.clear();
 } catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
 
 void SdlRenderer::init(int res_x, int res_y) try 
