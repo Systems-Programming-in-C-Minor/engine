@@ -1,6 +1,7 @@
 #include "box2d/box2d.h"
 #include "components/colliders/chaincollider.hpp"
 #include "fmt/core.h"
+#include "utils/xmlreader.hpp"
 
 ChainCollider::ChainCollider(std::vector<Vector2d> points, bool ignore_collision_physics ,ColliderNormal collider_normal) : Collider(), _collider_normal(collider_normal)
 {
@@ -18,11 +19,8 @@ std::vector<Vector2d> ChainCollider::get_points() const {
 }
 
 void ChainCollider::get_points_from_file(const std::string& path) {
-    /*
-     * TODO Task: Implement SpriteCollider
-     * https://app.clickup.com/t/377pt9y
-     */
-    _points = std::vector<Vector2d>{Vector2d{}};
+    XmlReader xmlreader(path);
+    _points = xmlreader.get_points_vec2d();
 }
 
 void ChainCollider::set_fixture(b2Body& body, float friction, float restitution) {

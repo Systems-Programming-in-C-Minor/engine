@@ -26,11 +26,11 @@ RigidBody::RigidBody(const Scene &scene,
 }
 
 void RigidBody::apply_force(const Vector2d force, const Vector2d point) const {
-    _body->ApplyForce(get_b2vec(force), get_b2vec(point), false);
+    _body->ApplyForce(get_b2vec(force), get_b2vec(point), true);
 }
 
 void RigidBody::apply_torque(const float torque) const {
-    _body->ApplyTorque(torque, false);
+    _body->ApplyTorque(torque, true);
 }
 
 void RigidBody::set_linear_velocity(const Vector2d velocity) const {
@@ -50,11 +50,38 @@ float RigidBody::get_angular_velocity() const {
 }
 
 void RigidBody::apply_linear_impulse(const Vector2d impulse, const Vector2d point) const {
-    _body->ApplyLinearImpulse(get_b2vec(impulse), get_b2vec(point), false);
+    _body->ApplyLinearImpulse(get_b2vec(impulse), get_b2vec(point), true);
 }
 
 void RigidBody::apply_angular_impulse(const float impulse) const {
-    _body->ApplyAngularImpulse(impulse, false);
+    _body->ApplyAngularImpulse(impulse, true);
+}
+
+Vector2d RigidBody::get_world_vector(const Vector2d vector) const {
+    return get_vec(_body->GetWorldVector(get_b2vec(vector)));
+}
+
+Vector2d RigidBody::get_lateral_velocity() {
+    b2Vec2 current_right_normal = _body->GetWorldVector(b2Vec2(1, 0));
+    return get_vec(b2Dot(current_right_normal, _body->GetLinearVelocity()) * current_right_normal);
+}
+
+Vector2d RigidBody::get_forward_velocity() {
+    b2Vec2 currentForwardNormal = _body->GetWorldVector(b2Vec2(0, 1));
+    return get_vec(b2Dot(currentForwardNormal, _body->GetLinearVelocity()) * currentForwardNormal);
+}
+
+Vector2d RigidBody::get_direction() {
+    return get_vec(_body->GetWorldVector(b2Vec2(0, 1)));
+}
+
+float RigidBody::get_current_speed() {
+    Vector2d currentForwardNormal = get_world_vector(Vector2d { 0 , 1});
+    return b2Dot(get_b2vec(get_forward_velocity()), get_b2vec(currentForwardNormal));
+}
+
+Vector2d RigidBody::get_world_center() {
+    return get_vec(_body->GetWorldCenter());
 }
 
 float RigidBody::get_mass() const {

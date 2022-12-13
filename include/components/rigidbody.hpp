@@ -17,6 +17,7 @@ class b2Body;
 class b2Vec2;
 
 class Scene;
+
 class Collider;
 class SdlRenderer;
 
@@ -48,6 +49,18 @@ public:
 
     void apply_angular_impulse(float impulse) const;
 
+    [[nodiscard]] Vector2d get_world_vector(Vector2d vector) const;
+
+    Vector2d get_lateral_velocity();
+
+    Vector2d get_forward_velocity();
+
+    Vector2d get_direction();
+
+    float get_current_speed();
+
+    Vector2d get_world_center();
+
     [[nodiscard]] float get_mass() const;
 
     [[nodiscard]] float get_inertia() const;
@@ -76,7 +89,7 @@ public:
 
 private:
     b2Body *_body;
-    std::shared_ptr<Collider> _collider;    
+    std::shared_ptr<Collider> _collider;
     float _restitution;
     float _friction;
 
