@@ -61,6 +61,14 @@ void Transform::set_local_position(Vector2d &new_position) {
     _local_position = std::move(new_position);
 }
 
+float Transform::get_local_angle() const {
+    return _local_angle;
+}
+
+void Transform::set_local_angle(float &angle) {
+    _local_angle = angle;
+}
+
 std::shared_ptr<RigidBody> Transform::get_rigid_body() const {
     if (!_game_object)
         return nullptr;
