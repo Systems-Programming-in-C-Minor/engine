@@ -165,7 +165,8 @@ public:
 
 int main() {
     auto sound_engine = SDLMixerSoundEngine();
-    sound_engine.play("./assets/sample-sound.wav");
+    sound_engine.play("./assets/sample-sound.wav", 100);
+    sound_engine.play("./assets/sample-sound2.wav", 0);
 
     // Setup engine
     const auto global = Global::get_instance();

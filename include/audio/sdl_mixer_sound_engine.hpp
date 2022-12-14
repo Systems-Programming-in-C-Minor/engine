@@ -13,10 +13,11 @@ class SDLMixerSoundEngine : public ISoundEngine {
 
 public:
     SDLMixerSoundEngine();
-    void play(const std::string &path) override;
+    void play(const std::string &path, int loops) override;
     ~SDLMixerSoundEngine();
 private:
     std::map<std::string, std::shared_ptr<SDL2pp::Chunk>> _audio_files = {};
+    std::map<std::string, int> _channels = {};
 };
 
 #endif //ENGINE_SDL_MIXER_SOUND_ENGINE_HPP
