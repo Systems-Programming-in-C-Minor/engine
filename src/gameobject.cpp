@@ -1,5 +1,6 @@
 #include "gameobject.hpp"
 #include "interfaces/itickable.hpp"
+#include "uiobjects/text.hpp"
 
 int GameObject::object_counter = 0;
 
@@ -69,6 +70,13 @@ void GameObject::render() const {
         if (renderable) {
             renderable->render(is_world_space);
 
+        }
+    }
+
+    for (const auto &game_object : this->children) {
+        auto text = std::dynamic_pointer_cast<Text>(game_object);
+        if(text){
+            text->render();
         }
     }
 }
