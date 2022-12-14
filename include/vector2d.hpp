@@ -58,6 +58,8 @@ public:
 
     float normalize();
 
+    Vector2d normalize2();
+
     [[nodiscard]] float static dot(const Vector2d &a, const Vector2d &b);
 
     [[nodiscard]] float cross(const Vector2d &a, const Vector2d &b);
