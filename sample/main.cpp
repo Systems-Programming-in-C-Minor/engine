@@ -77,12 +77,12 @@ class Car : public GameObject {
 public:
     Car(const std::string &name, const std::string &tag, std::string sprite_path, const std::shared_ptr<Scene> &scene, const int order_in_layer = 10)
             : GameObject(name, tag) {
-        auto sprite =
+            const auto sprite =
                 std::make_shared<Sprite>(std::move(sprite_path), Color(0, 0, 0, 0), false, false, 1, 10);
         add_component(sprite);
 
-        auto collider = std::make_shared<BoxCollider>(1.65f, 4.f);
-        auto rigid_body = std::make_shared<RigidBody>(*scene, order_in_layer, BodyType::dynamic_body, Vector2d{0.f, 1.5f}, 1.f);
+            const auto collider = std::make_shared<BoxCollider>(1.65f, 4.f);
+            const auto rigid_body = std::make_shared<RigidBody>(*scene, order_in_layer, BodyType::dynamic_body, Vector2d{0.f, 1.5f}, 1.f);
         rigid_body->set_mass(1600.f);
         rigid_body->set_collider(collider);
         add_component(rigid_body);
@@ -165,31 +165,40 @@ int main() {
     global->set_engine(std::move(engine));
     Engine &engine_ref = global->get_engine();
 
-    // Create gameobject with sprite component
-    const auto game_object1 = std::make_shared<GameObject>(
-            "TestGameObject", "TestTag", true,
-            Transform{Vector2d{0.f, 0.f}, 0.0f, 0.5f});
-    const auto game_object2 = std::make_shared<GameObject>(
-            "TestGameObject", "TestTag", true,
-            Transform{Vector2d{1.f, 1.f}, 1.1f, 0.3f});
-    const auto game_object3 = std::make_shared<GameObject>(
-            "TestGameObject", "TestTag", true,
-            Transform{Vector2d{-1.f, -1.f}, 2.0f, 0.4f});
-
-    Sprite sprite1{"./assets/sample.png", Color(0, 0, 0, 255.0), false, false, 1, 5};
-    Sprite sprite2{"./assets/sample.png", Color(0, 0, 0, 255.0), false, false, 1, 2};
-    Sprite sprite3{"./assets/sample.png", Color(0, 0, 0, 255.0), false, false, 1, -1};
-
-    game_object1->add_component(std::make_shared<Sprite>(sprite1));
-    game_object2->add_component(std::make_shared<Sprite>(sprite2));
-    game_object3->add_component(std::make_shared<Sprite>(sprite3));
-    game_object3->add_component(std::make_shared<InputScript>());
-
+    // Setup scene
     const auto scene = std::make_shared<Scene>();
 
-    scene->gameobjects.push_back(game_object1);
-    scene->gameobjects.push_back(game_object2);
-    scene->gameobjects.push_back(game_object3);
+    // Create game objects with component
+    const auto track_outer = std::make_shared<GameObject>(
+            "track_outer", "track", true,
+            Transform{Vector2d{0.f, 0.f}, 1.f, 1.f});
+    const auto track_inner = std::make_shared<GameObject>(
+            "track_inner", "track", true,
+            Transform{Vector2d{0.f, 0.f}, 1.f, 1.f});
+
+    Sprite sprite1{"./assets/track1.png", Color(0, 0, 0, 255.0), false, false, 1, 1, 6.f};
+
+    track_outer->add_component(std::make_shared<Sprite>(sprite1));
+
+    const auto car = std::make_shared<Car>("player_car", "car", "./assets/blue_car.png", scene);
+    const auto car_behaviour = std::make_shared<PlayerCarBehaviour>(scene->get_event_manager());
+    car->add_component(car_behaviour);
+    car->add_component(std::make_shared<InputScript>());
+
+    scene->gameobjects.push_back(track_outer);
+    scene->gameobjects.push_back(track_inner);
+    scene->gameobjects.push_back(car);
+
+    // Add rigid bodies
+    const auto track_outer_coll = std::make_shared<ChainCollider>("./assets/track1_outer.xml", false, ColliderNormal::inwards);
+    const auto track_outer_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{ 0.f, 0.f }, 1.0f);
+    track_outer_rb->set_collider(track_outer_coll);
+    track_outer->add_component(track_outer_rb);
+
+    const auto track_inner_coll = std::make_shared<ChainCollider>("./assets/track1_inner.xml", false, ColliderNormal::outwards);
+    const auto track_inner_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{ 0.f, 0.f }, 1.0f);
+    track_inner_rb->set_collider(track_inner_coll);
+    track_inner->add_component(track_inner_rb);
 
     // Add listeners
     const auto key_listener_object = std::make_shared<GameObject>("KeyMouseListener", "TestTag", true);
