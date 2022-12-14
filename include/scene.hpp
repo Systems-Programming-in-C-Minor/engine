@@ -5,6 +5,7 @@
 #include <memory>
 #include "components/rigidbody.hpp"
 #include "managers/event_manager.hpp"
+#include "../src/handlers/collision_handler.hpp"
 
 class IRenderer;
 class b2World;
@@ -16,6 +17,7 @@ class Scene {
 private:
     const std::unique_ptr<EventManager> _event_manager;
     const std::unique_ptr<b2World> _world;
+    const std::unique_ptr<CollisionHandler> _collision_handler;
     friend class RigidBody;
 
 public:
