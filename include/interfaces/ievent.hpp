@@ -18,6 +18,7 @@ enum Event {
     JoystickButtonReleased,
     JoystickAxisCurrent,
     JoystickAxisChanged,
+    AITargetReached,
 };
 
 class IEvent {
