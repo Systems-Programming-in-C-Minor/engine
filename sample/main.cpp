@@ -170,10 +170,10 @@ int main() {
     // Create game objects with component
     const auto track_outer = std::make_shared<GameObject>(
             "track_outer", "track", true,
-            Transform{Vector2d{0.f, 0.f}, 1.f, 1.f});
+            Transform{Vector2d{0.f, 0.f}});
     const auto track_inner = std::make_shared<GameObject>(
             "track_inner", "track", true,
-            Transform{Vector2d{0.f, 0.f}, 1.f, 1.f});
+            Transform{Vector2d{0.f, 0.f}});
 
     Sprite sprite1{"./assets/track1.png", Color(0, 0, 0, 255.0), false, false, 1, 1, 6.f};
 
@@ -184,9 +184,18 @@ int main() {
     car->add_component(car_behaviour);
     car->add_component(std::make_shared<InputScript>());
 
+//    const auto okto = std::make_shared<GameObject>(
+//            "okto", "okto", true,
+//            Transform{Vector2d {0.f, 0.f}, Vector2d{0,0}, 0.f, 0.1f});
+//    const auto okto_sprite = std::make_shared<Sprite>("./assets/sample.png", Color(), false, false, 1, 1, 6.f);
+//    okto->add_component(okto_sprite);
+//
+//    car->add_child(okto);
+
     scene->gameobjects.push_back(track_outer);
     scene->gameobjects.push_back(track_inner);
     scene->gameobjects.push_back(car);
+//    scene->gameobjects.push_back(okto);
 
     // Add rigid bodies
     const auto track_outer_coll = std::make_shared<ChainCollider>("./assets/track1_outer.xml", false, ColliderNormal::inwards);
