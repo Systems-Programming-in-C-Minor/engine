@@ -6,8 +6,7 @@
 #include "../include/managers/event_manager.hpp"
 
 class ColliderListener {
-
-private:
+protected:
     explicit ColliderListener(EventManager &manager);
 
 public:

@@ -5,9 +5,10 @@
 #include "events.hpp"
 
 class MouseListener {
-public:
+protected:
     explicit MouseListener(EventManager &event_manager);
 
+public:
     virtual void on_mouse_moved(const MouseMovedEvent &event) = 0;
 
     virtual void on_mouse_pressed(const MousePressedEvent &event) = 0;
