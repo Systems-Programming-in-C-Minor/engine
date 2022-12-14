@@ -185,9 +185,22 @@ int main() {
     car->add_component(car_behaviour);
     car->add_component(std::make_shared<InputScript>());
 
+    const auto ai_car = std::make_shared<Car>("ai_car", "ai-car", "./assets/blue_car.png", scene);
+    auto ai_behaviour = std::make_shared<AIBehaviour>();
+    ai_car->add_component(ai_behaviour);
+
+    auto target = std::make_shared<GameObject>(
+            "TestGameObject4", "TestTag", true,
+            Transform{Vector2d{-35.f, 70.f}, 0.0f, 0.2f});
+    target->add_component(std::make_shared<Sprite>(sprite1));
+    scene->gameobjects.push_back(target);
+
+    ai_behaviour->set_target(*target);
+
     scene->gameobjects.push_back(track_outer);
     scene->gameobjects.push_back(track_inner);
     scene->gameobjects.push_back(car);
+    scene->gameobjects.push_back(ai_car);
 
     // Add rigid bodies
     const auto track_outer_coll = std::make_shared<ChainCollider>("./assets/track1_outer.xml", false, ColliderNormal::inwards);
@@ -206,25 +219,8 @@ int main() {
     key_listener_object->add_component(std::make_shared<KeyMouseListenerComponent>(key_listener));
     scene->gameobjects.push_back(key_listener_object);
 
-    auto car = std::make_shared<Car>("player-car", "car", "./assets/blue_car.png", scene);
-    auto behaviour = std::make_shared<PlayerCarBehaviour>(scene->get_event_manager());
-    auto aibehaviour = std::make_shared<AIBehaviour>();
 
-    auto target = std::make_shared<GameObject>(
-            "TestGameObject4", "TestTag", true,
-            Transform{Vector2d{-35.f, 70.f}, 0.0f, 0.2f});
-    target->add_component(std::make_shared<Sprite>(sprite1));
-    scene->gameobjects.push_back(target);
 
-    aibehaviour->set_target(*target);
-
-    car->add_component(behaviour);
-    scene->gameobjects.push_back(car);
-
-    auto chaincollider = std::make_shared<ChainCollider>("./assets/track1_outer.xml");
-    auto chain_rigidbody = std::make_shared<RigidBody>(*scene, 6, BodyType::static_body, Vector2d{ 2.f, 2.f }, 1.0f);
-    chain_rigidbody->set_collider(chaincollider);
-    game_object2->add_component(chain_rigidbody);
 
 
     engine_ref.load_scene(scene);
