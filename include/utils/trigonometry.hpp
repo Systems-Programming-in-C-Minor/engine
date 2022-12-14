@@ -3,12 +3,12 @@
 
 #include <cmath>
 
-inline static double radians_to_degrees(double radians)
+inline static float radians_to_degrees(float radians)
 {
 	return(radians * (180 / M_PI));
 }
 
-inline static double degrees_to_radians(double degrees)
+inline static float degrees_to_radians(float degrees)
 {
 	return((degrees * M_PI) / 180);
 }

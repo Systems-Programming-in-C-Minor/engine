@@ -1,5 +1,6 @@
 #include "box2d/b2_math.h"
-
+#include "utils/trigonometry.hpp"
+#include <math.h>
 #include "vector2d.hpp"
 
 
@@ -87,6 +88,42 @@ float Vector2d::length() const {
 
 float Vector2d::normalize() const {
     return b2Vec2(x, y).Normalize();
+}
+
+float Vector2d::dot(const Vector2d &a, const Vector2d &b) {
+    return b2Dot(static_cast<b2Vec2>(a),static_cast<b2Vec2>(b));
+}
+
+float Vector2d::cross(const Vector2d &a, const Vector2d &b) {
+    return b2Cross(static_cast<b2Vec2>(a),static_cast<b2Vec2>(b));
+}
+
+float Vector2d::angle(const Vector2d &from, const Vector2d &to) {
+    auto a = static_cast<b2Vec2>(from);
+    auto b = static_cast<b2Vec2>(to);
+
+    float denominator = sqrt(a.LengthSquared() * b.LengthSquared());
+    float k_epsilon_normal_sqrt = 1e-15f;
+    if (denominator < k_epsilon_normal_sqrt)
+        return 0.f;
+
+    float dot = b2Clamp(b2Dot(a,b) / denominator, -1.f, 1.f);
+
+    return radians_to_degrees(acos(dot));
+}
+
+float Vector2d::signed_angle(const Vector2d &from, const Vector2d &to, const Vector2d &axis) {
+    auto a = static_cast<b2Vec2>(from);
+    auto b = static_cast<b2Vec2>(to);
+
+    return atan2(a.x * b.y - a.y * b.x, a.x * b.x + a.y * b.y);
+}
+
+float Vector2d::distance(const Vector2d &a, const Vector2d &b) {
+    auto c = static_cast<b2Vec2>(a);
+    auto d = static_cast<b2Vec2>(b);
+
+    return b2Distance(c,d);
 }
 
 Vector2d::Vector2d(const float x, const float y)

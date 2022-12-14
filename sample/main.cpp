@@ -10,6 +10,7 @@
 #include "listeners/mouse_listener.hpp"
 #include "listeners/collider_listener.hpp"
 #include "race/behaviours/car_behaviour.hpp"
+#include "race/behaviours/ai_behaviour.hpp"
 #include "utils/trigonometry.hpp"
 #include "utils/xmlreader.hpp"
 #include "uiobjects/text.hpp"
