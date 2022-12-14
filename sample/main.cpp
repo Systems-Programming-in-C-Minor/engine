@@ -17,7 +17,7 @@
 class InputScript : public Component, public ITickable {
     Input input;
 
-    void tick(GameObject &gameobject){
+    void tick(GameObject &gameobject) override{
 
         if(input.get_mouse_button(BUTTON_LEFT)){
             std::cout << input.mouse_position() << std::endl;
