@@ -8,15 +8,17 @@
 /**
  * @brief Class representing a piece of text which can be rendered.
 */
-class Text : public UIObject {
+class Text : public UIObject  {
 private:
     std::string _text;
     std::string _font;
     int _size;
     Alignment _alignment;
     Color _color;
+    int _order_in_layer;
 public:
-    Text(const std::string& name, const std::string& tag, bool is_world_space, Transform transform, int width, int height, std::string  text, std::string  font, int size, Alignment alignment, Color color);
+    Text(const std::string& name, const std::string& tag, bool is_world_space, Transform transform, int width, int height,
+        std::string  text, std::string  font, int size, Alignment alignment, Color color, int order_in_layer);
     [[nodiscard]] std::string get_text() const;
     [[nodiscard]] std::string get_font() const;
     [[nodiscard]] int get_size() const;

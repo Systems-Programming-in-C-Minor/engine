@@ -13,6 +13,7 @@ class RenderCall;
 
 namespace SDL2pp 
 {
+	class SDLTTF;
 	class SDLImage;
 	class SDL;
 	class Window;
@@ -90,6 +91,7 @@ private:
 
 	std::unique_ptr<SDL2pp::SDL> _sdl;
 	std::unique_ptr<SDL2pp::SDLImage> _sdl_image;
+	std::unique_ptr<SDL2pp::SDLTTF> _sdl_ttf;
 	std::shared_ptr<SDL2pp::Window> _window;
 	std::shared_ptr<SDL2pp::Renderer> _renderer;
     std::list<RenderCall> _render_queue;
