@@ -86,8 +86,12 @@ float Vector2d::length() const {
     return b2Vec2(x, y).Length();
 }
 
-float Vector2d::normalize() const {
-    b2Vec2(x, y).Normalize();
+float Vector2d::normalize() {
+    auto vec = b2Vec2(x, y);
+    float res = vec.Normalize();
+    x = vec.x;
+    y = vec.y;
+    return res;
 }
 
 float Vector2d::dot(const Vector2d &a, const Vector2d &b) {
