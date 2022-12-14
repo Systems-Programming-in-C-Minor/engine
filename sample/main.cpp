@@ -75,8 +75,8 @@ private:
 
 class Car : public GameObject {
 public:
-    Car(const std::string &name, const std::string &tag, std::string sprite_path, const std::shared_ptr<Scene> &scene, const int order_in_layer = 10)
-            : GameObject(name, tag) {
+    Car(const std::string &name, const std::string &tag, std::string sprite_path, const std::shared_ptr<Scene> &scene, const int order_in_layer = 10, Transform transform = Transform{Vector2d()})
+            : GameObject(name, tag, true, transform) {
             const auto sprite =
                 std::make_shared<Sprite>(std::move(sprite_path), Color(0, 0, 0, 0), false, false, 1, 10);
         add_component(sprite);
@@ -180,22 +180,16 @@ int main() {
 
     track_outer->add_component(std::make_shared<Sprite>(sprite1));
 
-    const auto car = std::make_shared<Car>("player_car", "car", "./assets/blue_car.png", scene);
+    const auto car = std::make_shared<Car>("player_car", "car", "./assets/blue_car.png", scene, 10, Transform(Vector2d{-6.f, 0.f}, 0, 0.5f));
     const auto car_behaviour = std::make_shared<PlayerCarBehaviour>(scene->get_event_manager());
     car->add_component(car_behaviour);
     car->add_component(std::make_shared<InputScript>());
 
-    const auto ai_car = std::make_shared<Car>("ai_car", "ai-car", "./assets/blue_car.png", scene);
+    const auto ai_car = std::make_shared<Car>("ai_car", "ai-car", "./assets/sample.png", scene);
     auto ai_behaviour = std::make_shared<AIBehaviour>();
     ai_car->add_component(ai_behaviour);
 
-    auto target = std::make_shared<GameObject>(
-            "TestGameObject4", "TestTag", true,
-            Transform{Vector2d{-35.f, 70.f}, 0.0f, 0.2f});
-    target->add_component(std::make_shared<Sprite>(sprite1));
-    scene->gameobjects.push_back(target);
-
-    ai_behaviour->set_target(*car);
+    ai_behaviour->set_target(car);
 
     scene->gameobjects.push_back(track_outer);
     scene->gameobjects.push_back(track_inner);

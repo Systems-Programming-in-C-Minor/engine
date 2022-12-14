@@ -25,7 +25,7 @@ public:
 
     bool reached_target = false;
 
-    void set_target(GameObject &gameObject);
+    void set_target(std::shared_ptr<GameObject> game_object);
 
     void move_to_target();
     void tick(GameObject &object) override;
