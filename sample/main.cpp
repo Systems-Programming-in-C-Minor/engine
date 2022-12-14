@@ -280,7 +280,7 @@ int main() {
     target->add_component(std::make_shared<Sprite>(sprite1));
     scene->gameobjects.push_back(target);
 
-    ai_behaviour->set_target(*target);
+    ai_behaviour->set_target(*car);
 
     scene->gameobjects.push_back(track_outer);
     scene->gameobjects.push_back(track_inner);

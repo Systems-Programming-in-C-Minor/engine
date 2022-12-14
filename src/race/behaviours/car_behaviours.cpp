@@ -24,7 +24,7 @@ void CarBehaviour::_friction() {
 
     //forward linear velocity
     Vector2d currentForwardNormal = body.get_forward_velocity();
-    float currentForwardSpeed = currentForwardNormal.normalize();
+    float currentForwardSpeed = currentForwardNormal.normalized_length();
     float dragForceMagnitude = -2 * currentForwardSpeed * drag_modifier;
 
     auto force_vec = currentForwardNormal * current_traction * dragForceMagnitude;

@@ -54,7 +54,9 @@ public:
 
     [[nodiscard]] float length() const;
 
-    float normalize() const;
+    [[nodiscard]] float normalized_length() const;
+
+    float normalize();
 
     [[nodiscard]] float static dot(const Vector2d &a, const Vector2d &b);
 
