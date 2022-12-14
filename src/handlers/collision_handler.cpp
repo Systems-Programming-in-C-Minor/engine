@@ -1,4 +1,3 @@
-#include <iostream>
 #include "collision_handler.hpp"
 #include "global.hpp"
 #include "events.hpp"
