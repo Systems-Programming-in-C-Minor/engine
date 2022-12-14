@@ -10,11 +10,10 @@ class CarBehaviour : public Component, public ITickable {
 private:
     void friction();
 
+protected:
     void drive(float desired_speed);
 
     void turn(float steering);
-
-protected:
 
     void drive_forwards();
 

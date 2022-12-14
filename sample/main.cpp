@@ -9,6 +9,7 @@
 #include "listeners/key_listener.hpp"
 #include "listeners/mouse_listener.hpp"
 #include "race/behaviours/car_behaviour.hpp"
+#include "race/behaviours/ai_behaviour.hpp"
 #include "utils/trigonometry.hpp"
 #include "utils/xmlreader.hpp"
 #include "input.hpp"
@@ -198,6 +199,16 @@ int main() {
 
     auto car = std::make_shared<Car>("player-car", "car", "./assets/blue_car.png", scene);
     auto behaviour = std::make_shared<PlayerCarBehaviour>(scene->get_event_manager());
+    auto aibehaviour = std::make_shared<AIBehaviour>();
+
+    auto target = std::make_shared<GameObject>(
+            "TestGameObject4", "TestTag", true,
+            Transform{Vector2d{-35.f, 70.f}, 0.0f, 0.2f});
+    target->add_component(std::make_shared<Sprite>(sprite1));
+    scene->gameobjects.push_back(target);
+
+    aibehaviour->set_target(*target);
+
     car->add_component(behaviour);
     scene->gameobjects.push_back(car);
 

@@ -33,7 +33,13 @@ void CarBehaviour::friction() {
     body.apply_force(force_vec, body.get_world_center());
 }
 
-void CarBehaviour::drive(float desired_speed) {
+void CarBehaviour::drive(float desired_speed){
+    if(desired_speed > max_speed_forwards)
+        desired_speed = max_speed_forwards;
+
+    if (desired_speed < max_speed_backwards)
+        desired_speed = max_speed_backwards;
+
     auto &body = *game_object->get_component<RigidBody>();
 
     //find current speed in forward direction
@@ -49,6 +55,12 @@ void CarBehaviour::drive(float desired_speed) {
 }
 
 void CarBehaviour::turn(float steering) {
+    if (steering > steering_impulse)
+        steering = steering_impulse;
+
+    if(steering < -steering_impulse)
+        steering = -steering_impulse;
+
     auto &body = *game_object->get_component<RigidBody>();
     auto speed = body.get_current_speed();
 
