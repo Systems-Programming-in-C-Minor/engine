@@ -186,14 +186,14 @@ int main() {
     car->add_component(car_behaviour);
     car->add_component(std::make_shared<InputScript>());
     
-    const auto ui_object1 = std::make_shared<UIObject>("TestUIObject", "UIObjectTag", true, Transform{Vector2d{400.f, -10.f}, 20.0f, 0.49f}, 100, 100);
-    Text text1{"name", "tag", true, Transform{Vector2d{200.f, -10.f}, 20.0f, 0.49f}, 300, 300, "text", "./assets/Sans.ttf", 100, Alignment::CENTER, Color(200, 0, 0, 0)};
-    ui_object1->add_child(std::make_shared<Text>(text1));
+    const auto ui_object = std::make_shared<UIObject>("ui_object", "text", true, Transform{Vector2d{400.f, -10.f}, 20.0f, 0.49f}, 100, 100);
+    Text text{"name", "tag", true, Transform{Vector2d{-50.f, 10.f}, 1.F, 1.f}, 20,5, "text", "./assets/Sans.ttf", 1000, Alignment::CENTER, Color(200, 0, 0, 0), 100};
+    ui_object->add_child(std::make_shared<Text>(text));
 
     scene->gameobjects.push_back(track_outer);
     scene->gameobjects.push_back(track_inner);
     scene->gameobjects.push_back(car);
-    scene->gameobjects.push_back(ui_object1);
+    scene->gameobjects.push_back(ui_object);
 
     // Add rigid bodies
     const auto track_outer_coll = std::make_shared<ChainCollider>("./assets/track1_outer.xml", false, ColliderNormal::inwards);

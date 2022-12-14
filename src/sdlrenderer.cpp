@@ -20,6 +20,7 @@
 #include "SDL2pp/Font.hh"
 #include "SDL2pp/Surface.hh"
 #include "SDL2pp/Texture.hh"
+#include "SDL2pp/SDLTTF.hh"
 #include "box2d/box2d.h"
 
 
@@ -124,25 +125,24 @@ void SdlRenderer::render_lines(std::vector<Vector2d>& vectors, const Color& colo
 
 void SdlRenderer::render_text(const Text& text) const
 {
-    SDL2pp::Color color = static_cast<SDL2pp::Color>(text.get_color());
+    SDL2pp::Font font(text.get_font(), text.get_size());
+	SDL2pp::Texture texture(*_renderer, font.RenderUTF8_Solid(text.get_text(), static_cast<SDL2pp::Color>(text.get_color())));
 
-    TTF_Init();
-    TTF_Font* font = TTF_OpenFont(text.get_font().c_str(), 24);
-    if (!font)
-        std::cout << TTF_GetError() << std::endl;
+    const auto text_size_x = static_cast<float>(text.get_width());
+    const auto text_size_y = static_cast<float>(text.get_width());
 
-    SDL2pp::Surface surface {TTF_RenderText_Solid(font, text.get_text().c_str(), color)};
-    SDL2pp::Texture texture {SDL_CreateTextureFromSurface(_renderer->Get(), surface.Get())};
+	const float left_corner_x = text.transform.get_position().x + -text_size_x * text.transform.get_scale() / 2.f;
+	const float left_corner_y = text.transform.get_position().y + text_size_y * text.transform.get_scale() / 2.f;
 
-    SDL2pp::Rect rect;
-    rect.SetW(text.get_width());
-    rect.SetH(text.get_height());
-    rect.SetX(static_cast<int>(text.transform.get_position().x));
-    rect.SetY(static_cast<int>(text.transform.get_position().y));
+	const auto center = world_to_screen(text.transform.get_position());
+	const auto left_corner = world_to_screen(Vector2d{ left_corner_x, left_corner_y });
 
-    _renderer->Copy(texture, SDL2pp::NullOpt, rect);
+	const int size_x = static_cast<int>(round(text_size_x * text.transform.get_scale() * _mtp));
+	const int size_y = static_cast<int>(round(text_size_y * text.transform.get_scale() * _mtp));
 
-    TTF_Quit();
+	const auto size = SDL2pp::Point{ size_x, size_y };
+	auto rect = SDL2pp::Rect{ left_corner, size };
+    _renderer->Copy(texture, SDL2pp::NullOpt, rect, -radians_to_degrees(text.transform.get_angle()));
 }
 
 void SdlRenderer::clear(const Color& color) const try
@@ -169,6 +169,7 @@ void SdlRenderer::init(int res_x, int res_y) try
 {
 	_sdl = std::make_unique<SDL2pp::SDL>(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 	_sdl_image = std::make_unique<SDL2pp::SDLImage>();
+	_sdl_ttf = std::make_unique<SDL2pp::SDLTTF>();
 
 	_window = std::make_shared<SDL2pp::Window>("UnEngine",
 		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,

@@ -1,6 +1,7 @@
 #include "uiobject.hpp"
 
-UIObject::UIObject(const std::string &name, const std::string &tag, bool is_world_space, Transform transform, int width, int height) : GameObject(name, tag, is_world_space, transform),
+UIObject::UIObject(const std::string &name, const std::string &tag, bool is_world_space, Transform transform, int width, int height) :
+	GameObject(name, tag, is_world_space, transform),
     _width(width),
     _height(height) {}
 
