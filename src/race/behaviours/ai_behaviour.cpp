@@ -1,13 +1,20 @@
 #include "race/behaviours/ai_behaviour.hpp"
 #include "gameobject.hpp"
 #include "vector2d.hpp"
-#include <math.h>
-#include <fmt/core.h>
+#include <valarray>
+#include "global.hpp"
+#include "events.hpp"
 
 AIBehaviour::~AIBehaviour() = default;
 
 void AIBehaviour::move_to_target() {
+    if(!_target){
+        return;
+    }
+
     if (reached_target){
+        auto target_reached = AITargetReachedEvent(*this, _target);
+        Global::get_instance()->notify_event_manager(target_reached);
         return;
     }
 
@@ -25,7 +32,6 @@ void AIBehaviour::move_to_target() {
 
     float dot = Vector2d::dot(forward, direction_to_target);
 
-
     if ( dot > 0 ) {
         drive_forwards();
     } else {
@@ -39,10 +45,15 @@ void AIBehaviour::move_to_target() {
     } else {
         turn_right();
     }
+
+    float distance_to_target = Vector2d::distance(current_position, target_position);
+    if(distance_to_target < reached_target_distance)
+        reached_target = true;
 }
 
 void AIBehaviour::set_target(std::shared_ptr<GameObject> game_object) {
     _target = game_object;
+    reached_target = false;
 }
 
 void AIBehaviour::tick(GameObject &gameObject) {

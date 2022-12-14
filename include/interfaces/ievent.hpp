@@ -14,6 +14,7 @@ enum Event {
     ColliderEntry,
     ColliderStay,
     SceneLoaded,
+    AITargetReached
 };
 
 class IEvent {

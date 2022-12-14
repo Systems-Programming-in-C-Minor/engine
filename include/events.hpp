@@ -1,9 +1,12 @@
 #ifndef ENGINE_EVENTS_HPP
 #define ENGINE_EVENTS_HPP
 
+#include <utility>
+
 #include "interfaces/ievent.hpp"
 #include "enums/key.hpp"
 #include "enums/mouse_input.hpp"
+#include "race/behaviours/ai_behaviour.hpp"
 
 class Collider;
 
@@ -64,5 +67,12 @@ public:
 class SceneLoadedEvent : public IEvent {
 public:
     SceneLoadedEvent() : IEvent(SceneLoaded) {}
+};
+
+class AITargetReachedEvent : public IEvent {
+public:
+    AITargetReachedEvent(AIBehaviour &ai_behaviour, std::shared_ptr<GameObject> target) : IEvent(AITargetReached), ai_behaviour(ai_behaviour), target(std::move(target)) {};
+    AIBehaviour &ai_behaviour;
+    std::shared_ptr<GameObject> target;
 };
 #endif //ENGINE_EVENTS_HPP
