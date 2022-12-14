@@ -14,8 +14,8 @@
 #include "utils/xmlreader.hpp"
 #include "uiobjects/text.hpp"
 #include "input.hpp"
-#include "interfaces/itickable.hpp"
 #include "listeners/ai_listener.hpp"
+#include "storage/json_properties.hpp"
 
 class KeyMouseListenerComponent : public Component, public KeyListener, public MouseListener {
 public:
