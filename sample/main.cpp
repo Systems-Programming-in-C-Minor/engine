@@ -270,11 +270,24 @@ int main() {
 
     car->add_child(okto);
 
+    const auto ai_car = std::make_shared<Car>("ai_car", "ai-car", "./assets/blue_car.png", scene);
+    auto ai_behaviour = std::make_shared<AIBehaviour>();
+    ai_car->add_component(ai_behaviour);
+
+    auto target = std::make_shared<GameObject>(
+            "TestGameObject4", "TestTag", true,
+            Transform{Vector2d{-35.f, 70.f}, Vector2d{.0f, .0f}, 0.0f, 0.2f});
+    target->add_component(std::make_shared<Sprite>(sprite1));
+    scene->gameobjects.push_back(target);
+
+    ai_behaviour->set_target(*target);
+
     scene->gameobjects.push_back(track_outer);
     scene->gameobjects.push_back(track_inner);
     scene->gameobjects.push_back(car);
     scene->gameobjects.push_back(okto);
     scene->gameobjects.push_back(ui_object);
+    scene->gameobjects.push_back(ai_car);
 
     // Add rigid bodies
     const auto track_outer_coll = std::make_shared<ChainCollider>("./assets/track1_outer.xml", false,
