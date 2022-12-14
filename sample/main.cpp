@@ -12,6 +12,7 @@
 #include "race/behaviours/ai_behaviour.hpp"
 #include "utils/trigonometry.hpp"
 #include "utils/xmlreader.hpp"
+#include "uiobjects/text.hpp"
 #include "input.hpp"
 #include "interfaces/itickable.hpp"
 #include "listeners/ai_listener.hpp"
@@ -194,6 +195,7 @@ int main() {
     const auto global = Global::get_instance();
     auto engine = std::make_unique<Engine>();
     global->set_engine(std::move(engine));
+    global->set_properties(std::make_unique<JsonProperties>("settings.json"));
     Engine &engine_ref = global->get_engine();
 
     // Setup scene
@@ -248,19 +250,30 @@ int main() {
     ai_listener_component->targets = std::move(targets);
     ai_behaviour->set_target(ai_listener_component->targets[0]);
 
+    
+    const auto ui_object = std::make_shared<UIObject>("ui_object", "text", true, Transform{Vector2d{400.f, -10.f}, 20.0f, 0.49f}, 100, 100);
+    Text text{"name", "tag", true, Transform{Vector2d{-50.f, 10.f}, 1.F, 1.f}, 20,5, "text", "./assets/Sans.ttf", 1000, Alignment::CENTER, Color(200, 0, 0, 0), 100};
+    ui_object->add_child(std::make_shared<Text>(text));
+
+
     scene->gameobjects.push_back(track_outer);
     scene->gameobjects.push_back(track_inner);
     scene->gameobjects.push_back(car);
     scene->gameobjects.push_back(ai_car);
+    scene->gameobjects.push_back(ui_object);
 
     // Add rigid bodies
-    const auto track_outer_coll = std::make_shared<ChainCollider>("./assets/track1_outer.xml", false, ColliderNormal::inwards);
-    const auto track_outer_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{ 0.f, 0.f }, 1.0f);
+    const auto track_outer_coll = std::make_shared<ChainCollider>("./assets/track1_outer.xml", false,
+                                                                  ColliderNormal::inwards);
+    const auto track_outer_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{0.f, 0.f},
+                                                            1.0f);
     track_outer_rb->set_collider(track_outer_coll);
     track_outer->add_component(track_outer_rb);
 
-    const auto track_inner_coll = std::make_shared<ChainCollider>("./assets/track1_inner.xml", false, ColliderNormal::outwards);
-    const auto track_inner_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{ 0.f, 0.f }, 1.0f);
+    const auto track_inner_coll = std::make_shared<ChainCollider>("./assets/track1_inner.xml", false,
+                                                                  ColliderNormal::outwards);
+    const auto track_inner_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{0.f, 0.f},
+                                                            1.0f);
     track_inner_rb->set_collider(track_inner_coll);
     track_inner->add_component(track_inner_rb);
 

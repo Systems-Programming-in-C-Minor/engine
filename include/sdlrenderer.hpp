@@ -13,6 +13,7 @@ class RenderCall;
 
 namespace SDL2pp 
 {
+	class SDLTTF;
 	class SDLImage;
 	class SDL;
 	class Window;
@@ -57,7 +58,7 @@ public:
 	 * @brief Renders a text object
 	 * @param text The text to be rendered
 	 */
-	void render_text(Text& text) const override;
+	void render_text(const Text& text) const override;
 
 	/**
 	 * @brief Clears the backbuffer and applies a default colour
@@ -90,6 +91,7 @@ private:
 
 	std::unique_ptr<SDL2pp::SDL> _sdl;
 	std::unique_ptr<SDL2pp::SDLImage> _sdl_image;
+	std::unique_ptr<SDL2pp::SDLTTF> _sdl_ttf;
 	std::shared_ptr<SDL2pp::Window> _window;
 	std::shared_ptr<SDL2pp::Renderer> _renderer;
     std::list<RenderCall> _render_queue;
