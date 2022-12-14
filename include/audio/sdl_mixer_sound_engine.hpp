@@ -12,7 +12,9 @@ namespace SDL2pp {
 class SDLMixerSoundEngine : public ISoundEngine {
 
 public:
+    SDLMixerSoundEngine();
     void play(const std::string &path) override;
+    ~SDLMixerSoundEngine();
 private:
     std::map<std::string, std::shared_ptr<SDL2pp::Chunk>> _audio_files = {};
 };
