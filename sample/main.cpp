@@ -13,17 +13,18 @@
 #include "utils/xmlreader.hpp"
 #include "input.hpp"
 #include "interfaces/itickable.hpp"
+#include "storage/json_properties.hpp"
 
 class InputScript : public Component, public ITickable {
     Input input;
 
-    void tick(GameObject &gameobject){
+    void tick(GameObject &gameobject) {
 
-        if(input.get_mouse_button(BUTTON_LEFT)){
+        if (input.get_mouse_button(BUTTON_LEFT)) {
             std::cout << input.mouse_position() << std::endl;
         }
 
-        if (input.get_key_down(A)){
+        if (input.get_key_down(A)) {
             std::cout << "Pressed A key" << std::endl;
         }
     }
@@ -74,14 +75,16 @@ private:
 
 class Car : public GameObject {
 public:
-    Car(const std::string &name, const std::string &tag, std::string sprite_path, const std::shared_ptr<Scene> &scene, const int order_in_layer = 10)
+    Car(const std::string &name, const std::string &tag, std::string sprite_path, const std::shared_ptr<Scene> &scene,
+        const int order_in_layer = 10)
             : GameObject(name, tag) {
-            const auto sprite =
+        const auto sprite =
                 std::make_shared<Sprite>(std::move(sprite_path), Color(0, 0, 0, 0), false, false, 1, 10);
         add_component(sprite);
 
-            const auto collider = std::make_shared<BoxCollider>(1.65f, 4.f);
-            const auto rigid_body = std::make_shared<RigidBody>(*scene, order_in_layer, BodyType::dynamic_body, Vector2d{0.f, 1.5f}, 1.f);
+        const auto collider = std::make_shared<BoxCollider>(1.65f, 4.f);
+        const auto rigid_body = std::make_shared<RigidBody>(*scene, order_in_layer, BodyType::dynamic_body,
+                                                            Vector2d{0.f, 1.5f}, 1.f);
         rigid_body->set_mass(1600.f);
         rigid_body->set_collider(collider);
         add_component(rigid_body);
@@ -162,6 +165,7 @@ int main() {
     const auto global = Global::get_instance();
     auto engine = std::make_unique<Engine>();
     global->set_engine(std::move(engine));
+    global->set_properties(std::make_unique<JsonProperties>("settings.json"));
     Engine &engine_ref = global->get_engine();
 
     // Setup scene
@@ -189,13 +193,17 @@ int main() {
     scene->gameobjects.push_back(car);
 
     // Add rigid bodies
-    const auto track_outer_coll = std::make_shared<ChainCollider>("./assets/track1_outer.xml", false, ColliderNormal::inwards);
-    const auto track_outer_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{ 0.f, 0.f }, 1.0f);
+    const auto track_outer_coll = std::make_shared<ChainCollider>("./assets/track1_outer.xml", false,
+                                                                  ColliderNormal::inwards);
+    const auto track_outer_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{0.f, 0.f},
+                                                            1.0f);
     track_outer_rb->set_collider(track_outer_coll);
     track_outer->add_component(track_outer_rb);
 
-    const auto track_inner_coll = std::make_shared<ChainCollider>("./assets/track1_inner.xml", false, ColliderNormal::outwards);
-    const auto track_inner_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{ 0.f, 0.f }, 1.0f);
+    const auto track_inner_coll = std::make_shared<ChainCollider>("./assets/track1_inner.xml", false,
+                                                                  ColliderNormal::outwards);
+    const auto track_inner_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{0.f, 0.f},
+                                                            1.0f);
     track_inner_rb->set_collider(track_inner_coll);
     track_inner->add_component(track_inner_rb);
 
