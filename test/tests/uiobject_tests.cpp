@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include "uiobject.hpp"
 
-#define test_ui_object UIObject("name", "tag", 10, 10)
+#define test_ui_object UIObject("name", "tag", true, Transform{Vector2d{0.f, 0.f}, 0.0f, 0.5f}, 10, 10)
 
 TEST(UIObjectTest, TestGetWidthHeight)
 {
