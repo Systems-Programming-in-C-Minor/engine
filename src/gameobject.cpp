@@ -40,6 +40,10 @@ void GameObject::set_active(bool is_active) {
     active = is_active;
 }
 
+std::string GameObject::get_name() const {
+    return name;
+}
+
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "misc-no-recursion"
 

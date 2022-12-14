@@ -21,8 +21,8 @@ RigidBody::RigidBody(const Scene &scene,
     body_def.type = static_cast<b2BodyType>(type);
     body_def.position.Set(vector.x, vector.y);
     body_def.gravityScale = gravity_scale;
+    body_def.userData.pointer = reinterpret_cast<std::uintptr_t>(this);
     _body = scene._world->CreateBody(&body_def);
-    _body->GetUserData().pointer = reinterpret_cast<std::uintptr_t>(this);
 }
 
 void RigidBody::apply_force(const Vector2d force, const Vector2d point) const {
@@ -139,7 +139,7 @@ float RigidBody::get_angle() const {
     return _body->GetAngle();
 }
 
-void RigidBody::set_collider(const std::shared_ptr<Collider>& collider) {
+void RigidBody::set_collider(const std::shared_ptr<Collider> &collider) {
     _collider = collider;
     collider->set_fixture(*_body, _friction, _restitution);
 }

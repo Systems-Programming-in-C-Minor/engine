@@ -49,18 +49,18 @@ public:
 
 class ColliderEntryEvent : public IEvent {
 public:
-    explicit ColliderEntryEvent(RigidBody &col_a, RigidBody &col_b) :
+    explicit ColliderEntryEvent(RigidBody *col_a, RigidBody *col_b) :
             IEvent(ColliderEntry), collider_a(col_a), collider_b(col_b) {};
-    RigidBody &collider_a;
-    RigidBody &collider_b;
+    RigidBody *collider_a;
+    RigidBody *collider_b;
 };
 
 class ColliderExitEvent : public IEvent {
 public:
-    explicit ColliderExitEvent(RigidBody &col_a, RigidBody &col_b) :
+    explicit ColliderExitEvent(RigidBody *col_a, RigidBody *col_b) :
             IEvent(ColliderExit), collider_a(col_a), collider_b(col_b) {};
-    RigidBody &collider_a;
-    RigidBody &collider_b;
+    RigidBody *collider_a;
+    RigidBody *collider_b;
 };
 
 class SceneLoadedEvent : public IEvent {

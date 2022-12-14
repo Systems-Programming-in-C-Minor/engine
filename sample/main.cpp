@@ -8,35 +8,24 @@
 #include "components/colliders/chaincollider.hpp"
 #include "listeners/key_listener.hpp"
 #include "listeners/mouse_listener.hpp"
+#include "listeners/collider_listener.hpp"
 #include "race/behaviours/car_behaviour.hpp"
 #include "utils/trigonometry.hpp"
 #include "utils/xmlreader.hpp"
 #include "input.hpp"
 #include "interfaces/itickable.hpp"
 
-class InputScript : public Component, public ITickable {
-    Input input;
-
-    void tick(GameObject &gameobject){
-
-        if(input.get_mouse_button(BUTTON_LEFT)){
-            std::cout << input.mouse_position() << std::endl;
-        }
-
-        if (input.get_key_down(A)){
-            std::cout << "Pressed A key" << std::endl;
-        }
-    }
-};
-
-class KeyMouseListenerComponent : public Component, public KeyListener, public MouseListener {
+class KeyMouseListenerComponent : public Component, public KeyListener, public MouseListener, public ColliderListener {
 public:
     explicit KeyMouseListenerComponent(EventManager &event_manager) : KeyListener(event_manager),
-                                                                      MouseListener(event_manager) {}
+                                                                      MouseListener(event_manager),
+                                                                      ColliderListener(event_manager) {}
 
     void on_key_pressed(const KeyPressedEvent &event) override {
         if (event.key == P)
             enabled = !enabled;
+        if (event.key == C)
+            colliders_enabled = !colliders_enabled;
         if (enabled)
             std::cout << "Pressed key: " << event.key << "\n";
     }
@@ -68,20 +57,37 @@ public:
             std::cout << "Released mouse: " << event.button << "\n";
     }
 
+    void on_collider_entry(const ColliderEntryEvent &event) override {
+        if (colliders_enabled) {
+            std::cout << std::endl << "Collider entry a: " << event.collider_a->game_object->get_name() << std::endl;
+            std::cout << "Collider entry b: " << event.collider_b->game_object->get_name() << std::endl;
+        }
+    }
+
+    void on_collider_exit(const ColliderExitEvent &event) override {
+        if (colliders_enabled) {
+            std::cout << std::endl << "Collider exit a: " << event.collider_a->game_object->get_name() << std::endl;
+            std::cout << "Collider exit b: " << event.collider_b->game_object->get_name() << std::endl;
+        }
+    }
+
 private:
     bool enabled = false;
+    bool colliders_enabled = false;
 };
 
 class Car : public GameObject {
 public:
-    Car(const std::string &name, const std::string &tag, std::string sprite_path, const std::shared_ptr<Scene> &scene, const int order_in_layer = 10)
+    Car(const std::string &name, const std::string &tag, std::string sprite_path, const std::shared_ptr<Scene> &scene,
+        const int order_in_layer = 10)
             : GameObject(name, tag) {
-            const auto sprite =
+        const auto sprite =
                 std::make_shared<Sprite>(std::move(sprite_path), Color(0, 0, 0, 0), false, false, 1, 10);
         add_component(sprite);
 
-            const auto collider = std::make_shared<BoxCollider>(1.65f, 4.f);
-            const auto rigid_body = std::make_shared<RigidBody>(*scene, order_in_layer, BodyType::dynamic_body, Vector2d{0.f, 1.5f}, 1.f);
+        const auto collider = std::make_shared<BoxCollider>(1.65f, 4.f);
+        const auto rigid_body = std::make_shared<RigidBody>(*scene, order_in_layer, BodyType::dynamic_body,
+                                                            Vector2d{0.f, 1.5f}, 1.f);
         rigid_body->set_mass(1600.f);
         rigid_body->set_collider(collider);
         add_component(rigid_body);
@@ -182,20 +188,23 @@ int main() {
     const auto car = std::make_shared<Car>("player_car", "car", "./assets/blue_car.png", scene);
     const auto car_behaviour = std::make_shared<PlayerCarBehaviour>(scene->get_event_manager());
     car->add_component(car_behaviour);
-    car->add_component(std::make_shared<InputScript>());
 
     scene->gameobjects.push_back(track_outer);
     scene->gameobjects.push_back(track_inner);
     scene->gameobjects.push_back(car);
 
     // Add rigid bodies
-    const auto track_outer_coll = std::make_shared<ChainCollider>("./assets/track1_outer.xml", false, ColliderNormal::inwards);
-    const auto track_outer_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{ 0.f, 0.f }, 1.0f);
+    const auto track_outer_coll = std::make_shared<ChainCollider>("./assets/track1_outer.xml", false,
+                                                                  ColliderNormal::inwards);
+    const auto track_outer_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{0.f, 0.f},
+                                                            1.0f);
     track_outer_rb->set_collider(track_outer_coll);
     track_outer->add_component(track_outer_rb);
 
-    const auto track_inner_coll = std::make_shared<ChainCollider>("./assets/track1_inner.xml", false, ColliderNormal::outwards);
-    const auto track_inner_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{ 0.f, 0.f }, 1.0f);
+    const auto track_inner_coll = std::make_shared<ChainCollider>("./assets/track1_inner.xml", false,
+                                                                  ColliderNormal::outwards);
+    const auto track_inner_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{0.f, 0.f},
+                                                            1.0f);
     track_inner_rb->set_collider(track_inner_coll);
     track_inner->add_component(track_inner_rb);
 
