@@ -329,7 +329,7 @@ int main() {
         Vector2d{10.5f, -74.f}
     };
 
-    auto targets = tf.make_targets(vector_targets);
+    auto targets = tf.make_targets(vector_targets1);
 
     for (auto target : targets) {
         scene->gameobjects.push_back(target);
