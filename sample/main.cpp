@@ -233,7 +233,7 @@ int main() {
 
     track_outer->add_component(std::make_shared<Sprite>(sprite1));
 
-    const auto car = std::make_shared<Car>("player_car", "car", "./assets/blue_car.png", scene, 10, Transform(Vector2d{-6.f, 0.f}, 0, 0.5f));
+    const auto car = std::make_shared<Car>("player_car", "car", "./assets/blue_car.png", scene, 10, Transform(Vector2d{-6.f, 0.f}, Vector2d{}, 0, 0.5f));
     const auto car_behaviour = std::make_shared<PlayerCarBehaviour>(scene->get_event_manager());
     car->add_component(car_behaviour);
 
@@ -271,8 +271,8 @@ int main() {
     ai_behaviour->set_target(ai_listener_component->targets[0]);
 
     
-    const auto ui_object = std::make_shared<UIObject>("ui_object", "text", true, Transform{Vector2d{400.f, -10.f}, 20.0f, 0.49f}, 100, 100);
-    Text text{"name", "tag", true, Transform{Vector2d{-50.f, 10.f}, 1.F, 1.f}, 20,5, "text", "./assets/Sans.ttf", 1000, Alignment::CENTER, Color(200, 0, 0, 0), 100};
+    const auto ui_object = std::make_shared<UIObject>("ui_object", "text", true, Transform{Vector2d{400.f, -10.f}, Vector2d{}, 20.0f, 0.49f} ,100, 100);
+    Text text{"name", "tag", true, Transform{Vector2d{-50.f, 10.f}, Vector2d{}, 1.F, 1.f}, 20,5, "text", "./assets/Sans.ttf", 1000, Alignment::CENTER, Color(200, 0, 0, 0), 100};
     ui_object->add_child(std::make_shared<Text>(text));
 
 
