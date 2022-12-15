@@ -36,12 +36,13 @@ void AIBehaviour::move_to_target() {
 
     if ( dot > 0 ) {
         drive_forwards();
-    } else if (distance_to_target > reverse_distance) {
-        turn_right();
-//        turn_right();
-        drive_forwards();
     } else {
-        drive_backwards();
+        if (distance_to_target > reverse_distance) {
+            turn_right();
+            drive_forwards();
+        } else {
+            drive_backwards();
+        }
     }
 
     float angle_to_dir = Vector2d::signed_angle(forward, direction_to_target, Vector2d(0,1));
