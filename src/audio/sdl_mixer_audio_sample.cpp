@@ -3,7 +3,6 @@
 #include "audio/sdl_mixer_audio_sample.hpp"
 #include "global.hpp"
 
-#include "SDl2pp/Chunk.hh"
 
 SDLMixerAudioSample::SDLMixerAudioSample(std::string path, float volume, bool loop) :
     _path(std::move(path)),
