@@ -235,9 +235,6 @@ class Target : public GameObject {
 public:
     Target(const std::string &name, const std::string &tag, Transform transform = Transform{Vector2d()})
             : GameObject(name, tag, true, transform) {
-        const auto sprite = std::make_shared<Sprite>("./assets/sample.png", Color(), false, false, 1, 10);
-
-        add_component(sprite);
     }
 };
 
@@ -307,27 +304,78 @@ int main() {
     car->add_component(car_behaviour);
 
     TargetFactory tf;
-    std::vector<Vector2d> vector_targets;
+
+    std::vector<Vector2d> vector_targets
     {
-        vector_targets.emplace_back(Vector2d{-60.f, -72.f});
-        vector_targets.emplace_back(Vector2d{-74.f, -53.f});
-        vector_targets.emplace_back(Vector2d{-60.f, -34.f});
-        vector_targets.emplace_back(Vector2d{-10.f, -6.f});
-        vector_targets.emplace_back(Vector2d{-13.f, 32.f});
-        vector_targets.emplace_back(Vector2d{-65.f, 38.f});
-        vector_targets.emplace_back(Vector2d{-72.f, 62.f});
-        vector_targets.emplace_back(Vector2d{-52.f, 73.f});
-        vector_targets.emplace_back(Vector2d{64.f, 73.f});
-        vector_targets.emplace_back(Vector2d{77.f, 57.f});
-        vector_targets.emplace_back(Vector2d{22.f, 37.f});
-        vector_targets.emplace_back(Vector2d{16.f, -34.f});
-        vector_targets.emplace_back(Vector2d{49.f, -39.f});
-        vector_targets.emplace_back(Vector2d{34.f, 18.f});
-        vector_targets.emplace_back(Vector2d{72.f, 20.f});
-        vector_targets.emplace_back(Vector2d{73.f, -66.f});
-    }
+        Vector2d{9.f, -74.f},
+        Vector2d{0.f, -74.f},
+        Vector2d{-10.f, -74.f},
+        Vector2d{-20.f, -74.f},
+        Vector2d{-30.f, -74.f},
+        Vector2d{-40.f, -74.f},
+        Vector2d{-52.f, -74.f},
+        Vector2d{-70.f, -56.f},
+        Vector2d{-55.f, -26.f},
+        Vector2d{-18.f, -8.f},
+        Vector2d{-7.f, 10.f},
+        Vector2d{-7.f, 16.f},
+        Vector2d{-18.f, 36.f},
+        Vector2d{-52.f, 36.f},
+        Vector2d{-65.f, 38.f},
+        Vector2d{-69.f, 50.f},
+        Vector2d{-69.f, 62.f},
+        Vector2d{-52.f, 73.f},
+        Vector2d{-40.f, 73.f},
+        Vector2d{-30.f, 73.f},
+        Vector2d{-20.f, 73.f},
+        Vector2d{-10.f, 73.f},
+        Vector2d{0.f, 73.f},
+        Vector2d{10.f, 73.f},
+        Vector2d{20.f, 73.f},
+        Vector2d{30.f, 73.f},
+        Vector2d{40.f, 73.f},
+        Vector2d{50.f, 73.f},
+        Vector2d{58.f, 73.f},
+        Vector2d{74.f, 62.f},
+        Vector2d{58.f, 48.f},
+        Vector2d{48.f, 48.f},
+        Vector2d{38.f, 48.f},
+        Vector2d{20.f, 34.f},
+        Vector2d{16.f, 28.f},
+        Vector2d{14.f, 24.f},
+        Vector2d{14.f, 16.f},
+        Vector2d{14.f, 8.f},
+        Vector2d{14.f, 0.f},
+        Vector2d{15.f, -12.f},
+        Vector2d{16.f, -30.f},
+        Vector2d{28.f, -46.f},
+        Vector2d{36.f, -46.f},
+        Vector2d{51.f, -30.f},
+        Vector2d{44.f, -12.f},
+        Vector2d{36.f, 10.f},
+        Vector2d{52.f, 25.f},
+        Vector2d{72.f, 20.f},
+        Vector2d{74.f, 6.f},
+        Vector2d{74.f, 0.f},
+        Vector2d{74.f, -20.f},
+        Vector2d{74.f, -20.f},
+        Vector2d{74.f, -30.f},
+        Vector2d{74.f, -40.f},
+        Vector2d{74.f, -50.f},
+        Vector2d{74.f, -60.f},
+        Vector2d{62.f, -74.f},
+        Vector2d{50.f, -74.f},
+        Vector2d{40.f, -74.f},
+        Vector2d{30.f, -74.f},
+        Vector2d{20.f, -74.f},
+        Vector2d{10.5f, -74.f}
+    };
 
     auto targets = tf.make_targets(vector_targets);
+
+    for (auto target : targets) {
+        scene->gameobjects.push_back(target);
+    }
 
     const auto ai_car = std::make_shared<Car>("ai_car", "ai-car", "./assets/blue_car.png", scene, 10, Vector2d{14, -76} );
     ai_car->add_component(std::make_shared<AIBehaviour>(targets[0]));
