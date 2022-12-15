@@ -16,7 +16,8 @@
 #include "input.hpp"
 #include "interfaces/itickable.hpp"
 #include "storage/json_properties.hpp"
-#include "audio/sdl_mixer_audio_sample.hpp"
+#include "components/audiosource.hpp"
+#include <unistd.h>
 
 class KeyMouseListenerComponent : public Component, public KeyListener, public MouseListener, public ColliderListener {
 public:
@@ -175,8 +176,9 @@ int main() {
     global->set_properties(std::make_unique<JsonProperties>("settings.json"));
     Engine &engine_ref = global->get_engine();
 
-    auto audio_sample = SDLMixerAudioSample("./assets/sample-sound.wav", 0.1, true);
-    audio_sample.play();
+    // Setup music
+    const auto background_music = std::make_shared<AudioSource>("./assets/sample-sound.wav", false, false, 0.1);
+    background_music->play(true);
 
     // Setup scene
     const auto scene = std::make_shared<Scene>();
