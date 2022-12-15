@@ -54,9 +54,11 @@ list(APPEND CMAKE_PREFIX_PATH $ENV{CMAKE_PREFIX_PATH}/SDL2_image/x86_64-w64-ming
 list(APPEND CMAKE_PREFIX_PATH $ENV{CMAKE_PREFIX_PATH}/SDL2_image/x86_64-w64-mingw32/lib)
 list(APPEND CMAKE_PREFIX_PATH $ENV{CMAKE_PREFIX_PATH}/SDL2_ttf/x86_64-w64-mingw32/include)
 list(APPEND CMAKE_PREFIX_PATH $ENV{CMAKE_PREFIX_PATH}/SDL2_ttf/x86_64-w64-mingw32/lib)
+list(APPEND CMAKE_PREFIX_PATH $ENV{CMAKE_PREFIX_PATH}/SDL2_mixer/x86_64-w64-mingw32/include)
+list(APPEND CMAKE_PREFIX_PATH $ENV{CMAKE_PREFIX_PATH}/SDL2_mixer/x86_64-w64-mingw32/lib)
 
 set(SDL2PP_WITH_IMAGE ON) # if you need SDL_image support
-set(SDL2PP_WITH_MIXER OFF) # if you need SDL_mixer support
+set(SDL2PP_WITH_MIXER ON) # if you need SDL_mixer support
 set(SDL2PP_WITH_TTF ON) # if you need SDL_ttf support
 
 FetchContent_MakeAvailable(fmt box2d SDL2pp tinyxml2 json)
@@ -68,9 +70,11 @@ file(GLOB_RECURSE PRIVATE_HEADER_FILES CONFIGURE_DEPENDS ./src/*.hpp)
 if (WIN32)
     set(SDL2_IMAGE_LIBRARIES SDL2_image::SDL2_image)
     set(SDL2_TTF_LIBRARIES SDL2_TTF::SDL2_TTF)
+    set(SDL2_MIXER_LIBRARIES SDL2_MIXER::SDL2_MIXER)
 else ()
     set(SDL2_IMAGE_LIBRARIES SDL2_image)
     set(SDL2_TTF_LIBRARIES SDL2_TTF)
+    set(SDL2_MIXER_LIBRARIES SDL2_MIXER)
 endif ()
 
 add_library(engine STATIC ${SOURCE_FILES} ${HEADER_FILES} ${PRIVATE_HEADER_FILES})
