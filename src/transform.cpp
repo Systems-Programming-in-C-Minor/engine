@@ -3,8 +3,9 @@
 #include "components/rigidbody.hpp"
 #include "gameobject.hpp"
 
-Transform::Transform(const Vector2d &position, float angle, float scale) :
+Transform::Transform(const Vector2d &position, const Vector2d &local_position, float angle, float scale) :
         _position(position),
+        _local_position(local_position),
         _angle(angle),
         _scale(scale) {}
 
@@ -50,6 +51,22 @@ void Transform::set_position(Vector2d &position) {
     }
 
     _position = position;
+}
+
+Vector2d Transform::get_local_position() const {
+    return _local_position;
+}
+
+void Transform::set_local_position(Vector2d &new_position) {
+    _local_position = std::move(new_position);
+}
+
+float Transform::get_local_angle() const {
+    return _local_angle;
+}
+
+void Transform::set_local_angle(float &angle) {
+    _local_angle = angle;
 }
 
 std::shared_ptr<RigidBody> Transform::get_rigid_body() const {

@@ -10,9 +10,8 @@ enum Event {
     KeyPressed,
     KeyHold,
     KeyReleased,
-    ColliderExit,
     ColliderEntry,
-    ColliderStay,
+    ColliderExit,
     SceneLoaded,
 };
 
