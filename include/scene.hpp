@@ -9,6 +9,7 @@
 class IRenderer;
 class b2World;
 class b2Vec2;
+class CollisionHandler;
 
 class GameObject;
 
@@ -16,6 +17,7 @@ class Scene {
 private:
     const std::unique_ptr<EventManager> _event_manager;
     const std::unique_ptr<b2World> _world;
+    const std::unique_ptr<CollisionHandler> _collision_handler;
     friend class RigidBody;
 
 public:
@@ -25,6 +27,8 @@ public:
      * Simulates a tick on this scene's gameobjects
      */
     virtual void tick();
+
+    void tick_world();
 
     /**
      * Calls the render functions on this scene's gameobjects

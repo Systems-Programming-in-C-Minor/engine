@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include "uiobjects/button.hpp"
 
-#define test_button Button("name", "tag", true, Transform{Vector2d{0.f, 0.f}, 0.f, 0.f}, 10, 10, true)
+#define test_button Button("name", "tag", true, Transform{Vector2d{}, Vector2d{}, 0.f, 0.f}, 10, 10, true)
 
 class TestButton : public UIObject {
 };

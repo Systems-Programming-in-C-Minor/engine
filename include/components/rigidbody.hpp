@@ -83,7 +83,7 @@ public:
 
     [[nodiscard]] float get_angle() const;
 
-    void set_collider(std::shared_ptr<Collider> collider);
+    void set_collider(const std::shared_ptr<Collider>& collider);
 
     void render(bool is_world_space) const override;
 
