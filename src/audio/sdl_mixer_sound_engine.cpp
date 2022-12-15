@@ -31,7 +31,7 @@ void SDLMixerSoundEngine::play(const std::string &path, double volume, bool loop
     }
     else
     {
-        // Channel number exists, continue playing
+        // channel number exists, continue playing
         Mix_Resume(_channels[path]);
     }
 

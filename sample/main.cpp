@@ -16,7 +16,6 @@
 #include "interfaces/itickable.hpp"
 #include "storage/json_properties.hpp"
 #include "audio/sdl_mixer_sound_engine.hpp"
-#include <unistd.h>
 
 class InputScript : public Component, public ITickable {
     Input input;
