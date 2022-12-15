@@ -180,7 +180,8 @@ int main() {
     Engine &engine_ref = global->get_engine();
 
     // Setup scene
-    const auto scene = std::make_shared<Scene>(std::make_shared<Camera>());
+    const auto camera = std::make_shared<Camera>();
+	const auto scene = std::make_shared<Scene>(camera);
 
     // Create game objects with component
     const auto track_outer = std::make_shared<GameObject>(
@@ -288,6 +289,18 @@ int main() {
     Text text{"name", "tag", true, Transform{Vector2d{-50.f, 10.f}, Vector2d{}, 1.F, 1.f}, 20, 5, "text",
               "./assets/Sans.ttf", 1000, Alignment::CENTER, Color(200, 0, 0, 0), 100};
     ui_object->add_child(std::make_shared<Text>(text));
+    const auto okto = std::make_shared<GameObject>(
+            "okto", "okto", true,
+            Transform{Vector2d {0.f, 0.f}, Vector2d{0,0}, 0.f, 0.1f});
+    const auto okto_sprite = std::make_shared<Sprite>("./assets/sample.png", Color(), false, false, 1, 1, 6.f);
+    okto->add_component(okto_sprite);
+
+    car->add_child(okto);
+    car->add_child(camera);
+
+    const auto ui_object = std::make_shared<UIObject>("ui_object", "text", true, Transform{ Vector2d{400.f, -10.f}, Vector2d{}, 0.49f }, 100, 100);
+    const auto text = std::make_shared<Text>("name", "tag", true, Transform{ Vector2d{-50.f, 10.f}, Vector2d{}, 1.f }, 20, 10, "text", "./assets/Sans.ttf", 1000, Alignment::CENTER, Color(200, 0, 0, 0), 100);
+    ui_object->add_child(text);
 
     scene->gameobjects.push_back(track_outer);
     scene->gameobjects.push_back(track_inner);
@@ -296,6 +309,7 @@ int main() {
     scene->gameobjects.push_back(track_bg);
     scene->gameobjects.push_back(car);
     scene->gameobjects.push_back(ui_object);
+    scene->gameobjects.push_back(camera);
 
     scene->gameobjects.push_back(ai_car);
     scene->gameobjects.push_back(ai_car2);

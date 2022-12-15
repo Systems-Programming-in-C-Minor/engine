@@ -28,6 +28,11 @@
 #include <ostream>
 #include <utility>
 
+#include "camera.hpp"
+#include "global.hpp"
+
+#define camera Global::get_instance()->get_active_scene().get_camera
+
 void SdlRenderer::render_sprite(const Sprite& sprite, ITexture& texture, Transform& transform, bool is_world_space) const
 {
 	/*
@@ -44,8 +49,8 @@ void SdlRenderer::render_sprite(const Sprite& sprite, ITexture& texture, Transfo
 	const auto center = world_to_screen(transform.get_position());
 	const auto left_corner = world_to_screen(Vector2d{ left_corner_x, left_corner_y });
 
-	const int size_x = static_cast<int>(round(sprite.get_size_x() * transform.get_scale() * _mtp));
-	const int size_y = static_cast<int>(round(sprite.get_size_y() * transform.get_scale() * _mtp));
+	const int size_x = static_cast<int>(round(sprite.get_size_x() * transform.get_scale() * camera()->mtp));
+	const int size_y = static_cast<int>(round(sprite.get_size_y() * transform.get_scale() * camera()->mtp));
 	const auto size = SDL2pp::Point{ size_x, size_y };
 
 	auto rect = SDL2pp::Rect{ left_corner, size };
@@ -142,8 +147,8 @@ void SdlRenderer::render_text(const Text& text) const
 	const auto center = world_to_screen(text.transform.get_position());
 	const auto left_corner = world_to_screen(Vector2d{ left_corner_x, left_corner_y });
 
-	const int size_x = static_cast<int>(round(text_size_x * text.transform.get_scale() * _mtp));
-	const int size_y = static_cast<int>(round(text_size_y * text.transform.get_scale() * _mtp));
+	const int size_x = static_cast<int>(round(text_size_x * text.transform.get_scale() * camera()->mtp));
+	const int size_y = static_cast<int>(round(text_size_y * text.transform.get_scale() * camera()->mtp));
 
 	const auto size = SDL2pp::Point{ size_x, size_y };
 	auto rect = SDL2pp::Rect{ left_corner, size };
@@ -193,9 +198,11 @@ SDL2pp::Point SdlRenderer::world_to_screen(const Vector2d& position) const
 {
 	// TODO Optimization: only retrieve when resolution changes
 	const SDL2pp::Point res = _renderer->GetOutputSize();
+
+	const auto position_translated = position - camera()->transform.get_position();
 	const SDL2pp::Point return_pos{
-		static_cast<int>(round(static_cast<float>(res.GetX()) * 0.5f + position.x * _mtp)),
-		static_cast<int>(round(static_cast<float>(res.GetY()) * 0.5f - position.y * _mtp))
+		static_cast<int>(round(static_cast<float>(res.GetX()) * 0.5f + position_translated.x * camera()->mtp)),
+		static_cast<int>(round(static_cast<float>(res.GetY()) * 0.5f - position_translated.y * camera()->mtp))
 	};
 	return return_pos;
 }
