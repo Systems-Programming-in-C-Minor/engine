@@ -196,7 +196,7 @@ int main() {
     car->add_component(car_behaviour);
 
     const auto ui_object = std::make_shared<UIObject>("ui_object", "text", true, Transform{ Vector2d{400.f, -10.f}, Vector2d{}, 0.49f }, 100, 100);
-    const auto text = std::make_shared<Text>("name", "tag", true, Transform{ Vector2d{-50.f, 10.f}, Vector2d{}, 1.f }, 20, 5, "text", "./assets/Sans.ttf", 1000, Alignment::CENTER, Color(200, 0, 0, 0), 100);
+    const auto text = std::make_shared<Text>("name", "tag", true, Transform{ Vector2d{-50.f, 10.f}, Vector2d{}, 1.f }, 20, 10, "text", "./assets/Sans.ttf", 1000, Alignment::CENTER, Color(200, 0, 0, 0), 100);
     ui_object->add_child(text);
 
     const auto okto = std::make_shared<GameObject>(

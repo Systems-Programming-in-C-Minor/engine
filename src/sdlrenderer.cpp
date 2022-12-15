@@ -129,7 +129,7 @@ void SdlRenderer::render_text(const Text& text) const
 	SDL2pp::Texture texture(*_renderer, font.RenderUTF8_Solid(text.get_text(), static_cast<SDL2pp::Color>(text.get_color())));
 
     const auto text_size_x = static_cast<float>(text.get_width());
-    const auto text_size_y = static_cast<float>(text.get_width());
+    const auto text_size_y = static_cast<float>(text.get_height());
 
 	const float left_corner_x = text.transform.get_position().x + -text_size_x * text.transform.get_scale() / 2.f;
 	const float left_corner_y = text.transform.get_position().y + text_size_y * text.transform.get_scale() / 2.f;
