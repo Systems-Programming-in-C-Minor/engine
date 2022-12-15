@@ -1,13 +1,16 @@
+#include <thread>
 #include "gameobject.hpp"
 #include "scene.hpp"
 #include "handlers/collision_handler.hpp"
 
 void Scene::tick() {
-    _world->Step(1.f / 60.f, 6.0f, 2.0f);
-
     for (auto &game_object: gameobjects) {
         game_object->tick();
     }
+}
+
+void Scene::tick_world() {
+    _world->Step(1.f/60.f, 6.0f, 2.0f);
 }
 
 void Scene::render() const {
