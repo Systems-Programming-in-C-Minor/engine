@@ -119,10 +119,12 @@ public:
         switch (event.key) {
             case W: {
                 drive_forwards();
+                game_object->get_component<AudioSource>()->play(true);
                 break;
             }
             case S: {
                 drive_backwards();
+                game_object->get_component<AudioSource>()->play(true);
                 break;
             }
             case A: {
@@ -164,7 +166,19 @@ public:
         }
     }
 
-    void on_key_released(const KeyReleasedEvent &event) override {}
+    void on_key_released(const KeyReleasedEvent &event) override {
+        switch (event.key) {
+            case W: {
+                game_object->get_component<AudioSource>()->stop();
+                break;
+            }
+            case S: {
+                drive_backwards();
+                game_object->get_component<AudioSource>()->stop();
+                break;
+            }
+        }
+    }
 };
 
 int main() {
@@ -178,6 +192,7 @@ int main() {
 
     // Setup music
     const auto background_music = std::make_shared<AudioSource>("./assets/sample-sound.wav", false, false, 0.1);
+    const auto acceleration_sound = std::make_shared<AudioSource>("./assets/acceleration.wav", false, false, 0.05);
     background_music->play(true);
 
     // Setup scene
@@ -198,6 +213,7 @@ int main() {
     const auto car = std::make_shared<Car>("player_car", "car", "./assets/blue_car.png", scene);
     const auto car_behaviour = std::make_shared<PlayerCarBehaviour>(scene->get_event_manager());
     car->add_component(car_behaviour);
+    car->add_component(acceleration_sound);
 
     const auto ui_object = std::make_shared<UIObject>("ui_object", "text", true, Transform{ Vector2d{400.f, -10.f}, Vector2d{}, 0.49f }, 100, 100);
     const auto text = std::make_shared<Text>("name", "tag", true, Transform{ Vector2d{-50.f, 10.f}, Vector2d{}, 1.f }, 20, 5, "text", "./assets/Sans.ttf", 1000, Alignment::CENTER, Color(200, 0, 0, 0), 100);
