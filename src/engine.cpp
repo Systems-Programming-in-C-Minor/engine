@@ -1,5 +1,5 @@
-#include "color.hpp"
 #include "engine.hpp"
+
 #include <utility>
 #include <chrono>
 #include <cmath>
@@ -8,10 +8,10 @@
 #include "gameobject.hpp"
 #include "sdlrenderer.hpp"
 #include "audio/sdl_mixer_sound_engine.hpp"
-#include "managers/host_multiplayer_manager.hpp"
-#include "managers/client_multiplayer_manager.hpp"
 #include "fmt/core.h"
 #include "utils/thread_wait.hpp"
+#include "networking/multiplayer_host.hpp"
+#include "networking/multiplayer_client.hpp"
 
 void Engine::load_scene(std::shared_ptr<Scene> new_scene) {
 	_active_scene = std::move(new_scene);
@@ -93,7 +93,7 @@ Engine::Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine
 
 Engine::Engine(const std::string &user_id, bool is_host) : Engine(std::make_shared<SdlRenderer>(), std::make_shared<SDLMixerSoundEngine>(), user_id, is_host) {}
 
-Engine::Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine, const std::string &user_id, bool is_host) :
+Engine::Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine, const std::string &player_name, bool is_host) :
         _should_quit(false), 
 		    _time(std::make_shared<Time>()),
         _key_handler(std::make_shared<KeyHandler>()),
@@ -104,10 +104,12 @@ Engine::Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine
 		    _fps(0),
 		    _tps(60)
         {
-          if (is_host)
-            _multiplayer_manager = std::make_shared<HostMultiplayerManager>(user_id);
-          else
-            _multiplayer_manager = std::make_shared<ClientMultiplayerManager>(user_id);
+            const auto signalling_server = "localhost:10000";
+            const auto host_player_name = "player_b";
+            if (is_host)
+                _multiplayer_manager = std::make_unique<MultiplayerHost>(player_name, signalling_server);
+            else
+                _multiplayer_manager = std::make_unique<MultiplayerClient>(player_name, host_player_name, signalling_server);
         } 
 
 unsigned long Engine::get_number_of_controllers() const {

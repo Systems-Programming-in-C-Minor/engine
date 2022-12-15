@@ -52,10 +52,10 @@ public:
     * @brief Constructor.
     * @param renderer A shared pointer to the IRenderer the engine will use.
     * @param sound_engine A shared pointer to the ISoundEngine the engine will use.
-    * @param user_id The user_id the engine class will refer to.
+    * @param player_name The user_id the engine class will refer to.
     * @param is_host The boolean value whether the engine is a host.
-    */    
-    Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine, const std::string& user_id, bool is_host = true);
+    */
+    Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine, const std::string& player_name, bool is_host = true);
 
     /**
      * @brief Virtual destructor.

@@ -48,6 +48,12 @@ FetchContent_Declare(
         URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz
 )
 
+FetchContent_Declare(
+        GameNetworkingSockets
+        GIT_REPOSITORY https://github.com/ValveSoftware/GameNetworkingSockets.git
+        GIT_TAG v1.4.1
+)
+
 # This allows libSDL2pp to find the local SDL2 libraries.
 list(APPEND CMAKE_PREFIX_PATH $ENV{CMAKE_PREFIX_PATH}/SDL2)
 list(APPEND CMAKE_PREFIX_PATH $ENV{CMAKE_PREFIX_PATH}/SDL2_image/x86_64-w64-mingw32/include)
@@ -61,7 +67,7 @@ set(SDL2PP_WITH_IMAGE ON) # if you need SDL_image support
 set(SDL2PP_WITH_MIXER ON) # if you need SDL_mixer support
 set(SDL2PP_WITH_TTF ON) # if you need SDL_ttf support
 
-FetchContent_MakeAvailable(fmt box2d SDL2pp tinyxml2 json)
+FetchContent_MakeAvailable(fmt box2d SDL2pp tinyxml2 json GameNetworkingSockets)
 
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS ./src/*.cpp)
 file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS ./include/*.hpp)
@@ -89,6 +95,7 @@ target_link_libraries(engine PRIVATE
         SDL2pp::SDL2pp
         tinyxml2::tinyxml2
         nlohmann_json::nlohmann_json
+        GameNetworkingSockets::shared
         )
 
 if (ENGINE_TEST)

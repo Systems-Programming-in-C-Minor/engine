@@ -4,7 +4,7 @@
 
 #include <string>
 #include <memory>
-#include <vector>
+#include <list>
 #include "inetworkable.hpp"
 
 /**
@@ -12,23 +12,20 @@
  */
 class IMultiplayer {
 private:
-    std::vector<std::shared_ptr<INetworkable>> _networkables;
+    std::list<std::shared_ptr<INetworkable>> _networkables;
 
 protected:
     /**
-     * @brief Explicit constructor.
-     * @param user_id The user_id of the IMultiplayer object.
+     * @brief Default constructor.
      */
-    explicit IMultiplayer(std::string user_id);
+    IMultiplayer() = default;
 
 public:
-    const std::string user_id;
-
     /**
      * @brief Register a networkable object.
      * @param networkable The INetworkable which will be registered.
      */
-    void register_networkable(const std::shared_ptr<INetworkable>& networkable);
+    void register_networkable(const std::shared_ptr<INetworkable> &networkable);
 
     /**
      * @brief Initialize the IMultiplayer object.
