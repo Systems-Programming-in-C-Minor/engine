@@ -7,12 +7,12 @@
  */
 class UIObject : public GameObject {
 private:
-    double _width;
-    double _height;
+    int _width;
+    int _height;
 public:
-    UIObject(const std::string& name, const std::string& tag, double width, double height);
-    void set_width(double new_width);
-    [[nodiscard]] double get_width() const;
-    void set_height(double new_height);
-    [[nodiscard]] double get_height() const;
+    UIObject(const std::string& name, const std::string& tag, bool is_world_space, Transform transform, int width, int height);
+    void set_width(int new_width);
+    [[nodiscard]] int get_width() const;
+    void set_height(int new_height);
+    [[nodiscard]] int get_height() const;
 };
