@@ -1,4 +1,6 @@
 #include <iostream>
+
+#include "camera.hpp"
 #include "color.hpp"
 #include "gameobject.hpp"
 #include "components/sprite.hpp"
@@ -176,6 +178,9 @@ int main() {
     global->set_engine(std::move(engine));
     global->set_properties(std::make_unique<JsonProperties>("settings.json"));
     Engine &engine_ref = global->get_engine();
+
+    // Setup scene
+    const auto scene = std::make_shared<Scene>(std::make_shared<Camera>());
 
     // Create game objects with component
     const auto track_outer = std::make_shared<GameObject>(
