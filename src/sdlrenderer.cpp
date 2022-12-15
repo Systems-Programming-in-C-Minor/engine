@@ -43,10 +43,10 @@ void SdlRenderer::render_sprite(const Sprite& sprite, ITexture& texture, Transfo
 	 * SDL_GetRendererOutputSize(_renderer->Get(), &x, nullptr);
 	 */
 
-	const float left_corner_x = transform.get_position().x + -sprite.get_size_x() * transform.get_scale() / 2.f;
-	const float left_corner_y = transform.get_position().y + sprite.get_size_y() * transform.get_scale() / 2.f;
+	const auto center = transform_vector(transform.get_position());
+	const float left_corner_x = center.x + -sprite.get_size_x() * transform.get_scale() / 2.f;
+	const float left_corner_y = center.y + sprite.get_size_y() * transform.get_scale() / 2.f;
 
-	const auto center = world_to_screen(transform.get_position());
 	const auto left_corner = world_to_screen(Vector2d{ left_corner_x, left_corner_y });
 
 	const int size_x = static_cast<int>(round(sprite.get_size_x() * transform.get_scale() * camera()->mtp));
@@ -54,7 +54,8 @@ void SdlRenderer::render_sprite(const Sprite& sprite, ITexture& texture, Transfo
 	const auto size = SDL2pp::Point{ size_x, size_y };
 
 	auto rect = SDL2pp::Rect{ left_corner, size };
-	_renderer->Copy(*texture.get_texture(), SDL2pp::NullOpt, rect, -radians_to_degrees(transform.get_angle()));
+
+	_renderer->Copy(*texture.get_texture(), SDL2pp::NullOpt, rect, -radians_to_degrees(transform.get_angle() - camera()->transform.get_angle()));
 }
 
 void SdlRenderer::render_rigid_body(const RigidBody& rigid_body, Transform& transform, bool is_world_space) const
@@ -122,7 +123,7 @@ void SdlRenderer::render_lines(std::vector<Vector2d>& vectors, const Color& colo
 	points.reserve(vectors.size());
 
 	for(auto& vector : vectors) {
-		points.push_back(world_to_screen(vector));
+		points.push_back(world_to_screen(transform_vector(vector)));
 	}
 	_renderer->SetDrawColor(static_cast<SDL2pp::Color>(color));
 	_renderer->DrawLines(points.data(), static_cast<int>(points.size()));
@@ -193,12 +194,21 @@ SDL2pp::Point SdlRenderer::world_to_screen(const Vector2d& position) const
 	// TODO Optimization: only retrieve when resolution changes
 	const SDL2pp::Point res = _renderer->GetOutputSize();
 
-	const auto position_translated = position - camera()->transform.get_position();
 	const SDL2pp::Point return_pos{
-		static_cast<int>(round(static_cast<float>(res.GetX()) * 0.5f + position_translated.x * camera()->mtp)),
-		static_cast<int>(round(static_cast<float>(res.GetY()) * 0.5f - position_translated.y * camera()->mtp))
+		static_cast<int>(round(static_cast<float>(res.GetX()) * 0.5f + position.x * camera()->mtp)),
+		static_cast<int>(round(static_cast<float>(res.GetY()) * 0.5f - position.y * camera()->mtp))
 	};
 	return return_pos;
+}
+
+Vector2d SdlRenderer::transform_vector(const Vector2d& position) const {
+	const auto camera_position = camera()->transform.get_position();
+	const auto position_translated = position - camera_position;
+
+	const auto angle = camera()->transform.get_angle();
+	const b2Mat22 rotation_matrix{ cos(angle),-sin(angle), sin(angle), cos(angle) };
+	const auto result = b2MulT(rotation_matrix, static_cast<b2Vec2>(position_translated));
+	return Vector2d{ result };
 }
 
 std::shared_ptr<SDL2pp::Renderer> SdlRenderer::get_renderer()
