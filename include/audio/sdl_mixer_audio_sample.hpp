@@ -2,6 +2,7 @@
 #define ENGINE_SDL_MIXER_AUDIO_SAMPLE_HPP
 
 #include "interfaces/iaudio_sample.hpp"
+#include "interfaces/isound_engine.hpp"
 #include <memory>
 
 namespace SDL2pp {
@@ -11,12 +12,16 @@ namespace SDL2pp {
 class SDLMixerAudioSample : public IAudioSample
 {
 public:
-    void play(const std::string &path) override;
+    SDLMixerAudioSample(std::string path, float volume, bool loop);
+    void play() override;
     void set_volume(double volume) override;
     void stop() override;
     void set_looping(bool loop) override;
 private:
-    std::shared_ptr<SDL2pp::Chunk> _audio_file;
+    std::shared_ptr<ISoundEngine>_sound_engine;
+    const std::string _path;
+    double _volume;
+    bool _loop;
 };
 
 #endif //ENGINE_SDL_MIXER_AUDIO_SAMPLE_HPP

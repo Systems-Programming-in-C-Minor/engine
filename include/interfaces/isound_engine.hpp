@@ -6,6 +6,7 @@
 class ISoundEngine {
 public:
     virtual void play(const std::string &path, double volume, bool loop) = 0;
+    virtual void stop(const std::string &path) = 0;
 };
 
 #endif //ENGINE_ISOUND_ENGINE_HPP

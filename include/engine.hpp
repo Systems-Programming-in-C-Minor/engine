@@ -5,6 +5,7 @@
 #include "scene.hpp"
 #include "render/irenderer.hpp"
 #include "interfaces/imultiplayer.hpp"
+#include "interfaces/isound_engine.hpp"
 #include "handlers/key_handler.hpp"
 #include "handlers/mouse_handler.hpp"
 #include "time.hpp"
@@ -18,6 +19,7 @@ private:
     std::unique_ptr<IMultiplayer> _multiplayer_manager;
     std::shared_ptr<Scene> _active_scene;
     std::shared_ptr<IRenderer> _renderer;
+    std::shared_ptr<ISoundEngine> _sound_engine;
 
     long long _time_after_last_frame;
     unsigned long _fps;
@@ -25,11 +27,11 @@ private:
 public:
     Engine();
 
-    explicit Engine(std::shared_ptr<IRenderer> renderer);
+    explicit Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine);
 
     explicit Engine(const std::string& user_id, bool is_host = true);
 
-    Engine(std::shared_ptr<IRenderer> renderer, const std::string& user_id, bool is_host = true);
+    Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine, const std::string& user_id, bool is_host = true);
 
     virtual ~Engine();
 
@@ -46,6 +48,8 @@ public:
     [[nodiscard]] unsigned long get_fps() const;
 
     [[nodiscard]] virtual std::shared_ptr<IRenderer> get_renderer() const;
+
+    [[nodiscard]] virtual std::shared_ptr<ISoundEngine> get_sound_engine() const;
 
     [[nodiscard]] Time &get_time() const;
 };

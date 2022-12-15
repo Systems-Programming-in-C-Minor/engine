@@ -14,7 +14,7 @@ class SDLMixerSoundEngine : public ISoundEngine {
 public:
     SDLMixerSoundEngine();
     void play(const std::string &path, double volume, bool loop) override;
-    void stop(const std::string &path);
+    void stop(const std::string &path) override;
     void load_chunk(const std::string &path);
     ~SDLMixerSoundEngine();
 private:

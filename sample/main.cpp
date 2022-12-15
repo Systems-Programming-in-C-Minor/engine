@@ -15,7 +15,7 @@
 #include "input.hpp"
 #include "interfaces/itickable.hpp"
 #include "storage/json_properties.hpp"
-#include "audio/sdl_mixer_sound_engine.hpp"
+#include "audio/sdl_mixer_audio_sample.hpp"
 
 class InputScript : public Component, public ITickable {
     Input input;
@@ -163,8 +163,6 @@ public:
 };
 
 int main() {
-    auto sound_engine = SDLMixerSoundEngine();
-    sound_engine.play("./assets/sample-sound.wav", 0.1, true);
 
     // Setup engine
     const auto global = Global::get_instance();
@@ -172,6 +170,9 @@ int main() {
     global->set_engine(std::move(engine));
     global->set_properties(std::make_unique<JsonProperties>("settings.json"));
     Engine &engine_ref = global->get_engine();
+
+    auto audio_sample = SDLMixerAudioSample("./assets/sample-sound.wav", 0.1, true);
+    audio_sample.play();
 
     // Setup scene
     const auto scene = std::make_shared<Scene>();
