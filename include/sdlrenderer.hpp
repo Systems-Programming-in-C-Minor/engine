@@ -97,6 +97,7 @@ public:
 	virtual ~SdlRenderer();
 private:
 	void init(bool fullscreen);
+	[[nodiscard]] Vector2d transform_vector(const Vector2d &position) const;
 	[[nodiscard]] SDL2pp::Point world_to_screen(const Vector2d& position) const;
 	void render_ngon(b2Body* body, b2PolygonShape* shape) const;
 	void render_ngon(b2Body* body, b2ChainShape* shape) const;
