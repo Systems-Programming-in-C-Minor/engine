@@ -2,7 +2,7 @@
 #include "gameobject.hpp"
 #include "vector2d.hpp"
 #include <utility>
-#include <valarray>
+#include <cmath>
 #include "global.hpp"
 #include "events.hpp"
 

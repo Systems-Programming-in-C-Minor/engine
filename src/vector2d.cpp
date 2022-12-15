@@ -1,6 +1,6 @@
 #include "box2d/b2_math.h"
 #include "utils/trigonometry.hpp"
-#include <math.h>
+#include <cmath>
 #include "vector2d.hpp"
 
 
