@@ -12,14 +12,14 @@ public:
     Color background_color;
     int aspect_width;
     int aspect_height;
-    int mtp;
+    float mtp;
 
     Camera(int aspect_width = 100,
         int aspect_height = 100,
         bool is_world_space = true,
         Transform transform = Transform{},
         const Color& background_color = Color{},
-        int mtp = 100.f
+        int mtp = 6.f
     );
 
     [[nodiscard]] Color get_background_color() const;
