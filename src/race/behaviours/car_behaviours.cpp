@@ -1,5 +1,7 @@
 #include "race/behaviours/car_behaviour.hpp"
 #include <gameobject.hpp>
+#include <iostream>
+#include <iomanip>
 #include "global.hpp"
 
 void CarBehaviour::tick(GameObject &object) {
@@ -15,20 +17,17 @@ void CarBehaviour::friction() {
         impulse = impulse * (max_lateral_impulse / impulse.length());
 
     // apply the impulse
-    body.apply_linear_impulse(impulse * drift_friction * Global::get_instance()->get_delta_time(),
-                              body.get_world_center());
+    body.apply_linear_impulse(impulse * drift_friction, body.get_world_center());
 
     //angular velocity
-    body.apply_angular_impulse(angular_friction * body.get_inertia() * -body.get_angular_velocity() *
-                               Global::get_instance()->get_delta_time());
+    body.apply_angular_impulse(angular_friction * body.get_inertia() * -body.get_angular_velocity());
 
     //forward linear velocity
     Vector2d currentForwardNormal = body.get_forward_velocity();
     float currentForwardSpeed = currentForwardNormal.normalize();
     float dragForceMagnitude = -2 * currentForwardSpeed * drag_modifier;
 
-    auto force_vec =
-            currentForwardNormal * current_traction * dragForceMagnitude * Global::get_instance()->get_delta_time();
+    auto force_vec = currentForwardNormal * current_traction * dragForceMagnitude;
 
     body.apply_force(force_vec, body.get_world_center());
 }
@@ -42,8 +41,7 @@ void CarBehaviour::drive(float desired_speed) {
     //apply necessary force
     float force = (desired_speed > current_speed) ? max_drive_force : -max_drive_force;
     if (desired_speed != current_speed) {
-        auto force_vec = body.get_world_vector(Vector2d{0, 1}) * current_traction * force *
-                         Global::get_instance()->get_delta_time();
+        auto force_vec = body.get_world_vector(Vector2d{0, 1}) * current_traction * force;
         body.apply_force(force_vec, body.get_world_center());
     }
 }
@@ -58,8 +56,7 @@ void CarBehaviour::turn(float steering) {
     if (speed < 0)
         steering *= -1;
 
-    body.apply_angular_impulse(
-            steering *  Global::get_instance()->get_delta_time());
+    body.apply_angular_impulse(steering);
 }
 
 void CarBehaviour::turn_left() {

@@ -13,10 +13,10 @@
 class Engine {
 private:
     bool _should_quit;
-    const std::unique_ptr<Time> _time;
-    const std::unique_ptr<KeyHandler> _key_handler;
-    const std::unique_ptr<MouseHandler> _mouse_handler;
-    std::unique_ptr<IMultiplayer> _multiplayer_manager;
+    const std::shared_ptr<Time> _time;
+    const std::shared_ptr<KeyHandler> _key_handler;
+    const std::shared_ptr<MouseHandler> _mouse_handler;
+    std::shared_ptr<IMultiplayer> _multiplayer_manager;
     std::shared_ptr<Scene> _active_scene;
     std::shared_ptr<IRenderer> _renderer;
     std::shared_ptr<ISoundEngine> _sound_engine;

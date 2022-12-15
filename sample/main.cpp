@@ -8,6 +8,7 @@
 #include "components/colliders/chaincollider.hpp"
 #include "listeners/key_listener.hpp"
 #include "listeners/mouse_listener.hpp"
+#include "listeners/collider_listener.hpp"
 #include "race/behaviours/car_behaviour.hpp"
 #include "utils/trigonometry.hpp"
 #include "utils/xmlreader.hpp"
@@ -17,29 +18,17 @@
 #include "storage/json_properties.hpp"
 #include "audio/sdl_mixer_audio_sample.hpp"
 
-class InputScript : public Component, public ITickable {
-    Input input;
-
-    void tick(GameObject &gameobject) {
-
-        if (input.get_mouse_button(BUTTON_LEFT)) {
-            std::cout << input.mouse_position() << std::endl;
-        }
-
-        if (input.get_key_down(A)) {
-            std::cout << "Pressed A key" << std::endl;
-        }
-    }
-};
-
-class KeyMouseListenerComponent : public Component, public KeyListener, public MouseListener {
+class KeyMouseListenerComponent : public Component, public KeyListener, public MouseListener, public ColliderListener {
 public:
     explicit KeyMouseListenerComponent(EventManager &event_manager) : KeyListener(event_manager),
-                                                                      MouseListener(event_manager) {}
+                                                                      MouseListener(event_manager),
+                                                                      ColliderListener(event_manager) {}
 
     void on_key_pressed(const KeyPressedEvent &event) override {
         if (event.key == P)
             enabled = !enabled;
+        if (event.key == C)
+            colliders_enabled = !colliders_enabled;
         if (enabled)
             std::cout << "Pressed key: " << event.key << "\n";
     }
@@ -71,8 +60,23 @@ public:
             std::cout << "Released mouse: " << event.button << "\n";
     }
 
+    void on_collider_entry(const ColliderEntryEvent &event) override {
+        if (colliders_enabled) {
+            std::cout << std::endl << "Collider entry a: " << event.collider_a->game_object->get_name() << std::endl;
+            std::cout << "Collider entry b: " << event.collider_b->game_object->get_name() << std::endl;
+        }
+    }
+
+    void on_collider_exit(const ColliderExitEvent &event) override {
+        if (colliders_enabled) {
+            std::cout << std::endl << "Collider exit a: " << event.collider_a->game_object->get_name() << std::endl;
+            std::cout << "Collider exit b: " << event.collider_b->game_object->get_name() << std::endl;
+        }
+    }
+
 private:
     bool enabled = false;
+    bool colliders_enabled = false;
 };
 
 class Car : public GameObject {
@@ -180,10 +184,10 @@ int main() {
     // Create game objects with component
     const auto track_outer = std::make_shared<GameObject>(
             "track_outer", "track", true,
-            Transform{Vector2d{0.f, 0.f}, 1.f, 1.f});
+            Transform{Vector2d{0.f, 0.f}});
     const auto track_inner = std::make_shared<GameObject>(
             "track_inner", "track", true,
-            Transform{Vector2d{0.f, 0.f}, 1.f, 1.f});
+            Transform{Vector2d{0.f, 0.f}});
 
     Sprite sprite1{"./assets/track1.png", Color(0, 0, 0, 255.0), false, false, 1, 1, 6.f};
 
@@ -192,15 +196,23 @@ int main() {
     const auto car = std::make_shared<Car>("player_car", "car", "./assets/blue_car.png", scene);
     const auto car_behaviour = std::make_shared<PlayerCarBehaviour>(scene->get_event_manager());
     car->add_component(car_behaviour);
-    car->add_component(std::make_shared<InputScript>());
-    
-    const auto ui_object = std::make_shared<UIObject>("ui_object", "text", true, Transform{Vector2d{400.f, -10.f}, 20.0f, 0.49f}, 100, 100);
-    Text text{"name", "tag", true, Transform{Vector2d{-50.f, 10.f}, 1.F, 1.f}, 20,5, "text", "./assets/Sans.ttf", 1000, Alignment::CENTER, Color(200, 0, 0, 0), 100};
-    ui_object->add_child(std::make_shared<Text>(text));
+
+    const auto ui_object = std::make_shared<UIObject>("ui_object", "text", true, Transform{ Vector2d{400.f, -10.f}, Vector2d{}, 0.49f }, 100, 100);
+    const auto text = std::make_shared<Text>("name", "tag", true, Transform{ Vector2d{-50.f, 10.f}, Vector2d{}, 1.f }, 20, 5, "text", "./assets/Sans.ttf", 1000, Alignment::CENTER, Color(200, 0, 0, 0), 100);
+    ui_object->add_child(text);
+
+    const auto okto = std::make_shared<GameObject>(
+            "okto", "okto", true,
+            Transform{Vector2d {0.f, 0.f}, Vector2d{0,0}, 0.f, 0.1f});
+    const auto okto_sprite = std::make_shared<Sprite>("./assets/sample.png", Color(), false, false, 1, 1, 6.f);
+    okto->add_component(okto_sprite);
+
+    car->add_child(okto);
 
     scene->gameobjects.push_back(track_outer);
     scene->gameobjects.push_back(track_inner);
     scene->gameobjects.push_back(car);
+    scene->gameobjects.push_back(okto);
     scene->gameobjects.push_back(ui_object);
 
     // Add rigid bodies
