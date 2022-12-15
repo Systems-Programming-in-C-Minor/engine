@@ -6,8 +6,9 @@
 
 
 class AIListener {
-public:
+protected:
     explicit AIListener(EventManager &manager);
+public:
     virtual void on_target_reached(const AITargetReachedEvent &event) = 0;
 };
 

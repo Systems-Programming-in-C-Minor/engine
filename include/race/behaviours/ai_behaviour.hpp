@@ -23,6 +23,7 @@ public:
 
     float reached_target_distance = 5.f;
     float reverse_distance = 25.f;
+    float max_angle_to_direction = 0.08f;
 
     void set_target(std::shared_ptr<GameObject> game_object);
 
