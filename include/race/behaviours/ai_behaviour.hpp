@@ -17,9 +17,12 @@ private:
 
     void move_to_target();
 public:
+    explicit AIBehaviour(std::shared_ptr<GameObject> target);
+    explicit AIBehaviour();
     ~AIBehaviour() override;
 
     float reached_target_distance = 5.f;
+    float reverse_distance = 25.f;
 
     void set_target(std::shared_ptr<GameObject> game_object);
 

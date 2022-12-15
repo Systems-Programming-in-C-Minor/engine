@@ -1,6 +1,7 @@
 #include "race/behaviours/ai_behaviour.hpp"
 #include "gameobject.hpp"
 #include "vector2d.hpp"
+#include <utility>
 #include <valarray>
 #include "global.hpp"
 #include "events.hpp"
@@ -31,8 +32,13 @@ void AIBehaviour::move_to_target() {
     direction_to_target.normalize();
 
     float dot = Vector2d::dot(forward, direction_to_target);
+    float distance_to_target = Vector2d::distance(current_position, target_position);
 
     if ( dot > 0 ) {
+        drive_forwards();
+    } else if (distance_to_target > reverse_distance) {
+        turn_right();
+//        turn_right();
         drive_forwards();
     } else {
         drive_backwards();
@@ -46,13 +52,12 @@ void AIBehaviour::move_to_target() {
         turn_right();
     }
 
-    float distance_to_target = Vector2d::distance(current_position, target_position);
     if(distance_to_target < reached_target_distance)
         reached_target = true;
 }
 
 void AIBehaviour::set_target(std::shared_ptr<GameObject> game_object) {
-    _target = game_object;
+    _target = std::move(game_object);
     reached_target = false;
 }
 
@@ -60,3 +65,9 @@ void AIBehaviour::tick(GameObject &gameObject) {
     CarBehaviour::tick(gameObject);
     move_to_target();
 }
+
+AIBehaviour::AIBehaviour(std::shared_ptr<GameObject> target) {
+    _target = std::move(target);
+}
+
+AIBehaviour::AIBehaviour() = default;
