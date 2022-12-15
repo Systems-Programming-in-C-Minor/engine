@@ -123,7 +123,7 @@ public:
         rigid_body->set_collider(collider);
         add_component(rigid_body);
         transform.set_scale(0.5f);
-        transform.set_angle(degrees_to_radians(90));
+        transform.set_angle(degrees_to_radians(90.f));
     }
 };
 
@@ -245,7 +245,7 @@ public:
     std::vector<std::shared_ptr<Target>> make_targets(std::vector<Vector2d> &vectors){
         std::vector<std::shared_ptr<Target>> res;
 
-        for(auto vector: vectors){
+        for(auto &vector: vectors){
             auto target = std::make_shared<Target>("Target"+counter,"target", Transform{vector});
             res.emplace_back(target);
             counter++;
@@ -327,7 +327,7 @@ int main() {
 
     auto targets = tf.make_targets(vector_targets_little);
 
-    for (auto target : targets) {
+    for (auto &target : targets) {
         scene->gameobjects.push_back(target);
     }
 
