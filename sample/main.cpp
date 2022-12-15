@@ -216,6 +216,9 @@ int main() {
 
     car->get_component<Sprite>()->set_color(Color(255, 255, 255, 140));
     TargetFactory tf;
+    const auto ui_object = std::make_shared<UIObject>("ui_object", "text", true, Transform{ Vector2d{400.f, -10.f}, Vector2d{}, 0.49f }, 100, 100);
+    const auto text = std::make_shared<Text>("name", "tag", true, Transform{ Vector2d{-50.f, 10.f}, Vector2d{}, 1.f }, 20, 10, "text", "./assets/Sans.ttf", 1000, Alignment::CENTER, Color(200, 0, 0, 0), 100);
+    ui_object->add_child(text);
 
     std::vector<Vector2d> vector_targets_little
             {
