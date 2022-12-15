@@ -82,6 +82,14 @@ void GameObject::render() const {
 }
 
 void GameObject::tick() {
+    if (parent) {
+        auto child_pos = parent->transform.get_position() + transform.get_local_position();
+        transform.set_position(child_pos);
+
+        auto child_angle = parent->transform.get_angle() + transform.get_local_angle();
+        transform.set_angle(child_angle);
+    }
+
     for (const auto &component: get_components_in_children<Component>()) {
         auto tickable = std::dynamic_pointer_cast<ITickable>(component);
         if (tickable) {
