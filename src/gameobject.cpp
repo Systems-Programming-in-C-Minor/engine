@@ -45,6 +45,10 @@ std::string GameObject::get_name() const {
     return name;
 }
 
+std::string GameObject::get_tag() const {
+    return tag;
+}
+
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "misc-no-recursion"
 

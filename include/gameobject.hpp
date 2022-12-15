@@ -184,6 +184,8 @@ public:
 
     std::string get_name() const;
 
+    std::string get_tag() const;
+
     /**
      * @brief Returns whether this game component is active, taking its parents
      *        into consideration as well.
