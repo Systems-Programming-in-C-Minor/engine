@@ -7,21 +7,21 @@
 #include "box2d/box2d.h"
 
 RigidBody::RigidBody(const Scene &scene,
-    int order_in_layer,
-    const BodyType type,
-    const Vector2d vector,
-    const float gravity_scale,
-    const float restitution,
-    const float friction
+                     int order_in_layer,
+                     const BodyType type,
+                     const Vector2d vector,
+                     const float gravity_scale,
+                     const float restitution,
+                     const float friction
 ) :
-    IRenderable(order_in_layer),
-	_restitution(restitution),
-	_friction(friction)
-{
+        IRenderable(order_in_layer),
+        _restitution(restitution),
+        _friction(friction) {
     b2BodyDef body_def;
     body_def.type = static_cast<b2BodyType>(type);
     body_def.position.Set(vector.x, vector.y);
     body_def.gravityScale = gravity_scale;
+    body_def.userData.pointer = reinterpret_cast<std::uintptr_t>(this);
     _body = scene._world->CreateBody(&body_def);
 }
 
@@ -76,7 +76,7 @@ Vector2d RigidBody::get_direction() {
 }
 
 float RigidBody::get_current_speed() {
-    Vector2d currentForwardNormal = get_world_vector(Vector2d { 0 , 1});
+    Vector2d currentForwardNormal = get_world_vector(Vector2d{0, 1});
     return b2Dot(get_b2vec(get_forward_velocity()), get_b2vec(currentForwardNormal));
 }
 
@@ -85,7 +85,7 @@ Vector2d RigidBody::get_world_center() {
 }
 
 void RigidBody::set_mass(const float mass) const {
-    auto data = b2MassData {};
+    auto data = b2MassData{};
     _body->GetMassData(&data);
     data.mass = mass;
     _body->SetMassData(&data);
@@ -139,13 +139,12 @@ float RigidBody::get_angle() const {
     return _body->GetAngle();
 }
 
-void RigidBody::set_collider(std::shared_ptr<Collider> collider) {
+void RigidBody::set_collider(const std::shared_ptr<Collider> &collider) {
     _collider = collider;
     collider->set_fixture(*_body, _friction, _restitution);
 }
 
-b2Body *RigidBody::get_body() const
-{
+b2Body *RigidBody::get_body() const {
     return _body;
 }
 
@@ -155,6 +154,6 @@ void RigidBody::render(bool is_world_space) const {
 
     auto render_call = RenderCall([this, renderer, transform = game_object->transform, is_world_space]() {
         renderer->render_rigid_body(*this, game_object->transform, is_world_space);
-        }, _order_in_layer);
+    }, _order_in_layer);
     renderer->add_render_call(render_call);
 }
