@@ -80,27 +80,27 @@ public:
 
     void on_button_pressed(const JoystickButtonPressedEvent &event) override {
         if (enabled)
-            std::cout << "Joystick button pressed: " << event.button << std::endl;
+            std::cout << "Joystick " << event.joystick_id << " button pressed: " << event.button << std::endl;
     }
 
     void on_button_hold(const JoystickButtonHoldEvent &event) override {
         if (enabled)
-            std::cout << "Joystick button hold: " << event.button << std::endl;
+            std::cout << "Joystick " << event.joystick_id << " button hold: " << event.button << std::endl;
     }
 
     void on_button_released(const JoystickButtonReleasedEvent &event) override {
         if (enabled)
-            std::cout << "Joystick button released: " << event.button << std::endl;
+            std::cout << "Joystick " << event.joystick_id << " button released: " << event.button << std::endl;
     }
 
     void on_axis_changed(const JoystickAxisChangedEvent &event) override {
         if (enabled)
-            std::cout << "Joystick axis changed: " << event.axis << " (" << event.value << ")" << std::endl;
+            std::cout << "Joystick " << event.joystick_id << " axis changed: " << event.axis << " (" << event.value << ")" << std::endl;
     }
 
 //    void on_axis_current(const JoystickAxisCurrentEvent &event) override {
 //        if (enabled)
-//            std::cout << "Joystick axis current: " << event.axis << "(" << event.value << ")" << std::endl;
+//            std::cout << "Joystick " << event.joystick_id << " axis current: " << event.axis << "(" << event.value << ")" << std::endl;
 //    }
 
 private:
