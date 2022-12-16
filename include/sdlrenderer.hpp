@@ -80,11 +80,19 @@ public:
 	 * @return A pointer to the SDL_Renderer instance
 	 */
 	std::shared_ptr<SDL2pp::Renderer> get_renderer();
+	/*
+	* @brief Toggles the windowstate from fullscreen to windowed;	
+	*/
+	void toggle_fullscreen() override;
+	/*
+	* @brief 
+	*/
+	void get_display_resolution(int* width, int* height);
 
-	explicit SdlRenderer(int res_x = 800, int res_y = 600);
+	explicit SdlRenderer(int res_x = 800, int res_y = 600, bool fullscreen = true);
 	virtual ~SdlRenderer();
 private:
-	void init(int res_x = 800, int res_y = 600);
+	void init(bool fullscreen);
 	[[nodiscard]] SDL2pp::Point world_to_screen(const Vector2d& position) const;
 	void render_ngon(b2Body* body, b2PolygonShape* shape) const;
 	void render_ngon(b2Body* body, b2ChainShape* shape) const;
@@ -98,6 +106,9 @@ private:
 
 	// Todo move to something which gamedev can set
 	float _mtp = 6.f;
+	bool _fullscreen = false;
+	int _windowed_res_x;
+	int _windowed_res_y;
 };
 
 #endif // SDL_RENDERER_H_Hbcayj12iU

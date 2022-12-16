@@ -165,16 +165,17 @@ void SdlRenderer::push_to_screen() try
 	_render_queue.clear();
 } catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
 
-void SdlRenderer::init(int res_x, int res_y) try 
+void SdlRenderer::init(bool fullscreen) try 
 {
 	_sdl = std::make_unique<SDL2pp::SDL>(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK);
 	_sdl_image = std::make_unique<SDL2pp::SDLImage>();
 	_sdl_ttf = std::make_unique<SDL2pp::SDLTTF>();
-
 	_window = std::make_shared<SDL2pp::Window>("UnEngine",
 		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-		res_x, res_y,
+		_windowed_res_x, _windowed_res_y,
 		SDL_WINDOW_RESIZABLE);
+	if (fullscreen)
+		toggle_fullscreen();
 
 	_renderer = std::make_shared<SDL2pp::Renderer>(*_window, -1, SDL_RENDERER_ACCELERATED);
 } catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
@@ -194,14 +195,28 @@ SDL2pp::Point SdlRenderer::world_to_screen(const Vector2d& position) const
 	return return_pos;
 }
 
+void SdlRenderer::toggle_fullscreen() {
+	if (_fullscreen) {
+		_window->SetFullscreen(0);
+		_window->SetSize(_windowed_res_x, _windowed_res_y);
+		_fullscreen = false;
+		return;
+	}
+	SDL_DisplayMode dm;
+	SDL_GetCurrentDisplayMode(_window->GetDisplayIndex(), &dm);
+	_window->SetSize(dm.w, dm.h);
+	_window->SetFullscreen(SDL_WINDOW_FULLSCREEN);
+	_fullscreen = true;
+}
+
 std::shared_ptr<SDL2pp::Renderer> SdlRenderer::get_renderer()
 {
 	return _renderer;
 }
 
-SdlRenderer::SdlRenderer(int res_x, int res_y)
-{
-	init(res_x, res_y);
+SdlRenderer::SdlRenderer(int res_x, int res_y, bool fullscreen) : _windowed_res_x(res_x), _windowed_res_y(res_y)
+{	
+	init(fullscreen);
 }
 
 SdlRenderer::~SdlRenderer() = default;

@@ -33,6 +33,10 @@ public:
             enabled = !enabled;
         if (event.key == C)
             colliders_enabled = !colliders_enabled;
+        if (event.key == ALT_LEFT)
+            _ALT = true;
+        if (event.key == ENTER && _ALT) 
+            Global::get_instance()->get_engine().get_renderer()->toggle_fullscreen();
         if (enabled)
             std::cout << "Pressed key: " << event.key << std::endl;
     }
@@ -43,6 +47,8 @@ public:
     }
 
     void on_key_released(const KeyReleasedEvent &event) override {
+        if (event.key == ALT_LEFT)
+            _ALT = false;
         if (enabled)
             std::cout << "Released key: " << event.key << std::endl;
     }
@@ -106,6 +112,7 @@ public:
 private:
     bool enabled = false;
     bool colliders_enabled = false;
+    bool _ALT = false;
 };
 
 class Car : public GameObject {
