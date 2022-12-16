@@ -54,7 +54,21 @@ public:
 
     [[nodiscard]] float length() const;
 
-    [[nodiscard]] float normalize() const;
+    [[nodiscard]] float normalized_length() const;
+
+    float normalize();
+
+    Vector2d normalize2();
+
+    [[nodiscard]] float static dot(const Vector2d &a, const Vector2d &b);
+
+    [[nodiscard]] float cross(const Vector2d &a, const Vector2d &b);
+
+    [[nodiscard]] float static angle(const Vector2d &from, const Vector2d &to);
+
+    [[nodiscard]] float static signed_angle(const Vector2d &from, const Vector2d &to, const Vector2d &axis);
+
+    [[nodiscard]] float static distance(const Vector2d &a, const Vector2d &b);
 
     explicit Vector2d(float x = 0.0f, float y = 0.0f);
 private:

@@ -10,12 +10,14 @@
 #include "listeners/mouse_listener.hpp"
 #include "listeners/collider_listener.hpp"
 #include "race/behaviours/car_behaviour.hpp"
+#include "race/behaviours/ai_behaviour.hpp"
 #include "utils/trigonometry.hpp"
 #include "utils/xmlreader.hpp"
 #include "uiobjects/text.hpp"
 #include "input.hpp"
 #include "storage/json_properties.hpp"
 #include "listeners/joystick_listener.hpp"
+#include "listeners/ai_listener.hpp"
 
 
 class KeyMouseListenerComponent
@@ -109,20 +111,19 @@ private:
 class Car : public GameObject {
 public:
     Car(const std::string &name, const std::string &tag, std::string sprite_path, const std::shared_ptr<Scene> &scene,
-        const int order_in_layer = 10)
+        const int order_in_layer = 10, Vector2d position = Vector2d())
             : GameObject(name, tag) {
-        const auto sprite =
-                std::make_shared<Sprite>(std::move(sprite_path), Color(0, 0, 0, 0), false, false, 1, 10);
+        const auto sprite = std::make_shared<Sprite>(std::move(sprite_path), Color(0, 0, 0, 0), false, false, 1, 10);
         add_component(sprite);
 
         const auto collider = std::make_shared<BoxCollider>(1.65f, 4.f);
-        const auto rigid_body = std::make_shared<RigidBody>(*scene, order_in_layer, BodyType::dynamic_body,
-                                                            Vector2d{0.f, 1.5f}, 1.f);
+        const auto rigid_body = std::make_shared<RigidBody>(*scene, order_in_layer, BodyType::dynamic_body, position, 1.f);
+
         rigid_body->set_mass(1600.f);
         rigid_body->set_collider(collider);
         add_component(rigid_body);
-        transform.set_scale(.5f);
-        transform.set_angle(degrees_to_radians(90));
+        transform.set_scale(0.5f);
+        transform.set_angle(degrees_to_radians(90.f));
     }
 };
 
@@ -138,6 +139,9 @@ public:
                 break;
             case MIN:
                 game_object->transform.set_scale(game_object->transform.get_scale() - 0.01f);
+                break;
+            case B:
+                std::cout << game_object->transform.get_position() << std::endl;
                 break;
         }
     }
@@ -227,6 +231,51 @@ public:
     void on_key_released(const KeyReleasedEvent &event) override {}
 };
 
+class Target : public GameObject {
+public:
+    Target(const std::string &name, const std::string &tag, Transform transform = Transform{Vector2d()})
+            : GameObject(name, tag, true, transform) {
+    }
+};
+
+class TargetFactory {
+public:
+    int counter = 0;
+
+    std::vector<std::shared_ptr<Target>> make_targets(std::vector<Vector2d> &vectors){
+        std::vector<std::shared_ptr<Target>> res;
+
+        for(auto &vector: vectors){
+            auto target = std::make_shared<Target>("Target"+counter,"target", Transform{vector});
+            res.emplace_back(target);
+            counter++;
+        }
+
+        return res;
+    };
+};
+
+class AITargetListenerComponent : public Component, public AIListener {
+public:
+    explicit AITargetListenerComponent(EventManager &event_manager) : AIListener(event_manager) {};
+
+    std::vector<std::shared_ptr<Target>> targets;
+
+    int _target_index = 0;
+
+    void on_target_reached(const AITargetReachedEvent &event) override {
+        auto test = game_object->get_component<AIBehaviour>()->game_object;
+        if(event.ai_behaviour.game_object != test)
+            return;
+
+        _target_index++;
+        if(targets.size() <= _target_index){
+            _target_index = 0;
+        }
+        event.ai_behaviour.set_target(targets[_target_index]);
+    };
+};
+
 int main() {
     // Setup engine
     const auto global = Global::get_instance();
@@ -250,30 +299,89 @@ int main() {
 
     track_outer->add_component(std::make_shared<Sprite>(sprite1));
 
-    const auto car = std::make_shared<Car>("player_car", "car", "./assets/blue_car.png", scene);
+    const auto car = std::make_shared<Car>("player_car", "car", "./assets/blue_car.png", scene, 10, Vector2d{-6.f, 0.f});
     const auto car_behaviour = std::make_shared<PlayerCarBehaviour>(scene->get_event_manager());
     car->add_component(car_behaviour);
 
-    const auto ui_object = std::make_shared<UIObject>("ui_object", "text", true,
-                                                      Transform{Vector2d{400.f, -10.f}, Vector2d{}, 0.49f}, 100, 100);
-    const auto text = std::make_shared<Text>("name", "tag", true, Transform{Vector2d{-50.f, 10.f}, Vector2d{}, 1.f}, 20,
-                                             5, "text", "./assets/Sans.ttf", 1000, Alignment::CENTER,
-                                             Color(200, 0, 0, 0), 100);
-    ui_object->add_child(text);
+    TargetFactory tf;
 
-    const auto okto = std::make_shared<GameObject>(
-            "okto", "okto", true,
-            Transform{Vector2d{0.f, 0.f}, Vector2d{0, 0}, 0.f, 0.1f});
-    const auto okto_sprite = std::make_shared<Sprite>("./assets/sample.png", Color(), false, false, 1, 1, 6.f);
-    okto->add_component(okto_sprite);
+    std::vector<Vector2d> vector_targets_little
+    {
+        Vector2d{-60.f, -72.f},
+        Vector2d{-74.f, -53.f},
+        Vector2d{-60.f, -34.f},
+        Vector2d{-10.f, -6.f},
+        Vector2d{-13.f, 32.f},
+        Vector2d{-65.f, 38.f},
+        Vector2d{-72.f, 62.f},
+        Vector2d{-52.f, 73.f},
+        Vector2d{64.f, 73.f},
+        Vector2d{77.f, 57.f},
+        Vector2d{22.f, 37.f},
+        Vector2d{16.f, -34.f},
+        Vector2d{49.f, -39.f},
+        Vector2d{34.f, 18.f},
+        Vector2d{72.f, 20.f},
+        Vector2d{73.f, -66.f}
+    };
 
-    car->add_child(okto);
+    auto targets = tf.make_targets(vector_targets_little);
+
+    for (auto &target : targets) {
+        scene->gameobjects.push_back(target);
+    }
+
+    const auto ai_car = std::make_shared<Car>("ai_car", "ai-car", "./assets/blue_car.png", scene, 10, Vector2d{14, -76} );
+    ai_car->add_component(std::make_shared<AIBehaviour>(targets[0]));
+    auto ai_listener_component = std::make_shared<AITargetListenerComponent>(scene->get_event_manager());
+    ai_car->add_component(ai_listener_component);
+    ai_listener_component->targets = targets;
+
+    const auto ai_car2 = std::make_shared<Car>("ai_car2", "ai-car", "./assets/red_car.png", scene, 10,Vector2d{20, -72});
+    ai_car2->add_component(std::make_shared<AIBehaviour>(targets[0]));
+    auto ai_listener_component2 = std::make_shared<AITargetListenerComponent>(scene->get_event_manager());
+    ai_car2->add_component(ai_listener_component2);
+    ai_listener_component2->targets = targets;
+
+    const auto ai_car3 = std::make_shared<Car>("ai_car3", "ai-car", "./assets/green_car.png", scene, 10,Vector2d{26, -76});
+    ai_car3->add_component(std::make_shared<AIBehaviour>(targets[0]));
+    auto ai_listener_component3 = std::make_shared<AITargetListenerComponent>(scene->get_event_manager());
+    ai_car3->add_component(ai_listener_component3);
+    ai_listener_component3->targets = targets;
+
+    const auto ai_car4 = std::make_shared<Car>("ai_car4", "ai-car", "./assets/pink_car.png", scene, 10,Vector2d{31, -72});
+    ai_car4->add_component(std::make_shared<AIBehaviour>(targets[0]));
+    auto ai_listener_component4 = std::make_shared<AITargetListenerComponent>(scene->get_event_manager());
+    ai_car4->add_component(ai_listener_component4);
+    ai_listener_component4->targets = targets;
+
+    const auto ai_car5 = std::make_shared<Car>("ai_car5", "ai-car", "./assets/orange_car.png", scene, 10, Vector2d{38, -76});
+    ai_car5->add_component(std::make_shared<AIBehaviour>(targets[0]));
+    auto ai_listener_component5 = std::make_shared<AITargetListenerComponent>(scene->get_event_manager());
+    ai_car5->add_component(ai_listener_component5);
+    ai_listener_component5->targets = targets;
+
+    const auto ai_car6 = std::make_shared<Car>("ai_car6", "ai-car", "./assets/yellow_car.png", scene, 10, Vector2d{43, -72});
+    ai_car6->add_component(std::make_shared<AIBehaviour>(targets[0]));
+    auto ai_listener_component6 = std::make_shared<AITargetListenerComponent>(scene->get_event_manager());
+    ai_car6->add_component(ai_listener_component6);
+    ai_listener_component6->targets = targets;
+
+    const auto ui_object = std::make_shared<UIObject>("ui_object", "text", true, Transform{Vector2d{400.f, -10.f}, Vector2d{}, 20.0f, 0.49f} ,100, 100);
+    Text text{"name", "tag", true, Transform{Vector2d{-50.f, 10.f}, Vector2d{}, 1.F, 1.f}, 20,5, "text", "./assets/Sans.ttf", 1000, Alignment::CENTER, Color(200, 0, 0, 0), 100};
+    ui_object->add_child(std::make_shared<Text>(text));
 
     scene->gameobjects.push_back(track_outer);
     scene->gameobjects.push_back(track_inner);
     scene->gameobjects.push_back(car);
-    scene->gameobjects.push_back(okto);
+    scene->gameobjects.push_back(ai_car);
     scene->gameobjects.push_back(ui_object);
+
+    scene->gameobjects.push_back(ai_car2);
+    scene->gameobjects.push_back(ai_car3);
+    scene->gameobjects.push_back(ai_car4);
+    scene->gameobjects.push_back(ai_car5);
+    scene->gameobjects.push_back(ai_car6);
 
     // Add rigid bodies
     const auto track_outer_coll = std::make_shared<ChainCollider>("./assets/track1_outer.xml", false,

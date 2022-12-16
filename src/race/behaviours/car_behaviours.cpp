@@ -24,7 +24,7 @@ void CarBehaviour::_friction() {
 
     //forward linear velocity
     Vector2d currentForwardNormal = body.get_forward_velocity();
-    float currentForwardSpeed = currentForwardNormal.normalize();
+    float currentForwardSpeed = currentForwardNormal.normalized_length();
     float dragForceMagnitude = -2 * currentForwardSpeed * drag_modifier;
 
     auto force_vec = currentForwardNormal * current_traction * dragForceMagnitude;
@@ -32,7 +32,13 @@ void CarBehaviour::_friction() {
     body.apply_force(force_vec, body.get_world_center());
 }
 
-void CarBehaviour::_drive(float desired_speed) {
+void CarBehaviour::_drive(float desired_speed){
+    if(desired_speed > max_speed_forwards)
+        desired_speed = max_speed_forwards;
+
+    if (desired_speed < max_speed_backwards)
+        desired_speed = max_speed_backwards;
+
     auto &body = *game_object->get_component<RigidBody>();
 
     //find current speed in forward direction
@@ -49,6 +55,12 @@ void CarBehaviour::_drive(float desired_speed) {
 }
 
 void CarBehaviour::_turn(float steering) {
+    if (steering > steering_impulse)
+        steering = steering_impulse;
+
+    if(steering < -steering_impulse)
+        steering = -steering_impulse;
+
     auto &body = *game_object->get_component<RigidBody>();
     auto speed = body.get_current_speed();
 

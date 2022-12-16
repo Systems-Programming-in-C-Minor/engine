@@ -36,3 +36,39 @@ TEST(TrigonometryTest, DegreesToRadiansTestNegative)
 	EXPECT_DOUBLE_EQ(deg1, degrees_to_radians(-400.0));
 	EXPECT_DOUBLE_EQ(deg2, degrees_to_radians(-10.0));
 }
+
+TEST(TrigonometryTest, FloatRadiansToDegreesTest)
+{
+	constexpr float deg1 = 57.295779513082321;
+	constexpr float deg2 = 200.535228295788123;
+
+	EXPECT_FLOAT_EQ(deg1, radians_to_degrees(1.0));
+	EXPECT_FLOAT_EQ(deg2, radians_to_degrees(3.5));
+}
+
+TEST(TrigonometryTest, FloatRadiansToDegreesTestNegative)
+{
+	constexpr float deg1 = -57.295779513082321;
+	constexpr float deg2 = -200.535228295788123;
+
+	EXPECT_FLOAT_EQ(deg1, radians_to_degrees(-1.0));
+	EXPECT_FLOAT_EQ(deg2, radians_to_degrees(-3.5));
+}
+
+TEST(TrigonometryTest, FloatDegreesToRadiansTest)
+{
+	constexpr float deg1 = 6.9813170079773183;
+	constexpr float deg2 = 0.1745329251994330;
+
+	EXPECT_FLOAT_EQ(deg1, degrees_to_radians(400.0));
+	EXPECT_FLOAT_EQ(deg2, degrees_to_radians(10.0));
+}
+
+TEST(TrigonometryTest, FloatDegreesToRadiansTestNegative)
+{
+	constexpr float deg1 = -6.9813170079773183;
+	constexpr float deg2 = -0.1745329251994330;
+
+	EXPECT_FLOAT_EQ(deg1, degrees_to_radians(-400.0));
+	EXPECT_FLOAT_EQ(deg2, degrees_to_radians(-10.0));
+}
