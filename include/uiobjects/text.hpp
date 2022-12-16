@@ -30,8 +30,10 @@ public:
         Alignment alignment, 
         int order_in_layer,
         Color foreground_color,
-        Color background_color = Color{0, 0, 0, 255}
+        Color background_color = Color{0, 0, 0, 255},
+        Space space = Space::SCREEN
     );
+    virtual ~Text() override;
     [[nodiscard]] std::string get_text() const;
     [[nodiscard]] std::string get_font() const;
     [[nodiscard]] int get_size() const;

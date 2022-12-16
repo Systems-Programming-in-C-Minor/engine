@@ -16,9 +16,10 @@ Text::Text(const std::string& name,
     Alignment alignment,
     int order_in_layer,
     Color foreground_color,
-    Color background_color
+    Color background_color,
+    Space space
     ) :
-	UIObject(name, tag, is_world_space, transform, width, height),
+	UIObject(name, tag, is_world_space, transform, width, height, space),
 	_text(std::move(text)),
 	_font(std::move(font)),
 	_size(size),
@@ -28,6 +29,8 @@ Text::Text(const std::string& name,
 	_order_in_layer(order_in_layer)
 {
 }
+
+Text::~Text() = default;
 
 std::string Text::get_text() const {
     return _text;
