@@ -9,6 +9,10 @@ int Random::random(int max, int min) {
     return dist(engine);
 }
 
+int Random::random(float max, float min) {
+    return random(static_cast<int>( max), static_cast<int>(min));
+}
+
 bool Random::random_bool() {
     return random() == 1;
 }
