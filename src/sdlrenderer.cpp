@@ -162,8 +162,8 @@ void SdlRenderer::render_text(const Text& text) const
 
 		// TODO Optimization: only retrieve when resolution changes
 		const SDL2pp::Point res = _renderer->GetOutputSize();
-		const auto ratio_x = static_cast<float>(res.GetX()) / 400.f;
-		const auto ratio_y = static_cast<float>(res.GetY()) / 400.f;
+		const auto ratio_x = static_cast<float>(res.GetX()) / camera()->screen_space_limits;
+		const auto ratio_y = static_cast<float>(res.GetY()) / camera()->screen_space_limits;
 
 		const auto center = text.transform.get_position();
 
@@ -247,8 +247,8 @@ SDL2pp::Point SdlRenderer::screen_space_to_screen(const Vector2d& position) cons
 	//transpose pixel space to sdl pixel space
 
 	const SDL2pp::Point return_pos{
-		static_cast<int>(round(res_x * 0.5f + position.x * res_x / 400.f)),
-		static_cast<int>(round(res_y * 0.5f - position.y * res_y / 400.f))
+		static_cast<int>(round(res_x * 0.5f + position.x * res_x / camera()->screen_space_limits)),
+		static_cast<int>(round(res_y * 0.5f - position.y * res_y / camera()->screen_space_limits))
 	};
 	return return_pos;
 }

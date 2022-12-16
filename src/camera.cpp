@@ -1,12 +1,13 @@
 #include "camera.hpp"
 #include "color.hpp"
 
-Camera::Camera(int aspect_width, int aspect_height, bool is_world_space, Transform transform, const Color& background_color, int mtp) :
+Camera::Camera(int aspect_width, int aspect_height, bool is_world_space, Transform transform, const Color& background_color, float mtp, float screen_space_limits) :
     GameObject("camera", "camera", is_world_space, transform),
     background_color(background_color),
 	aspect_width(aspect_width),
     aspect_height(aspect_height),
-    mtp(mtp)
+    mtp(mtp),
+	screen_space_limits(screen_space_limits)
 { }
 
 Color Camera::get_background_color() const {
