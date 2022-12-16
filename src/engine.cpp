@@ -41,9 +41,11 @@ void Engine::start() {
         _time_after_last_frame = current_nanos;
 
         SDL_Event event;
-        SDL_PollEvent(&event);
-        if (event.type == SDL_QUIT || event.type == SDL_APP_TERMINATING)
-            stop();
+        while(SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT || event.type == SDL_APP_TERMINATING) {
+                stop();
+            }
+        }
         std::this_thread::sleep_until(end_time);
     }
 }

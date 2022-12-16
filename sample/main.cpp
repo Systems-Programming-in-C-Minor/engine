@@ -14,15 +14,17 @@
 #include "utils/xmlreader.hpp"
 #include "uiobjects/text.hpp"
 #include "input.hpp"
-#include "interfaces/itickable.hpp"
 #include "storage/json_properties.hpp"
+#include "listeners/joystick_listener.hpp"
 
 
-class KeyMouseListenerComponent : public Component, public KeyListener, public MouseListener, public ColliderListener {
+class KeyMouseListenerComponent
+        : public Component, public KeyListener, public MouseListener, public ColliderListener, public JoystickListener {
 public:
     explicit KeyMouseListenerComponent(EventManager &event_manager) : KeyListener(event_manager),
                                                                       MouseListener(event_manager),
-                                                                      ColliderListener(event_manager) {}
+                                                                      ColliderListener(event_manager),
+                                                                      JoystickListener(event_manager) {}
 
     void on_key_pressed(const KeyPressedEvent &event) override {
         if (event.key == P)
@@ -30,34 +32,34 @@ public:
         if (event.key == C)
             colliders_enabled = !colliders_enabled;
         if (enabled)
-            std::cout << "Pressed key: " << event.key << "\n";
+            std::cout << "Pressed key: " << event.key << std::endl;
     }
 
     void on_key_hold(const KeyHoldEvent &event) override {
         if (enabled)
-            std::cout << "Hold key: " << event.key << "\n";
+            std::cout << "Hold key: " << event.key << std::endl;
     }
 
     void on_key_released(const KeyReleasedEvent &event) override {
         if (enabled)
-            std::cout << "Released key: " << event.key << "\n";
+            std::cout << "Released key: " << event.key << std::endl;
     }
 
     void on_mouse_moved(const MouseMovedEvent &event) override {
         if (enabled)
-            std::cout << "Moved mouse: " << event.x << " " << event.y << "\n";
+            std::cout << "Moved mouse: " << event.x << " " << event.y << std::endl;
 
     }
 
     void on_mouse_pressed(const MousePressedEvent &event) override {
         if (enabled)
-            std::cout << "Pressed mouse: " << event.button << "\n";
+            std::cout << "Pressed mouse: " << event.button << std::endl;
 
     }
 
     void on_mouse_released(const MouseReleasedEvent &event) override {
         if (enabled)
-            std::cout << "Released mouse: " << event.button << "\n";
+            std::cout << "Released mouse: " << event.button << std::endl;
     }
 
     void on_collider_entry(const ColliderEntryEvent &event) override {
@@ -73,6 +75,31 @@ public:
             std::cout << "Collider exit b: " << event.collider_b->game_object->get_name() << std::endl;
         }
     }
+
+    void on_button_pressed(const JoystickButtonPressedEvent &event) override {
+        if (enabled)
+            std::cout << "Joystick button pressed: " << event.button << std::endl;
+    }
+
+    void on_button_hold(const JoystickButtonHoldEvent &event) override {
+        if (enabled)
+            std::cout << "Joystick button hold: " << event.button << std::endl;
+    }
+
+    void on_button_released(const JoystickButtonReleasedEvent &event) override {
+        if (enabled)
+            std::cout << "Joystick button released: " << event.button << std::endl;
+    }
+
+    void on_axis_changed(const JoystickAxisChangedEvent &event) override {
+        if (enabled)
+            std::cout << "Joystick axis changed: " << event.axis << " (" << event.value << ")" << std::endl;
+    }
+
+//    void on_axis_current(const JoystickAxisCurrentEvent &event) override {
+//        if (enabled)
+//            std::cout << "Joystick axis current: " << event.axis << "(" << event.value << ")" << std::endl;
+//    }
 
 private:
     bool enabled = false;
@@ -99,9 +126,10 @@ public:
     }
 };
 
-class PlayerCarBehaviour : public CarBehaviour, public KeyListener {
+class PlayerCarBehaviour : public CarBehaviour, public KeyListener, public JoystickListener {
 public:
-    explicit PlayerCarBehaviour(EventManager &event_manager) : KeyListener(event_manager) {}
+    explicit PlayerCarBehaviour(EventManager &event_manager) : KeyListener(event_manager),
+                                                               JoystickListener(event_manager) {}
 
     void on_key_pressed(const KeyPressedEvent &event) override {
         switch (event.key) {
@@ -163,6 +191,39 @@ public:
         }
     }
 
+    void on_axis_current(const JoystickAxisCurrentEvent &event) override {
+        switch (event.axis) {
+            case LeftJoystickX: {
+                if (std::abs(event.value) > 0.1f) {
+                    turn(-event.value);
+                }
+                break;
+            }
+            case LeftTrigger: {
+                if (event.value > -0.9) {
+                    drive_backwards((event.value + 1.0f) / 2);
+                }
+                break;
+            }
+            case RightTrigger: {
+                if (event.value > -0.9) {
+                    drive_forwards((event.value + 1.0f) / 2);
+                }
+                break;
+            }
+            case LeftJoystickY:
+            case RightJoystickX:
+            case RightJoystickY:
+                break;
+        }
+    }
+
+    void on_button_hold(const JoystickButtonHoldEvent &event) override {
+        if (event.button == LeftButton) {
+            brake();
+        }
+    }
+
     void on_key_released(const KeyReleasedEvent &event) override {}
 };
 
@@ -193,13 +254,16 @@ int main() {
     const auto car_behaviour = std::make_shared<PlayerCarBehaviour>(scene->get_event_manager());
     car->add_component(car_behaviour);
 
-    const auto ui_object = std::make_shared<UIObject>("ui_object", "text", true, Transform{ Vector2d{400.f, -10.f}, Vector2d{}, 0.49f }, 100, 100);
-    const auto text = std::make_shared<Text>("name", "tag", true, Transform{ Vector2d{-50.f, 10.f}, Vector2d{}, 1.f }, 20, 5, "text", "./assets/Sans.ttf", 1000, Alignment::CENTER, Color(200, 0, 0, 0), 100);
+    const auto ui_object = std::make_shared<UIObject>("ui_object", "text", true,
+                                                      Transform{Vector2d{400.f, -10.f}, Vector2d{}, 0.49f}, 100, 100);
+    const auto text = std::make_shared<Text>("name", "tag", true, Transform{Vector2d{-50.f, 10.f}, Vector2d{}, 1.f}, 20,
+                                             5, "text", "./assets/Sans.ttf", 1000, Alignment::CENTER,
+                                             Color(200, 0, 0, 0), 100);
     ui_object->add_child(text);
 
     const auto okto = std::make_shared<GameObject>(
             "okto", "okto", true,
-            Transform{Vector2d {0.f, 0.f}, Vector2d{0,0}, 0.f, 0.1f});
+            Transform{Vector2d{0.f, 0.f}, Vector2d{0, 0}, 0.f, 0.1f});
     const auto okto_sprite = std::make_shared<Sprite>("./assets/sample.png", Color(), false, false, 1, 1, 6.f);
     okto->add_component(okto_sprite);
 

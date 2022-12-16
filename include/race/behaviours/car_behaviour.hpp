@@ -8,21 +8,22 @@
 class CarBehaviour : public Component, public ITickable {
 
 private:
-    void friction();
+    void _friction();
 
-    void drive(float desired_speed);
+    void _drive(float desired_speed);
 
-    void turn(float steering);
+    void _turn(float steering);
 
 protected:
+    void turn(float amount = 1.0f);
 
-    void drive_forwards();
+    void drive_forwards(float amount = 1.0f);
 
-    void drive_backwards();
+    void drive_backwards(float amount = 1.0f);
 
-    void turn_left();
+    void turn_left(float amount = 1.0f);
 
-    void turn_right();
+    void turn_right(float amount = 1.0f);
 
     void brake();
 

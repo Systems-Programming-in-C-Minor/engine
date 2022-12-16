@@ -5,6 +5,21 @@
 #include "SDL.h"
 #include "events.hpp"
 
+KeyHandler::KeyHandler() {
+    int num_joysticks = SDL_NumJoysticks();
+    std::cout << "Number of connected joysticks: " << num_joysticks << std::endl;
+
+    for (int i = 0; i < num_joysticks; i++) {
+        SDL_Joystick *joystick = SDL_JoystickOpen(i);
+        if (joystick == nullptr) {
+            std::cerr << "Error: Failed to open joystick " << i << ": " << SDL_GetError() << std::endl;
+        } else {
+            _joysticks.push_back(joystick);
+            std::cout << "Joystick " << i << " name: " << SDL_JoystickName(joystick) << std::endl;
+        }
+    }
+}
+
 std::vector<Key> KeyHandler::fetch_keys() {
     const Uint8 *current_key_states = SDL_GetKeyboardState(nullptr);
 
@@ -142,5 +157,71 @@ void KeyHandler::tick() {
         Global::get_instance()->notify_event_manager(release_event);
     }
 
+
+
+    // Update joystick state
+    SDL_JoystickUpdate();
+
+    // Iterate over all joysticks
+    for (auto &joystick: _joysticks) {
+        _fire_joystick_axis_event_if_changed(LeftJoystickX, SDL_JoystickGetAxis(joystick, 0));
+        _fire_joystick_axis_event_if_changed(LeftJoystickY, SDL_JoystickGetAxis(joystick, 1));
+
+        _fire_joystick_axis_event_if_changed(LeftTrigger, SDL_JoystickGetAxis(joystick, 2));
+
+        _fire_joystick_axis_event_if_changed(RightJoystickX, SDL_JoystickGetAxis(joystick, 3));
+        _fire_joystick_axis_event_if_changed(RightJoystickY, SDL_JoystickGetAxis(joystick, 4));
+
+        _fire_joystick_axis_event_if_changed(RightTrigger, SDL_JoystickGetAxis(joystick, 5));
+
+        _fire_joystick_button_event_if_changed(AButton, SDL_JoystickGetButton(joystick, 0));
+        _fire_joystick_button_event_if_changed(BButton, SDL_JoystickGetButton(joystick, 1));
+        _fire_joystick_button_event_if_changed(XButton, SDL_JoystickGetButton(joystick, 2));
+        _fire_joystick_button_event_if_changed(YButton, SDL_JoystickGetButton(joystick, 3));
+        _fire_joystick_button_event_if_changed(LeftButton, SDL_JoystickGetButton(joystick, 4));
+        _fire_joystick_button_event_if_changed(RightButton, SDL_JoystickGetButton(joystick, 5));
+    }
+
     _keys_active = keys_pressed;
+}
+
+KeyHandler::~KeyHandler() {
+    // Close all joysticks
+    for (auto &joystick: _joysticks) {
+        SDL_JoystickClose(joystick);
+    }
+}
+
+void KeyHandler::_fire_joystick_button_event_if_changed(JoystickButton button, int value) {
+    const auto previouslyPressed =
+            std::find(_joystick_buttons_active.begin(), _joystick_buttons_active.end(), button) !=
+            _joystick_buttons_active.end();
+    if (value == 1) {
+        Global::get_instance()->notify_event_manager(JoystickButtonHoldEvent(button));
+
+        if (!previouslyPressed) {
+            Global::get_instance()->notify_event_manager(JoystickButtonPressedEvent(button));
+            _joystick_buttons_active.push_back(button);
+        }
+    } else {
+        if (previouslyPressed) {
+            Global::get_instance()->notify_event_manager(JoystickButtonReleasedEvent(button));
+            _joystick_buttons_active.remove(button);
+        }
+    }
+}
+
+void KeyHandler::_fire_joystick_axis_event_if_changed(JoystickAxis axis, int value) {
+    const auto normalized_value = _normalize_axis(value);
+
+    Global::get_instance()->notify_event_manager(JoystickAxisCurrentEvent(axis, normalized_value));
+
+    if (std::abs(_joystick_axes_values[axis] - normalized_value) > 0.1f) {
+        Global::get_instance()->notify_event_manager(JoystickAxisChangedEvent(axis, normalized_value));
+        _joystick_axes_values[axis] = normalized_value;
+    }
+}
+
+float KeyHandler::_normalize_axis(int value) {
+    return static_cast<float>(value + 32767) / 32767.0f - 1.0f;
 }
