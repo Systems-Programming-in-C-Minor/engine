@@ -200,8 +200,7 @@ void KeyHandler::tick() {
             _fire_joystick_button_event_if_changed(YButton, SDL_JoystickGetButton(joystick, 3));
             _fire_joystick_button_event_if_changed(LeftButton, SDL_JoystickGetButton(joystick, 4));
             _fire_joystick_button_event_if_changed(RightButton, SDL_JoystickGetButton(joystick, 5));
-        }
-        else if (strcmp("Generic USB Joystick", controller_name) == 0) {
+        } else if (strcmp("Generic USB Joystick", controller_name) == 0) {
             _fire_joystick_axis_event_if_changed(LeftJoystickX, SDL_JoystickGetAxis(joystick, 0));
             _fire_joystick_axis_event_if_changed(LeftJoystickY, SDL_JoystickGetAxis(joystick, 1));
 
@@ -215,6 +214,25 @@ void KeyHandler::tick() {
 
             _fire_joystick_button_event_if_changed(LeftButton, SDL_JoystickGetButton(joystick, 5));
             _fire_joystick_button_event_if_changed(RightButton, SDL_JoystickGetButton(joystick, 4));
+        } else if (strcmp("Wireless Steam Controller", controller_name) == 0) {
+            _fire_joystick_axis_event_if_changed(LeftJoystickX, SDL_JoystickGetAxis(joystick, 0));
+            _fire_joystick_axis_event_if_changed(LeftJoystickY, SDL_JoystickGetAxis(joystick, 1));
+
+            _fire_joystick_axis_event_if_changed(LeftTouchpadX, SDL_JoystickGetAxis(joystick, 4));
+            _fire_joystick_axis_event_if_changed(LeftTouchpadY, SDL_JoystickGetAxis(joystick, 5));
+            _fire_joystick_axis_event_if_changed(RightTouchpadX, SDL_JoystickGetAxis(joystick, 2));
+            _fire_joystick_axis_event_if_changed(RightTouchpadY, SDL_JoystickGetAxis(joystick, 3));
+
+            _fire_joystick_axis_event_if_changed(LeftTrigger, SDL_JoystickGetAxis(joystick, 7));
+            _fire_joystick_axis_event_if_changed(RightTrigger, SDL_JoystickGetAxis(joystick, 6));
+
+            _fire_joystick_button_event_if_changed(AButton, SDL_JoystickGetButton(joystick, 2));
+            _fire_joystick_button_event_if_changed(BButton, SDL_JoystickGetButton(joystick, 3));
+            _fire_joystick_button_event_if_changed(XButton, SDL_JoystickGetButton(joystick, 4));
+            _fire_joystick_button_event_if_changed(YButton, SDL_JoystickGetButton(joystick, 5));
+
+            _fire_joystick_button_event_if_changed(LeftButton, SDL_JoystickGetButton(joystick, 6));
+            _fire_joystick_button_event_if_changed(RightButton, SDL_JoystickGetButton(joystick, 7));
         }
     }
 

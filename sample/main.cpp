@@ -197,7 +197,8 @@ public:
 
     void on_axis_current(const JoystickAxisCurrentEvent &event) override {
         switch (event.axis) {
-            case LeftJoystickX: {
+            case LeftJoystickX:
+            case LeftTouchpadX: {
                 if (std::abs(event.value) > 0.1f) {
                     turn(-event.value);
                 }
@@ -215,9 +216,7 @@ public:
                 }
                 break;
             }
-            case LeftJoystickY:
-            case RightJoystickX:
-            case RightJoystickY:
+            default:
                 break;
         }
     }
