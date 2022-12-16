@@ -98,11 +98,6 @@ public:
             std::cout << "Joystick " << event.joystick_id << " axis changed: " << event.axis << " (" << event.value << ")" << std::endl;
     }
 
-//    void on_axis_current(const JoystickAxisCurrentEvent &event) override {
-//        if (enabled)
-//            std::cout << "Joystick " << event.joystick_id << " axis current: " << event.axis << "(" << event.value << ")" << std::endl;
-//    }
-
 private:
     bool enabled = false;
     bool colliders_enabled = false;
