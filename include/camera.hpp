@@ -13,13 +13,15 @@ public:
     int aspect_width;
     int aspect_height;
     float mtp;
+    float screen_space_limits;
 
     Camera(int aspect_width = 100,
         int aspect_height = 100,
         bool is_world_space = true,
         Transform transform = Transform{},
         const Color& background_color = Color{},
-        int mtp = 15.f
+        float mtp = 15.f,
+        float screen_space_limits = 200.f
     );
 
     [[nodiscard]] Color get_background_color() const;

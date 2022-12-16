@@ -144,10 +144,20 @@ public:
 	    }
         if(_game_object.get_name() == "ui_velocity_indicator")
         {
-            Text* test = reinterpret_cast<Text*>(&_game_object);
-            test->set_text(std::to_string(_velocity));
+            Text* text = reinterpret_cast<Text*>(&_game_object);
+            text->set_text(std::to_string(static_cast<int>(round(_velocity * 3.6f))));
         }
     }
+};
+
+class FpsIndicator : public Component, public ITickable
+{
+	void tick(GameObject& _game_object) override
+	{
+        Text* text = reinterpret_cast<Text*>(&_game_object);
+        const long long fps = Global::get_instance()->get_engine().get_fps();
+        text->set_text(std::to_string(fps));
+	}
 };
 
 class Car : public GameObject {
@@ -450,9 +460,13 @@ int main() {
     car->add_child(okto);
     car->add_child(camera);
 
-    //const auto ui_object = std::make_shared<UIObject>("ui_object", "text", true, Transform{ Vector2d{400.f, -10.f}, Vector2d{}, 0.49f }, 100, 100);
-    const auto ui_velocity_indicator = std::make_shared<Text>("ui_velocity_indicator", "ui", true, Transform{ Vector2d{-50.f, -50.f}, Vector2d{}, 0.f }, 100, 100, "0.0", "./assets/Roboto/Roboto-Medium.ttf", 1000, Alignment::CENTER, 100, Color{200, 0, 0, 0}, Color{0, 255, 0, 0 }, Space::SCREEN);
+    const auto ui_velocity_indicator = std::make_shared<Text>("ui_velocity_indicator", "ui", true, Transform{ Vector2d{-92.f, -84}, Vector2d{}, 0.f }, 16, 32, "0.0", "./assets/Roboto/Roboto-Medium.ttf", 1000, Alignment::CENTER, 1000, Color{255, 255, 255, 150}, Color{0, 0, 0, 150 }, Space::SCREEN);
     ui_velocity_indicator->add_component(ui_velocity_indicator_behaviour);
+
+    const auto ui_fps_indicator_behaviour = std::make_shared<FpsIndicator>();
+
+    const auto ui_fps_indicator = std::make_shared<Text>("ui_fps_indicator", "ui", true, Transform{ Vector2d{96.f, 92}, Vector2d{}, 0.f }, 4, 8, "0.0", "./assets/Roboto/Roboto-Medium.ttf", 1000, Alignment::CENTER, 1000, Color{ 0, 255, 0, 255 }, Color{ 0, 0, 0, 150 }, Space::SCREEN);
+    ui_fps_indicator->add_component(ui_fps_indicator_behaviour);
 
     scene->gameobjects.push_back(track_outer);
     scene->gameobjects.push_back(track_inner);
@@ -463,6 +477,7 @@ int main() {
     scene->gameobjects.push_back(ui_object);
     scene->gameobjects.push_back(okto);
     scene->gameobjects.push_back(ui_velocity_indicator);
+    scene->gameobjects.push_back(ui_fps_indicator);
     scene->gameobjects.push_back(camera);
 
     scene->gameobjects.push_back(ai_car);
