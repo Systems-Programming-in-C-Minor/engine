@@ -15,7 +15,7 @@ MultiplayerHost::MultiplayerHost(const std::string& player_name, const std::stri
 
     for (;;) {
         // Check for incoming signals, and dispatch them
-        signaling_client->Poll();
+        signaling_client->poll();
 
         // If we have a connection, then poll it for messages
         if (network_connection != k_HSteamNetConnection_Invalid) {

@@ -6,7 +6,6 @@
 #include "signaling_client.hpp"
 #include <steam/isteamnetworkingsockets.h>
 #include <steam/isteamnetworkingutils.h>
-#include <steam/steamnetworkingcustomsignaling.h>
 
 #ifndef _WIN32
 
@@ -202,7 +201,7 @@ public:
         return new ConnectionSignaling(this, sIdentityPeer.c_str());
     }
 
-    void Poll() override {
+    void poll() override {
         // Drain the socket into the buffer, and check for reconnecting
         sockMutex.lock();
         if (m_sock == INVALID_SOCKET) {
@@ -345,7 +344,7 @@ public:
         }
     }
 
-    void Release() override {
+    void release() override {
         // NOTE: Here we are assuming that the calling code has already cleaned
         // up all the connections, to keep the example simple.
         CloseSocket();
@@ -355,8 +354,8 @@ public:
 // Start connecting to the signaling server.
 ISignalingClient *CreateSignalingClient(
         const char *pszServerAddress, // Address of the server.
-        ISteamNetworkingSockets *pSteamNetworkingSockets, // Where should we send signals when we get them?
-        SteamNetworkingErrMsg &errMsg // Error message is retjrned here if we fail
+        ISteamNetworkingSockets *steam_networking_sockets, // Where should we send signals when we get them?
+        SteamNetworkingErrMsg &error_message // Error message is retjrned here if we fail
 ) {
 
     std::string sAddress(pszServerAddress);
@@ -373,11 +372,11 @@ ISignalingClient *CreateSignalingClient(
     addrinfo *pAddrInfo = nullptr;
     int r = getaddrinfo(sAddress.c_str(), sService.c_str(), nullptr, &pAddrInfo);
     if (r != 0 || pAddrInfo == nullptr) {
-        sprintf(errMsg, "Invalid/unknown server address.  getaddrinfo returned %d", r);
+        sprintf(error_message, "Invalid/unknown server address.  getaddrinfo returned %d", r);
         return nullptr;
     }
 
-    auto *pClient = new CSignalingClient(pAddrInfo->ai_addr, pAddrInfo->ai_addrlen, pSteamNetworkingSockets);
+    auto *pClient = new CSignalingClient(pAddrInfo->ai_addr, pAddrInfo->ai_addrlen, steam_networking_sockets);
 
     freeaddrinfo(pAddrInfo);
 

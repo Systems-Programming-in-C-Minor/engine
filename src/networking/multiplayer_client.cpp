@@ -58,7 +58,7 @@ MultiplayerClient::MultiplayerClient(const std::string &player_name, const std::
 
     for (;;) {
         // Check for incoming signals, and dispatch them
-        signaling_client->Poll();
+        signaling_client->poll();
 
         // Check callbacks
 //        TEST_PumpCallbacks();

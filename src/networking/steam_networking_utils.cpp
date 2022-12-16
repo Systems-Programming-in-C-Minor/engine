@@ -340,7 +340,7 @@ int run(int argc, const char **argv) {
     // Main test loop
     for (;;) {
         // Check for incoming signals, and dispatch them
-        pSignaling->Poll();
+        pSignaling->poll();
 
         // Check callbacks
 //        TEST_PumpCallbacks();

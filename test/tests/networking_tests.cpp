@@ -6,3 +6,8 @@ TEST(NetworkingTest, Client) {
     auto x = NetworkingTest();
     x.client();
 }
+
+TEST(NetworkingTest, Host) {
+    auto x = NetworkingTest();
+    x.host();
+}
