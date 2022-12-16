@@ -179,12 +179,19 @@ int main() {
     const auto track_inner = std::make_shared<GameObject>(
             "track_inner", "track", true,
             Transform{Vector2d{0.f, 0.f}});
+    const auto track_grass_outer = std::make_shared<GameObject>(
+        "track_grass_outer", "track", true,
+        Transform{ Vector2d(0.f, 0.f) });
+    const auto track_grass_inner = std::make_shared<GameObject>(
+        "track_grass_inner", "track", true,
+        Transform{ Vector2d(0.f, 0.f) });
 
     const auto track_bg = std::make_shared<GameObject>(
             "track_bg", "track", true,
             Transform{Vector2d{}, Vector2d{}, 0.f, 2.f});
 
-    Sprite sprite1{"./assets/track1.png", Color(0, 0, 0, 255.0), false, false, 1, 1, 6.f};
+    Sprite sprite1{"./assets/track1.png", Color(0, 0, 0, 255.0), false, false, 1, 1, 12.f};
+    track_outer->add_component(std::make_shared<Sprite>(sprite1));
 
     Sprite sprite2{"./assets/track1_bg.png", Color(0, 0, 0, 255.0), false, false, 1, 0, 6.f};
 
@@ -270,6 +277,8 @@ int main() {
 
     scene->gameobjects.push_back(track_outer);
     scene->gameobjects.push_back(track_inner);
+    scene->gameobjects.push_back(track_grass_outer);
+    scene->gameobjects.push_back(track_grass_inner);
     scene->gameobjects.push_back(track_bg);
     scene->gameobjects.push_back(car);
     scene->gameobjects.push_back(ai_car);
@@ -295,6 +304,16 @@ int main() {
                                                             1.0f);
     track_inner_rb->set_collider(track_inner_coll);
     track_inner->add_component(track_inner_rb);
+
+    const auto track_grass_outer_coll = std::make_shared<ChainCollider>("./assets/track1_2x_grass_outer.xml", true, ColliderNormal::inwards);
+    const auto track_grass_outer_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{ 0.f, 0.f }, 1.0f);
+    track_grass_outer_rb->set_collider(track_grass_outer_coll);
+    track_grass_outer->add_component(track_grass_outer_rb);
+
+    const auto track_grass_inner_coll = std::make_shared<ChainCollider>("./assets/track1_2x_grass_inner.xml", true, ColliderNormal::outwards);
+    const auto track_grass_inner_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{ 0.f, 0.f }, 1.0f);
+    track_grass_inner_rb->set_collider(track_grass_inner_coll);
+    track_grass_inner->add_component(track_grass_inner_rb);
 
     // Add listeners
     const auto key_listener_object = std::make_shared<GameObject>("KeyMouseListener", "TestTag", true);
