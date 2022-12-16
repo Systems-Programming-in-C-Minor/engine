@@ -19,7 +19,7 @@ public:
         bool is_world_space = true,
         Transform transform = Transform{},
         const Color& background_color = Color{},
-        int mtp = 6.f
+        int mtp = 15.f
     );
 
     [[nodiscard]] Color get_background_color() const;

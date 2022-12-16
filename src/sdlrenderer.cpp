@@ -139,13 +139,14 @@ void SdlRenderer::render_text(const Text& text) const
 	// https://stackoverflow.com/a/29725751/10787114
 	SDL2pp::Texture texture(*_renderer, font.RenderUTF8_Solid(text.get_text(), static_cast<SDL2pp::Color>(text.get_color())));
 
+	const auto center = transform_vector(text.transform.get_position());
+
     const auto text_size_x = static_cast<float>(text.get_width());
     const auto text_size_y = static_cast<float>(text.get_height());
 
-	const float left_corner_x = text.transform.get_position().x + -text_size_x * text.transform.get_scale() / 2.f;
-	const float left_corner_y = text.transform.get_position().y + text_size_y * text.transform.get_scale() / 2.f;
+	const float left_corner_x = center.x + -text_size_x * text.transform.get_scale() / 2.f;
+	const float left_corner_y = center.y + text_size_y * text.transform.get_scale() / 2.f;
 
-	const auto center = world_to_screen(text.transform.get_position());
 	const auto left_corner = world_to_screen(Vector2d{ left_corner_x, left_corner_y });
 
 	const int size_x = static_cast<int>(round(text_size_x * text.transform.get_scale() * camera()->mtp));
@@ -153,7 +154,7 @@ void SdlRenderer::render_text(const Text& text) const
 
 	const auto size = SDL2pp::Point{ size_x, size_y };
 	auto rect = SDL2pp::Rect{ left_corner, size };
-    _renderer->Copy(texture, SDL2pp::NullOpt, rect, -radians_to_degrees(text.transform.get_angle()));
+    _renderer->Copy(texture, SDL2pp::NullOpt, rect, -radians_to_degrees(text.transform.get_angle() - camera()->transform.get_angle()));
 }
 
 void SdlRenderer::clear(const Color& color) const try
