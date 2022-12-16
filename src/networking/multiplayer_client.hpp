@@ -5,7 +5,7 @@
 
 class MultiplayerClient : public IMultiplayer, protected SteamNetworking {
 protected:
-    SteamNetworkingIdentity remoteIdentity{};
+    SteamNetworkingIdentity remote_identity{};
 public:
     MultiplayerClient(const std::string& player_name, const std::string& host_player_name, const std::string& signaling_server);
 

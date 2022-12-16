@@ -67,9 +67,9 @@ SteamNetworking::SteamNetworking(const std::string &player_name, const std::stri
                                                       k_nSteamNetworkingConfig_P2P_Transport_ICE_Enable_All);
 
 
-    ISignalingClient *pSignaling = CreateSignalingClient(signaling_server.c_str(),
-                                                         SteamNetworkingSockets(), errMsg);
-    if (pSignaling == nullptr) {
+    signaling_client = CreateSignalingClient(signaling_server.c_str(),
+                                             SteamNetworkingSockets(), errMsg);
+    if (signaling_client == nullptr) {
         std::cout << "Failed to initializing signaling client. " << errMsg << std::endl;
         exit(1);
     }
@@ -158,3 +158,9 @@ SteamNetworking::onConnectionStatusChanged(SteamNetConnectionStatusChangedCallba
     }
 }
 
+void SteamNetworking::send_message(const std::string &message) const {
+    printf("Sending msg '%s'\n", message.c_str());
+    EResult r = SteamNetworkingSockets()->SendMessageToConnection(
+            network_connection, message.c_str(), message.size() + 1, k_nSteamNetworkingSend_Reliable, nullptr);
+    assert(r == k_EResultOK);
+}
