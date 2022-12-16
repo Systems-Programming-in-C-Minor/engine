@@ -176,7 +176,6 @@ void KeyHandler::tick() {
             _fire_joystick_axis_event_if_changed(RightJoystickY, SDL_JoystickGetAxis(joystick, 4));
 
             _fire_joystick_axis_event_if_changed(RightTrigger, SDL_JoystickGetAxis(joystick, 5));
-
             _fire_joystick_button_event_if_changed(AButton, SDL_JoystickGetButton(joystick, 0));
             _fire_joystick_button_event_if_changed(BButton, SDL_JoystickGetButton(joystick, 1));
             _fire_joystick_button_event_if_changed(XButton, SDL_JoystickGetButton(joystick, 2));
@@ -190,9 +189,9 @@ void KeyHandler::tick() {
             _fire_joystick_axis_event_if_changed(LeftJoystickY, SDL_JoystickGetAxis(joystick, 1));
 
             _fire_joystick_axis_event_if_changed(RightJoystickX, SDL_JoystickGetAxis(joystick, 2));
-            _fire_joystick_axis_event_if_changed(RightJoystickY, SDL_JoystickGetAxis(joystick, 4));
+            _fire_joystick_axis_event_if_changed(RightJoystickY, SDL_JoystickGetAxis(joystick, 3));
 
-            _fire_joystick_axis_event_if_changed(LeftTrigger, SDL_JoystickGetAxis(joystick, 3));
+            _fire_joystick_axis_event_if_changed(LeftTrigger, SDL_JoystickGetAxis(joystick, 4));
             _fire_joystick_axis_event_if_changed(RightTrigger, SDL_JoystickGetAxis(joystick, 5));
 
             _fire_joystick_button_event_if_changed(AButton, SDL_JoystickGetButton(joystick, 0));
