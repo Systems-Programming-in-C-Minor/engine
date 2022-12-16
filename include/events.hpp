@@ -3,6 +3,7 @@
 
 #include "interfaces/ievent.hpp"
 #include "enums/key.hpp"
+#include "enums/joystick.hpp"
 #include "enums/mouse_input.hpp"
 #include "components/rigidbody.hpp"
 
@@ -45,6 +46,38 @@ class KeyReleasedEvent : public IEvent {
 public:
     explicit KeyReleasedEvent(Key key) : IEvent(KeyReleased), key(key) {};
     Key key;
+};
+
+class JoystickButtonPressedEvent : public IEvent {
+public:
+    explicit JoystickButtonPressedEvent(JoystickButton button) : IEvent(JoystickButtonPressed), button(button) {};
+    JoystickButton button;
+};
+
+class JoystickButtonHoldEvent : public IEvent {
+public:
+    explicit JoystickButtonHoldEvent(JoystickButton button) : IEvent(JoystickButtonHold), button(button) {};
+    JoystickButton button;
+};
+
+class JoystickButtonReleasedEvent : public IEvent {
+public:
+    explicit JoystickButtonReleasedEvent(JoystickButton button) : IEvent(JoystickButtonReleased), button(button) {};
+    JoystickButton button;
+};
+
+class JoystickAxisChangedEvent : public IEvent {
+public:
+    JoystickAxisChangedEvent(JoystickAxis axis, float value) : IEvent(JoystickAxisChanged), axis(axis), value(value) {};
+    JoystickAxis axis;
+    float value;
+};
+
+class JoystickAxisCurrentEvent : public IEvent {
+public:
+    JoystickAxisCurrentEvent(JoystickAxis axis, float value) : IEvent(JoystickAxisCurrent), axis(axis), value(value) {};
+    JoystickAxis axis;
+    float value;
 };
 
 class ColliderEntryEvent : public IEvent {

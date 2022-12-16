@@ -13,6 +13,11 @@ enum Event {
     ColliderEntry,
     ColliderExit,
     SceneLoaded,
+    JoystickButtonPressed,
+    JoystickButtonHold,
+    JoystickButtonReleased,
+    JoystickAxisCurrent,
+    JoystickAxisChanged,
 };
 
 class IEvent {

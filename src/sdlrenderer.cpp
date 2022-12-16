@@ -167,7 +167,7 @@ void SdlRenderer::push_to_screen() try
 
 void SdlRenderer::init(int res_x, int res_y) try 
 {
-	_sdl = std::make_unique<SDL2pp::SDL>(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+	_sdl = std::make_unique<SDL2pp::SDL>(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK);
 	_sdl_image = std::make_unique<SDL2pp::SDLImage>();
 	_sdl_ttf = std::make_unique<SDL2pp::SDLTTF>();
 
