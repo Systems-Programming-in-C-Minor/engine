@@ -164,22 +164,44 @@ void KeyHandler::tick() {
 
     // Iterate over all joysticks
     for (auto &joystick: _joysticks) {
-        _fire_joystick_axis_event_if_changed(LeftJoystickX, SDL_JoystickGetAxis(joystick, 0));
-        _fire_joystick_axis_event_if_changed(LeftJoystickY, SDL_JoystickGetAxis(joystick, 1));
+        const auto controller_name = SDL_JoystickName(joystick);
 
-        _fire_joystick_axis_event_if_changed(LeftTrigger, SDL_JoystickGetAxis(joystick, 2));
+        if (strcmp("Xbox One S Controller", controller_name) != 0) {
+            _fire_joystick_axis_event_if_changed(LeftJoystickX, SDL_JoystickGetAxis(joystick, 0));
+            _fire_joystick_axis_event_if_changed(LeftJoystickY, SDL_JoystickGetAxis(joystick, 1));
 
-        _fire_joystick_axis_event_if_changed(RightJoystickX, SDL_JoystickGetAxis(joystick, 3));
-        _fire_joystick_axis_event_if_changed(RightJoystickY, SDL_JoystickGetAxis(joystick, 4));
+            _fire_joystick_axis_event_if_changed(LeftTrigger, SDL_JoystickGetAxis(joystick, 2));
 
-        _fire_joystick_axis_event_if_changed(RightTrigger, SDL_JoystickGetAxis(joystick, 5));
+            _fire_joystick_axis_event_if_changed(RightJoystickX, SDL_JoystickGetAxis(joystick, 3));
+            _fire_joystick_axis_event_if_changed(RightJoystickY, SDL_JoystickGetAxis(joystick, 4));
 
-        _fire_joystick_button_event_if_changed(AButton, SDL_JoystickGetButton(joystick, 0));
-        _fire_joystick_button_event_if_changed(BButton, SDL_JoystickGetButton(joystick, 1));
-        _fire_joystick_button_event_if_changed(XButton, SDL_JoystickGetButton(joystick, 2));
-        _fire_joystick_button_event_if_changed(YButton, SDL_JoystickGetButton(joystick, 3));
-        _fire_joystick_button_event_if_changed(LeftButton, SDL_JoystickGetButton(joystick, 4));
-        _fire_joystick_button_event_if_changed(RightButton, SDL_JoystickGetButton(joystick, 5));
+            _fire_joystick_axis_event_if_changed(RightTrigger, SDL_JoystickGetAxis(joystick, 5));
+
+            _fire_joystick_button_event_if_changed(AButton, SDL_JoystickGetButton(joystick, 0));
+            _fire_joystick_button_event_if_changed(BButton, SDL_JoystickGetButton(joystick, 1));
+            _fire_joystick_button_event_if_changed(XButton, SDL_JoystickGetButton(joystick, 2));
+            _fire_joystick_button_event_if_changed(YButton, SDL_JoystickGetButton(joystick, 3));
+            _fire_joystick_button_event_if_changed(LeftButton, SDL_JoystickGetButton(joystick, 4));
+            _fire_joystick_button_event_if_changed(RightButton, SDL_JoystickGetButton(joystick, 5));
+        } else if (strcmp("Xbox 360 Controller", controller_name) != 0 ||
+                   strcmp("PS4 Controller", controller_name) != 0 ||
+                   strcmp("PS5 Controller", controller_name) != 0) {
+            _fire_joystick_axis_event_if_changed(LeftJoystickX, SDL_JoystickGetAxis(joystick, 0));
+            _fire_joystick_axis_event_if_changed(LeftJoystickY, SDL_JoystickGetAxis(joystick, 1));
+
+            _fire_joystick_axis_event_if_changed(RightJoystickX, SDL_JoystickGetAxis(joystick, 2));
+            _fire_joystick_axis_event_if_changed(RightJoystickY, SDL_JoystickGetAxis(joystick, 4));
+
+            _fire_joystick_axis_event_if_changed(LeftTrigger, SDL_JoystickGetAxis(joystick, 3));
+            _fire_joystick_axis_event_if_changed(RightTrigger, SDL_JoystickGetAxis(joystick, 5));
+
+            _fire_joystick_button_event_if_changed(AButton, SDL_JoystickGetButton(joystick, 0));
+            _fire_joystick_button_event_if_changed(BButton, SDL_JoystickGetButton(joystick, 1));
+            _fire_joystick_button_event_if_changed(XButton, SDL_JoystickGetButton(joystick, 2));
+            _fire_joystick_button_event_if_changed(YButton, SDL_JoystickGetButton(joystick, 3));
+            _fire_joystick_button_event_if_changed(LeftButton, SDL_JoystickGetButton(joystick, 4));
+            _fire_joystick_button_event_if_changed(RightButton, SDL_JoystickGetButton(joystick, 5));
+        }
     }
 
     _keys_active = keys_pressed;
