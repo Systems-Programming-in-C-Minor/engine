@@ -53,32 +53,47 @@ public:
 
 class JoystickButtonPressedEvent : public IEvent {
 public:
-    explicit JoystickButtonPressedEvent(JoystickButton button) : IEvent(JoystickButtonPressed), button(button) {};
+    explicit JoystickButtonPressedEvent(int joystick_id, JoystickButton button) : IEvent(JoystickButtonPressed),
+                                                                                  joystick_id(joystick_id),
+                                                                                  button(button) {};
+    int joystick_id;
     JoystickButton button;
 };
 
 class JoystickButtonHoldEvent : public IEvent {
 public:
-    explicit JoystickButtonHoldEvent(JoystickButton button) : IEvent(JoystickButtonHold), button(button) {};
+    explicit JoystickButtonHoldEvent(int joystick_id, JoystickButton button) : IEvent(JoystickButtonHold),
+                                                                               joystick_id(joystick_id),
+                                                                               button(button) {};
+    int joystick_id;
     JoystickButton button;
 };
 
 class JoystickButtonReleasedEvent : public IEvent {
 public:
-    explicit JoystickButtonReleasedEvent(JoystickButton button) : IEvent(JoystickButtonReleased), button(button) {};
+    explicit JoystickButtonReleasedEvent(int joystick_id, JoystickButton button) : IEvent(JoystickButtonReleased),
+                                                                                   joystick_id(joystick_id),
+                                                                                   button(button) {};
+    int joystick_id;
     JoystickButton button;
 };
 
 class JoystickAxisChangedEvent : public IEvent {
 public:
-    JoystickAxisChangedEvent(JoystickAxis axis, float value) : IEvent(JoystickAxisChanged), axis(axis), value(value) {};
+    JoystickAxisChangedEvent(int joystick_id, JoystickAxis axis, float value) : IEvent(JoystickAxisChanged),
+                                                                                joystick_id(joystick_id), axis(axis),
+                                                                                value(value) {};
+    int joystick_id;
     JoystickAxis axis;
     float value;
 };
 
 class JoystickAxisCurrentEvent : public IEvent {
 public:
-    JoystickAxisCurrentEvent(JoystickAxis axis, float value) : IEvent(JoystickAxisCurrent), axis(axis), value(value) {};
+    JoystickAxisCurrentEvent(int joystick_id, JoystickAxis axis, float value) : IEvent(JoystickAxisCurrent),
+                                                                                joystick_id(joystick_id), axis(axis),
+                                                                                value(value) {};
+    int joystick_id;
     JoystickAxis axis;
     float value;
 };

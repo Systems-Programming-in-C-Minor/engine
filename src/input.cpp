@@ -240,3 +240,7 @@ bool Input::get_mouse_button_up(MouseInput which) {
     _previous_mousestate = current_mousestate;
     return true;
 }
+
+int Input::get_controller_count() {
+    return SDL_NumJoysticks();
+}

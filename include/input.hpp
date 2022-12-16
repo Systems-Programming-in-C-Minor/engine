@@ -60,6 +60,8 @@ public:
      * @brief Returns true during the frame the user releases the given mouse button.
      */
     bool get_mouse_button_up(MouseInput which);
+
+    [[nodiscard]] static int get_controller_count();
 };
 
 #endif //ENGINE_INPUT_HPP

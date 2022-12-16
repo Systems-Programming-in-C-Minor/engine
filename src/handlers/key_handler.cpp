@@ -167,72 +167,74 @@ void KeyHandler::tick() {
         const auto controller_name = SDL_JoystickName(joystick);
 
         if (strcmp("Xbox One S Controller", controller_name) == 0) {
-            _fire_joystick_axis_event_if_changed(LeftJoystickX, SDL_JoystickGetAxis(joystick, 0));
-            _fire_joystick_axis_event_if_changed(LeftJoystickY, SDL_JoystickGetAxis(joystick, 1));
+            _fire_joystick_axis_event_if_changed(joystick, LeftJoystickX, SDL_JoystickGetAxis(joystick, 0));
+            _fire_joystick_axis_event_if_changed(joystick, LeftJoystickY, SDL_JoystickGetAxis(joystick, 1));
 
-            _fire_joystick_axis_event_if_changed(LeftTrigger, SDL_JoystickGetAxis(joystick, 2));
+            _fire_joystick_axis_event_if_changed(joystick, LeftTrigger, SDL_JoystickGetAxis(joystick, 2));
 
-            _fire_joystick_axis_event_if_changed(RightJoystickX, SDL_JoystickGetAxis(joystick, 3));
-            _fire_joystick_axis_event_if_changed(RightJoystickY, SDL_JoystickGetAxis(joystick, 4));
+            _fire_joystick_axis_event_if_changed(joystick, RightJoystickX, SDL_JoystickGetAxis(joystick, 3));
+            _fire_joystick_axis_event_if_changed(joystick, RightJoystickY, SDL_JoystickGetAxis(joystick, 4));
 
-            _fire_joystick_axis_event_if_changed(RightTrigger, SDL_JoystickGetAxis(joystick, 5));
-            _fire_joystick_button_event_if_changed(AButton, SDL_JoystickGetButton(joystick, 0));
-            _fire_joystick_button_event_if_changed(BButton, SDL_JoystickGetButton(joystick, 1));
-            _fire_joystick_button_event_if_changed(XButton, SDL_JoystickGetButton(joystick, 2));
-            _fire_joystick_button_event_if_changed(YButton, SDL_JoystickGetButton(joystick, 3));
-            _fire_joystick_button_event_if_changed(LeftButton, SDL_JoystickGetButton(joystick, 4));
-            _fire_joystick_button_event_if_changed(RightButton, SDL_JoystickGetButton(joystick, 5));
+            _fire_joystick_axis_event_if_changed(joystick, RightTrigger, SDL_JoystickGetAxis(joystick, 5));
+            _fire_joystick_button_event_if_changed(joystick, AButton, SDL_JoystickGetButton(joystick, 0));
+            _fire_joystick_button_event_if_changed(joystick, BButton, SDL_JoystickGetButton(joystick, 1));
+            _fire_joystick_button_event_if_changed(joystick, XButton, SDL_JoystickGetButton(joystick, 2));
+            _fire_joystick_button_event_if_changed(joystick, YButton, SDL_JoystickGetButton(joystick, 3));
+            _fire_joystick_button_event_if_changed(joystick, LeftButton, SDL_JoystickGetButton(joystick, 4));
+            _fire_joystick_button_event_if_changed(joystick, RightButton, SDL_JoystickGetButton(joystick, 5));
         } else if (strcmp("Xbox 360 Controller", controller_name) == 0 ||
                    strcmp("PS4 Controller", controller_name) == 0 ||
                    strcmp("PS5 Controller", controller_name) == 0) {
-            _fire_joystick_axis_event_if_changed(LeftJoystickX, SDL_JoystickGetAxis(joystick, 0));
-            _fire_joystick_axis_event_if_changed(LeftJoystickY, SDL_JoystickGetAxis(joystick, 1));
+            _fire_joystick_axis_event_if_changed(joystick, LeftJoystickX, SDL_JoystickGetAxis(joystick, 0));
+            _fire_joystick_axis_event_if_changed(joystick, LeftJoystickY, SDL_JoystickGetAxis(joystick, 1));
 
-            _fire_joystick_axis_event_if_changed(RightJoystickX, SDL_JoystickGetAxis(joystick, 2));
-            _fire_joystick_axis_event_if_changed(RightJoystickY, SDL_JoystickGetAxis(joystick, 3));
+            _fire_joystick_axis_event_if_changed(joystick, RightJoystickX, SDL_JoystickGetAxis(joystick, 2));
+            _fire_joystick_axis_event_if_changed(joystick, RightJoystickY, SDL_JoystickGetAxis(joystick, 3));
 
-            _fire_joystick_axis_event_if_changed(LeftTrigger, SDL_JoystickGetAxis(joystick, 4));
-            _fire_joystick_axis_event_if_changed(RightTrigger, SDL_JoystickGetAxis(joystick, 5));
+            _fire_joystick_axis_event_if_changed(joystick, LeftTrigger, SDL_JoystickGetAxis(joystick, 4));
+            _fire_joystick_axis_event_if_changed(joystick, RightTrigger, SDL_JoystickGetAxis(joystick, 5));
 
-            _fire_joystick_button_event_if_changed(AButton, SDL_JoystickGetButton(joystick, 0));
-            _fire_joystick_button_event_if_changed(BButton, SDL_JoystickGetButton(joystick, 1));
-            _fire_joystick_button_event_if_changed(XButton, SDL_JoystickGetButton(joystick, 2));
-            _fire_joystick_button_event_if_changed(YButton, SDL_JoystickGetButton(joystick, 3));
-            _fire_joystick_button_event_if_changed(LeftButton, SDL_JoystickGetButton(joystick, 4));
-            _fire_joystick_button_event_if_changed(RightButton, SDL_JoystickGetButton(joystick, 5));
+            _fire_joystick_button_event_if_changed(joystick, AButton, SDL_JoystickGetButton(joystick, 0));
+            _fire_joystick_button_event_if_changed(joystick, BButton, SDL_JoystickGetButton(joystick, 1));
+            _fire_joystick_button_event_if_changed(joystick, XButton, SDL_JoystickGetButton(joystick, 2));
+            _fire_joystick_button_event_if_changed(joystick, YButton, SDL_JoystickGetButton(joystick, 3));
+            _fire_joystick_button_event_if_changed(joystick, LeftButton, SDL_JoystickGetButton(joystick, 4));
+            _fire_joystick_button_event_if_changed(joystick, RightButton, SDL_JoystickGetButton(joystick, 5));
         } else if (strcmp("Generic USB Joystick", controller_name) == 0) {
-            _fire_joystick_axis_event_if_changed(LeftJoystickX, SDL_JoystickGetAxis(joystick, 0));
-            _fire_joystick_axis_event_if_changed(LeftJoystickY, SDL_JoystickGetAxis(joystick, 1));
+            _fire_joystick_axis_event_if_changed(joystick, LeftJoystickX, SDL_JoystickGetAxis(joystick, 0));
+            _fire_joystick_axis_event_if_changed(joystick, LeftJoystickY, SDL_JoystickGetAxis(joystick, 1));
 
-            _fire_joystick_axis_event_if_changed(LeftTrigger, SDL_JoystickGetButton(joystick, 5)*32767*2-32767);
-            _fire_joystick_axis_event_if_changed(RightTrigger, SDL_JoystickGetButton(joystick, 8)*32767*2-32767);
+            _fire_joystick_axis_event_if_changed(joystick, LeftTrigger,
+                                                 SDL_JoystickGetButton(joystick, 5) * 32767 * 2 - 32767);
+            _fire_joystick_axis_event_if_changed(joystick, RightTrigger,
+                                                 SDL_JoystickGetButton(joystick, 8) * 32767 * 2 - 32767);
 
-            _fire_joystick_button_event_if_changed(AButton, SDL_JoystickGetButton(joystick, 2));
-            _fire_joystick_button_event_if_changed(BButton, SDL_JoystickGetButton(joystick, 1));
-            _fire_joystick_button_event_if_changed(XButton, SDL_JoystickGetButton(joystick, 3));
-            _fire_joystick_button_event_if_changed(YButton, SDL_JoystickGetButton(joystick, 0));
+            _fire_joystick_button_event_if_changed(joystick, AButton, SDL_JoystickGetButton(joystick, 2));
+            _fire_joystick_button_event_if_changed(joystick, BButton, SDL_JoystickGetButton(joystick, 1));
+            _fire_joystick_button_event_if_changed(joystick, XButton, SDL_JoystickGetButton(joystick, 3));
+            _fire_joystick_button_event_if_changed(joystick, YButton, SDL_JoystickGetButton(joystick, 0));
 
-            _fire_joystick_button_event_if_changed(LeftButton, SDL_JoystickGetButton(joystick, 5));
-            _fire_joystick_button_event_if_changed(RightButton, SDL_JoystickGetButton(joystick, 4));
+            _fire_joystick_button_event_if_changed(joystick, LeftButton, SDL_JoystickGetButton(joystick, 5));
+            _fire_joystick_button_event_if_changed(joystick, RightButton, SDL_JoystickGetButton(joystick, 4));
         } else if (strcmp("Wireless Steam Controller", controller_name) == 0) {
-            _fire_joystick_axis_event_if_changed(LeftJoystickX, SDL_JoystickGetAxis(joystick, 0));
-            _fire_joystick_axis_event_if_changed(LeftJoystickY, SDL_JoystickGetAxis(joystick, 1));
+            _fire_joystick_axis_event_if_changed(joystick, LeftJoystickX, SDL_JoystickGetAxis(joystick, 0));
+            _fire_joystick_axis_event_if_changed(joystick, LeftJoystickY, SDL_JoystickGetAxis(joystick, 1));
 
-            _fire_joystick_axis_event_if_changed(LeftTouchpadX, SDL_JoystickGetAxis(joystick, 4));
-            _fire_joystick_axis_event_if_changed(LeftTouchpadY, SDL_JoystickGetAxis(joystick, 5));
-            _fire_joystick_axis_event_if_changed(RightTouchpadX, SDL_JoystickGetAxis(joystick, 2));
-            _fire_joystick_axis_event_if_changed(RightTouchpadY, SDL_JoystickGetAxis(joystick, 3));
+            _fire_joystick_axis_event_if_changed(joystick, LeftTouchpadX, SDL_JoystickGetAxis(joystick, 4));
+            _fire_joystick_axis_event_if_changed(joystick, LeftTouchpadY, SDL_JoystickGetAxis(joystick, 5));
+            _fire_joystick_axis_event_if_changed(joystick, RightTouchpadX, SDL_JoystickGetAxis(joystick, 2));
+            _fire_joystick_axis_event_if_changed(joystick, RightTouchpadY, SDL_JoystickGetAxis(joystick, 3));
 
-            _fire_joystick_axis_event_if_changed(LeftTrigger, SDL_JoystickGetAxis(joystick, 7));
-            _fire_joystick_axis_event_if_changed(RightTrigger, SDL_JoystickGetAxis(joystick, 6));
+            _fire_joystick_axis_event_if_changed(joystick, LeftTrigger, SDL_JoystickGetAxis(joystick, 7));
+            _fire_joystick_axis_event_if_changed(joystick, RightTrigger, SDL_JoystickGetAxis(joystick, 6));
 
-            _fire_joystick_button_event_if_changed(AButton, SDL_JoystickGetButton(joystick, 2));
-            _fire_joystick_button_event_if_changed(BButton, SDL_JoystickGetButton(joystick, 3));
-            _fire_joystick_button_event_if_changed(XButton, SDL_JoystickGetButton(joystick, 4));
-            _fire_joystick_button_event_if_changed(YButton, SDL_JoystickGetButton(joystick, 5));
+            _fire_joystick_button_event_if_changed(joystick, AButton, SDL_JoystickGetButton(joystick, 2));
+            _fire_joystick_button_event_if_changed(joystick, BButton, SDL_JoystickGetButton(joystick, 3));
+            _fire_joystick_button_event_if_changed(joystick, XButton, SDL_JoystickGetButton(joystick, 4));
+            _fire_joystick_button_event_if_changed(joystick, YButton, SDL_JoystickGetButton(joystick, 5));
 
-            _fire_joystick_button_event_if_changed(LeftButton, SDL_JoystickGetButton(joystick, 6));
-            _fire_joystick_button_event_if_changed(RightButton, SDL_JoystickGetButton(joystick, 7));
+            _fire_joystick_button_event_if_changed(joystick, LeftButton, SDL_JoystickGetButton(joystick, 6));
+            _fire_joystick_button_event_if_changed(joystick, RightButton, SDL_JoystickGetButton(joystick, 7));
         }
     }
 
@@ -246,33 +248,37 @@ KeyHandler::~KeyHandler() {
     }
 }
 
-void KeyHandler::_fire_joystick_button_event_if_changed(JoystickButton button, int value) {
+void KeyHandler::_fire_joystick_button_event_if_changed(SDL_Joystick *joystick, JoystickButton button, int value) {
+    const int joystick_id = SDL_JoystickInstanceID(joystick);
+
     const auto previouslyPressed =
-            std::find(_joystick_buttons_active.begin(), _joystick_buttons_active.end(), button) !=
-            _joystick_buttons_active.end();
+            std::find(_joystick_buttons_active[joystick_id].begin(), _joystick_buttons_active[joystick_id].end(),
+                      button) !=
+            _joystick_buttons_active[joystick_id].end();
     if (value == 1) {
-        Global::get_instance()->notify_event_manager(JoystickButtonHoldEvent(button));
+        Global::get_instance()->notify_event_manager(JoystickButtonHoldEvent(joystick_id, button));
 
         if (!previouslyPressed) {
-            Global::get_instance()->notify_event_manager(JoystickButtonPressedEvent(button));
-            _joystick_buttons_active.push_back(button);
+            Global::get_instance()->notify_event_manager(JoystickButtonPressedEvent(joystick_id, button));
+            _joystick_buttons_active[joystick_id].push_back(button);
         }
     } else {
         if (previouslyPressed) {
-            Global::get_instance()->notify_event_manager(JoystickButtonReleasedEvent(button));
-            _joystick_buttons_active.remove(button);
+            Global::get_instance()->notify_event_manager(JoystickButtonReleasedEvent(joystick_id, button));
+            _joystick_buttons_active[joystick_id].remove(button);
         }
     }
 }
 
-void KeyHandler::_fire_joystick_axis_event_if_changed(JoystickAxis axis, int value) {
+void KeyHandler::_fire_joystick_axis_event_if_changed(SDL_Joystick *joystick, JoystickAxis axis, int value) {
+    const int joystick_id = SDL_JoystickInstanceID(joystick);
     const auto normalized_value = _normalize_axis(value);
 
-    Global::get_instance()->notify_event_manager(JoystickAxisCurrentEvent(axis, normalized_value));
+    Global::get_instance()->notify_event_manager(JoystickAxisCurrentEvent(joystick_id, axis, normalized_value));
 
-    if (std::abs(_joystick_axes_values[axis] - normalized_value) > 0.1f) {
-        Global::get_instance()->notify_event_manager(JoystickAxisChangedEvent(axis, normalized_value));
-        _joystick_axes_values[axis] = normalized_value;
+    if (std::abs(_joystick_axes_values[joystick_id][axis] - normalized_value) > 0.1f) {
+        Global::get_instance()->notify_event_manager(JoystickAxisChangedEvent(joystick_id, axis, normalized_value));
+        _joystick_axes_values[joystick_id][axis] = normalized_value;
     }
 }
 
