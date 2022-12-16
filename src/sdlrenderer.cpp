@@ -133,28 +133,55 @@ void SdlRenderer::render_text(const Text& text) const
 {
     SDL2pp::Font font(text.get_font(), text.get_size());
 
-	SDL2pp::Texture texture{ *_renderer, font.RenderUTF8_Shaded(
+	SDL2pp::Texture texture{ *_renderer, font.RenderText_Shaded(
 			text.get_text(),
 			static_cast<SDL2pp::Color>(text.get_fg_color()),
 			static_cast<SDL2pp::Color>(text.get_bg_color())
 	) };
 
-	const auto center = transform_vector(text.transform.get_position());
+	if (text.get_space() == Space::WORLD) {
+		const auto center = transform_vector(text.transform.get_position());
 
-    const auto text_size_x = static_cast<float>(text.get_width());
-    const auto text_size_y = static_cast<float>(text.get_height());
+		const auto text_size_x = static_cast<float>(text.get_width());
+		const auto text_size_y = static_cast<float>(text.get_height());
 
-	const float left_corner_x = center.x + -text_size_x * text.transform.get_scale() / 2.f;
-	const float left_corner_y = center.y + text_size_y * text.transform.get_scale() / 2.f;
+		const float left_corner_x = center.x + -text_size_x * text.transform.get_scale() / 2.f;
+		const float left_corner_y = center.y + text_size_y * text.transform.get_scale() / 2.f;
 
-	const auto left_corner = world_space_to_screen(Vector2d{ left_corner_x, left_corner_y });
+		const auto left_corner = world_space_to_screen(Vector2d{ left_corner_x, left_corner_y });
 
-	const int size_x = static_cast<int>(round(text_size_x * text.transform.get_scale() * camera()->mtp));
-	const int size_y = static_cast<int>(round(text_size_y * text.transform.get_scale() * camera()->mtp));
+		const int size_x = static_cast<int>(round(text_size_x * text.transform.get_scale() * camera()->mtp));
+		const int size_y = static_cast<int>(round(text_size_y * text.transform.get_scale() * camera()->mtp));
 
-	const auto size = SDL2pp::Point{ size_x, size_y };
-	auto rect = SDL2pp::Rect{ left_corner, size };
-    _renderer->Copy(texture, SDL2pp::NullOpt, rect, -radians_to_degrees(text.transform.get_angle() - camera()->transform.get_angle()));
+		const auto size = SDL2pp::Point{ size_x, size_y };
+		auto rect = SDL2pp::Rect{ left_corner, size };
+		_renderer->Copy(texture, SDL2pp::NullOpt, rect, -radians_to_degrees(text.transform.get_angle() - camera()->transform.get_angle()));
+	}
+
+	if (text.get_space() == Space::SCREEN) {
+
+		// TODO Optimization: only retrieve when resolution changes
+		const SDL2pp::Point res = _renderer->GetOutputSize();
+		const auto ratio_x = static_cast<float>(res.GetX()) / 400.f;
+		const auto ratio_y = static_cast<float>(res.GetY()) / 400.f;
+
+		const auto center = text.transform.get_position();
+
+		const auto text_size_x = static_cast<float>(text.get_width());
+		const auto text_size_y = static_cast<float>(text.get_height());
+
+		const float left_corner_x = center.x + -text_size_x * text.transform.get_scale() / 2.f;
+		const float left_corner_y = center.y + text_size_y * text.transform.get_scale() / 2.f;
+
+		const auto left_corner = screen_space_to_screen(Vector2d{ left_corner_x, left_corner_y });
+
+		const int size_x = static_cast<int>(round(text_size_x * text.transform.get_scale() * ratio_x));
+		const int size_y = static_cast<int>(round(text_size_y * text.transform.get_scale() * ratio_y));
+
+		const auto size = SDL2pp::Point{ size_x, size_y };
+		auto rect = SDL2pp::Rect{ left_corner, size };
+		_renderer->Copy(texture, SDL2pp::NullOpt, rect, -radians_to_degrees(text.transform.get_angle()));
+	}
 }
 
 void SdlRenderer::clear(const Color& color) const try
@@ -210,9 +237,20 @@ SDL2pp::Point SdlRenderer::world_space_to_screen(const Vector2d& position) const
 SDL2pp::Point SdlRenderer::screen_space_to_screen(const Vector2d& position) const
 {
 	// TODO Optimization: only retrieve when resolution changes
+
 	const SDL2pp::Point res = _renderer->GetOutputSize();
+	const auto res_x = static_cast<float>(res.GetX());
+	const auto res_y = static_cast<float>(res.GetY());
 
+	//convert relative space to pixel space
+	// res_x / 200 (screenspace to screen ratio)
+	//transpose pixel space to sdl pixel space
 
+	const SDL2pp::Point return_pos{
+		static_cast<int>(round(res_x * 0.5f + position.x * res_x / 400.f)),
+		static_cast<int>(round(res_y * 0.5f - position.y * res_y / 400.f))
+	};
+	return return_pos;
 }
 
 Vector2d SdlRenderer::transform_vector(const Vector2d& position) const {

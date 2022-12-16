@@ -14,6 +14,7 @@
 #include "race/behaviours/car_behaviour.hpp"
 #include "utils/trigonometry.hpp"
 #include "utils/xmlreader.hpp"
+#include "uiobject.hpp"
 #include "uiobjects/text.hpp"
 #include "input.hpp"
 #include "interfaces/itickable.hpp"
@@ -79,6 +80,29 @@ public:
 private:
     bool enabled = false;
     bool colliders_enabled = false;
+};
+
+class VelocityIndicator : public Component, public ITickable
+{
+private:
+    float _velocity;
+public:
+    explicit VelocityIndicator(float velocity = 0.f)
+	    : _velocity(velocity)
+    {}
+
+    void tick(GameObject& _game_object) override
+    {
+	    if(_game_object.get_name() == "player_car")
+	    {
+            _velocity = _game_object.get_component<RigidBody>()->get_forward_velocity().length();
+	    }
+        if(_game_object.get_name() == "ui_velocity_indicator")
+        {
+            Text* test = reinterpret_cast<Text*>(&_game_object);
+            test->set_text(std::to_string(_velocity));
+        }
+    }
 };
 
 class Car : public GameObject {
@@ -192,9 +216,12 @@ int main() {
 
     track_outer->add_component(std::make_shared<Sprite>(sprite1));
 
+    const auto ui_velocity_indicator_behaviour = std::make_shared<VelocityIndicator>();
+
     const auto car = std::make_shared<Car>("player_car", "car", "./assets/blue_car.png", scene);
     const auto car_behaviour = std::make_shared<PlayerCarBehaviour>(scene->get_event_manager());
     car->add_component(car_behaviour);
+    car->add_component(ui_velocity_indicator_behaviour);
 
     const auto okto = std::make_shared<GameObject>(
             "okto", "okto", true,
@@ -205,15 +232,15 @@ int main() {
     car->add_child(okto);
     car->add_child(camera);
 
-    const auto ui_object = std::make_shared<UIObject>("ui_object", "text", true, Transform{ Vector2d{400.f, -10.f}, Vector2d{}, 0.49f }, 100, 100);
-    const auto text = std::make_shared<Text>("name", "tag", true, Transform{ Vector2d{-50.f, 10.f}, Vector2d{}, 1.f }, 20, 10, "text", "./assets/Sans.ttf", 1000, Alignment::CENTER, 100, Color{200, 0, 0, 0}, Color{0, 255, 0, 0});
-    ui_object->add_child(text);
+    //const auto ui_object = std::make_shared<UIObject>("ui_object", "text", true, Transform{ Vector2d{400.f, -10.f}, Vector2d{}, 0.49f }, 100, 100);
+    const auto ui_velocity_indicator = std::make_shared<Text>("ui_velocity_indicator", "ui", true, Transform{ Vector2d{-50.f, -50.f}, Vector2d{}, 0.f }, 100, 100, "0.0", "./assets/Roboto/Roboto-Medium.ttf", 1000, Alignment::CENTER, 100, Color{200, 0, 0, 0}, Color{0, 255, 0, 0 }, Space::SCREEN);
+    ui_velocity_indicator->add_component(ui_velocity_indicator_behaviour);
 
     scene->gameobjects.push_back(track_outer);
     scene->gameobjects.push_back(track_inner);
     scene->gameobjects.push_back(car);
     scene->gameobjects.push_back(okto);
-    scene->gameobjects.push_back(ui_object);
+    scene->gameobjects.push_back(ui_velocity_indicator);
     scene->gameobjects.push_back(camera);
 
     // Add rigid bodies
