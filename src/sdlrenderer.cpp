@@ -47,7 +47,7 @@ void SdlRenderer::render_sprite(const Sprite& sprite, ITexture& texture, Transfo
 	const float left_corner_x = center.x + -sprite.get_size_x() * transform.get_scale() / 2.f;
 	const float left_corner_y = center.y + sprite.get_size_y() * transform.get_scale() / 2.f;
 
-	const auto left_corner = world_to_screen(Vector2d{ left_corner_x, left_corner_y });
+	const auto left_corner = world_space_to_screen(Vector2d{ left_corner_x, left_corner_y });
 
 	const int size_x = static_cast<int>(round(sprite.get_size_x() * transform.get_scale() * camera()->mtp));
 	const int size_y = static_cast<int>(round(sprite.get_size_y() * transform.get_scale() * camera()->mtp));
@@ -125,7 +125,7 @@ void SdlRenderer::render_lines(std::vector<Vector2d>& vectors, const Color& colo
 	points.reserve(vectors.size());
 
 	for(auto& vector : vectors) {
-		points.push_back(world_to_screen(transform_vector(vector)));
+		points.push_back(world_space_to_screen(transform_vector(vector)));
 	}
 	_renderer->SetDrawColor(static_cast<SDL2pp::Color>(color));
 	_renderer->DrawLines(points.data(), static_cast<int>(points.size()));
@@ -135,9 +135,11 @@ void SdlRenderer::render_text(const Text& text) const
 {
     SDL2pp::Font font(text.get_font(), text.get_size());
 
-	// TODO Cache font for performance gains
-	// https://stackoverflow.com/a/29725751/10787114
-	SDL2pp::Texture texture(*_renderer, font.RenderUTF8_Solid(text.get_text(), static_cast<SDL2pp::Color>(text.get_color())));
+	SDL2pp::Texture texture{ *_renderer, font.RenderUTF8_Shaded(
+			text.get_text(),
+			static_cast<SDL2pp::Color>(text.get_fg_color()),
+			static_cast<SDL2pp::Color>(text.get_bg_color())
+	) };
 
 	const auto center = transform_vector(text.transform.get_position());
 
@@ -147,7 +149,7 @@ void SdlRenderer::render_text(const Text& text) const
 	const float left_corner_x = center.x + -text_size_x * text.transform.get_scale() / 2.f;
 	const float left_corner_y = center.y + text_size_y * text.transform.get_scale() / 2.f;
 
-	const auto left_corner = world_to_screen(Vector2d{ left_corner_x, left_corner_y });
+	const auto left_corner = world_space_to_screen(Vector2d{ left_corner_x, left_corner_y });
 
 	const int size_x = static_cast<int>(round(text_size_x * text.transform.get_scale() * camera()->mtp));
 	const int size_y = static_cast<int>(round(text_size_y * text.transform.get_scale() * camera()->mtp));
@@ -196,7 +198,7 @@ void SdlRenderer::add_render_call(RenderCall& render_call) {
 	_render_queue.push_back(render_call);
 }
 
-SDL2pp::Point SdlRenderer::world_to_screen(const Vector2d& position) const
+SDL2pp::Point SdlRenderer::world_space_to_screen(const Vector2d& position) const
 {
 	// TODO Optimization: only retrieve when resolution changes
 	const SDL2pp::Point res = _renderer->GetOutputSize();
@@ -224,6 +226,16 @@ void SdlRenderer::toggle_fullscreen() {
 
 void SdlRenderer::toggle_debug_mode() {
 	_debug_mode = !_debug_mode;
+}
+
+SDL2pp::Point SdlRenderer::screen_space_to_screen(const Vector2d& position) const
+{
+	// TODO Optimization: only retrieve when resolution changes
+	const SDL2pp::Point res = _renderer->GetOutputSize();
+
+
+}
+
 Vector2d SdlRenderer::transform_vector(const Vector2d& position) const {
 	const auto camera_position = camera()->transform.get_position();
 	const auto position_translated = position - camera_position;

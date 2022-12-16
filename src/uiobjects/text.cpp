@@ -5,13 +5,26 @@
 #include "global.hpp"
 #include "../rendercall.hpp"
 
-Text::Text(const std::string& name, const std::string& tag, bool is_world_space, Transform transform, int width, int height, std::string text, std::string font, int size, Alignment alignment, Color color, int order_in_layer) :
+Text::Text(const std::string& name,
+    const std::string& tag,
+    bool is_world_space,
+    Transform transform,
+    int width, int height,
+    std::string text,
+    std::string font,
+    int size,
+    Alignment alignment,
+    int order_in_layer,
+    Color foreground_color,
+    Color background_color
+    ) :
 	UIObject(name, tag, is_world_space, transform, width, height),
 	_text(std::move(text)),
 	_font(std::move(font)),
 	_size(size),
 	_alignment(alignment),
-	_color(color),
+	_fg_color(foreground_color),
+	_bg_color(background_color),
 	_order_in_layer(order_in_layer)
 {
 }
@@ -32,8 +45,12 @@ Alignment Text::get_alignment() const {
     return _alignment;
 }
 
-Color Text::get_color() const {
-    return _color;
+Color Text::get_fg_color() const {
+    return _fg_color;
+}
+
+Color Text::get_bg_color() const {
+    return _bg_color;
 }
 
 void Text::set_text(std::string new_text) {
@@ -52,8 +69,13 @@ void Text::set_alignment(Alignment new_alignment) {
     _alignment = new_alignment;
 }
 
-void Text::set_color(Color new_color) {
-    _color = new_color;
+void Text::set_fg_color(const Color& new_color) {
+    _fg_color = new_color;
+}
+
+void Text::set_bg_color(const Color& new_color)
+{
+    _bg_color = new_color;
 }
 
 void Text::render() const {
