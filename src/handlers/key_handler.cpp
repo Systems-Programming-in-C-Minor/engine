@@ -166,7 +166,7 @@ void KeyHandler::tick() {
     for (auto &joystick: _joysticks) {
         const auto controller_name = SDL_JoystickName(joystick);
 
-        if (strcmp("Xbox One S Controller", controller_name) != 0) {
+        if (strcmp("Xbox One S Controller", controller_name) == 0) {
             _fire_joystick_axis_event_if_changed(LeftJoystickX, SDL_JoystickGetAxis(joystick, 0));
             _fire_joystick_axis_event_if_changed(LeftJoystickY, SDL_JoystickGetAxis(joystick, 1));
 
@@ -183,9 +183,9 @@ void KeyHandler::tick() {
             _fire_joystick_button_event_if_changed(YButton, SDL_JoystickGetButton(joystick, 3));
             _fire_joystick_button_event_if_changed(LeftButton, SDL_JoystickGetButton(joystick, 4));
             _fire_joystick_button_event_if_changed(RightButton, SDL_JoystickGetButton(joystick, 5));
-        } else if (strcmp("Xbox 360 Controller", controller_name) != 0 ||
-                   strcmp("PS4 Controller", controller_name) != 0 ||
-                   strcmp("PS5 Controller", controller_name) != 0) {
+        } else if (strcmp("Xbox 360 Controller", controller_name) == 0 ||
+                   strcmp("PS4 Controller", controller_name) == 0 ||
+                   strcmp("PS5 Controller", controller_name) == 0) {
             _fire_joystick_axis_event_if_changed(LeftJoystickX, SDL_JoystickGetAxis(joystick, 0));
             _fire_joystick_axis_event_if_changed(LeftJoystickY, SDL_JoystickGetAxis(joystick, 1));
 
