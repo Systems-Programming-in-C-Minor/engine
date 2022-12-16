@@ -201,6 +201,21 @@ void KeyHandler::tick() {
             _fire_joystick_button_event_if_changed(LeftButton, SDL_JoystickGetButton(joystick, 4));
             _fire_joystick_button_event_if_changed(RightButton, SDL_JoystickGetButton(joystick, 5));
         }
+        else if (strcmp("Generic USB Joystick", controller_name) == 0) {
+            _fire_joystick_axis_event_if_changed(LeftJoystickX, SDL_JoystickGetAxis(joystick, 0));
+            _fire_joystick_axis_event_if_changed(LeftJoystickY, SDL_JoystickGetAxis(joystick, 1));
+
+            _fire_joystick_axis_event_if_changed(LeftTrigger, SDL_JoystickGetButton(joystick, 5)*32767*2-32767);
+            _fire_joystick_axis_event_if_changed(RightTrigger, SDL_JoystickGetButton(joystick, 8)*32767*2-32767);
+
+            _fire_joystick_button_event_if_changed(AButton, SDL_JoystickGetButton(joystick, 2));
+            _fire_joystick_button_event_if_changed(BButton, SDL_JoystickGetButton(joystick, 1));
+            _fire_joystick_button_event_if_changed(XButton, SDL_JoystickGetButton(joystick, 3));
+            _fire_joystick_button_event_if_changed(YButton, SDL_JoystickGetButton(joystick, 0));
+
+            _fire_joystick_button_event_if_changed(LeftButton, SDL_JoystickGetButton(joystick, 5));
+            _fire_joystick_button_event_if_changed(RightButton, SDL_JoystickGetButton(joystick, 4));
+        }
     }
 
     _keys_active = keys_pressed;
