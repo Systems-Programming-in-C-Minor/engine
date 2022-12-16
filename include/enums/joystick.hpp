@@ -17,6 +17,10 @@ enum JoystickAxis {
     RightJoystickY,
     LeftTrigger,
     RightTrigger,
+    LeftTouchpadX,
+    LeftTouchpadY,
+    RightTouchpadX,
+    RightTouchpadY,
 };
 
 #endif //ENGINE_JOYSTICK_HPP
