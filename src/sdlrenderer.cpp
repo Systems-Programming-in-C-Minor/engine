@@ -54,6 +54,7 @@ void SdlRenderer::render_sprite(const Sprite& sprite, ITexture& texture, Transfo
 
 void SdlRenderer::render_rigid_body(const RigidBody& rigid_body, Transform& transform, bool is_world_space) const
 {
+	if (!_debug_mode) return;
 	b2Body* body = rigid_body.get_body();
 	b2Shape* shape = body->GetFixtureList()->GetShape();
 	switch(shape->GetType())
@@ -62,15 +63,11 @@ void SdlRenderer::render_rigid_body(const RigidBody& rigid_body, Transform& tran
 		case b2Shape::Type::e_circle: break;
 		case b2Shape::Type::e_polygon:
 			{
-				if (!_debug_mode)
-					break;
 				render_ngon(body, dynamic_cast<b2PolygonShape*>(shape));
 				break;
 			}
 		case b2Shape::Type::e_chain:
 			{
-				if (!_debug_mode)
-					break;
 				render_ngon(body, dynamic_cast<b2ChainShape*>(shape));
 				break;
 			}
@@ -117,6 +114,7 @@ void SdlRenderer::render_ngon(b2Body* body, b2ChainShape* shape) const
 
 void SdlRenderer::render_lines(std::vector<Vector2d>& vectors, const Color& color) const
 {
+	if (!_debug_mode) return;
 	std::vector<SDL2pp::Point> points;
 	points.reserve(vectors.size());
 
