@@ -128,6 +128,9 @@ void SdlRenderer::render_lines(std::vector<Vector2d>& vectors, const Color& colo
 void SdlRenderer::render_text(const Text& text) const
 {
     SDL2pp::Font font(text.get_font(), text.get_size());
+
+	// TODO Cache font for performance gains
+	// https://stackoverflow.com/a/29725751/10787114
 	SDL2pp::Texture texture(*_renderer, font.RenderUTF8_Solid(text.get_text(), static_cast<SDL2pp::Color>(text.get_color())));
 
     const auto text_size_x = static_cast<float>(text.get_width());

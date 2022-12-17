@@ -44,3 +44,7 @@ void Sprite::load_texture()
 {
 	_texture = std::make_shared<SdlTexture>(_sprite, &res_x, &res_y);
 }
+
+void Sprite::set_color(const Color& color) {
+	_texture->set_color(color);
+}

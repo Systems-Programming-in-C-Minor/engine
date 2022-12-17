@@ -18,6 +18,7 @@ public:
     void render(bool is_world_space) const override;
     [[nodiscard]] float get_size_x() const;
     [[nodiscard]] float get_size_y() const;
+    void set_color(const Color& color);
 private:
     std::string _sprite;
     Color color;

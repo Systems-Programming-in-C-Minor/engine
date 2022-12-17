@@ -14,6 +14,7 @@ class ITexture {
 public:
     ITexture(const std::string& path) {}
 
+    virtual void set_color(const Color& color) = 0;
 private:
     friend class SdlRenderer;
     [[nodiscard]] virtual std::shared_ptr<SDL2pp::Texture> get_texture() const = 0;
