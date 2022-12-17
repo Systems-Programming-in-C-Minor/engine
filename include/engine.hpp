@@ -12,6 +12,7 @@
 class Engine {
 private:
     bool _should_quit;
+    double _time_scale = 1.0;
     const std::shared_ptr<Time> _time;
     const std::shared_ptr<KeyHandler> _key_handler;
     const std::shared_ptr<MouseHandler> _mouse_handler;
@@ -50,6 +51,10 @@ public:
     [[nodiscard]] unsigned long get_number_of_controllers() const;
 
     [[nodiscard]] Time &get_time() const;
+
+    [[nodiscard]] double get_time_scale();
+
+    void set_time_scale(double time_scale);
 };
 
 #endif //ENGINE_ENGINE_HPP

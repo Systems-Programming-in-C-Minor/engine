@@ -1,4 +1,5 @@
 #include "time.hpp"
+#include "global.hpp"
 #include <chrono>
 
 float Time::delta_time() const {
@@ -7,7 +8,7 @@ float Time::delta_time() const {
 }
 
 double Time::time_scale() const {
-    return _time_scale;
+    return Global::get_instance()->get_engine().get_time_scale();
 }
 
 void Time::time_scale(double new_time_scale) {

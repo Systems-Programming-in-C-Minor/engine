@@ -21,7 +21,7 @@ void Engine::start() {
     while (!_should_quit) {
         SDL_PumpEvents();
         auto start_time = std::chrono::steady_clock::now();
-        auto end_time = start_time + std::chrono::duration<int, std::ratio<1, 60>>(1);
+        auto end_time = start_time + std::chrono::duration<int, std::ratio<1, 60>>(1) * _time_scale;
 
         _renderer->clear(Color(0.0, 0.0, 0.0, 255.0));
         _key_handler->tick();
@@ -94,6 +94,14 @@ Engine::Engine(std::shared_ptr<IRenderer> renderer, const std::string &user_id, 
 
 unsigned long Engine::get_number_of_controllers() const {
     return _key_handler->get_number_of_controllers();
+}
+
+void Engine::set_time_scale(double time_scale) {
+    _time_scale = time_scale;
+}
+
+double Engine::get_time_scale() {
+    return _time_scale;
 }
 
 Engine::~Engine() = default;

@@ -39,6 +39,16 @@ public:
             Global::get_instance()->get_engine().get_renderer()->toggle_fullscreen();
         if (event.key == D && _ALT)
             Global::get_instance()->get_engine().get_renderer()->toggle_debug_mode();
+        if (event.key == EQUAL) {
+            double ts = Global::get_instance()->get_engine().get_time_scale();
+            Global::get_instance()->get_engine().set_time_scale(ts - 0.1);
+            std::cout << ts << std::endl;
+        }
+        if (event.key == MIN) {
+            double ts = Global::get_instance()->get_engine().get_time_scale();
+            Global::get_instance()->get_engine().set_time_scale(ts + 0.1);
+            std::cout << ts << std::endl;
+        }
         if (enabled)
             std::cout << "Pressed key: " << event.key << std::endl;
     }
