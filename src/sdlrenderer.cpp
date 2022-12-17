@@ -62,11 +62,15 @@ void SdlRenderer::render_rigid_body(const RigidBody& rigid_body, Transform& tran
 		case b2Shape::Type::e_circle: break;
 		case b2Shape::Type::e_polygon:
 			{
+				if (!_debug_mode)
+					break;
 				render_ngon(body, dynamic_cast<b2PolygonShape*>(shape));
 				break;
 			}
 		case b2Shape::Type::e_chain:
 			{
+				if (!_debug_mode)
+					break;
 				render_ngon(body, dynamic_cast<b2ChainShape*>(shape));
 				break;
 			}
@@ -209,12 +213,16 @@ void SdlRenderer::toggle_fullscreen() {
 	_fullscreen = true;
 }
 
+void SdlRenderer::toggle_debug_mode() {
+	_debug_mode = !_debug_mode;
+}
+
 std::shared_ptr<SDL2pp::Renderer> SdlRenderer::get_renderer()
 {
 	return _renderer;
 }
 
-SdlRenderer::SdlRenderer(int res_x, int res_y, bool fullscreen) : _windowed_res_x(res_x), _windowed_res_y(res_y)
+SdlRenderer::SdlRenderer(int res_x, int res_y, bool fullscreen, bool debug_mode) : _windowed_res_x(res_x), _windowed_res_y(res_y), _debug_mode(debug_mode)
 {	
 	init(fullscreen);
 }
