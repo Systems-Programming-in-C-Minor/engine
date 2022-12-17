@@ -89,7 +89,7 @@ public:
 	*/
 	void get_display_resolution(int* width, int* height);
 
-	explicit SdlRenderer(int res_x = 800, int res_y = 600, bool fullscreen = true);
+	explicit SdlRenderer(int res_x = 800, int res_y = 600, bool fullscreen = false);
 	virtual ~SdlRenderer();
 private:
 	void init(bool fullscreen);
