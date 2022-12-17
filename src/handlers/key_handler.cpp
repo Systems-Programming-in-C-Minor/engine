@@ -216,7 +216,8 @@ void KeyHandler::tick() {
 
             _fire_joystick_button_event_if_changed(joystick, LeftButton, SDL_JoystickGetButton(joystick, 5));
             _fire_joystick_button_event_if_changed(joystick, RightButton, SDL_JoystickGetButton(joystick, 4));
-        } else if (strcmp("Wireless Steam Controller", controller_name) == 0) {
+        } else if (strcmp("Wireless Steam Controller", controller_name) == 0 ||
+                   strcmp("Steam Controller", controller_name) == 0) {
             _fire_joystick_axis_event_if_changed(joystick, LeftJoystickX, SDL_JoystickGetAxis(joystick, 0));
             _fire_joystick_axis_event_if_changed(joystick, LeftJoystickY, SDL_JoystickGetAxis(joystick, 1));
 
