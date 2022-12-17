@@ -285,3 +285,7 @@ void KeyHandler::_fire_joystick_axis_event_if_changed(SDL_Joystick *joystick, Jo
 float KeyHandler::_normalize_axis(int value) {
     return static_cast<float>(value + 32767) / 32767.0f - 1.0f;
 }
+
+unsigned long KeyHandler::get_number_of_controllers() const {
+    return _joysticks.size();
+}

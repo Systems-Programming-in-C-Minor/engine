@@ -21,11 +21,15 @@ private:
     static std::vector<Key> fetch_keys();
 
     void _fire_joystick_button_event_if_changed(_SDL_Joystick *joystick, JoystickButton button, int value);
+
     void _fire_joystick_axis_event_if_changed(_SDL_Joystick *joystick, JoystickAxis axis, int value);
+
     static float _normalize_axis(int value);
 
 public:
     void tick();
+
+    [[nodiscard]] unsigned long get_number_of_controllers() const;
 
     KeyHandler();
 

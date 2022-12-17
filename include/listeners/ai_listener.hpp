@@ -9,7 +9,7 @@ class AIListener {
 protected:
     explicit AIListener(EventManager &manager);
 public:
-    virtual void on_target_reached(const AITargetReachedEvent &event) = 0;
+    virtual void on_target_reached(const AITargetReachedEvent &event) {};
 };
 
 #endif //ENGINE_AI_LISTENER_HPP

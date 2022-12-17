@@ -41,7 +41,7 @@ void Engine::start() {
         _time_after_last_frame = current_nanos;
 
         SDL_Event event;
-        while(SDL_PollEvent(&event)) {
+        while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT || event.type == SDL_APP_TERMINATING) {
                 stop();
             }
@@ -90,6 +90,10 @@ Engine::Engine(std::shared_ptr<IRenderer> renderer, const std::string &user_id, 
         _multiplayer_manager = std::make_shared<HostMultiplayerManager>(user_id);
     else
         _multiplayer_manager = std::make_shared<ClientMultiplayerManager>(user_id);
+}
+
+unsigned long Engine::get_number_of_controllers() const {
+    return _key_handler->get_number_of_controllers();
 }
 
 Engine::~Engine() = default;
