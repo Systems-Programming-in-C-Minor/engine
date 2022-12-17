@@ -37,6 +37,8 @@ public:
             _ALT = true;
         if (event.key == ENTER && _ALT) 
             Global::get_instance()->get_engine().get_renderer()->toggle_fullscreen();
+        if (event.key == D && _ALT)
+            Global::get_instance()->get_engine().get_renderer()->toggle_debug_mode();
         if (enabled)
             std::cout << "Pressed key: " << event.key << std::endl;
     }

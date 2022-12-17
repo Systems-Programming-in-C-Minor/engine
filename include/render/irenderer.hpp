@@ -21,6 +21,7 @@ public:
 	virtual void push_to_screen() = 0;
     virtual void add_render_call(RenderCall& render_call) = 0;
 	virtual void toggle_fullscreen() = 0;
+	virtual void toggle_debug_mode() = 0;
 
     virtual ~IRenderer() = default;
 };

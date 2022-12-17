@@ -54,6 +54,7 @@ void SdlRenderer::render_sprite(const Sprite& sprite, ITexture& texture, Transfo
 
 void SdlRenderer::render_rigid_body(const RigidBody& rigid_body, Transform& transform, bool is_world_space) const
 {
+	if (!_debug_mode) return;
 	b2Body* body = rigid_body.get_body();
 	b2Shape* shape = body->GetFixtureList()->GetShape();
 	switch(shape->GetType())
@@ -113,6 +114,7 @@ void SdlRenderer::render_ngon(b2Body* body, b2ChainShape* shape) const
 
 void SdlRenderer::render_lines(std::vector<Vector2d>& vectors, const Color& color) const
 {
+	if (!_debug_mode) return;
 	std::vector<SDL2pp::Point> points;
 	points.reserve(vectors.size());
 
@@ -205,8 +207,12 @@ void SdlRenderer::toggle_fullscreen() {
 	SDL_DisplayMode dm;
 	SDL_GetCurrentDisplayMode(_window->GetDisplayIndex(), &dm);
 	_window->SetSize(dm.w, dm.h);
-	_window->SetFullscreen(SDL_WINDOW_FULLSCREEN);
+	_window->SetFullscreen(SDL_WINDOW_FULLSCREEN_DESKTOP);
 	_fullscreen = true;
+}
+
+void SdlRenderer::toggle_debug_mode() {
+	_debug_mode = !_debug_mode;
 }
 
 std::shared_ptr<SDL2pp::Renderer> SdlRenderer::get_renderer()
@@ -214,7 +220,7 @@ std::shared_ptr<SDL2pp::Renderer> SdlRenderer::get_renderer()
 	return _renderer;
 }
 
-SdlRenderer::SdlRenderer(int res_x, int res_y, bool fullscreen) : _windowed_res_x(res_x), _windowed_res_y(res_y)
+SdlRenderer::SdlRenderer(int res_x, int res_y, bool fullscreen, bool debug_mode) : _windowed_res_x(res_x), _windowed_res_y(res_y), _debug_mode(debug_mode)
 {	
 	init(fullscreen);
 }
