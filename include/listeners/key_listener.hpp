@@ -10,11 +10,11 @@ protected:
     explicit KeyListener(EventManager &event_manager);
 
 public:
-    virtual void on_key_pressed(const KeyPressedEvent &event) = 0;
+    virtual void on_key_pressed(const KeyPressedEvent &event) {};
 
-    virtual void on_key_hold(const KeyHoldEvent &event) = 0;
+    virtual void on_key_hold(const KeyHoldEvent &event) {};
 
-    virtual void on_key_released(const KeyReleasedEvent &event) = 0;
+    virtual void on_key_released(const KeyReleasedEvent &event) {};
 };
 
 #endif //ENGINE_IKEYLISTENER_HPP

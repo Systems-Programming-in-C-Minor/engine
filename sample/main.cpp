@@ -325,7 +325,7 @@ int main() {
         scene->gameobjects.push_back(target);
     }
 
-    const auto ai_car = std::make_shared<Car>("ai_car", "ai-car", "./assets/blue_car.png", scene, 10, Vector2d{14, -76} );
+    const auto ai_car = std::make_shared<Car>("ai_car", "ai-car", "./assets/blue_car.png", scene, 10, Vector2d{14, -76});
     ai_car->add_component(std::make_shared<AIBehaviour>(targets[0]));
     auto ai_listener_component = std::make_shared<AITargetListenerComponent>(scene->get_event_manager());
     ai_car->add_component(ai_listener_component);

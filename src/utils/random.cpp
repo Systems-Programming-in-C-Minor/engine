@@ -5,7 +5,7 @@ int Random::random(int max, int min) {
     std::random_device device;
     std::default_random_engine engine{device()};
 
-    std::uniform_int_distribution<int> dist{min, static_cast<int>(max)};
+    std::uniform_int_distribution<int> dist{min, max};
     return dist(engine);
 }
 

@@ -27,9 +27,9 @@ public:
 
     explicit Engine(std::shared_ptr<IRenderer> renderer);
 
-    explicit Engine(const std::string& user_id, bool is_host = true);
+    explicit Engine(const std::string &user_id, bool is_host = true);
 
-    Engine(std::shared_ptr<IRenderer> renderer, const std::string& user_id, bool is_host = true);
+    Engine(std::shared_ptr<IRenderer> renderer, const std::string &user_id, bool is_host = true);
 
     virtual ~Engine();
 
@@ -46,6 +46,8 @@ public:
     [[nodiscard]] unsigned long get_fps() const;
 
     [[nodiscard]] virtual std::shared_ptr<IRenderer> get_renderer() const;
+
+    [[nodiscard]] unsigned long get_number_of_controllers() const;
 
     [[nodiscard]] Time &get_time() const;
 };
