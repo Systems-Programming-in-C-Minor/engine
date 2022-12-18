@@ -14,7 +14,7 @@ private:
 
     void _turn(float steering);
 
-protected:
+public:
     void turn(float amount = 1.0f);
 
     void drive_forwards(float amount = 1.0f);
@@ -27,7 +27,6 @@ protected:
 
     void brake();
 
-public:
     float max_speed_forwards = 2030.f;
     float max_speed_backwards = -1200.f;
     float max_drive_force = 800.f;
