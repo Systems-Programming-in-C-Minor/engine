@@ -19,6 +19,9 @@ enum Event {
     JoystickAxisCurrent,
     JoystickAxisChanged,
     AITargetReached,
+    CheckpointTouched,
+    CheckpointReached,
+    CheckpointLapped,
 };
 
 class IEvent {

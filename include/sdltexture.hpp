@@ -29,6 +29,7 @@ public:
 	SdlTexture(const std::string& path, unsigned int* res_x, unsigned int* res_y);
 
 	[[nodiscard]] std::shared_ptr<SDL2pp::Texture> get_texture() const override;
+	void set_color(const Color& color) override;
 private:
 	std::shared_ptr<SDL2pp::Texture> _texture;
 

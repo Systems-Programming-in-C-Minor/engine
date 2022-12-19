@@ -1,4 +1,4 @@
-#include "../include/listeners/collider_listener.hpp"
+#include "listeners/collider_listener.hpp"
 
 ColliderListener::ColliderListener(EventManager &manager) {
     manager.register_listener(ColliderEntry, [this](const IEvent &event) {

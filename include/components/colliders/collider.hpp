@@ -10,7 +10,7 @@ class b2Shape;
 class RigidBody;
 
 /**
- * Component class for colliders
+ * @brief The base class for all colliders.
  */
 class Collider
 {
@@ -20,6 +20,12 @@ protected:
     std::vector<Vector2d> _points;
     bool _ignore_collision_physics;
 
+    /**
+     * @brief Set the collider's fixture.
+     * @param body The current b2Body.
+     * @param friction desired friction.
+     * @param restitution The desired restitution.
+     */
     virtual void set_fixture(b2Body& body, float friction, float restitution) = 0;
 };
 

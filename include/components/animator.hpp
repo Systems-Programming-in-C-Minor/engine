@@ -9,6 +9,9 @@
 
 using Sprites = std::vector<std::shared_ptr<Sprite>>;
 
+/**
+ * @brief A component which can play animated sequences of sprites.
+ */
 class Animator : public Component, public ITickable {
 public:
 
@@ -30,7 +33,7 @@ public:
     /**
      * @brief Run the animation every tick.
      * @details First determine if the Sprite should be swapped this tick. If so, do so.
-     * @param object
+     * @param object the GameObject on which the action is performed.
      */
     void tick(GameObject &object) override;
 
