@@ -44,8 +44,10 @@ void SDLMixerSoundEngine::play(const std::string &path, double volume, bool loop
 
 void SDLMixerSoundEngine::stop(const std::string &path)
 {
-    int channel_number = _channels[path];
-    Mix_Pause(channel_number);
+    if(_audio_files.contains(path))
+    {
+        Mix_Pause(_channels[path]);
+    }
 }
 
 SDLMixerSoundEngine::~SDLMixerSoundEngine()
