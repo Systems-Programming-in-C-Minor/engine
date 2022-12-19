@@ -18,8 +18,8 @@ private:
 
     void move_to_target();
 public:
-    explicit AIBehaviour(RigidBody &body, std::shared_ptr<GameObject> target);
-    explicit AIBehaviour(RigidBody &body);
+    explicit AIBehaviour(std::shared_ptr<RigidBody> body, std::shared_ptr<GameObject> target);
+    explicit AIBehaviour(std::shared_ptr<RigidBody> body);
     ~AIBehaviour() override;
 
     float reached_target_distance = 5.f;

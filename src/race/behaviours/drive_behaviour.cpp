@@ -2,9 +2,10 @@
 #include <gameobject.hpp>
 #include <iostream>
 #include <iomanip>
+#include <utility>
 #include "global.hpp"
 
-DriveBehaviour::DriveBehaviour(RigidBody &body) : _body(body) {}
+DriveBehaviour::DriveBehaviour(std::shared_ptr<RigidBody> body) : _body(std::move(body)) {}
 
 void DriveBehaviour::_drive(float desired_speed){
     if(desired_speed > max_speed_forwards)
@@ -14,15 +15,14 @@ void DriveBehaviour::_drive(float desired_speed){
         desired_speed = max_speed_backwards;
 
     //find current speed in forward direction
-    float current_speed = _body.get_current_speed();
+    float current_speed = _body->get_current_speed();
 
     //apply necessary force
     float force = std::min(max_drive_force, std::max(-max_drive_force, (desired_speed/100 - current_speed) * max_drive_force));
 
-//    float force = (desired_speed > current_speed) ? max_drive_force : -max_drive_force;
     if (desired_speed != current_speed) {
-        auto force_vec = _body.get_world_vector(Vector2d{0, 1}) * drive_traction * force;
-        _body.apply_force(force_vec, _body.get_world_center());
+        auto force_vec = _body->get_world_vector(Vector2d{0, 1}) * drive_traction * force;
+        _body->apply_force(force_vec, _body->get_world_center());
     }
 }
 
@@ -33,7 +33,7 @@ void DriveBehaviour::_turn(float steering) {
     if(steering < -steering_impulse)
         steering = -steering_impulse;
     
-    auto speed = _body.get_current_speed();
+    auto speed = _body->get_current_speed();
 
     if (speed < 0.5f && speed > -0.5f)
         return;
@@ -41,7 +41,7 @@ void DriveBehaviour::_turn(float steering) {
     if (speed < 0)
         steering *= -1;
 
-    _body.apply_angular_impulse(steering);
+    _body->apply_angular_impulse(steering);
 }
 
 void DriveBehaviour::turn_left(float amount) {

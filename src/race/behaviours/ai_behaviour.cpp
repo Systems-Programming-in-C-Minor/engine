@@ -59,8 +59,8 @@ void AIBehaviour::tick(GameObject &gameObject) {
     move_to_target();
 }
 
-AIBehaviour::AIBehaviour(RigidBody &body, std::shared_ptr<GameObject> target) : DriveBehaviour(body) {
+AIBehaviour::AIBehaviour(std::shared_ptr<RigidBody> body, std::shared_ptr<GameObject> target) : DriveBehaviour(std::move(body)) {
     _target = std::move(target);
 }
 
-AIBehaviour::AIBehaviour(RigidBody &body) : DriveBehaviour(body) {}
+AIBehaviour::AIBehaviour(std::shared_ptr<RigidBody> body) : DriveBehaviour(std::move(body)) {}

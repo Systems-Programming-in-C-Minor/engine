@@ -4,6 +4,7 @@
 
 #include "interfaces/itickable.hpp"
 #include "components/component.hpp"
+#include <memory>
 
 class RigidBody;
 
@@ -17,7 +18,7 @@ private:
 
 
 protected:
-    explicit DriveBehaviour(RigidBody &body);
+    explicit DriveBehaviour(std::shared_ptr<RigidBody> body);
 
     std::shared_ptr<RigidBody> _body;
 
