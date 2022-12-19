@@ -18,7 +18,7 @@ private:
 
 
 protected:
-    explicit DriveBehaviour(std::shared_ptr<RigidBody> body);
+    explicit DriveBehaviour(std::shared_ptr<RigidBody> body, bool is_enabled = true);
 
     std::shared_ptr<RigidBody> _body;
 
@@ -41,6 +41,8 @@ public:
     float max_drive_force = 800.f;
     float drive_traction = 3.6f;
     float steering_impulse = 60.f;
+
+    bool is_enabled;
 };
 
 #endif //ENGINE_DRIVE_BEHAVIOUR_HPP
