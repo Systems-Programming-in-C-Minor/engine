@@ -4,10 +4,10 @@
 #include "color.hpp"
 #include "vector2d.hpp"
 
-    /**
-     * @brief Some convenient debugging functions.
-     */
-namespace Debug {
+/**
+ * @brief Some convenient debugging functions.
+ */
+class Debug {
 
     /**
      * @brief Draws a colored line between specified start and end points.

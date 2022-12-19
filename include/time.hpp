@@ -21,7 +21,7 @@ public:
     [[nodiscard]] double time_scale() const;
 
     /**
-     * @brief The set the new time scale.
+     * @brief The setter of the new time scale.
      * @param new_time_scale the new time scale value
      */
     void time_scale(double new_time_scale);
