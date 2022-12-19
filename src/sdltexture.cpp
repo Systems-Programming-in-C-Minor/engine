@@ -2,10 +2,11 @@
 #include "sdltexture.hpp"
 #include "utils/exceptionhandlers.hpp"
 #include "global.hpp"
-
+#include "SDL2pp/Color.hh"
 #include "SDL2pp/Texture.hh"
 #include "fmt/core.h"
 
+#include "color.hpp"
 #include <string>
 #include <filesystem>
 
@@ -61,4 +62,8 @@ try {
 	*res_y = _texture->GetHeight();
 }
 catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
+
+void SdlTexture::set_color(const Color& color) {
+	_texture->SetColorAndAlphaMod(static_cast<SDL2pp::Color>(color));
+}
 
