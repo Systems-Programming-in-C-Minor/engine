@@ -28,7 +28,7 @@ void CheckpointBehaviour::check_and_set_checkpoint(GameObject *game_object) {
     auto new_checkpoint = checkpoint->previous_checkpoint.has_value() && _reached.has_value() &&
                           checkpoint->previous_checkpoint.value()->get_name() == _reached.value()->get_name();
 
-    if (checkpoint->_is_finish_line && new_checkpoint) {
+    if (checkpoint->is_finish_line && new_checkpoint) {
         _reached = std::nullopt;
         const auto now = std::chrono::system_clock::now();
         const auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(now);

@@ -10,7 +10,7 @@ public:
                std::optional<std::shared_ptr<Checkpoint>> previous_checkpoint);
 
     const std::optional<std::shared_ptr<Checkpoint>> previous_checkpoint;
-    const bool _is_finish_line;
+    const bool is_finish_line;
 };
 
 #endif //GAME_CHECKPOINT_HPP
