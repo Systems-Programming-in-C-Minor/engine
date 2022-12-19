@@ -28,8 +28,10 @@ void NetworkClient::_read_body() {
                      asio::buffer(_read_msg.body(), _read_msg.body_length()),
                      [this](std::error_code ec, std::size_t /*length*/) {
                          if (!ec) {
-                             std::cout.write(_read_msg.body(), _read_msg.body_length());
-                             std::cout << "\n";
+                             const auto text = std::string(_read_msg.body(), _read_msg.body_length());
+                             for (const auto &callback: _callbacks) {
+                                 callback(text);
+                             }
                              _read_header();
                          } else {
                              _socket.close();
@@ -79,4 +81,8 @@ void NetworkClient::write(const NetworkMessage &msg) {
 
 void NetworkClient::close() {
     asio::post(_io_context, [this]() { _socket.close(); });
+}
+
+void NetworkClient::on_message(const std::function<void(std::string)>& callback) {
+    _callbacks.push_back(callback);
 }

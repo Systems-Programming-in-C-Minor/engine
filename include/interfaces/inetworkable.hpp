@@ -17,9 +17,14 @@ protected:
      * @brief Explicit constructor.
      * @param id The id of the INetworkable object.
      */
-    explicit INetworkable(std::string id) : _id(std::move(id)) {}
+    explicit INetworkable(std::string id, bool transmit, bool receive) : _id(std::move(id)),
+                                                                         transmit(transmit),
+                                                                         receive(receive) {}
 
 public:
+    bool transmit;
+    bool receive;
+
     /**
      * @brief Serialize the INetworkable object.
      * @return The serialized object as a std::string.

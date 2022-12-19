@@ -6,7 +6,8 @@
 #include <iostream>
 #include <thread>
 #include <asio.hpp>
-#include "chat_message.hpp"
+#include <list>
+#include "network_message.hpp"
 
 class NetworkClient {
 private:
@@ -14,6 +15,7 @@ private:
     asio::ip::tcp::socket _socket;
     NetworkMessage _read_msg;
     std::deque<NetworkMessage> _write_msgs;
+    std::list<std::function<void(std::string)>> _callbacks;
 
     void _connect(const asio::ip::tcp::resolver::results_type &endpoints);
 
@@ -27,6 +29,8 @@ public:
     NetworkClient(asio::io_context &io_context, const std::string &signaling_server);
 
     void write(const NetworkMessage &msg);
+
+    void on_message(const std::function<void(std::string)>& callback);
 
     void close();
 };

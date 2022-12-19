@@ -12,6 +12,8 @@ private:
     asio::io_context _io_context;
     NetworkClient _network_client;
     std::thread _networking_thread;
+    std::deque<std::string> _received_messages;
+    std::mutex _received_messages_mutex;
 
 public:
     MultiplayerClient(const std::string& player_name, const std::string& signaling_server);
