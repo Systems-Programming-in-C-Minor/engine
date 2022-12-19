@@ -1,9 +1,8 @@
-
 #ifndef ENGINE_COLLIDER_LISTENER_HPP
 #define ENGINE_COLLIDER_LISTENER_HPP
 
 #include "events.hpp"
-#include "../include/managers/event_manager.hpp"
+#include "managers/event_manager.hpp"
 
 /**
  * @brief Interface for objects wanting to respond to collider events.
@@ -29,7 +28,8 @@ public:
      *        Override for implementing the desired behaviour.
      * @param event The desired ColliderExitEvent.
      */
-    virtual void on_collider_exit(const ColliderExitEvent &event) = 0;
+    virtual void on_collider_exit(const ColliderExitEvent &event) {};
+
 
 };
 

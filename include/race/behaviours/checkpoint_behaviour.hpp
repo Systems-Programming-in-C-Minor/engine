@@ -2,7 +2,7 @@
 #define GAME_CHECKPOINT_BEHAVIOUR_HPP
 
 #include <components/component.hpp>
-#include <listeners/collider_listener.hpp>
+#include "listeners/collider_listener.hpp"
 #include <optional>
 
 class Checkpoint;
@@ -13,13 +13,14 @@ public:
 
     void on_collider_entry(const ColliderEntryEvent &event) override;
 
-    void on_collider_exit(const ColliderExitEvent &event) override;
-
-    [[nodiscard]] int get_laps() const;
+    [[nodiscard]] int get_number_of_laps() const;
 
     [[nodiscard]] std::vector<long> get_lap_times() const;
 
+    [[nodiscard]] std::optional<std::shared_ptr<Checkpoint>> get_last_touched() const;
+
 private:
+    std::optional<std::shared_ptr<Checkpoint>> _last_touched = std::nullopt;
     std::optional<std::shared_ptr<Checkpoint>> _reached = std::nullopt;
 
     std::vector<long> _lap_times;

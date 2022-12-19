@@ -10,7 +10,7 @@
 
 class GameObject;
 
-class AIBehaviour : public Component, public DriveBehaviour, public ITickable {
+class AIBehaviour : public Component, public ITickable {
 
 private:
     std::shared_ptr<GameObject> _target;
@@ -18,8 +18,8 @@ private:
 
     void move_to_target();
 public:
-    explicit AIBehaviour(std::shared_ptr<RigidBody> body, std::shared_ptr<GameObject> target);
-    explicit AIBehaviour(std::shared_ptr<RigidBody> body);
+    explicit AIBehaviour(std::shared_ptr<GameObject> target = {});
+
     ~AIBehaviour() override;
 
     float reached_target_distance = 5.f;
