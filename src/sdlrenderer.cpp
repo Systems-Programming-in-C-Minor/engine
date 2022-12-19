@@ -152,9 +152,9 @@ void SdlRenderer::render_lines(std::vector<Vector2d>& vectors, const Color& colo
 	_renderer->DrawLines(points.data(), static_cast<int>(points.size()));
 }
 
-void SdlRenderer::clear(const Color& color) const try
+void SdlRenderer::clear() const try
 {
-	const auto _color = static_cast<SDL2pp::Color>(color);
+	const auto _color = static_cast<SDL2pp::Color>(camera()->background_color);
 	_renderer->SetDrawColor(_color).Clear();
 } catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
 

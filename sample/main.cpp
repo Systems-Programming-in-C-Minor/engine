@@ -224,7 +224,7 @@ int main() {
     Engine &engine_ref = global->get_engine();
 
     // Setup scene
-    const auto camera = std::make_shared<Camera>();
+    const auto camera = std::make_shared<Camera>(Transform{}, Color{0, 255, 0, 0}, 5);
 	const auto scene = std::make_shared<Scene>(camera);
 
     // Create game objects with component

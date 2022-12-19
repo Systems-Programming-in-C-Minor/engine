@@ -23,7 +23,7 @@ void Engine::start() {
 		ThreadWait thread_wait{_tps};
 
 		SDL_PumpEvents();
-		_renderer->clear(Color(0.0, 0.0, 0.0, 255.0));
+		_renderer->clear();
 		_key_handler->tick();
 		_mouse_handler->tick();
 		_active_scene->tick();

@@ -17,7 +17,7 @@ public:
     virtual void render_texture(ITexture & texture, Transform & transform, float width, float height) const = 0;
 	virtual void render_rigid_body(const RigidBody& rigid_body) const = 0;
 	virtual void render_lines(std::vector<Vector2d>& vectors, const Color& color) const = 0;
-	virtual void clear(const Color& color) const = 0;
+	virtual void clear() const = 0;
 	virtual void push_to_screen() = 0;
     virtual void add_render_call(RenderCall& render_call) = 0;
 	virtual void toggle_fullscreen() = 0;

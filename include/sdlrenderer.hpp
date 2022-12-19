@@ -57,7 +57,7 @@ public:
 	/**
 	 * @brief Clears the backbuffer and applies a default colour
 	 */
-	void clear(const Color& color) const override;
+	void clear() const override;
 
 	/**
 	 * @brief Presents the composed backbuffer
