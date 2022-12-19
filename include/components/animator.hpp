@@ -14,6 +14,8 @@ public:
 
     Animator(Sprites sprites, int fps);
 
+    Animator(Sprites sprites, int fps, bool start_playing, bool looping = false);
+
     /**
      * @brief Start the animation on the next tick.
      * @param looping when the animation is finished start it again automatically.

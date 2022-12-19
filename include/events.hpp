@@ -1,10 +1,14 @@
 #ifndef ENGINE_EVENTS_HPP
 #define ENGINE_EVENTS_HPP
 
+#include <utility>
+
 #include "interfaces/ievent.hpp"
 #include "enums/key.hpp"
+#include "enums/joystick.hpp"
 #include "enums/mouse_input.hpp"
 #include "components/rigidbody.hpp"
+#include "race/behaviours/ai_behaviour.hpp"
 
 class Collider;
 
@@ -47,6 +51,53 @@ public:
     Key key;
 };
 
+class JoystickButtonPressedEvent : public IEvent {
+public:
+    explicit JoystickButtonPressedEvent(int joystick_id, JoystickButton button) : IEvent(JoystickButtonPressed),
+                                                                                  joystick_id(joystick_id),
+                                                                                  button(button) {};
+    int joystick_id;
+    JoystickButton button;
+};
+
+class JoystickButtonHoldEvent : public IEvent {
+public:
+    explicit JoystickButtonHoldEvent(int joystick_id, JoystickButton button) : IEvent(JoystickButtonHold),
+                                                                               joystick_id(joystick_id),
+                                                                               button(button) {};
+    int joystick_id;
+    JoystickButton button;
+};
+
+class JoystickButtonReleasedEvent : public IEvent {
+public:
+    explicit JoystickButtonReleasedEvent(int joystick_id, JoystickButton button) : IEvent(JoystickButtonReleased),
+                                                                                   joystick_id(joystick_id),
+                                                                                   button(button) {};
+    int joystick_id;
+    JoystickButton button;
+};
+
+class JoystickAxisChangedEvent : public IEvent {
+public:
+    JoystickAxisChangedEvent(int joystick_id, JoystickAxis axis, float value) : IEvent(JoystickAxisChanged),
+                                                                                joystick_id(joystick_id), axis(axis),
+                                                                                value(value) {};
+    int joystick_id;
+    JoystickAxis axis;
+    float value;
+};
+
+class JoystickAxisCurrentEvent : public IEvent {
+public:
+    JoystickAxisCurrentEvent(int joystick_id, JoystickAxis axis, float value) : IEvent(JoystickAxisCurrent),
+                                                                                joystick_id(joystick_id), axis(axis),
+                                                                                value(value) {};
+    int joystick_id;
+    JoystickAxis axis;
+    float value;
+};
+
 class ColliderEntryEvent : public IEvent {
 public:
     explicit ColliderEntryEvent(RigidBody *col_a, RigidBody *col_b) :
@@ -66,6 +117,15 @@ public:
 class SceneLoadedEvent : public IEvent {
 public:
     SceneLoadedEvent() : IEvent(SceneLoaded) {}
+};
+
+class AITargetReachedEvent : public IEvent {
+public:
+    AITargetReachedEvent(AIBehaviour &ai_behaviour, std::shared_ptr<GameObject> target) : IEvent(AITargetReached),
+                                                                                          ai_behaviour(ai_behaviour),
+                                                                                          target(std::move(target)) {};
+    AIBehaviour &ai_behaviour;
+    std::shared_ptr<GameObject> target;
 };
 
 #endif //ENGINE_EVENTS_HPP

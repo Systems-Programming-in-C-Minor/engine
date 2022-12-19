@@ -1,11 +1,13 @@
 #include "components/animator.hpp"
 #include "gameobject.hpp"
-
-#include <utility>
 #include "global.hpp"
-#include "fmt/core.h"
 
 Animator::Animator(Sprites sprites, const int fps) : _sprites(std::move(sprites)), _fps(fps) {}
+
+Animator::Animator(Sprites sprites, int fps, bool start_playing, bool looping) : Animator(std::move(sprites), fps) {
+    if (start_playing)
+        play(looping);
+}
 
 void Animator::play(bool looping) {
     _loop = looping;
@@ -21,8 +23,7 @@ void Animator::stop() {
 bool Animator::should_animate() {
     const auto delta_time = Global::get_instance()->get_delta_time();
     _time_since_last_animate += delta_time;
-    fmt::print("Time: {}", _time_since_last_animate);
-    if (_time_since_last_animate > (1000.0/_fps)){ // Time at least necessary for sprite change
+    if (_time_since_last_animate > (1000.0 / _fps)) { // Time at least necessary for sprite change
         _time_since_last_animate = 0;
         return true;
     }
@@ -33,7 +34,7 @@ void Animator::tick(GameObject &object) {
     if (!active || !_play)
         return;
 
-    if(!should_animate()){
+    if (!should_animate()) {
         return;
     }
 

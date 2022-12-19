@@ -5,10 +5,10 @@
 #include "global.hpp"
 
 void CarBehaviour::tick(GameObject &object) {
-    friction();
+    _friction();
 }
 
-void CarBehaviour::friction() {
+void CarBehaviour::_friction() {
     auto &body = *game_object->get_component<RigidBody>();
 
     //calculate the counter lateral impulse based on drift parameters
@@ -24,7 +24,7 @@ void CarBehaviour::friction() {
 
     //forward linear velocity
     Vector2d currentForwardNormal = body.get_forward_velocity();
-    float currentForwardSpeed = currentForwardNormal.normalize();
+    float currentForwardSpeed = currentForwardNormal.normalized_length();
     float dragForceMagnitude = -2 * currentForwardSpeed * drag_modifier;
 
     auto force_vec = currentForwardNormal * current_traction * dragForceMagnitude;
@@ -32,21 +32,35 @@ void CarBehaviour::friction() {
     body.apply_force(force_vec, body.get_world_center());
 }
 
-void CarBehaviour::drive(float desired_speed) {
+void CarBehaviour::_drive(float desired_speed){
+    if(desired_speed > max_speed_forwards)
+        desired_speed = max_speed_forwards;
+
+    if (desired_speed < max_speed_backwards)
+        desired_speed = max_speed_backwards;
+
     auto &body = *game_object->get_component<RigidBody>();
 
     //find current speed in forward direction
     float current_speed = body.get_current_speed();
 
     //apply necessary force
-    float force = (desired_speed > current_speed) ? max_drive_force : -max_drive_force;
+    float force = std::min(max_drive_force, std::max(-max_drive_force, (desired_speed/100 - current_speed) * max_drive_force));
+
+//    float force = (desired_speed > current_speed) ? max_drive_force : -max_drive_force;
     if (desired_speed != current_speed) {
         auto force_vec = body.get_world_vector(Vector2d{0, 1}) * current_traction * force;
         body.apply_force(force_vec, body.get_world_center());
     }
 }
 
-void CarBehaviour::turn(float steering) {
+void CarBehaviour::_turn(float steering) {
+    if (steering > steering_impulse)
+        steering = steering_impulse;
+
+    if(steering < -steering_impulse)
+        steering = -steering_impulse;
+
     auto &body = *game_object->get_component<RigidBody>();
     auto speed = body.get_current_speed();
 
@@ -59,22 +73,26 @@ void CarBehaviour::turn(float steering) {
     body.apply_angular_impulse(steering);
 }
 
-void CarBehaviour::turn_left() {
-    turn(steering_impulse);
+void CarBehaviour::turn_left(float amount) {
+    turn(amount);
 }
 
-void CarBehaviour::turn_right() {
-    turn(-steering_impulse);
+void CarBehaviour::turn_right(float amount) {
+    turn(-amount);
 }
 
-void CarBehaviour::drive_forwards() {
-    drive(max_speed_forwards);
+void CarBehaviour::drive_forwards(float amount) {
+    _drive(max_speed_forwards * amount);
 }
 
-void CarBehaviour::drive_backwards() {
-    drive(max_speed_backwards);
+void CarBehaviour::drive_backwards(float amount) {
+    _drive(max_speed_backwards * amount);
 }
 
 void CarBehaviour::brake() {
-    drive(0.f);
+    _drive(0.f);
+}
+
+void CarBehaviour::turn(float amount) {
+    _turn(steering_impulse * amount);
 }

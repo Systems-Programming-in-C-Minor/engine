@@ -29,7 +29,7 @@ public:
 
     explicit Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine);
 
-    explicit Engine(const std::string& user_id, bool is_host = true);
+    explicit Engine(const std::string &user_id, bool is_host = true);
 
     Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine, const std::string& user_id, bool is_host = true);
 
@@ -50,6 +50,8 @@ public:
     [[nodiscard]] virtual std::shared_ptr<IRenderer> get_renderer() const;
 
     [[nodiscard]] virtual std::shared_ptr<ISoundEngine> get_sound_engine() const;
+
+    [[nodiscard]] unsigned long get_number_of_controllers() const;
 
     [[nodiscard]] Time &get_time() const;
 };
