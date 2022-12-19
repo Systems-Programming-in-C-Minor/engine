@@ -79,7 +79,7 @@ void SdlRenderer::render_texture(ITexture& texture, Transform& transform, float 
     _renderer->Copy(*texture.get_texture(), SDL2pp::NullOpt, rect, -radians_to_degrees(transform.get_angle()));
 }
 
-void SdlRenderer::render_rigid_body(const RigidBody& rigid_body, Transform& transform) const
+void SdlRenderer::render_rigid_body(const RigidBody& rigid_body) const
 {
 	if (!_debug_mode) return;
 	b2Body* body = rigid_body.get_body();

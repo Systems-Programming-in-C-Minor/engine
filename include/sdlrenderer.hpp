@@ -39,7 +39,7 @@ public:
 	/**
 	 * @brief Renders a collider
 	 */
-	void render_rigid_body(const RigidBody& rigid_body, Transform& transform) const override;
+	void render_rigid_body(const RigidBody& rigid_body) const override;
 
 
 	/**
