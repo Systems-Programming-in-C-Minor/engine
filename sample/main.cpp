@@ -369,7 +369,7 @@ int main() {
         Transform{ Vector2d{}, Vector2d{}, 0.f, 2.f });
     Sprite sprite1{"./assets/track1.png", 1, 6.f };
 
-    Sprite sprite2{ "./assets/track1_bg.png", 0, 3.f};
+    Sprite sprite2{ "./assets/track1_bg.png", 0, 6.f};
 
     Sprite sprite2{"./assets/track1_bg.png", Color(0, 0, 0, 255.0), false, false, 1, 0, 6.f};
     track_outer->add_component(std::make_shared<Sprite>(sprite2));
@@ -383,7 +383,7 @@ int main() {
     car->add_component(std::make_shared<DriveInputControllerBehaviour>(scene->get_event_manager(), 0));
     const auto ui_velocity_indicator_behaviour = std::make_shared<VelocityIndicator>();
 
-    const auto car = std::make_shared<Car>("player_car", "car", "./assets/blue_car.png", scene, 10, Vector2d{-6.f, 0.f});
+    const auto car = std::make_shared<Car>("player_car", "car", "./assets/blue_car.png", scene, 10, Vector2d{ 14.f, -76.f});
     const auto car_behaviour = std::make_shared<PlayerCarBehaviour>(scene->get_event_manager());
     car->add_component(car_behaviour);
     car->add_component(ui_velocity_indicator_behaviour);
@@ -454,8 +454,8 @@ int main() {
     ai_listener_component6->targets = targets;
 
     const auto text = std::make_shared<GameObject>(
-            "text", "text", Transform{Vector2d{}, Vector2d{}, 2.f, 4.f});
-    text->add_component(std::make_shared<TextNew>("Test", "./assets/Roboto/Roboto-Medium.ttf", 70, 10));
+            "ad_board", "ad", Transform{Vector2d{-50.f, 10.f}, Vector2d{}, 0.2f, 1.f});
+    text->add_component(std::make_shared<TextNew>("Powered by UnEngine", "./assets/Roboto/Roboto-Medium.ttf", 500, 10, Color{255,255,255,0 }, Color{0,0,0,1 }, 1));
     car->add_child(camera);
 
 
