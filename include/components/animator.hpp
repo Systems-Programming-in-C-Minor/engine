@@ -48,7 +48,7 @@ private:
 
     /**
      * @brief Determines how many ticks there are between swaps.
-     * @return int  number of ticks between sprite swap.
+     * @return int number of ticks between sprite swap.
      */
     [[nodiscard]] bool should_animate();
 };
