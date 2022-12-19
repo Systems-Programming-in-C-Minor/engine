@@ -15,10 +15,11 @@ private:
 
     void _turn(float steering);
 
-    RigidBody &_body;
 
 protected:
     explicit DriveBehaviour(RigidBody &body);
+
+    RigidBody &_body;
 
 public:
     void turn(float amount = 1.0f);
