@@ -247,8 +247,6 @@ public:
             brake();
         }
     }
-
-    void on_key_released(const KeyReleasedEvent &event) override {}
 };
 
 class Target : public GameObject {
