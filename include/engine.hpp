@@ -19,7 +19,6 @@ private:
     const std::shared_ptr<Time> _time;
     const std::shared_ptr<KeyHandler> _key_handler;
     const std::shared_ptr<MouseHandler> _mouse_handler;
-    std::shared_ptr<IMultiplayer> _multiplayer_manager;
     std::shared_ptr<Scene> _active_scene;
     std::shared_ptr<IRenderer> _renderer;
     std::shared_ptr<ISoundEngine> _sound_engine;
@@ -29,24 +28,26 @@ private:
     int _tps;
 
 public:
+    std::shared_ptr<IMultiplayer> _multiplayer_manager;
+
     /**
     * @brief Constructor.
     */
     Engine();
 
     /**
-    * @brief Explicit constructor.
+    * @brief Constructor.
     * @param renderer A shared pointer to the IRenderer the engine will use.
     * @param sound_engine A shared pointer to the ISoundEngine the engine will use.
     */
-    explicit Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine);
+    Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine);
 
     /**
     * @brief Explicit constructor.
     * @param user_id The user_id the engine class will refer to.
     * @param is_host The boolean value whether the engine is a host.
     */
-    explicit Engine(const std::string &user_id, bool is_host = true);
+    explicit Engine(const std::string &user_id, bool is_host = false);
 
     /**
     * @brief Constructor.

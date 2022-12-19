@@ -27,6 +27,7 @@
 #include "race/behaviours/drive_input_behaviour.hpp"
 #include "race/behaviours/drive_input_controller_behaviour.hpp"
 #include "components/colliders/circlecollider.hpp"
+#include "race/objects/networkables/networkable_car.hpp"
 
 const auto camera = std::make_shared<Camera>(6);
 const auto camera2 = std::make_shared<Camera>(6);
@@ -240,7 +241,7 @@ int main() {
 
     // Setup engine
     const auto global = Global::get_instance();
-    auto engine = std::make_unique<Engine>();
+    auto engine = std::make_unique<Engine>("James");
     global->set_engine(std::move(engine));
     global->set_properties(std::make_unique<JsonProperties>("settings.json"));
     Engine &engine_ref = global->get_engine();
@@ -286,6 +287,7 @@ int main() {
     car->add_component(ui_velocity_indicator_behaviour);
 
     car->get_component<Sprite>()->set_color(Color(255, 255, 255, 140));
+
     TargetFactory tf;
 
     std::vector<Vector2d> vector_targets_little

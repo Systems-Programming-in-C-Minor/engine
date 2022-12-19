@@ -18,7 +18,7 @@ private:
     float _angle;
     float _local_angle;
     float _scale;
-    GameObject* _game_object = nullptr;
+    GameObject *_game_object = nullptr;
 
     friend class GameObject;
 
@@ -36,7 +36,8 @@ public:
      * @param angle The angle of the Transform (Rotation, in radians).
      * @param scale The scale of the Transform (Multiplication factor).
      */
-    explicit Transform(const Vector2d &position = Vector2d{}, const Vector2d &local_position = Vector2d{},float angle = 0.f, float scale = 1.f);
+    explicit Transform(const Vector2d &position = Vector2d{}, const Vector2d &local_position = Vector2d{},
+                       float angle = 0.f, float scale = 1.f);
 
     /**
      * @brief Getter for the angle of the Transform.
@@ -72,7 +73,7 @@ public:
      * @brief Setter for the position of the Transform.
      * @param position The new position which will be set.
      */
-    void set_position(Vector2d &position);
+    void set_position(Vector2d position);
 
     /**
      * @brief Getter for the local position of the Transform.
@@ -84,7 +85,7 @@ public:
      * @brief Setter for the local position of the Transform.
      * @param new_position The new local position which will be set.
      */
-    void set_local_position(Vector2d &new_position);
+    void set_local_position(Vector2d new_position);
 
     /**
      * @brief Getter for the local angle of the Transform.
@@ -96,7 +97,7 @@ public:
      * @brief Setter for the local angle of the Transform.
      * @param angle The new local angle which will be set.
      */
-    void set_local_angle(float &angle);
+    void set_local_angle(float angle);
 };
 
 #endif // ENGINE_TRANSFORM_H_sZYCcKEA4x

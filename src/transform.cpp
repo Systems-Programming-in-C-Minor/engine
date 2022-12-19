@@ -43,7 +43,7 @@ Vector2d Transform::get_position() const {
     return _position;
 }
 
-void Transform::set_position(Vector2d &position) {
+void Transform::set_position(Vector2d position) {
     auto rigid_body = get_rigid_body();
     if (rigid_body) {
         rigid_body->set_position(position);
@@ -57,15 +57,15 @@ Vector2d Transform::get_local_position() const {
     return _local_position;
 }
 
-void Transform::set_local_position(Vector2d &new_position) {
-    _local_position = std::move(new_position);
+void Transform::set_local_position(Vector2d new_position) {
+    _local_position = new_position;
 }
 
 float Transform::get_local_angle() const {
     return _local_angle;
 }
 
-void Transform::set_local_angle(float &angle) {
+void Transform::set_local_angle(float angle) {
     _local_angle = angle;
 }
 
