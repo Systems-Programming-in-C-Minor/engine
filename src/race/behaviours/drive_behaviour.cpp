@@ -1,7 +1,5 @@
 #include "race/behaviours/drive_behaviour.hpp"
 #include <gameobject.hpp>
-#include <iostream>
-#include <iomanip>
 #include <utility>
 #include "global.hpp"
 

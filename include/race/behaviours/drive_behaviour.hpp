@@ -1,6 +1,6 @@
 
-#ifndef ENGINE_CARBEHAVIOUR_HPP
-#define ENGINE_CARBEHAVIOUR_HPP
+#ifndef ENGINE_DRIVE_BEHAVIOUR_HPP
+#define ENGINE_DRIVE_BEHAVIOUR_HPP
 
 #include "interfaces/itickable.hpp"
 #include "components/component.hpp"
@@ -43,4 +43,4 @@ public:
     float steering_impulse = 60.f;
 };
 
-#endif //ENGINE_CARBEHAVIOUR_HPP
+#endif //ENGINE_DRIVE_BEHAVIOUR_HPP
