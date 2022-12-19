@@ -49,9 +49,11 @@ FetchContent_Declare(
 )
 
 FetchContent_Declare(
-        GameNetworkingSockets
-        GIT_REPOSITORY https://github.com/ValveSoftware/GameNetworkingSockets.git
-        GIT_TAG v1.4.1
+        asio
+        GIT_REPOSITORY git@github.com:chriskohlhoff/asio.git
+        GIT_TAG master
+        CONFIGURE_COMMAND ""
+        BUILD_COMMAND ""
 )
 
 # This allows libSDL2pp to find the local SDL2 libraries.
@@ -67,7 +69,7 @@ set(SDL2PP_WITH_IMAGE ON) # if you need SDL_image support
 set(SDL2PP_WITH_MIXER ON) # if you need SDL_mixer support
 set(SDL2PP_WITH_TTF ON) # if you need SDL_ttf support
 
-FetchContent_MakeAvailable(fmt box2d SDL2pp tinyxml2 json GameNetworkingSockets)
+FetchContent_MakeAvailable(fmt box2d SDL2pp tinyxml2 json asio)
 
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS ./src/*.cpp)
 file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS ./include/*.hpp)
@@ -83,6 +85,9 @@ else ()
     set(SDL2_MIXER_LIBRARIES SDL2_MIXER)
 endif ()
 
+add_library(asio INTERFACE)
+target_include_directories(asio INTERFACE ${asio_SOURCE_DIR}/asio/include)
+
 add_library(engine STATIC ${SOURCE_FILES} ${HEADER_FILES} ${PRIVATE_HEADER_FILES})
 
 target_compile_definitions(engine PRIVATE _USE_MATH_DEFINES)
@@ -95,7 +100,7 @@ target_link_libraries(engine PRIVATE
         SDL2pp::SDL2pp
         tinyxml2::tinyxml2
         nlohmann_json::nlohmann_json
-        GameNetworkingSockets::shared
+        asio
         )
 
 if (ENGINE_TEST)

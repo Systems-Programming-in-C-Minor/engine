@@ -12,18 +12,19 @@ class INetworkable : public Component {
 private:
     const std::string _id;
 
-public:
+protected:
     /**
      * @brief Explicit constructor.
      * @param id The id of the INetworkable object.
      */
     explicit INetworkable(std::string id) : _id(std::move(id)) {}
 
+public:
     /**
      * @brief Serialize the INetworkable object.
      * @return The serialized object as a std::string.
      */
-    virtual const std::string& serialize() = 0;
+    [[nodiscard]] virtual std::string serialize() const = 0;
 
     /**
      * @brief Deserialize the INetworkable object.

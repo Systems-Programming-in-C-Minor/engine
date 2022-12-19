@@ -94,23 +94,21 @@ Engine::Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine
 Engine::Engine(const std::string &user_id, bool is_host) : Engine(std::make_shared<SdlRenderer>(), std::make_shared<SDLMixerSoundEngine>(), user_id, is_host) {}
 
 Engine::Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine, const std::string &player_name, bool is_host) :
-        _should_quit(false), 
-		    _time(std::make_shared<Time>()),
+        _should_quit(false),
+        _time(std::make_shared<Time>()),
         _key_handler(std::make_shared<KeyHandler>()),
         _mouse_handler(std::make_shared<MouseHandler>()),
         _renderer(std::move(renderer)),
         _sound_engine(std::move(sound_engine)),
         _time_after_last_frame(0),
-		    _fps(0),
-		    _tps(60)
-        {
-            const auto signalling_server = "localhost:10000";
-            const auto host_player_name = "player_b";
-            if (is_host)
-                _multiplayer_manager = std::make_unique<MultiplayerHost>(player_name, signalling_server);
-            else
-                _multiplayer_manager = std::make_unique<MultiplayerClient>(player_name, host_player_name, signalling_server);
-        } 
+        _fps(0),
+        _tps(60) {
+    const auto signalling_server = "localhost:10000";
+    if (is_host)
+        _multiplayer_manager = std::make_unique<MultiplayerHost>(player_name, signalling_server);
+    else
+        _multiplayer_manager = std::make_unique<MultiplayerClient>(player_name, signalling_server);
+}
 
 unsigned long Engine::get_number_of_controllers() const {
 	return _key_handler->get_number_of_controllers();

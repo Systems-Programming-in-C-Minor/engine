@@ -11,10 +11,9 @@
  * @brief Interface for the multiplayer implementation.
  */
 class IMultiplayer {
-private:
+protected:
     std::list<std::shared_ptr<INetworkable>> _networkables;
 
-protected:
     /**
      * @brief Default constructor.
      */
@@ -39,21 +38,6 @@ public:
      * */
     virtual void tick() = 0;
 
-    /**
-     * @brief Connect the IMultiplayer object.
-     *        Override for implementing the desired behaviour.
-     */
-    virtual void connect() = 0;
-
-    /**
-     * @brief Disconnect the IMultiplayer object.
-     *        Override for implementing the desired behaviour.
-     */
-    virtual void disconnect() = 0;
-
-    /**
-     * @brief Virtual destructor.
-     */
     virtual ~IMultiplayer() = default;
 };
 
