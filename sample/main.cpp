@@ -124,135 +124,6 @@ private:
     bool _ALT = false;
 };
 
-class Car : public GameObject {
-public:
-    Car(const std::string &name, const std::string &tag, std::string sprite_path, const std::shared_ptr<Scene> &scene,
-        const int order_in_layer = 10, Vector2d position = Vector2d())
-            : GameObject(name, tag) {
-        const auto sprite = std::make_shared<Sprite>(std::move(sprite_path), Color(0, 0, 0, 0), false, false, 1, 10);
-        add_component(sprite);
-
-        const auto collider = std::make_shared<BoxCollider>(1.65f, 4.f);
-        const auto rigid_body = std::make_shared<RigidBody>(*scene, order_in_layer, BodyType::dynamic_body, position, 1.f);
-
-        rigid_body->set_mass(1600.f);
-        rigid_body->set_collider(collider);
-        add_component(rigid_body);
-        transform.set_scale(0.5f);
-        transform.set_angle(degrees_to_radians(90.f));
-    }
-};
-
-class PlayerCarBehaviour : public CarBehaviour, public KeyListener, public JoystickListener {
-public:
-    explicit PlayerCarBehaviour(EventManager &event_manager) : KeyListener(event_manager),
-                                                               JoystickListener(event_manager) {}
-
-    void on_key_pressed(const KeyPressedEvent &event) override {
-        switch (event.key) {
-            case EQUAL:
-                game_object->transform.set_scale(game_object->transform.get_scale() + 0.01f);
-                break;
-            case MIN:
-                game_object->transform.set_scale(game_object->transform.get_scale() - 0.01f);
-                break;
-            case B:
-                std::cout << game_object->transform.get_position() << std::endl;
-                break;
-            case R:
-                game_object->get_component<Sprite>()->set_color(Color(255, 0, 0, 50));
-                break;
-            case T:
-                game_object->get_component<Sprite>()->set_color(Color(255, 255, 255, 255));
-                break;
-        }
-    }
-
-    void on_key_hold(const KeyHoldEvent &event) override {
-        switch (event.key) {
-            case W: {
-                drive_forwards();
-                break;
-            }
-            case S: {
-                drive_backwards();
-                break;
-            }
-            case A: {
-                turn_left();
-                break;
-            }
-            case D: {
-                turn_right();
-                break;
-            }
-            case SPACE: {
-                brake();
-                break;
-            }
-            case UP: {
-                Vector2d pos_up{game_object->transform.get_position().x,
-                                game_object->transform.get_position().y + 0.01f};
-                game_object->transform.set_position(pos_up);
-                break;
-            }
-            case DOWN: {
-                Vector2d pos_down{game_object->transform.get_position().x,
-                                  game_object->transform.get_position().y - 0.01f};
-                game_object->transform.set_position(pos_down);
-                break;
-            }
-            case LEFT: {
-                Vector2d pos_left{game_object->transform.get_position().x - 0.01f,
-                                  game_object->transform.get_position().y};
-                game_object->transform.set_position(pos_left);
-                break;
-            }
-            case RIGHT: {
-                Vector2d pos_right{game_object->transform.get_position().x + 0.01f,
-                                   game_object->transform.get_position().y};
-                game_object->transform.set_position(pos_right);
-                break;
-            }
-        }
-    }
-
-    void on_axis_current(const JoystickAxisCurrentEvent &event) override {
-        switch (event.axis) {
-            case LeftJoystickX:
-            case LeftTouchpadX: {
-                if (std::abs(event.value) > 0.1f) {
-                    turn(-event.value);
-                }
-                break;
-            }
-            case LeftTrigger: {
-                if (event.value > -0.9) {
-                    drive_backwards((event.value + 1.0f) / 2);
-                }
-                break;
-            }
-            case RightTrigger: {
-                if (event.value > -0.9) {
-                    drive_forwards((event.value + 1.0f) / 2);
-                }
-                break;
-            }
-            default:
-                break;
-        }
-    }
-
-    void on_button_hold(const JoystickButtonHoldEvent &event) override {
-        if (event.button == LeftButton) {
-            brake();
-        }
-    }
-
-    void on_key_released(const KeyReleasedEvent &event) override {}
-};
-
-
 class Target : public GameObject {
 public:
     Target(const std::string &name, const std::string &tag, Transform transform = Transform{Vector2d()})
@@ -337,9 +208,11 @@ int main() {
     track_outer->add_component(std::make_shared<Sprite>(sprite1));
 
 
-    const auto car = std::make_shared<Car>("player_car", "car", "./assets/blue_car.png", scene, 10, Vector2d{-6.f, 0.f});
+    const auto car = std::make_shared<Car>("player_car", "./assets/blue_car.png", Vector2d(), scene);
     car->add_component(std::make_shared<DriveInputBehaviour>(scene->get_event_manager()));
     car->add_component(std::make_shared<DriveInputControllerBehaviour>(scene->get_event_manager(), 0));
+
+    car->get_component<Sprite>()->set_color(Color(255, 255, 255, 140));
     TargetFactory tf;
 
     std::vector<Vector2d> vector_targets_little
@@ -465,9 +338,9 @@ int main() {
 
     engine_ref.load_scene(scene);
  
-    Sprite sprite2{ "./assets/sample.png", Color(0, 0, 0, 255.0), false, false, 1, 1, 1.f };
+    Sprite sprite3{ "./assets/sample.png", Color(0, 0, 0, 255.0), false, false, 1, 1, 1.f };
     const auto test23 = std::make_shared<GameObject>("Scene2Test", "test", true);
-    test23->add_component(std::make_shared<Sprite>(sprite2));
+    test23->add_component(std::make_shared<Sprite>(sprite3));
     scene2->gameobjects.push_back(test23);
 
     engine_ref.start();
