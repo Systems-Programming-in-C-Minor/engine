@@ -21,7 +21,7 @@ void AudioSource::play(bool looping)
 		return;
 	}
 
-	if (_audio_clip.extension() != ".wav") {
+	if (_audio_clip.extension() != ".mp3") {
 		fmt::print("Unsupported audio format {}\n", _audio_clip.extension().string());
 		stop();
 		return;

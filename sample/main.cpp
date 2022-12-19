@@ -191,8 +191,8 @@ int main() {
     Engine &engine_ref = global->get_engine();
 
     // Setup music
-    const auto background_music = std::make_shared<AudioSource>("./assets/sample-sound.wav", false, false, 0.1);
-    const auto acceleration_sound = std::make_shared<AudioSource>("./assets/acceleration.wav", false, false, 0.05);
+    const auto background_music = std::make_shared<AudioSource>("./assets/toto-africa.mp3", false, false, 0.1);
+    const auto acceleration_sound = std::make_shared<AudioSource>("./assets/acceleration.mp3", false, false, 0.05);
     background_music->play(true);
 
     // Setup scene
