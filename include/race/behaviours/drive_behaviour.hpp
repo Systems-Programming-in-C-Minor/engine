@@ -19,7 +19,7 @@ private:
 protected:
     explicit DriveBehaviour(RigidBody &body);
 
-    RigidBody &_body;
+    std::shared_ptr<RigidBody> _body;
 
 public:
     void turn(float amount = 1.0f);
