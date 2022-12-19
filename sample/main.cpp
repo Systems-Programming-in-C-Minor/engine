@@ -177,9 +177,6 @@ int main() {
     global->set_properties(std::make_unique<JsonProperties>("settings.json"));
     Engine &engine_ref = global->get_engine();
 
-    // Setup scene
-    //const auto scene = std::make_shared<Scene>();
-
     // Create game objects with component
     const auto track_outer = std::make_shared<GameObject>(
             "track_outer", "track", true,
