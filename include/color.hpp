@@ -3,6 +3,7 @@
 
 class SdlRenderer;
 class SdlTexture;
+class SdlText;
 
 namespace SDL2pp
 {
@@ -12,6 +13,7 @@ namespace SDL2pp
 class Color {
 	friend class SdlTexture;
 	friend class SdlRenderer;
+	friend class SdlText;
 private:
 	explicit Color(const SDL2pp::Color& color);
 	explicit operator SDL2pp::Color() const;

@@ -6,6 +6,7 @@
 #include "components/rigidbody.hpp"
 #include "managers/event_manager.hpp"
 
+class Camera;
 class IRenderer;
 class b2World;
 class b2Vec2;
@@ -14,12 +15,12 @@ class CollisionHandler;
 class GameObject;
 
 class Scene {
+    friend class RigidBody;
 private:
     const std::unique_ptr<EventManager> _event_manager;
     const std::unique_ptr<b2World> _world;
     const std::unique_ptr<CollisionHandler> _collision_handler;
-    friend class RigidBody;
-
+    std::shared_ptr<Camera> _camera;
 public:
     std::vector<std::shared_ptr<GameObject>> gameobjects;
 
@@ -37,7 +38,9 @@ public:
 
     [[nodiscard]] EventManager &get_event_manager() const;
 
-    Scene();
+    [[nodiscard]] std::shared_ptr<Camera> get_camera() const;
+
+    Scene(std::shared_ptr<Camera> camera);    
 
     virtual ~Scene();
 };

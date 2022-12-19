@@ -12,9 +12,9 @@ TEST(AnimatorTest, Animate) {
     auto mock_engine = std::make_unique<MockEngine>();
     Global::get_instance()->set_engine(std::move(mock_engine));
 
-    const auto sprite_1 = std::make_shared<Sprite>("/path/to", Color(1, 0, 0, 0), false, false, 1, 1);
-    const auto sprite_2 = std::make_shared<Sprite>("/path/to", Color(2, 0, 0, 0), false, false, 1, 1);
-    const auto sprite_3 = std::make_shared<Sprite>("/path/to", Color(3, 0, 0, 0), false, false, 1, 1);
+    const auto sprite_1 = std::make_shared<Sprite>("/path/to", 1);
+    const auto sprite_2 = std::make_shared<Sprite>("/path/to", 1);
+    const auto sprite_3 = std::make_shared<Sprite>("/path/to", 1);
 
     const Sprites sprites{sprite_1, sprite_2, sprite_3};
     const auto animator = std::make_shared<Animator>(sprites, 10);
@@ -47,9 +47,9 @@ TEST(AnimatorTest, AnimateFPS) {
     auto mock_engine = std::make_unique<MockEngine>();
     Global::get_instance()->set_engine(std::move(mock_engine));
 
-    const auto sprite_1 = std::make_shared<Sprite>("/path/to", Color(1, 0, 0, 0), false, false, 1, 1);
-    const auto sprite_2 = std::make_shared<Sprite>("/path/to", Color(2, 0, 0, 0), false, false, 1, 1);
-    const auto sprite_3 = std::make_shared<Sprite>("/path/to", Color(3, 0, 0, 0), false, false, 1, 1);
+    const auto sprite_1 = std::make_shared<Sprite>("/path/to", 1);
+    const auto sprite_2 = std::make_shared<Sprite>("/path/to", 1);
+    const auto sprite_3 = std::make_shared<Sprite>("/path/to", 1);
 
     const Sprites sprites{sprite_1, sprite_2, sprite_3};
     const auto animator = std::make_shared<Animator>(sprites, 10);
@@ -82,9 +82,9 @@ TEST(AnimatorTest, AnimateWithLoop) {
     auto game_object = test_game_object;
     auto mock_engine = std::make_unique<MockEngine>();
 
-    const auto sprite_1 = std::make_shared<Sprite>("/path/to", Color(1, 0, 0, 0), false, false, 1, 1);
-    const auto sprite_2 = std::make_shared<Sprite>("/path/to", Color(2, 0, 0, 0), false, false, 1, 1);
-    const auto sprite_3 = std::make_shared<Sprite>("/path/to", Color(3, 0, 0, 0), false, false, 1, 1);
+    const auto sprite_1 = std::make_shared<Sprite>("/path/to", 1);
+    const auto sprite_2 = std::make_shared<Sprite>("/path/to", 1);
+    const auto sprite_3 = std::make_shared<Sprite>("/path/to", 1);
 
     const Sprites sprites{sprite_1, sprite_2, sprite_3};
     const auto animator = std::make_shared<Animator>(sprites, 10);
@@ -133,9 +133,9 @@ TEST(AnimatorTest, AnimateAndStop) {
     auto game_object = test_game_object;
     auto mock_engine = std::make_unique<MockEngine>();
 
-    const auto sprite_1 = std::make_shared<Sprite>("/path/to", Color(1, 0, 0, 0), false, false, 1, 1);
-    const auto sprite_2 = std::make_shared<Sprite>("/path/to", Color(2, 0, 0, 0), false, false, 1, 1);
-    const auto sprite_3 = std::make_shared<Sprite>("/path/to", Color(3, 0, 0, 0), false, false, 1, 1);
+    const auto sprite_1 = std::make_shared<Sprite>("/path/to", 1);
+    const auto sprite_2 = std::make_shared<Sprite>("/path/to", 1);
+    const auto sprite_3 = std::make_shared<Sprite>("/path/to", 1);
 
     const Sprites sprites{sprite_1, sprite_2, sprite_3};
     const auto animator = std::make_shared<Animator>(sprites, 10);
@@ -168,8 +168,8 @@ TEST(AnimatorTest, AnimateWithoutPlay) {
     auto game_object = test_game_object;
     auto mock_engine = std::make_unique<MockEngine>();
 
-    const auto sprite_1 = std::make_shared<Sprite>("/path/to", Color(1, 0, 0, 0), false, false, 1, 1);
-    const auto sprite_2 = std::make_shared<Sprite>("/path/to", Color(2, 0, 0, 0), false, false, 1, 1);
+    const auto sprite_1 = std::make_shared<Sprite>("/path/to", 1);
+    const auto sprite_2 = std::make_shared<Sprite>("/path/to", 1);
 
     const Sprites sprites{sprite_1, sprite_2};
     const auto animator = std::make_shared<Animator>(sprites, 20);
@@ -193,8 +193,8 @@ TEST(AnimatorTest, AnimateNotActive) {
     auto game_object = test_game_object;
     auto mock_engine = std::make_unique<MockEngine>();
 
-    const auto sprite_1 = std::make_shared<Sprite>("/path/to", Color(1, 0, 0, 0), false, false, 1, 1);
-    const auto sprite_2 = std::make_shared<Sprite>("/path/to", Color(2, 0, 0, 0), false, false, 1, 1);
+    const auto sprite_1 = std::make_shared<Sprite>("/path/to", 1);
+    const auto sprite_2 = std::make_shared<Sprite>("/path/to", 1);
 
     const Sprites sprites{sprite_1, sprite_2};
     const auto animator = std::make_shared<Animator>(sprites, 20);

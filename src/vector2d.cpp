@@ -3,6 +3,8 @@
 #include <cmath>
 #include "vector2d.hpp"
 
+#include "SDL2pp/Point.hh"
+
 
 Vector2d Vector2d::add(const Vector2d& other) const
 {
@@ -144,6 +146,19 @@ Vector2d::Vector2d(const b2Vec2& b2vec)
 Vector2d::operator b2Vec2() const
 {
     return b2Vec2{ x, y };
+}
+
+Vector2d::Vector2d(const SDL2pp::Point& point) :
+	x(static_cast<float>(point.GetX())),
+	y(static_cast<float>(point.GetY()))
+{}
+
+Vector2d::operator SDL2pp::Point() const
+{
+    return {
+        static_cast<int>(this->x),
+        static_cast<int>(this->y)
+    };
 }
 
 std::ostream& operator<<(std::ostream& stream, const Vector2d& vector)

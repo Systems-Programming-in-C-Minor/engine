@@ -6,20 +6,20 @@
 
 class Camera : public GameObject
 {
-private:
-    Color _background_color;
-    int _aspect_width;
-    int _aspect_height;
-
 public:
-    Camera(int aspect_width, int aspect_height);
+    Color background_color;
+    float mtp;
+    float screen_space_limits;
 
-    [[nodiscard]] Color get_background_color() const ;
+    Camera(
+        Transform transform = Transform{},
+        const Color& background_color = Color{},
+        float mtp = 20.f,
+        float screen_space_limits = 200.f
+    );
+
+    [[nodiscard]] Color get_background_color() const;
     void set_background_color(Color c);
-    [[nodiscard]] int get_aspect_width() const ;
-    void set_aspect_width(int w);
-    [[nodiscard]] int get_aspect_height() const ;
-    void set_aspect_height(int h);
 };
 
 #endif //ENGINE_CAMERA_HPP

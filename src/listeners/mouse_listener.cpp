@@ -1,13 +1,10 @@
-#include "../include/listeners/mouse_listener.hpp"
+#include "../include/listeners/uiobject_listener.hpp"
 
-MouseListener::MouseListener(EventManager &event_manager) {
-    event_manager.register_listener(MouseMoved, [this](const IEvent &event) {
-        on_mouse_moved(dynamic_cast<const MouseMovedEvent &>(event));
+UiObjectListener::UiObjectListener(EventManager &event_manager) {
+    event_manager.register_listener(UiObjectPressed, [this](const IEvent &event) {
+        on_uiobject_pressed(dynamic_cast<const UiObjectPressedEvent &>(event));
     });
-    event_manager.register_listener(MousePressed, [this](const IEvent &event) {
-        on_mouse_pressed(dynamic_cast<const MousePressedEvent &>(event));
-    });
-    event_manager.register_listener(MouseReleased, [this](const IEvent &event) {
-        on_mouse_released(dynamic_cast<const MouseReleasedEvent &>(event));
+    event_manager.register_listener(UiObjectReleased, [this](const IEvent &event) {
+        on_uiobject_released(dynamic_cast<const UiObjectReleasedEvent &>(event));
     });
 }
