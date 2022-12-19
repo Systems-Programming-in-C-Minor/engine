@@ -6,9 +6,10 @@
 #include "race/behaviours/checkpoint_behaviour.hpp"
 #include <scene.hpp>
 
-Car::Car(const std::string &name, const std::string& sprite_path, const Vector2d position, const std::shared_ptr<Scene> &scene)
-        : GameObject(name, "car"), DriveBehaviour(std::make_shared<RigidBody>(*scene, 1000, BodyType::dynamic_body, position, 1.f)) {
-
+Car::Car(const std::string &name, const std::string &sprite_path, const Vector2d position,
+         const std::shared_ptr<Scene> &scene, bool is_enabled)
+        : GameObject(name, "car"),
+          DriveBehaviour(std::make_shared<RigidBody>(*scene, 1000, BodyType::dynamic_body, position, 1.f), is_enabled) {
 
 
     auto sprite = std::make_shared<Sprite>(sprite_path, Color(0, 0, 0, 0), false, false, 1, 1);
