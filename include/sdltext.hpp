@@ -15,7 +15,7 @@ namespace SDL2pp {
 
 class SdlText : public ITexture
 {
-	friend class TextNew;
+	friend class Text;
 public:
 	/**
 	 * @brief A texture used by SDL, rendered from a font

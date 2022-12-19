@@ -154,7 +154,7 @@ public:
 	    }
         if(_game_object.get_name() == "ui_velocity_indicator")
         {
-            const auto text = _game_object.get_component<TextNew>();
+            const auto text = _game_object.get_component<Text>();
             text->set_text(std::to_string(static_cast<int>(round(_velocity * 3.6f))));
         }
     }
@@ -164,7 +164,7 @@ class FpsIndicator : public Component, public ITickable
 {
 	void tick(GameObject& _game_object) override
 	{
-        const auto text = _game_object.get_component<TextNew>();
+        const auto text = _game_object.get_component<Text>();
         const long long fps = Global::get_instance()->get_engine().get_fps();
         text->set_text(std::to_string(fps));
 	}
@@ -455,19 +455,19 @@ int main() {
 
     const auto text = std::make_shared<GameObject>(
             "ad_board", "ad", Transform{Vector2d{-50.f, 10.f}, Vector2d{}, 0.2f, 1.f});
-    text->add_component(std::make_shared<TextNew>("Powered by UnEngine", "./assets/Roboto/Roboto-Medium.ttf", 500, 10, Color{255,255,255,0 }, Color{0,0,0,1 }, 1));
+    text->add_component(std::make_shared<Text>("Powered by UnEngine", "./assets/Roboto/Roboto-Medium.ttf", 500, 10, Color{255,255,255,0 }, Color{0,0,0,1 }, 1));
     car->add_child(camera);
 
 
     const auto ui_velocity_indicator = std::make_shared<UIObject>("ui_velocity_indicator", "ui", 16, 32, scene->get_event_manager(), Transform{ Vector2d{-92.f, -84}, Vector2d{}, 0.f });
-    const auto ui_velocity_indicator_text = std::make_shared<TextNew>("0", "./assets/Roboto/Roboto-Medium.ttf", 100, 1000, Color{255, 255, 255, 150}, Color{0, 0, 0, 150 }, 10);
+    const auto ui_velocity_indicator_text = std::make_shared<Text>("0", "./assets/Roboto/Roboto-Medium.ttf", 100, 1000, Color{255, 255, 255, 150}, Color{0, 0, 0, 150 }, 10);
     ui_velocity_indicator->add_component(ui_velocity_indicator_text);
     ui_velocity_indicator->add_component(ui_velocity_indicator_behaviour);
 
     const auto ui_fps_indicator_behaviour = std::make_shared<FpsIndicator>();
 
     const auto ui_fps_indicator = std::make_shared<UIObject>("ui_fps_indicator", "ui", 4, 8, scene->get_event_manager(), Transform{ Vector2d{96.f, 92}, Vector2d{}, 0.f });
-    const auto ui_fps_indicator_text = std::make_shared<TextNew>("0",  "./assets/Roboto/Roboto-Medium.ttf", 100, 1000, Color{ 0, 255, 0, 255 }, Color{ 0, 0, 0, 150 }, 1);
+    const auto ui_fps_indicator_text = std::make_shared<Text>("0",  "./assets/Roboto/Roboto-Medium.ttf", 100, 1000, Color{ 0, 255, 0, 255 }, Color{ 0, 0, 0, 150 }, 1);
     ui_fps_indicator->add_component(ui_fps_indicator_text);
     ui_fps_indicator->add_component(ui_fps_indicator_behaviour);
 

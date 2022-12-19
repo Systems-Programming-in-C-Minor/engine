@@ -1,5 +1,5 @@
-#ifndef ENGINE_TEXTNEW_HPP
-#define ENGINE_TEXTNEw_HPP
+#ifndef ENGINE_TEXT_HPP
+#define ENGINE_TEXT_HPP
 
 #include "interfaces/irenderable.hpp"
 #include "component.hpp"
@@ -8,13 +8,12 @@
 #include <string>
 #include <memory>
 
-class TextNew : public Component, public IRenderable {
+class Text : public Component, public IRenderable {
 public:
     unsigned int res_x, res_y;
     float pixels_to_meters;
-    int ticks_per_refresh;
 
-    TextNew(const std::string& text,
+    Text(const std::string& text,
         const std::string& font_path,
         const int font_size,
         int order_in_layer,
