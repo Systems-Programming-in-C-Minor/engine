@@ -32,14 +32,14 @@ class Vector2d;
 class SdlRenderer : public IRenderer {
 public:
 
-	void render_texture(ITexture & texture, Transform & transform, bool is_world_space, float pixels_to_meters) const override;
+	void render_texture(ITexture & texture, Transform & transform, float pixels_to_meters) const override;
 
-    void render_texture(ITexture & texture, Transform & transform, bool is_world_space,  float width, float height) const override;
+    void render_texture(ITexture & texture, Transform & transform, float width, float height) const override;
 
 	/**
 	 * @brief Renders a collider
 	 */
-	void render_rigid_body(const RigidBody& rigid_body, Transform& transform, bool is_world_space) const override;
+	void render_rigid_body(const RigidBody& rigid_body, Transform& transform) const override;
 
 
 	/**

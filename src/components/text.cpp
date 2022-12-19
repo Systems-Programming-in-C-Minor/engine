@@ -40,21 +40,21 @@ TextNew::TextNew(const std::string& text,
 	load_texture(text);
 }
 
-void TextNew::render(bool is_world_space) {
+void TextNew::render() {
     const auto renderer = Global::get_instance()->get_engine().get_renderer();
 
     const auto ui_object = dynamic_cast<UIObject*>(game_object);
     if(ui_object) {
         auto render_call = RenderCall(
-                [this, renderer, texture = _texture, transform = game_object->transform, is_world_space, ui_object]() {
-                    renderer->render_texture(*texture, game_object->transform, is_world_space, ui_object->get_width(), ui_object->get_height());
+                [this, renderer, texture = _texture, transform = game_object->transform, ui_object]() {
+                    renderer->render_texture(*texture, game_object->transform, ui_object->get_width(), ui_object->get_height());
                 }, _order_in_layer);
         renderer->add_render_call(render_call);
     }
     else {
         auto render_call = RenderCall(
-                [this, renderer, texture = _texture, transform = game_object->transform, is_world_space]() {
-                    renderer->render_texture(*texture, game_object->transform, is_world_space, pixels_to_meters);
+                [this, renderer, texture = _texture, transform = game_object->transform]() {
+                    renderer->render_texture(*texture, game_object->transform, pixels_to_meters);
                 }, _order_in_layer);
         renderer->add_render_call(render_call);
     }

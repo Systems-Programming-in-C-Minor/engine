@@ -32,7 +32,7 @@
 
 #define camera Global::get_instance()->get_active_scene().get_camera
 
-void SdlRenderer::render_texture(ITexture& texture, Transform& transform, bool is_world_space, float pixels_to_meters) const
+void SdlRenderer::render_texture(ITexture& texture, Transform& transform, float pixels_to_meters) const
 {
     /*
      * TODO Open PR for SDL2pp
@@ -57,7 +57,7 @@ void SdlRenderer::render_texture(ITexture& texture, Transform& transform, bool i
     _renderer->Copy(*texture.get_texture(), SDL2pp::NullOpt, rect, -radians_to_degrees(transform.get_angle() - camera()->transform.get_angle()));
 }
 
-void SdlRenderer::render_texture(ITexture& texture, Transform& transform, bool is_world_space, float width, float height) const
+void SdlRenderer::render_texture(ITexture& texture, Transform& transform, float width, float height) const
 {
     // TODO Optimization: only retrieve when resolution changes
     const SDL2pp::Point res = _renderer->GetOutputSize();
@@ -79,7 +79,7 @@ void SdlRenderer::render_texture(ITexture& texture, Transform& transform, bool i
     _renderer->Copy(*texture.get_texture(), SDL2pp::NullOpt, rect, -radians_to_degrees(transform.get_angle()));
 }
 
-void SdlRenderer::render_rigid_body(const RigidBody& rigid_body, Transform& transform, bool is_world_space) const
+void SdlRenderer::render_rigid_body(const RigidBody& rigid_body, Transform& transform) const
 {
 	if (!_debug_mode) return;
 	b2Body* body = rigid_body.get_body();
@@ -209,7 +209,7 @@ void SdlRenderer::toggle_fullscreen() {
 	SDL_DisplayMode dm;
 	SDL_GetCurrentDisplayMode(_window->GetDisplayIndex(), &dm);
 	_window->SetSize(dm.w, dm.h);
-	_window->SetFullscreen(SDL_WINDOW_FULLSCREEN_DESKTOP);
+	_window->SetFullscreen(SDL_WINDOW_FULLSCREEN);
 	_fullscreen = true;
 }
 

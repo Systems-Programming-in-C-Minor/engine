@@ -21,6 +21,7 @@ private:
 
     long long _time_after_last_frame;
     unsigned long _fps;
+    int _tps;
 
 public:
     Engine();
@@ -45,7 +46,11 @@ public:
 
     [[nodiscard]] unsigned long get_fps() const;
 
-    [[nodiscard]] virtual std::shared_ptr<IRenderer> get_renderer() const;
+    void set_ticks_per_second(int tps = 60);
+
+    [[nodiscard]] int get_ticks_per_second() const;
+
+	[[nodiscard]] virtual std::shared_ptr<IRenderer> get_renderer() const;
 
     [[nodiscard]] unsigned long get_number_of_controllers() const;
 

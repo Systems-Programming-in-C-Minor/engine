@@ -13,7 +13,7 @@ private:
 
     bool is_in_object(int x, int y) const;
 public:
-    UIObject(const std::string& name, const std::string& tag, bool is_world_space, int width, int height, EventManager &event_manager, Transform transform = Transform{});
+    UIObject(const std::string& name, const std::string& tag, int width, int height, EventManager &event_manager, Transform transform = Transform{});
     void set_width(int new_width);
     [[nodiscard]] int get_width() const;
     void set_height(int new_height);

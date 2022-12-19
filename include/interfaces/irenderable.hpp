@@ -5,7 +5,7 @@
 
 class IRenderable {
 public:
-    virtual void render(bool is_world_space) = 0;
+    virtual void render() = 0;
     virtual ~IRenderable() = default;
     virtual int get_order_in_layer()
     {

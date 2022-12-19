@@ -20,9 +20,8 @@ public:
 
     /**
      * @brief Render the sprite.
-     * @param is_world_space Optionally render the sprite in world space.
      */
-    void render(bool is_world_space) override;
+    void render() override;
 
     /**
      * @brief Getter for the current size x.

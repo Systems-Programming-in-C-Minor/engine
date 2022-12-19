@@ -13,9 +13,9 @@ class Vector2d;
 
 class IRenderer {
 public:
-	virtual void render_texture(ITexture & texture, Transform & transform, bool is_world_space, float pixels_to_meters) const = 0;
-    virtual void render_texture(ITexture & texture, Transform & transform, bool is_world_space,  float width, float height) const = 0;
-	virtual void render_rigid_body(const RigidBody& rigid_body, Transform& transform, bool is_world_space) const = 0;
+	virtual void render_texture(ITexture & texture, Transform & transform, float pixels_to_meters) const = 0;
+    virtual void render_texture(ITexture & texture, Transform & transform, float width, float height) const = 0;
+	virtual void render_rigid_body(const RigidBody& rigid_body, Transform& transform) const = 0;
 	virtual void render_lines(std::vector<Vector2d>& vectors, const Color& color) const = 0;
 	virtual void clear(const Color& color) const = 0;
 	virtual void push_to_screen() = 0;

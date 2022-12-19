@@ -3,11 +3,10 @@
 
 int GameObject::object_counter = 0;
 
-GameObject::GameObject(std::string name, std::string tag, bool is_world_space, Transform _transform) :
+GameObject::GameObject(std::string name, std::string tag, Transform _transform) :
 	_id(object_counter++),
 	name(std::move(name)),
 	tag(std::move(tag)),
-    is_world_space(is_world_space),
 	parent(nullptr),
     transform(_transform){
     transform._game_object = this;
@@ -71,7 +70,7 @@ void GameObject::render() const {
     for (const auto &component: get_components_in_children<Component>()) {
         const auto renderable = std::dynamic_pointer_cast<IRenderable>(component);
         if (renderable) {
-            renderable->render(is_world_space);
+            renderable->render();
 
         }
     }

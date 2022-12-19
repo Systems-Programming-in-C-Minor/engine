@@ -4,8 +4,8 @@
 
 #include "global.hpp"
 
-UIObject::UIObject(const std::string &name, const std::string &tag, bool is_world_space, int width, int height, EventManager &event_manager, Transform transform) :
-	GameObject(name, tag, is_world_space, transform),
+UIObject::UIObject(const std::string &name, const std::string &tag, int width, int height, EventManager &event_manager, Transform transform) :
+	GameObject(name, tag, transform),
 	MouseListener(event_manager),
     _width(width),
     _height(height)
