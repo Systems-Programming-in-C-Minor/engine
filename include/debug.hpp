@@ -7,7 +7,7 @@
 /**
  * @brief Some convenient debugging functions.
  */
-class Debug {
+namespace Debug {
 
     /**
      * @brief Draws a colored line between specified start and end points.
