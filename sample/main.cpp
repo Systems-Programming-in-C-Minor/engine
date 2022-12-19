@@ -18,6 +18,9 @@
 #include "storage/json_properties.hpp"
 #include "listeners/joystick_listener.hpp"
 #include "listeners/ai_listener.hpp"
+#include "race/objects/car.hpp"
+#include "race/behaviours/drive_input_behaviour.hpp"
+#include "race/behaviours/drive_input_controller_behaviour.hpp"
 
 
 class KeyMouseListenerComponent
@@ -113,131 +116,6 @@ private:
     bool _ALT = false;
 };
 
-class Car : public GameObject {
-public:
-    Car(const std::string &name, const std::string &tag, std::string sprite_path, const std::shared_ptr<Scene> &scene,
-        const int order_in_layer = 10, Vector2d position = Vector2d())
-            : GameObject(name, tag) {
-        const auto sprite = std::make_shared<Sprite>(std::move(sprite_path), Color(0, 0, 0, 0), false, false, 1, 10);
-        add_component(sprite);
-
-        const auto collider = std::make_shared<BoxCollider>(1.65f, 4.f);
-        const auto rigid_body = std::make_shared<RigidBody>(*scene, order_in_layer, BodyType::dynamic_body, position,
-                                                            1.f);
-
-        rigid_body->set_mass(1600.f);
-        rigid_body->set_collider(collider);
-        add_component(rigid_body);
-        transform.set_scale(0.5f);
-        transform.set_angle(degrees_to_radians(90.f));
-    }
-};
-
-class PlayerCarBehaviour : public DriveBehaviour, public FrictionBehaviour, public KeyListener, public JoystickListener {
-public:
-    explicit PlayerCarBehaviour(EventManager &event_manager, std::shared_ptr<RigidBody> body) :
-            DriveBehaviour(body),
-            KeyListener(event_manager),
-            JoystickListener(event_manager) {}
-
-    void on_key_pressed(const KeyPressedEvent &event) override {
-        switch (event.key) {
-            case EQUAL:
-                game_object->transform.set_scale(game_object->transform.get_scale() + 0.01f);
-                break;
-            case MIN:
-                game_object->transform.set_scale(game_object->transform.get_scale() - 0.01f);
-                break;
-            case B:
-                std::cout << game_object->transform.get_position() << std::endl;
-                break;
-        }
-    }
-
-    void on_key_hold(const KeyHoldEvent &event) override {
-        switch (event.key) {
-            case W: {
-                drive_forwards();
-                break;
-            }
-            case S: {
-                drive_backwards();
-                break;
-            }
-            case A: {
-                turn_left();
-                break;
-            }
-            case D: {
-                turn_right();
-                break;
-            }
-            case SPACE: {
-                brake();
-                break;
-            }
-            case UP: {
-                Vector2d pos_up{game_object->transform.get_position().x,
-                                game_object->transform.get_position().y + 0.01f};
-                game_object->transform.set_position(pos_up);
-                break;
-            }
-            case DOWN: {
-                Vector2d pos_down{game_object->transform.get_position().x,
-                                  game_object->transform.get_position().y - 0.01f};
-                game_object->transform.set_position(pos_down);
-                break;
-            }
-            case LEFT: {
-                Vector2d pos_left{game_object->transform.get_position().x - 0.01f,
-                                  game_object->transform.get_position().y};
-                game_object->transform.set_position(pos_left);
-                break;
-            }
-            case RIGHT: {
-                Vector2d pos_right{game_object->transform.get_position().x + 0.01f,
-                                   game_object->transform.get_position().y};
-                game_object->transform.set_position(pos_right);
-                break;
-            }
-        }
-    }
-
-    void on_axis_current(const JoystickAxisCurrentEvent &event) override {
-        switch (event.axis) {
-            case LeftJoystickX:
-            case LeftTouchpadX: {
-                if (std::abs(event.value) > 0.1f) {
-                    turn(-event.value);
-                }
-                break;
-            }
-            case LeftTrigger: {
-                if (event.value > -0.9) {
-                    drive_backwards((event.value + 1.0f) / 2);
-                }
-                break;
-            }
-            case RightTrigger: {
-                if (event.value > -0.9) {
-                    drive_forwards((event.value + 1.0f) / 2);
-                }
-                break;
-            }
-            default:
-                break;
-        }
-    }
-
-    void on_button_hold(const JoystickButtonHoldEvent &event) override {
-        if (event.button == LeftButton) {
-            brake();
-        }
-    }
-
-    void on_key_released(const KeyReleasedEvent &event) override {}
-};
-
 class Target : public GameObject {
 public:
     Target(const std::string &name, const std::string &tag, Transform transform = Transform{Vector2d()})
@@ -314,10 +192,9 @@ int main() {
 
     track_outer->add_component(std::make_shared<Sprite>(sprite1));
 
-    const auto car = std::make_shared<Car>("player_car", "car", "./assets/blue_car.png", scene, 10,
-                                           Vector2d{-6.f, 0.f});
-    const auto car_behaviour = std::make_shared<PlayerCarBehaviour>(scene->get_event_manager(), car->get_component<RigidBody>());
-    car->add_component(car_behaviour);
+    const auto car = std::make_shared<Car>("player_car", "./assets/blue_car.png", Vector2d{-6.f, 0.f}, scene);
+    car->add_component(std::make_shared<DriveInputBehaviour>(scene->get_event_manager()));
+    car->add_component(std::make_shared<DriveInputControllerBehaviour>(scene->get_event_manager(), 0));
 
     TargetFactory tf;
 
@@ -347,44 +224,38 @@ int main() {
         scene->gameobjects.push_back(target);
     }
 
-    const auto ai_car = std::make_shared<Car>("ai_car", "ai-car", "./assets/blue_car.png", scene, 10,
-                                              Vector2d{14, -76});
+    const auto ai_car = std::make_shared<Car>("ai_car", "./assets/blue_car.png", Vector2d{14, -76}, scene);
 
     ai_car->add_component(std::make_shared<AIBehaviour>(ai_car->get_component<RigidBody>(), targets[0]));
     auto ai_listener_component = std::make_shared<AITargetListenerComponent>(scene->get_event_manager());
     ai_car->add_component(ai_listener_component);
     ai_listener_component->targets = targets;
 
-    const auto ai_car2 = std::make_shared<Car>("ai_car2", "ai-car", "./assets/red_car.png", scene, 10,
-                                               Vector2d{20, -72});
+    const auto ai_car2 = std::make_shared<Car>("ai_car2", "./assets/red_car.png", Vector2d{20, -72}, scene);
     ai_car2->add_component(std::make_shared<AIBehaviour>(ai_car2->get_component<RigidBody>(), targets[0]));
     auto ai_listener_component2 = std::make_shared<AITargetListenerComponent>(scene->get_event_manager());
     ai_car2->add_component(ai_listener_component2);
     ai_listener_component2->targets = targets;
 
-    const auto ai_car3 = std::make_shared<Car>("ai_car3", "ai-car", "./assets/green_car.png", scene, 10,
-                                               Vector2d{26, -76});
+    const auto ai_car3 = std::make_shared<Car>("ai_car3", "./assets/green_car.png", Vector2d{26, -76}, scene);
     ai_car3->add_component(std::make_shared<AIBehaviour>(ai_car3->get_component<RigidBody>(), targets[0]));
     auto ai_listener_component3 = std::make_shared<AITargetListenerComponent>(scene->get_event_manager());
     ai_car3->add_component(ai_listener_component3);
     ai_listener_component3->targets = targets;
 
-    const auto ai_car4 = std::make_shared<Car>("ai_car4", "ai-car", "./assets/pink_car.png", scene, 10,
-                                               Vector2d{31, -72});
+    const auto ai_car4 = std::make_shared<Car>("ai_car4", "./assets/pink_car.png", Vector2d{31, -72}, scene);
     ai_car4->add_component(std::make_shared<AIBehaviour>(ai_car4->get_component<RigidBody>(), targets[0]));
     auto ai_listener_component4 = std::make_shared<AITargetListenerComponent>(scene->get_event_manager());
     ai_car4->add_component(ai_listener_component4);
     ai_listener_component4->targets = targets;
 
-    const auto ai_car5 = std::make_shared<Car>("ai_car5", "ai-car", "./assets/orange_car.png", scene, 10,
-                                               Vector2d{38, -76});
+    const auto ai_car5 = std::make_shared<Car>("ai_car5", "./assets/orange_car.png", Vector2d{38, -76}, scene);
     ai_car5->add_component(std::make_shared<AIBehaviour>(ai_car5->get_component<RigidBody>(), targets[0]));
     auto ai_listener_component5 = std::make_shared<AITargetListenerComponent>(scene->get_event_manager());
     ai_car5->add_component(ai_listener_component5);
     ai_listener_component5->targets = targets;
 
-    const auto ai_car6 = std::make_shared<Car>("ai_car6", "ai-car", "./assets/yellow_car.png", scene, 10,
-                                               Vector2d{43, -72});
+    const auto ai_car6 = std::make_shared<Car>("ai_car6", "./assets/yellow_car.png", Vector2d{43, -72}, scene);
     ai_car6->add_component(std::make_shared<AIBehaviour>(ai_car6->get_component<RigidBody>(), targets[0]));
     auto ai_listener_component6 = std::make_shared<AITargetListenerComponent>(scene->get_event_manager());
     ai_car6->add_component(ai_listener_component6);
