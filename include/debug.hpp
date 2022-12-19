@@ -4,7 +4,7 @@
 #include "color.hpp"
 #include "vector2d.hpp"
 
-/**
+    /**
      * @brief Some convenient debugging functions.
      */
 namespace Debug {
