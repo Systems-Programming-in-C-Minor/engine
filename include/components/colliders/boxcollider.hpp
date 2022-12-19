@@ -4,7 +4,7 @@
 #include "polygoncollider.hpp"
 
 /**
- * Collider class for rectangular objects
+ * @brief Collider class for rectangular objects.
  */
 class BoxCollider : public PolygonCollider
 {
@@ -15,7 +15,16 @@ private:
 public:
     BoxCollider(float width, float height, bool ignore_collision_physics = false);
 
+    /**
+     * @brief The collider's width.
+     * @return The current width.
+     */
     [[nodiscard]] float get_width() const;
+
+    /**
+     * @brief The collider's height.
+     * @return The current height.
+     */
     [[nodiscard]] float get_height() const;
 };
 

@@ -3,6 +3,9 @@
 
 class GameObject;
 
+/**
+ * @brief Base class for all components.
+ */
 class Component {
 protected:
     Component() = default;
@@ -10,9 +13,22 @@ protected:
     friend class GameObject;
 public:
     GameObject* game_object = nullptr;
+
+    /**
+     * @brief Set new is_active status.
+     * @param is_active The new is_active status.
+     */
     virtual void set_active(bool is_active);
+
+    /**
+     * @brief Getter for active status.
+     * @return true if active, false otherwise.
+     */
     [[nodiscard]] bool get_active() const;
 
+    /**
+     * @brief Virtual destructor.
+     */
     virtual ~Component() = default;
 };
 

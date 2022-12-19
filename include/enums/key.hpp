@@ -1,6 +1,9 @@
 #ifndef ENGINE_KEY_HPP
 #define ENGINE_KEY_HPP
 
+/**
+ * @brief Enumeration for different keyboard keys.
+ */
 enum Key {
     NUM_0,
     NUM_1,
