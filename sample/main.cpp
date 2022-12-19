@@ -19,6 +19,7 @@
 #include "components/audiosource.hpp"
 #include "listeners/joystick_listener.hpp"
 #include "listeners/ai_listener.hpp"
+#include <cstring>
 
 
 class KeyMouseListenerComponent
@@ -137,21 +138,39 @@ public:
     explicit PlayerCarBehaviour(EventManager &event_manager) : KeyListener(event_manager),
                                                                JoystickListener(event_manager) {}
 
+    int turn_counter = 3;
+    bool idle = true;
+
     void on_key_pressed(const KeyPressedEvent &event) override {
+        const auto audio_sources = game_object->get_components<AudioSource>();
         switch (event.key) {
-            case EQUAL:
+            case W: {
+                auto speed = game_object->get_component<RigidBody>()->get_current_speed();
+                for (auto& as : audio_sources) {
+                    if (strcmp(as->get_name().c_str(), "car_drive_off") == 0 && speed <= 1)
+                        as->play();
+                }
+                break;
+            }                
+            case EQUAL: {
                 game_object->transform.set_scale(game_object->transform.get_scale() + 0.01f);
                 break;
-            case MIN:
+            }                
+            case MIN: {
                 game_object->transform.set_scale(game_object->transform.get_scale() - 0.01f);
                 break;
-            case B:
+            }
+            case B: {
                 std::cout << game_object->transform.get_position() << std::endl;
                 break;
+            }
+	        default:
+	            break;
         }
     }
 
     void on_key_hold(const KeyHoldEvent &event) override {
+        const auto audio_sources = game_object->get_components<AudioSource>();
         switch (event.key) {
             case W: {
                 drive_forwards();
@@ -160,15 +179,45 @@ public:
             }
             case S: {
                 drive_backwards();
-                game_object->get_component<AudioSource>()->play(true);
+                game_object->get_component<AudioSource>()->play(false);
                 break;
             }
             case A: {
                 turn_left();
+                if(Global::get_instance()->input.get_key(W))
+                {
+                	std::cout << "Turn counter: " << turn_counter << std::endl;
+                    if( turn_counter > 15)
+                    {
+	                    for (auto &as : audio_sources)
+	                    {
+	                        if (strcmp(as->get_name().c_str(), "car_drift") == 0)
+	                        {
+	                            as->play(true);
+	                        }
+	                    }	                    
+                    }
+                    turn_counter += 1;
+                }                        
                 break;
             }
             case D: {
                 turn_right();
+                if (Global::get_instance()->input.get_key(W))
+                {
+                    std::cout << "Turn counter: " << turn_counter << std::endl;
+                    if (turn_counter > 15)
+                    {
+                        for (auto& as : audio_sources)
+                        {
+                            if (strcmp(as->get_name().c_str(), "car_drift") == 0)
+                            {
+                                as->play(true);
+                            }
+                        }
+                    }
+                    turn_counter++;
+                }
                 break;
             }
             case SPACE: {
@@ -199,20 +248,45 @@ public:
                 game_object->transform.set_position(pos_right);
                 break;
             }
+            default:
+                break;
         }
     }
 
     void on_key_released(const KeyReleasedEvent &event) override {
+        const auto audio_sources = game_object->get_components<AudioSource>();
         switch (event.key) {
-            case W: {
-                game_object->get_component<AudioSource>()->stop();
-                break;
-            }
-            case S: {
-                drive_backwards();
-                game_object->get_component<AudioSource>()->stop();
-                break;
-            }
+	        case W: {
+	            game_object->get_component<AudioSource>()->stop();
+	            for (auto& as : audio_sources) {
+                    if (strcmp(as->get_name().c_str(), "car_drive_off") == 0)
+                        as->stop();
+	            }
+	            break;
+	        }
+	        case S: {
+	            drive_backwards();
+	            game_object->get_component<AudioSource>()->stop();
+	            break;
+	        }
+	        case A: {
+	            for (auto& as : audio_sources)
+	            {
+	                if (strcmp(as->get_name().c_str(), "car_drift") == 0)
+	                    as->stop();
+	            }
+	            turn_counter = 0;
+	            break;
+	        }
+	        case D: {
+	            for (auto& as : audio_sources)
+	            {
+	                if (strcmp(as->get_name().c_str(), "car_drift") == 0)
+	                    as->stop();
+	            }
+	            turn_counter = 0;
+	            break;
+	        }
         }
     }
 
@@ -304,9 +378,14 @@ int main() {
     Engine &engine_ref = global->get_engine();
 
     // Setup music
-    const auto background_music = std::make_shared<AudioSource>("./assets/toto-africa.mp3", false, false, 0.1);
-    const auto acceleration_sound = std::make_shared<AudioSource>("./assets/acceleration.mp3", false, false, 0.05);
+    const auto background_music = std::make_shared<AudioSource>("./assets/audio/background1.mp3", false, false, 0.1, "background");
+    const auto acceleration_sound = std::make_shared<AudioSource>("./assets/audio/engine-driving.mp3", false, false, 0.1, "acceleration");
+    const auto engine_idle = std::make_shared<AudioSource>("./assets/audio/engine-idle.mp3", false, true, 0.2, "engine_idle");
+    const auto car_drift = std::make_shared<AudioSource>("./assets/audio/tire-screech-drift.mp3", false, false, 0.2, "car_drift");
+    const auto car_drive_off = std::make_shared<AudioSource>("./assets/audio/tire-screech-drive-off.mp3", false, false, 0.2, "car_drive_off");
+    const auto car_crash = std::make_shared<AudioSource>("./assets/audio/car-crash.mp3", false, false, 1, "car_crash");
     background_music->play(true);
+    engine_idle->play(true);
 
     // Setup scene
     const auto scene = std::make_shared<Scene>();
@@ -334,7 +413,12 @@ int main() {
     const auto car = std::make_shared<Car>("player_car", "car", "./assets/blue_car.png", scene, 10, Vector2d{-6.f, 0.f});
     const auto car_behaviour = std::make_shared<PlayerCarBehaviour>(scene->get_event_manager());
     car->add_component(car_behaviour);
+
     car->add_component(acceleration_sound);
+    car->add_component(engine_idle);
+    car->add_component(car_drift);
+    car->add_component(car_drive_off);
+    car->add_component(car_crash);
 
     TargetFactory tf;
 

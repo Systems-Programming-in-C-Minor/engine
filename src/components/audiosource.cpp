@@ -50,11 +50,13 @@ AudioSource::AudioSource(
 	const std::string& audio_clip,
 	bool play_on_awake,
 	bool loop,
-	float volume) :
-	_audio_clip(fs::current_path().append(audio_clip)),
-	_play_on_awake(play_on_awake),
-	_loop(loop),
-	_volume(volume) 
+	float volume,
+	const std::string name) :
+		Component(name),
+		_audio_clip(fs::current_path().append(audio_clip)),
+		_play_on_awake(play_on_awake),
+		_loop(loop),
+		_volume(volume)
 {
 	_sample = std::make_unique<SDLMixerAudioSample>(audio_clip, volume, loop);
 	if (_play_on_awake && active)

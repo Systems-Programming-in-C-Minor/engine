@@ -44,7 +44,8 @@ public:
 		const std::string& audio_clip,
 		bool play_on_awake = false,
 		bool loop = false,
-        float volume = 1.0
+        float volume = 1.0,
+		const std::string name = ""
 	);
 private:
 	std::filesystem::path _audio_clip;
