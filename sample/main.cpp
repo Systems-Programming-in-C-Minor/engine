@@ -22,6 +22,8 @@
 #include "race/behaviours/drive_input_behaviour.hpp"
 #include "race/behaviours/drive_input_controller_behaviour.hpp"
 
+const auto scene = std::make_shared<Scene>();
+const auto scene2 = std::make_shared<Scene>();
 
 class KeyMouseListenerComponent
         : public Component, public KeyListener, public MouseListener, public ColliderListener, public JoystickListener {
@@ -42,6 +44,12 @@ public:
             Global::get_instance()->get_engine().get_renderer()->toggle_fullscreen();
         if (event.key == D && _ALT)
             Global::get_instance()->get_engine().get_renderer()->toggle_debug_mode();
+        if (event.key == NUM_5 && _ALT) {   
+            Global::get_instance()->get_engine().load_scene(scene2);
+            std::cout << "test" << std::endl;
+        }
+        if (event.key == NUM_4 && _ALT)
+            Global::get_instance()->get_engine().load_scene(scene);
         if (enabled)
             std::cout << "Pressed key: " << event.key << std::endl;
     }
@@ -169,9 +177,6 @@ int main() {
     global->set_properties(std::make_unique<JsonProperties>("settings.json"));
     Engine &engine_ref = global->get_engine();
 
-    // Setup scene
-    const auto scene = std::make_shared<Scene>();
-
     // Create game objects with component
     const auto track_outer = std::make_shared<GameObject>(
             "track_outer", "track", true,
@@ -199,10 +204,12 @@ int main() {
 
     track_outer->add_component(std::make_shared<Sprite>(sprite1));
 
-    const auto car = std::make_shared<Car>("player_car", "./assets/blue_car.png", Vector2d{-6.f, 0.f}, scene);
+
+    const auto car = std::make_shared<Car>("player_car", "./assets/blue_car.png", Vector2d(), scene);
     car->add_component(std::make_shared<DriveInputBehaviour>(scene->get_event_manager()));
     car->add_component(std::make_shared<DriveInputControllerBehaviour>(scene->get_event_manager(), 0));
 
+    car->get_component<Sprite>()->set_color(Color(255, 255, 255, 140));
     TargetFactory tf;
 
     std::vector<Vector2d> vector_targets_little
@@ -321,7 +328,17 @@ int main() {
     key_listener_object->add_component(std::make_shared<KeyMouseListenerComponent>(key_listener));
     scene->gameobjects.push_back(key_listener_object);
 
+    const auto key_listener_object2 = std::make_shared<GameObject>("KeyMouseListener", "TestTag", true);
+    KeyMouseListenerComponent key_listener2{ scene2->get_event_manager() };
+    key_listener_object2->add_component(std::make_shared<KeyMouseListenerComponent>(key_listener2));
+    scene2->gameobjects.push_back(key_listener_object2);
+
     engine_ref.load_scene(scene);
+ 
+    Sprite sprite3{ "./assets/sample.png", Color(0, 0, 0, 255.0), false, false, 1, 1, 1.f };
+    const auto test23 = std::make_shared<GameObject>("Scene2Test", "test", true);
+    test23->add_component(std::make_shared<Sprite>(sprite3));
+    scene2->gameobjects.push_back(test23);
 
     engine_ref.start();
 }

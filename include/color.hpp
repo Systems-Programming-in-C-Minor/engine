@@ -2,6 +2,7 @@
 #define ENGINE_COLOR_HPP
 
 class SdlRenderer;
+class SdlTexture;
 
 namespace SDL2pp
 {
@@ -12,12 +13,13 @@ namespace SDL2pp
  * @brief Color represents a red-green-blue color with alpha.
  */
 class Color {
-private:
+	friend class SdlTexture;
 	friend class SdlRenderer;
     /**
      * @brief Explicit constructor.
      * @param color SDL2pp::Color object of which the rgba values will be copied.
      */
+private:
 	explicit Color(const SDL2pp::Color& color);
 
     /**

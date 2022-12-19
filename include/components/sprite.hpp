@@ -35,6 +35,7 @@ public:
      * @return The current size y.
      */
     [[nodiscard]] float get_size_y() const;
+    void set_color(const Color& color);
 private:
     std::string _sprite;
     Color color;
