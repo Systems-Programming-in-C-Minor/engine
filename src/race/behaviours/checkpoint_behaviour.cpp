@@ -21,7 +21,7 @@ void CheckpointBehaviour::check_and_set_checkpoint(GameObject *game_object) {
         return;
 
     auto checkpoint = reinterpret_cast<Checkpoint *>(game_object);
-    _last_checked = std::make_shared<Checkpoint>(*checkpoint);
+    _last_touched = std::make_shared<Checkpoint>(*checkpoint);
 
     auto first_checkpoint = !checkpoint->previous_checkpoint.has_value() && !_reached.has_value();
     auto new_checkpoint = checkpoint->previous_checkpoint.has_value() && _reached.has_value() &&
@@ -49,6 +49,6 @@ std::vector<long> CheckpointBehaviour::get_lap_times() const {
     return _lap_times;
 }
 
-std::optional<std::shared_ptr<Checkpoint>> CheckpointBehaviour::get_last_checked() const {
-    return _last_checked;
+std::optional<std::shared_ptr<Checkpoint>> CheckpointBehaviour::get_last_touched() const {
+    return _last_touched;
 }
