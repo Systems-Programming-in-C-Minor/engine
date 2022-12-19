@@ -285,8 +285,15 @@ int main() {
     car->add_component(std::make_shared<DriveInputControllerBehaviour>(scene->get_event_manager(), 0));
     const auto ui_velocity_indicator_behaviour = std::make_shared<VelocityIndicator>();
     car->add_component(ui_velocity_indicator_behaviour);
-
     car->get_component<Sprite>()->set_color(Color(255, 255, 255, 140));
+
+    const auto car2 = std::make_shared<Car>("James", "./assets/red_car.png", Vector2d{-6.f, 0.f}, scene);
+//    car2->add_component(std::make_shared<DriveInputBehaviour>(scene->get_event_manager()));
+//    car2->add_component(std::make_shared<DriveInputControllerBehaviour>(scene->get_event_manager(), 0));
+
+    engine_ref._multiplayer_manager->register_networkable(std::make_shared<NetworkableCar>(car, true, false));
+    engine_ref._multiplayer_manager->register_networkable(std::make_shared<NetworkableCar>(car2, false, true));
+
 
     TargetFactory tf;
 
@@ -316,41 +323,41 @@ int main() {
         scene->gameobjects.push_back(target);
     }
 
-    const auto ai_car = std::make_shared<Car>("ai_car", "./assets/blue_car.png", Vector2d{14, -76}, scene);
-    ai_car->add_component(std::make_shared<AIBehaviour>(targets[0]));
-    auto ai_listener_component = std::make_shared<AITargetListenerComponent>(scene->get_event_manager());
-    ai_car->add_component(ai_listener_component);
-    ai_listener_component->targets = targets;
-
-    const auto ai_car2 = std::make_shared<Car>("ai_car2", "./assets/red_car.png", Vector2d{20, -72}, scene);
-    ai_car2->add_component(std::make_shared<AIBehaviour>(targets[0]));
-    auto ai_listener_component2 = std::make_shared<AITargetListenerComponent>(scene->get_event_manager());
-    ai_car2->add_component(ai_listener_component2);
-    ai_listener_component2->targets = targets;
-
-    const auto ai_car3 = std::make_shared<Car>("ai_car3", "./assets/green_car.png", Vector2d{26, -76}, scene);
-    ai_car3->add_component(std::make_shared<AIBehaviour>(targets[0]));
-    auto ai_listener_component3 = std::make_shared<AITargetListenerComponent>(scene->get_event_manager());
-    ai_car3->add_component(ai_listener_component3);
-    ai_listener_component3->targets = targets;
-
-    const auto ai_car4 = std::make_shared<Car>("ai_car4", "./assets/pink_car.png", Vector2d{31, -72}, scene);
-    ai_car4->add_component(std::make_shared<AIBehaviour>(targets[0]));
-    auto ai_listener_component4 = std::make_shared<AITargetListenerComponent>(scene->get_event_manager());
-    ai_car4->add_component(ai_listener_component4);
-    ai_listener_component4->targets = targets;
-
-    const auto ai_car5 = std::make_shared<Car>("ai_car5", "./assets/orange_car.png", Vector2d{38, -76}, scene);
-    ai_car5->add_component(std::make_shared<AIBehaviour>(targets[0]));
-    auto ai_listener_component5 = std::make_shared<AITargetListenerComponent>(scene->get_event_manager());
-    ai_car5->add_component(ai_listener_component5);
-    ai_listener_component5->targets = targets;
-
-    const auto ai_car6 = std::make_shared<Car>("ai_car6", "./assets/yellow_car.png", Vector2d{43, -72}, scene);
-    ai_car6->add_component(std::make_shared<AIBehaviour>(targets[0]));
-    auto ai_listener_component6 = std::make_shared<AITargetListenerComponent>(scene->get_event_manager());
-    ai_car6->add_component(ai_listener_component6);
-    ai_listener_component6->targets = targets;
+//    const auto ai_car = std::make_shared<Car>("ai_car", "./assets/blue_car.png", Vector2d{14, -76}, scene);
+//    ai_car->add_component(std::make_shared<AIBehaviour>(targets[0]));
+//    auto ai_listener_component = std::make_shared<AITargetListenerComponent>(scene->get_event_manager());
+//    ai_car->add_component(ai_listener_component);
+//    ai_listener_component->targets = targets;
+//
+//    const auto ai_car2 = std::make_shared<Car>("ai_car2", "./assets/red_car.png", Vector2d{20, -72}, scene);
+//    ai_car2->add_component(std::make_shared<AIBehaviour>(targets[0]));
+//    auto ai_listener_component2 = std::make_shared<AITargetListenerComponent>(scene->get_event_manager());
+//    ai_car2->add_component(ai_listener_component2);
+//    ai_listener_component2->targets = targets;
+//
+//    const auto ai_car3 = std::make_shared<Car>("ai_car3", "./assets/green_car.png", Vector2d{26, -76}, scene);
+//    ai_car3->add_component(std::make_shared<AIBehaviour>(targets[0]));
+//    auto ai_listener_component3 = std::make_shared<AITargetListenerComponent>(scene->get_event_manager());
+//    ai_car3->add_component(ai_listener_component3);
+//    ai_listener_component3->targets = targets;
+//
+//    const auto ai_car4 = std::make_shared<Car>("ai_car4", "./assets/pink_car.png", Vector2d{31, -72}, scene);
+//    ai_car4->add_component(std::make_shared<AIBehaviour>(targets[0]));
+//    auto ai_listener_component4 = std::make_shared<AITargetListenerComponent>(scene->get_event_manager());
+//    ai_car4->add_component(ai_listener_component4);
+//    ai_listener_component4->targets = targets;
+//
+//    const auto ai_car5 = std::make_shared<Car>("ai_car5", "./assets/orange_car.png", Vector2d{38, -76}, scene);
+//    ai_car5->add_component(std::make_shared<AIBehaviour>(targets[0]));
+//    auto ai_listener_component5 = std::make_shared<AITargetListenerComponent>(scene->get_event_manager());
+//    ai_car5->add_component(ai_listener_component5);
+//    ai_listener_component5->targets = targets;
+//
+//    const auto ai_car6 = std::make_shared<Car>("ai_car6", "./assets/yellow_car.png", Vector2d{43, -72}, scene);
+//    ai_car6->add_component(std::make_shared<AIBehaviour>(targets[0]));
+//    auto ai_listener_component6 = std::make_shared<AITargetListenerComponent>(scene->get_event_manager());
+//    ai_car6->add_component(ai_listener_component6);
+//    ai_listener_component6->targets = targets;
 
     const auto text = std::make_shared<GameObject>(
             "ad_board", "ad", Transform{Vector2d{-50.f, 10.f}, Vector2d{}, 0.2f, 1.f});
@@ -381,12 +388,6 @@ int main() {
     scene->gameobjects.push_back(ui_fps_indicator);
     scene->gameobjects.push_back(text);
 
-    scene->gameobjects.push_back(ai_car);
-    scene->gameobjects.push_back(ai_car2);
-    scene->gameobjects.push_back(ai_car3);
-    scene->gameobjects.push_back(ai_car4);
-    scene->gameobjects.push_back(ai_car5);
-    scene->gameobjects.push_back(ai_car6);
 
     // Add rigid bodies
     const auto track_outer_coll = std::make_shared<ChainCollider>("./assets/track1_outer.xml", false,
