@@ -12,7 +12,7 @@ Car::Car(const std::string &name, const std::string &sprite_path, const Vector2d
           DriveBehaviour(std::make_shared<RigidBody>(*scene, 1000, BodyType::dynamic_body, position, 1.f), is_enabled) {
 
 
-    auto sprite = std::make_shared<Sprite>(sprite_path, Color(0, 0, 0, 0), false, false, 1, 1);
+    auto sprite = std::make_shared<Sprite>(sprite_path, 1);
     add_component(sprite);
 
     auto collider = std::make_shared<BoxCollider>(1.65f, 4.f);
