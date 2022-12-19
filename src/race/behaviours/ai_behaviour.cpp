@@ -55,7 +55,6 @@ void AIBehaviour::set_target(std::shared_ptr<GameObject> game_object) {
 }
 
 void AIBehaviour::tick(GameObject &gameObject) {
-    FrictionBehaviour::tick(gameObject);
     move_to_target();
 }
 

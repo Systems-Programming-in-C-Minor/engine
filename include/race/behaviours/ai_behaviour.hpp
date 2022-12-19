@@ -10,7 +10,7 @@
 
 class GameObject;
 
-class AIBehaviour : public DriveBehaviour, public FrictionBehaviour {
+class AIBehaviour : public Component, public DriveBehaviour, public ITickable {
 
 private:
     std::shared_ptr<GameObject> _target;
