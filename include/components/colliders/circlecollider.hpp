@@ -9,7 +9,7 @@
 class CircleCollider : public Collider
 {
 private:
-    double _radius;
+    float _radius;
 
 protected:
     /**
@@ -21,13 +21,13 @@ protected:
     void set_fixture(b2Body& body, float friction, float restitution) override;
 
 public:
-    explicit CircleCollider(Vector2d point, float radius);
+    explicit CircleCollider(float radius, bool ignore_collision_physics = false);
 
     /**
      * @brief Get the collider's radius.
      * @return The radius.
      */
-    [[nodiscard]] double get_radius() const;
+    [[nodiscard]] float get_radius() const;
 };
 
 #endif //COLLIDERS_CIRCLECOLLIDER_HPP
