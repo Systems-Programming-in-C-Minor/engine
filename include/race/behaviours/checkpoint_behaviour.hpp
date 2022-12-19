@@ -13,13 +13,14 @@ public:
 
     void on_collider_entry(const ColliderEntryEvent &event) override;
 
-    void on_collider_exit(const ColliderExitEvent &event) override;
-
-    [[nodiscard]] int get_laps() const;
+    [[nodiscard]] int get_number_of_laps() const;
 
     [[nodiscard]] std::vector<long> get_lap_times() const;
 
+    [[nodiscard]] std::optional<std::shared_ptr<Checkpoint>> get_last_checked() const;
+
 private:
+    std::optional<std::shared_ptr<Checkpoint>> _last_checked = std::nullopt;
     std::optional<std::shared_ptr<Checkpoint>> _reached = std::nullopt;
 
     std::vector<long> _lap_times;

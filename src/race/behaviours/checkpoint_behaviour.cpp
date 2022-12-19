@@ -16,13 +16,12 @@ void CheckpointBehaviour::on_collider_entry(const ColliderEntryEvent &event) {
     }
 }
 
-void CheckpointBehaviour::on_collider_exit(const ColliderExitEvent &event) {}
-
 void CheckpointBehaviour::check_and_set_checkpoint(GameObject *game_object) {
     if (game_object->get_tag() != "checkpoint")
         return;
 
     auto checkpoint = reinterpret_cast<Checkpoint *>(game_object);
+    _last_checked = std::make_shared<Checkpoint>(*checkpoint);
 
     auto first_checkpoint = !checkpoint->previous_checkpoint.has_value() && !_reached.has_value();
     auto new_checkpoint = checkpoint->previous_checkpoint.has_value() && _reached.has_value() &&
@@ -42,10 +41,14 @@ void CheckpointBehaviour::check_and_set_checkpoint(GameObject *game_object) {
         _reached = std::make_shared<Checkpoint>(*checkpoint);
 }
 
-int CheckpointBehaviour::get_laps() const {
+int CheckpointBehaviour::get_number_of_laps() const {
     return (int) _lap_times.size();
 }
 
 std::vector<long> CheckpointBehaviour::get_lap_times() const {
     return _lap_times;
+}
+
+std::optional<std::shared_ptr<Checkpoint>> CheckpointBehaviour::get_last_checked() const {
+    return _last_checked;
 }
