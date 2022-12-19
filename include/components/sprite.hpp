@@ -8,6 +8,9 @@
 #include "render/itexture.hpp"
 #include "memory"
 
+/**
+ * @brief A component representing a sprite (small image)
+ */
 class Sprite : public Component, public IRenderable {
 public:
     unsigned int res_x, res_y;
@@ -15,8 +18,22 @@ public:
 
     Sprite(std::string sprite, Color color, bool flip_x, bool flip_y, int sorting_layer, int order_in_layer, float pixels_to_meters = 100.f);
 
+    /**
+     * @brief Render the sprite.
+     * @param is_world_space Optionally render the sprite in world space.
+     */
     void render(bool is_world_space) const override;
+
+    /**
+     * @brief Getter for the current size x.
+     * @return The current size x.
+     */
     [[nodiscard]] float get_size_x() const;
+
+    /**
+     * @brief Getter for the current size y.
+     * @return The current size y.
+     */
     [[nodiscard]] float get_size_y() const;
 private:
     std::string _sprite;
