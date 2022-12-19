@@ -194,9 +194,6 @@ int main() {
     track_outer->add_component(std::make_shared<Sprite>(sprite1));
 
     Sprite sprite2{"./assets/track1_bg.png", Color(0, 0, 0, 255.0), false, false, 1, 0, 6.f};
-
-    Sprite sprite1{"./assets/track1.png", Color(0, 0, 0, 255.0), false, false, 1, 1, 6.f};
-    Sprite sprite2{ "./assets/track1_2x.png", Color(0, 0, 0, 255.0), false, false, 1, 1, 12.f };
     track_outer->add_component(std::make_shared<Sprite>(sprite2));
     track_bg->add_component(std::make_shared<Sprite>(sprite2));
 
