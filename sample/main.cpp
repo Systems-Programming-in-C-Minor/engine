@@ -1,4 +1,6 @@
 #include <iostream>
+
+#include "camera.hpp"
 #include "color.hpp"
 #include "gameobject.hpp"
 #include "components/sprite.hpp"
@@ -13,7 +15,8 @@
 #include "race/behaviours/ai_behaviour.hpp"
 #include "utils/trigonometry.hpp"
 #include "utils/xmlreader.hpp"
-#include "uiobjects/text.hpp"
+#include "uiobject.hpp"
+#include "components/text.hpp"
 #include "input.hpp"
 #include "storage/json_properties.hpp"
 #include "listeners/joystick_listener.hpp"
@@ -22,8 +25,10 @@
 #include "race/behaviours/drive_input_behaviour.hpp"
 #include "race/behaviours/drive_input_controller_behaviour.hpp"
 
-const auto scene = std::make_shared<Scene>();
-const auto scene2 = std::make_shared<Scene>();
+const auto camera = std::make_shared<Camera>();
+const auto camera2 = std::make_shared<Camera>();
+const auto scene = std::make_shared<Scene>(camera);
+const auto scene2 = std::make_shared<Scene>(camera2);
 
 class KeyMouseListenerComponent
         : public Component, public KeyListener, public MouseListener, public ColliderListener, public JoystickListener {
@@ -44,12 +49,18 @@ public:
             Global::get_instance()->get_engine().get_renderer()->toggle_fullscreen();
         if (event.key == D && _ALT)
             Global::get_instance()->get_engine().get_renderer()->toggle_debug_mode();
-        if (event.key == NUM_5 && _ALT) {   
+        if (event.key == NUM_5 && _ALT)   
             Global::get_instance()->get_engine().load_scene(scene2);
-            std::cout << "test" << std::endl;
-        }
         if (event.key == NUM_4 && _ALT)
             Global::get_instance()->get_engine().load_scene(scene);
+        if (event.key == RIGHT && _ALT) {
+	        const int ticks = Global::get_instance()->get_engine().get_ticks_per_second();
+            (ticks < 1000) ? Global::get_instance()->get_engine().set_ticks_per_second(ticks + 10) : void();
+        }
+        if (event.key == LEFT && _ALT) {
+            const int ticks = Global::get_instance()->get_engine().get_ticks_per_second();
+            (ticks > 10) ? Global::get_instance()->get_engine().set_ticks_per_second(ticks - 10) : void();
+        }
         if (enabled)
             std::cout << "Pressed key: " << event.key << std::endl;
     }
@@ -124,10 +135,45 @@ private:
     bool _ALT = false;
 };
 
+class VelocityIndicator : public Component, public ITickable
+{
+private:
+    float _velocity;
+    int _ticks;
+public:
+    explicit VelocityIndicator(float velocity = 0.f)
+	    : _velocity(velocity),
+        _ticks(0)
+    {}
+
+    void tick(GameObject& _game_object) override
+    {
+	    if(_game_object.get_name() == "player_car")
+	    {
+            _velocity = _game_object.get_component<RigidBody>()->get_forward_velocity().length();
+	    }
+        if(_game_object.get_name() == "ui_velocity_indicator")
+        {
+            const auto text = _game_object.get_component<Text>();
+            text->set_text(std::to_string(static_cast<int>(round(_velocity * 3.6f))));
+        }
+    }
+};
+
+class FpsIndicator : public Component, public ITickable
+{
+	void tick(GameObject& _game_object) override
+	{
+        const auto text = _game_object.get_component<Text>();
+        const long long fps = Global::get_instance()->get_engine().get_fps();
+        text->set_text(std::to_string(fps));
+	}
+};
+
 class Target : public GameObject {
 public:
     Target(const std::string &name, const std::string &tag, Transform transform = Transform{Vector2d()})
-            : GameObject(name, tag, true, transform) {
+            : GameObject(name, tag, transform) {
     }
 };
 
@@ -179,26 +225,23 @@ int main() {
 
     // Create game objects with component
     const auto track_outer = std::make_shared<GameObject>(
-            "track_outer", "track", true,
+            "track_outer", "track",
             Transform{Vector2d{0.f, 0.f}});
     const auto track_inner = std::make_shared<GameObject>(
-            "track_inner", "track", true,
+            "track_inner", "track",
             Transform{Vector2d{0.f, 0.f}});
     const auto track_grass_outer = std::make_shared<GameObject>(
-        "track_grass_outer", "track", true,
-        Transform{ Vector2d(0.f, 0.f) });
+        "track_grass_outer", "track");
     const auto track_grass_inner = std::make_shared<GameObject>(
-        "track_grass_inner", "track", true,
-        Transform{ Vector2d(0.f, 0.f) });
+        "track_grass_inner", "track");
 
     const auto track_bg = std::make_shared<GameObject>(
-            "track_bg", "track", true,
-            Transform{Vector2d{}, Vector2d{}, 0.f, 2.f});
+        "track_bg", "track",
+        Transform{ Vector2d{}, Vector2d{}, 0.f, 2.f });
+    Sprite sprite1{"./assets/track1.png", 1, 12.f };
 
-    Sprite sprite1{"./assets/track1.png", Color(0, 0, 0, 255.0), false, false, 1, 1, 12.f};
-    track_outer->add_component(std::make_shared<Sprite>(sprite1));
+    Sprite sprite2{ "./assets/track1_bg.png", 0, 6.f};
 
-    Sprite sprite2{"./assets/track1_bg.png", Color(0, 0, 0, 255.0), false, false, 1, 0, 6.f};
     track_outer->add_component(std::make_shared<Sprite>(sprite2));
     track_bg->add_component(std::make_shared<Sprite>(sprite2));
 
@@ -208,6 +251,8 @@ int main() {
     const auto car = std::make_shared<Car>("player_car", "./assets/blue_car.png", Vector2d(), scene);
     car->add_component(std::make_shared<DriveInputBehaviour>(scene->get_event_manager()));
     car->add_component(std::make_shared<DriveInputControllerBehaviour>(scene->get_event_manager(), 0));
+    const auto ui_velocity_indicator_behaviour = std::make_shared<VelocityIndicator>();
+    car->add_component(ui_velocity_indicator_behaviour);
 
     car->get_component<Sprite>()->set_color(Color(255, 255, 255, 140));
     TargetFactory tf;
@@ -274,12 +319,22 @@ int main() {
     ai_car6->add_component(ai_listener_component6);
     ai_listener_component6->targets = targets;
 
-    const auto ui_object = std::make_shared<UIObject>("ui_object", "text", true,
-                                                      Transform{Vector2d{400.f, -10.f}, Vector2d{}, 20.0f, 0.49f}, 100,
-                                                      100);
-    Text text{"name", "tag", true, Transform{Vector2d{-50.f, 10.f}, Vector2d{}, 1.F, 1.f}, 20, 5, "text",
-              "./assets/Sans.ttf", 1000, Alignment::CENTER, Color(200, 0, 0, 0), 100};
-    ui_object->add_child(std::make_shared<Text>(text));
+    const auto text = std::make_shared<GameObject>(
+            "ad_board", "ad", Transform{Vector2d{-50.f, 10.f}, Vector2d{}, 0.2f, 1.f});
+    text->add_component(std::make_shared<Text>("Powered by UnEngine", "./assets/Roboto/Roboto-Medium.ttf", 500, 10, Color{255,255,255,0 }, Color{0,0,0,1 }, 1));
+    car->add_child(camera);
+
+
+    const auto ui_velocity_indicator = std::make_shared<UIObject>("ui_velocity_indicator", "ui", 16, 32, scene->get_event_manager(), Transform{ Vector2d{-92.f, -84}, Vector2d{}, 0.f });
+    const auto ui_velocity_indicator_text = std::make_shared<Text>("0", "./assets/Roboto/Roboto-Medium.ttf", 100, 1000, Color{255, 255, 255, 150}, Color{0, 0, 0, 150 }, 10);
+    ui_velocity_indicator->add_component(ui_velocity_indicator_text);
+    ui_velocity_indicator->add_component(ui_velocity_indicator_behaviour);
+
+    const auto ui_fps_indicator_behaviour = std::make_shared<FpsIndicator>();
+    const auto ui_fps_indicator = std::make_shared<UIObject>("ui_fps_indicator", "ui", 4, 8, scene->get_event_manager(), Transform{ Vector2d{96.f, 92}, Vector2d{}, 0.f });
+    const auto ui_fps_indicator_text = std::make_shared<Text>("0",  "./assets/Roboto/Roboto-Medium.ttf", 100, 1000, Color{ 0, 255, 0, 255 }, Color{ 0, 0, 0, 150 }, 1);
+    ui_fps_indicator->add_component(ui_fps_indicator_text);
+    ui_fps_indicator->add_component(ui_fps_indicator_behaviour);
 
     scene->gameobjects.push_back(track_outer);
     scene->gameobjects.push_back(track_inner);
@@ -287,7 +342,10 @@ int main() {
     scene->gameobjects.push_back(track_grass_inner);
     scene->gameobjects.push_back(track_bg);
     scene->gameobjects.push_back(car);
-    scene->gameobjects.push_back(ui_object);
+    scene->gameobjects.push_back(ui_velocity_indicator);
+    scene->gameobjects.push_back(ui_fps_indicator);
+    scene->gameobjects.push_back(camera);
+    scene->gameobjects.push_back(text);
 
     scene->gameobjects.push_back(ai_car);
     scene->gameobjects.push_back(ai_car2);
@@ -322,20 +380,20 @@ int main() {
     track_grass_inner->add_component(track_grass_inner_rb);
 
     // Add listeners
-    const auto key_listener_object = std::make_shared<GameObject>("KeyMouseListener", "TestTag", true);
+    const auto key_listener_object = std::make_shared<GameObject>("KeyMouseListener", "TestTag");
     KeyMouseListenerComponent key_listener{scene->get_event_manager()};
     key_listener_object->add_component(std::make_shared<KeyMouseListenerComponent>(key_listener));
     scene->gameobjects.push_back(key_listener_object);
 
-    const auto key_listener_object2 = std::make_shared<GameObject>("KeyMouseListener", "TestTag", true);
+    const auto key_listener_object2 = std::make_shared<GameObject>("KeyMouseListener", "TestTag");
     KeyMouseListenerComponent key_listener2{ scene2->get_event_manager() };
     key_listener_object2->add_component(std::make_shared<KeyMouseListenerComponent>(key_listener2));
     scene2->gameobjects.push_back(key_listener_object2);
 
     engine_ref.load_scene(scene);
  
-    Sprite sprite3{ "./assets/sample.png", Color(0, 0, 0, 255.0), false, false, 1, 1, 1.f };
-    const auto test23 = std::make_shared<GameObject>("Scene2Test", "test", true);
+    Sprite sprite3{ "./assets/sample.png", 1};
+    const auto test23 = std::make_shared<GameObject>("Scene2Test", "test");
     test23->add_component(std::make_shared<Sprite>(sprite3));
     scene2->gameobjects.push_back(test23);
 

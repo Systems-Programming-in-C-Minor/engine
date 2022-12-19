@@ -184,16 +184,16 @@ TEST(GameObjectTest, Render) {
     const auto render_component3 = std::make_shared<MockRenderableComponent>(1);
     const auto tick_render_component = std::make_shared<MockTickableRenderableComponent>(1);
 
-    EXPECT_CALL(*render_component1, render(testing::_))
+    EXPECT_CALL(*render_component1, render())
             .Times(1);
 
-    EXPECT_CALL(*render_component2, render(testing::_))
+    EXPECT_CALL(*render_component2, render())
             .Times(1);
 
-    EXPECT_CALL(*render_component3, render(testing::_))
+    EXPECT_CALL(*render_component3, render())
             .Times(1);
 
-    EXPECT_CALL(*tick_render_component, render(testing::_))
+    EXPECT_CALL(*tick_render_component, render())
             .Times(1);
 
     game_object.add_component(test_component1);

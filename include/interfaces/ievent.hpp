@@ -25,6 +25,8 @@ enum Event {
     CheckpointTouched,
     CheckpointReached,
     CheckpointLapped,
+    UiObjectPressed,
+    UiObjectReleased,
 };
 
 /**

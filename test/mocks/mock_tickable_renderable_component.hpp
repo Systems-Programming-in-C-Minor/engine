@@ -8,8 +8,10 @@
 class MockTickableRenderableComponent : public Component, public ITickable, public IRenderable {
 public:
 	explicit MockTickableRenderableComponent(int order_in_layer) : IRenderable(order_in_layer) {}
+	MOCK_METHOD(void, set_active, (bool), (override));
+	MOCK_METHOD(void, render, (), (override));
+	MOCK_METHOD(int, get_order_in_layer, (), (override));
     MOCK_METHOD(void, tick, (GameObject &), (override));
-    MOCK_METHOD(void, render, (bool), (override, const));
 };
 
 #endif //ENGINE_MOCK_TICKABLE_RENDERABLE_COMPONENT_HPP

@@ -3,6 +3,7 @@
 
 class SdlRenderer;
 class SdlTexture;
+class SdlText;
 
 namespace SDL2pp
 {
@@ -15,11 +16,12 @@ namespace SDL2pp
 class Color {
 	friend class SdlTexture;
 	friend class SdlRenderer;
+	friend class SdlText;
+private:
     /**
      * @brief Explicit constructor.
      * @param color SDL2pp::Color object of which the rgba values will be copied.
      */
-private:
 	explicit Color(const SDL2pp::Color& color);
 
     /**

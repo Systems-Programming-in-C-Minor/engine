@@ -11,9 +11,8 @@ public:
     /**
      * @brief Render the IRenderable object.
      *        Override for implementing the desired behaviour.
-     * @param is_world_space Optionally render the object in world space.
      */
-    virtual void render(bool is_world_space) const = 0;
+    virtual void render() = 0;
 
     /**
      * @brief Virtual destructor.

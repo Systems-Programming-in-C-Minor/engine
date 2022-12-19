@@ -16,24 +16,15 @@ class Vector2d;
  */
 class IRenderer {
 public:
-    /**
-     * @brief Render a sprite to the screen.
-     *        Override for implementing the desired behaviour.
-     * @param sprite The sprite which will be rendered to the screen.
-     * @param texture The source texture.
-     * @param transform The transform where the sprite will be rendered.
-     * @param is_world_space Optionally render in world space.
-     * */
-	virtual void render_sprite(const Sprite &sprite, ITexture &texture, Transform& transform, bool is_world_space) const = 0;
-
+	  virtual void render_texture(ITexture & texture, Transform & transform, float pixels_to_meters) const = 0;
+    virtual void render_texture(ITexture & texture, Transform & transform, float width, float height) const = 0;
     /**
      * @brief Render a rigid body to the screen.
      *        Override for implementing the desired behaviour.
      * @param rigid_body The rigid body which will be rendered to the screen.
-     * @param is_world_space Optionally render in world space.
      * */
-    virtual void render_rigid_body(const RigidBody& rigid_body, Transform& transform, bool is_world_space) const = 0;
-
+    virtual void render_rigid_body(const RigidBody& rigid_body) const = 0;
+    
     /**
      * @brief Render lines to the screen.
      *        Override for implementing the desired behaviour.
@@ -41,19 +32,12 @@ public:
      * @param color The desired color of the line.
      * */
 	virtual void render_lines(std::vector<Vector2d>& vectors, const Color& color) const = 0;
-
-    /**
-     * @brief Render text to the screen.
-     *        Override for implementing the desired behaviour.
-     * @param text The text object which will be rendered to the screen.
-     * */
-    virtual void render_text(const Text& text) const = 0;
-
-    /**
+  
+     /**
      * @brief Clear the screen of all known objects in the render queue.
      *        Override for implementing the desired behaviour.
      * */
-	virtual void clear(const Color& color) const = 0;
+    virtual void clear() const = 0;
 
     /**
      * @brief Method which pushes all known objects in the render queue to the screen.
@@ -79,6 +63,10 @@ public:
      *        Override for implementing the desired behaviour.
      * */
 	virtual void toggle_debug_mode() = 0;
+	[[nodiscard]] virtual Vector2d transform_vector(const Vector2d &position) const = 0;
+	[[nodiscard]] virtual Vector2d world_space_to_screen(const Vector2d& position) const = 0;
+	[[nodiscard]] virtual Vector2d screen_space_to_screen(const Vector2d & position) const = 0;
+	[[nodiscard]] virtual Vector2d screen_to_screen_space(const Vector2d & position) const = 0;
 
     /**
      * @brief Virtual destructor.

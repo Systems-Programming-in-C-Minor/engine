@@ -1,25 +1,26 @@
 #pragma once
 
 #include "gameobject.hpp"
+#include "listeners/mouse_listener.hpp"
 
-    /**
-     * @brief Base class for a user interface object like Button or Text.
-     */
-class UIObject : public GameObject {
+/**
+ * @brief Base class for a user interface object like Button or Text.
+ */
+class UIObject : public GameObject, public MouseListener {
 private:
     int _width;
     int _height;
+
+    bool is_in_object(int x, int y) const;
 public:
     /**
      * @brief Constructor.
      * @param name The name of the text GameObject.
      * @param tag The tag of the text GameObject.
-     * @param is_world_space Boolean option if the text will be rendered in world space.
-     * @param transform The transform of the text.
      * @param width The width of the text.
      * @param height The height of the text.
      */
-    UIObject(const std::string& name, const std::string& tag, bool is_world_space, Transform transform, int width, int height);
+    UIObject(const std::string& name, const std::string& tag, int width, int height, EventManager &event_manager, Transform transform = Transform{});
 
     /**
      * @brief Setter for the width of the ui object.
@@ -44,4 +45,7 @@ public:
      * @return Return the height as an int value.
      */
     [[nodiscard]] int get_height() const;
+    void on_mouse_pressed(const MousePressedEvent &event) override;
+    void on_mouse_released(const MouseReleasedEvent & event) override;
+    virtual ~UIObject() override;
 };

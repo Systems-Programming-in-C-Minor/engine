@@ -15,21 +15,13 @@ namespace SDL2pp {
  */
 class ITexture {
 public:
-    /**
-     * @brief Constructor.
-     * @param path The path to the texture.
-     */
-    ITexture(const std::string& path) {}
-
     virtual void set_color(const Color& color) = 0;
 private:
     friend class SdlRenderer;
-    /**
-     * @brief Getter for the texture.
-     *        Override for implementing the desired behaviour.
-     * @return a shared pointer containing a Texture object.
-     */
+protected:
     [[nodiscard]] virtual std::shared_ptr<SDL2pp::Texture> get_texture() const = 0;
+    [[nodiscard]] virtual float get_size_x() const = 0;
+    [[nodiscard]] virtual float get_size_y() const = 0;
 };
 
 

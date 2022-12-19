@@ -24,6 +24,7 @@ private:
 
     long long _time_after_last_frame;
     unsigned long _fps;
+    int _tps;
 
 public:
     /**
@@ -96,6 +97,10 @@ public:
      * @returns A shared pointer to the current IRenderer.
      */
     [[nodiscard]] virtual std::shared_ptr<IRenderer> get_renderer() const;
+
+    void set_ticks_per_second(int tps = 60);
+
+    [[nodiscard]] int get_ticks_per_second() const;
 
     /**
      * @brief The getter for the current number of controllers.

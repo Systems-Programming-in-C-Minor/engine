@@ -32,19 +32,14 @@ class Vector2d;
 class SdlRenderer : public IRenderer {
 public:
 
-	/**
-	 * @brief Renders a sprite
-	 * @param sprite Sprite to be rendered
-	 * @param texture Texture to be rendered, belonging to the same sprite
-	 * @param transform Transform of the to be renderer gameobject
-	 * @param is_world_space Whether this sprite should be rendered in world space or screen space
-	 */
-	void render_sprite(const Sprite& sprite, ITexture& texture, Transform& transform,  bool is_world_space) const override;
+	void render_texture(ITexture & texture, Transform & transform, float pixels_to_meters) const override;
+
+    void render_texture(ITexture & texture, Transform & transform, float width, float height) const override;
 
 	/**
 	 * @brief Renders a collider
 	 */
-	void render_rigid_body(const RigidBody& rigid_body, Transform& transform, bool is_world_space) const override;
+	void render_rigid_body(const RigidBody& rigid_body) const override;
 
 
 	/**
@@ -58,12 +53,11 @@ public:
 	 * @brief Renders a text object
 	 * @param text The text to be rendered
 	 */
-	void render_text(const Text& text) const override;
 
 	/**
 	 * @brief Clears the backbuffer and applies a default colour
 	 */
-	void clear(const Color& color) const override;
+	void clear() const override;
 
 	/**
 	 * @brief Presents the composed backbuffer
@@ -97,7 +91,10 @@ public:
 	virtual ~SdlRenderer();
 private:
 	void init(bool fullscreen);
-	[[nodiscard]] SDL2pp::Point world_to_screen(const Vector2d& position) const;
+	[[nodiscard]] Vector2d transform_vector(const Vector2d &position) const override;
+	[[nodiscard]] Vector2d world_space_to_screen(const Vector2d& position) const override;
+	[[nodiscard]] Vector2d screen_space_to_screen(const Vector2d & position) const override;
+	[[nodiscard]] Vector2d screen_to_screen_space(const Vector2d & position) const override;
 	void render_ngon(b2Body* body, b2PolygonShape* shape) const;
 	void render_ngon(b2Body* body, b2ChainShape* shape) const;
 

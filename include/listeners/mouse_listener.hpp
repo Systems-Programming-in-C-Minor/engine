@@ -20,19 +20,19 @@ public:
      * @brief Called whenever the mouse is moved.
      * @param event The desired MouseMovedEvent.
      */
-    virtual void on_mouse_moved(const MouseMovedEvent &event) {};
+    virtual void on_mouse_moved(const MouseMovedEvent &event) {}
 
     /**
      * @brief Called each frame when a mouse button is still down.
      * @param event The desired MousePressedEvent.
      */
-    virtual void on_mouse_pressed(const MousePressedEvent &event) {};
+    virtual void on_mouse_pressed(const MousePressedEvent &event) {}
 
     /**
      * @brief Called whenever a mouse button is released.
      * @param event The desired MouseReleasedEvent.
      */
-    virtual void on_mouse_released(const MouseReleasedEvent &event) {};
+    virtual void on_mouse_released(const MouseReleasedEvent &event) {}
 };
 
 #endif //ENGINE_IMOUSELISTENER_HPP
