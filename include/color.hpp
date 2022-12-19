@@ -2,6 +2,7 @@
 #define ENGINE_COLOR_HPP
 
 class SdlRenderer;
+class SdlText;
 
 namespace SDL2pp
 {
@@ -9,8 +10,9 @@ namespace SDL2pp
 }
 
 class Color {
-private:
 	friend class SdlRenderer;
+	friend class SdlText;
+private:
 	explicit Color(const SDL2pp::Color& color);
 	explicit operator SDL2pp::Color() const;
 public:

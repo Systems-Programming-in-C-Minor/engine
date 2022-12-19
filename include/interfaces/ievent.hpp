@@ -13,6 +13,8 @@ enum Event {
     ColliderEntry,
     ColliderExit,
     SceneLoaded,
+    UiObjectPressed,
+    UiObjectReleased,
 };
 
 class IEvent {

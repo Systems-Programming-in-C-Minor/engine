@@ -6,6 +6,7 @@
 #include "enums/mouse_input.hpp"
 #include "components/rigidbody.hpp"
 
+class UIObject;
 class Collider;
 
 class MouseMovedEvent : public IEvent {
@@ -17,15 +18,17 @@ public:
 
 class MousePressedEvent : public IEvent {
 public:
-    explicit MousePressedEvent(MouseInput btn) : IEvent(MousePressed), button(btn) {}
+    explicit MousePressedEvent(MouseInput btn, const int x, const int y) : IEvent(MousePressed), button(btn), x(x), y(y) {}
 
+    int x, y;
     MouseInput button;
 };
 
 class MouseReleasedEvent : public IEvent {
 public:
-    explicit MouseReleasedEvent(MouseInput btn) : IEvent(MouseReleased), button(btn) {}
+    explicit MouseReleasedEvent(MouseInput btn, const int x, const int y) : IEvent(MouseReleased), button(btn), x(x), y(y) {}
 
+    int x, y;
     MouseInput button;
 };
 
@@ -66,6 +69,22 @@ public:
 class SceneLoadedEvent : public IEvent {
 public:
     SceneLoadedEvent() : IEvent(SceneLoaded) {}
+};
+
+class UiObjectPressedEvent : public IEvent {
+public:
+    UiObjectPressedEvent(MouseInput btn, UIObject& ui_object) : IEvent(UiObjectPressed), button(btn), ui_object(ui_object) {}
+
+    MouseInput button;
+    UIObject& ui_object;
+};
+
+class UiObjectReleasedEvent : public IEvent {
+public:
+    UiObjectReleasedEvent(MouseInput btn, UIObject& ui_object) : IEvent(UiObjectReleased), button(btn), ui_object(ui_object) {}
+
+    MouseInput button;
+    UIObject& ui_object;
 };
 
 #endif //ENGINE_EVENTS_HPP

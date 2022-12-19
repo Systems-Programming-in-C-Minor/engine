@@ -85,7 +85,7 @@ public:
 
     void set_collider(const std::shared_ptr<Collider>& collider);
 
-    void render(bool is_world_space) const override;
+    void render(bool is_world_space) override;
 
 private:
     b2Body *_body;

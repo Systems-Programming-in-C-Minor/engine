@@ -15,7 +15,7 @@
 #include "utils/trigonometry.hpp"
 #include "utils/xmlreader.hpp"
 #include "uiobject.hpp"
-#include "uiobjects/text.hpp"
+#include "components/text.hpp"
 #include "input.hpp"
 #include "interfaces/itickable.hpp"
 #include "storage/json_properties.hpp"
@@ -86,9 +86,11 @@ class VelocityIndicator : public Component, public ITickable
 {
 private:
     float _velocity;
+    int _ticks;
 public:
     explicit VelocityIndicator(float velocity = 0.f)
-	    : _velocity(velocity)
+	    : _velocity(velocity),
+        _ticks(0)
     {}
 
     void tick(GameObject& _game_object) override
@@ -99,7 +101,7 @@ public:
 	    }
         if(_game_object.get_name() == "ui_velocity_indicator")
         {
-            Text* text = reinterpret_cast<Text*>(&_game_object);
+            const auto text = _game_object.get_component<TextNew>();
             text->set_text(std::to_string(static_cast<int>(round(_velocity * 3.6f))));
         }
     }
@@ -109,7 +111,7 @@ class FpsIndicator : public Component, public ITickable
 {
 	void tick(GameObject& _game_object) override
 	{
-        Text* text = reinterpret_cast<Text*>(&_game_object);
+        const auto text = _game_object.get_component<TextNew>();
         const long long fps = Global::get_instance()->get_engine().get_fps();
         text->set_text(std::to_string(fps));
 	}
@@ -121,7 +123,7 @@ public:
         const int order_in_layer = 10)
             : GameObject(name, tag) {
         const auto sprite =
-                std::make_shared<Sprite>(std::move(sprite_path), Color(0, 0, 0, 0), false, false, 1, 10);
+                std::make_shared<Sprite>(std::move(sprite_path), 10);
         add_component(sprite);
 
         const auto collider = std::make_shared<BoxCollider>(1.65f, 4.f);
@@ -222,7 +224,7 @@ int main() {
             "track_inner", "track", true,
             Transform{Vector2d{0.f, 0.f}});
 
-    Sprite sprite1{"./assets/track1.png", Color(0, 0, 0, 255.0), false, false, 1, 1, 6.f};
+    Sprite sprite1{"./assets/track1.png", 1, 6.f };
 
     track_outer->add_component(std::make_shared<Sprite>(sprite1));
 
@@ -233,30 +235,31 @@ int main() {
     car->add_component(car_behaviour);
     car->add_component(ui_velocity_indicator_behaviour);
 
-    const auto okto = std::make_shared<GameObject>(
-            "okto", "okto", true,
-            Transform{Vector2d {0.f, 0.f}, Vector2d{0,0}, 0.f, 0.1f});
-    const auto okto_sprite = std::make_shared<Sprite>("./assets/sample.png", Color(), false, false, 1, 1, 6.f);
-    okto->add_component(okto_sprite);
-
-    car->add_child(okto);
+    const auto text = std::make_shared<GameObject>(
+            "text", "text", true, Transform{Vector2d{}, Vector2d{}, 2.f, 4.f});
+    text->add_component(std::make_shared<TextNew>("Test", "./assets/Roboto/Roboto-Medium.ttf", 70, 10));
     car->add_child(camera);
 
-    const auto ui_velocity_indicator = std::make_shared<Text>("ui_velocity_indicator", "ui", true, Transform{ Vector2d{-92.f, -84}, Vector2d{}, 0.f }, 16, 32, "0.0", "./assets/Roboto/Roboto-Medium.ttf", 1000, Alignment::CENTER, 1000, Color{255, 255, 255, 150}, Color{0, 0, 0, 150 }, Space::SCREEN);
+
+    const auto ui_velocity_indicator = std::make_shared<UIObject>("ui_velocity_indicator", "ui", true, 16, 32, scene->get_event_manager(), Transform{ Vector2d{-92.f, -84}, Vector2d{}, 0.f });
+    const auto ui_velocity_indicator_text = std::make_shared<TextNew>("0", "./assets/Roboto/Roboto-Medium.ttf", 100, 1000, Color{255, 255, 255, 150}, Color{0, 0, 0, 150 }, 10);
+    ui_velocity_indicator->add_component(ui_velocity_indicator_text);
     ui_velocity_indicator->add_component(ui_velocity_indicator_behaviour);
 
     const auto ui_fps_indicator_behaviour = std::make_shared<FpsIndicator>();
 
-    const auto ui_fps_indicator = std::make_shared<Text>("ui_fps_indicator", "ui", true, Transform{ Vector2d{96.f, 92}, Vector2d{}, 0.f }, 4, 8, "0.0", "./assets/Roboto/Roboto-Medium.ttf", 1000, Alignment::CENTER, 1000, Color{ 0, 255, 0, 255 }, Color{ 0, 0, 0, 150 }, Space::SCREEN);
+    const auto ui_fps_indicator = std::make_shared<UIObject>("ui_fps_indicator", "ui", true, 4, 8, scene->get_event_manager(), Transform{ Vector2d{96.f, 92}, Vector2d{}, 0.f });
+    const auto ui_fps_indicator_text = std::make_shared<TextNew>("0",  "./assets/Roboto/Roboto-Medium.ttf", 100, 1000, Color{ 0, 255, 0, 255 }, Color{ 0, 0, 0, 150 }, 1);
+    ui_fps_indicator->add_component(ui_fps_indicator_text);
     ui_fps_indicator->add_component(ui_fps_indicator_behaviour);
 
     scene->gameobjects.push_back(track_outer);
     scene->gameobjects.push_back(track_inner);
     scene->gameobjects.push_back(car);
-    scene->gameobjects.push_back(okto);
     scene->gameobjects.push_back(ui_velocity_indicator);
     scene->gameobjects.push_back(ui_fps_indicator);
     scene->gameobjects.push_back(camera);
+    scene->gameobjects.push_back(text);
 
     // Add rigid bodies
     const auto track_outer_coll = std::make_shared<ChainCollider>("./assets/track1_outer.xml", false,

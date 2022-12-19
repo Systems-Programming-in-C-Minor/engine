@@ -148,7 +148,7 @@ b2Body *RigidBody::get_body() const {
     return _body;
 }
 
-void RigidBody::render(bool is_world_space) const {
+void RigidBody::render(bool is_world_space) {
     const auto renderer = Global::get_instance()->get_engine().get_renderer();
     renderer->render_rigid_body(*this, game_object->transform, true);
 

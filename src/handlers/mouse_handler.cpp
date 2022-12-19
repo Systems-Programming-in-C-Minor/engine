@@ -28,7 +28,7 @@ void MouseHandler::tick() {
         if (std::find(_input_active.begin(), _input_active.end(), pressed_key) != _input_active.end())
             continue;
 
-        auto pressed_event = MousePressedEvent(pressed_key);
+        auto pressed_event = MousePressedEvent(pressed_key, _x, _y);
         Global::get_instance()->notify_event_manager(pressed_event);
     }
 
@@ -36,7 +36,7 @@ void MouseHandler::tick() {
         if (std::find(input_pressed.begin(), input_pressed.end(), active_key) != input_pressed.end())
             continue;
 
-        auto release_event = MouseReleasedEvent(active_key);
+        auto release_event = MouseReleasedEvent(active_key, _x, _y);
         Global::get_instance()->notify_event_manager(release_event);
     }
 
