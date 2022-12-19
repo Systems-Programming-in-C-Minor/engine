@@ -12,8 +12,6 @@ namespace SDL2pp {
 
 class ITexture {
 public:
-    ITexture(const std::string& path) {}
-
     virtual void set_color(const Color& color) = 0;
 private:
     friend class SdlRenderer;

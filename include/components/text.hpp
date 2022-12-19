@@ -10,7 +10,6 @@
 
 class Text : public Component, public IRenderable {
 public:
-    unsigned int res_x, res_y;
     float pixels_to_meters;
 
     Text(const std::string& text,
@@ -26,7 +25,7 @@ public:
     );
 
     void render() override;
-    void set_text(const std::string & text);
+    void set_text(const std::string& text);
 private:
     std::string _font_path;
     int _font_size;

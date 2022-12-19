@@ -25,8 +25,10 @@
 #include "race/behaviours/drive_input_behaviour.hpp"
 #include "race/behaviours/drive_input_controller_behaviour.hpp"
 
-const auto scene = std::make_shared<Scene>();
-const auto scene2 = std::make_shared<Scene>();
+const auto camera = std::make_shared<Camera>();
+const auto camera2 = std::make_shared<Camera>();
+const auto scene = std::make_shared<Scene>(camera);
+const auto scene2 = std::make_shared<Scene>(camera2);
 
 class KeyMouseListenerComponent
         : public Component, public KeyListener, public MouseListener, public ColliderListener, public JoystickListener {
@@ -47,10 +49,8 @@ public:
             Global::get_instance()->get_engine().get_renderer()->toggle_fullscreen();
         if (event.key == D && _ALT)
             Global::get_instance()->get_engine().get_renderer()->toggle_debug_mode();
-        if (event.key == NUM_5 && _ALT) {   
+        if (event.key == NUM_5 && _ALT)   
             Global::get_instance()->get_engine().load_scene(scene2);
-            std::cout << "test" << std::endl;
-        }
         if (event.key == NUM_4 && _ALT)
             Global::get_instance()->get_engine().load_scene(scene);
         if (event.key == RIGHT && _ALT) {
@@ -223,10 +223,6 @@ int main() {
     global->set_properties(std::make_unique<JsonProperties>("settings.json"));
     Engine &engine_ref = global->get_engine();
 
-    // Setup scene
-    const auto camera = std::make_shared<Camera>(Transform{}, Color{0, 255, 0, 0}, 5);
-	const auto scene = std::make_shared<Scene>(camera);
-
     // Create game objects with component
     const auto track_outer = std::make_shared<GameObject>(
             "track_outer", "track",
@@ -389,15 +385,15 @@ int main() {
     key_listener_object->add_component(std::make_shared<KeyMouseListenerComponent>(key_listener));
     scene->gameobjects.push_back(key_listener_object);
 
-    const auto key_listener_object2 = std::make_shared<GameObject>("KeyMouseListener", "TestTag", true);
+    const auto key_listener_object2 = std::make_shared<GameObject>("KeyMouseListener", "TestTag");
     KeyMouseListenerComponent key_listener2{ scene2->get_event_manager() };
     key_listener_object2->add_component(std::make_shared<KeyMouseListenerComponent>(key_listener2));
     scene2->gameobjects.push_back(key_listener_object2);
 
     engine_ref.load_scene(scene);
  
-    Sprite sprite3{ "./assets/sample.png", Color(0, 0, 0, 255.0), false, false, 1, 1, 1.f };
-    const auto test23 = std::make_shared<GameObject>("Scene2Test", "test", true);
+    Sprite sprite3{ "./assets/sample.png", 1};
+    const auto test23 = std::make_shared<GameObject>("Scene2Test", "test");
     test23->add_component(std::make_shared<Sprite>(sprite3));
     scene2->gameobjects.push_back(test23);
 

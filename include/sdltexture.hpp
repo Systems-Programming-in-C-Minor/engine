@@ -18,15 +18,6 @@ public:
 	 */
 	SdlTexture(const std::string& path);
 
-	/**
-	 * @brief A texture used by SDL
-	 * @param path (Relative) path to a texture
-	 * @param[out] res_x X-axis resolution of the texture
-	 * @param[out] res_y Y-axis resolution of the texture
-	 */
-	SdlTexture(const std::string& path, unsigned int* res_x, unsigned int* res_y);
-
-	[[nodiscard]] std::shared_ptr<SDL2pp::Texture> get_texture() const override;
 	void set_color(const Color& color) override;
 private:
 	std::shared_ptr<SDL2pp::Texture> _texture;

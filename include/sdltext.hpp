@@ -30,6 +30,7 @@ public:
 
     virtual ~SdlText();
 
+	void set_color(const Color& color) override;
 private:
 	std::string _font_path;
 	int _font_size;

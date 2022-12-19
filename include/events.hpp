@@ -156,11 +156,12 @@ public:
 class CheckpointLappedEvent : public IEvent {
 public:
     CheckpointLappedEvent(CheckpointBehaviour *checkpoint_behaviour, std::shared_ptr<Checkpoint> checkpoint) :
-            IEvent(CheckpointLapped), checkpoint_behaviour(checkpoint_behaviour), checkpoint(std::move(checkpoint)) {}
+        IEvent(CheckpointLapped), checkpoint_behaviour(checkpoint_behaviour), checkpoint(std::move(checkpoint)) {}
 
     CheckpointBehaviour *checkpoint_behaviour;
     std::shared_ptr<Checkpoint> checkpoint;
-}
+};
+
 class UiObjectPressedEvent : public IEvent {
 public:
     UiObjectPressedEvent(MouseInput btn, UIObject& ui_object) : IEvent(UiObjectPressed), button(btn), ui_object(ui_object) {}

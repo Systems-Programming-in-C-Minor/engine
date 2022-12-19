@@ -27,6 +27,11 @@ SdlText::SdlText(const std::string& text,
 
 SdlText::~SdlText() = default;
 
+void SdlText::set_color(const Color & color)
+{
+	_texture->SetColorAndAlphaMod(static_cast<SDL2pp::Color>(color));
+}
+
 std::shared_ptr<SDL2pp::Texture> SdlText::get_texture() const
 {
 	return _texture;
