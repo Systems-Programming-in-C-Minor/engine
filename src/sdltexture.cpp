@@ -12,14 +12,12 @@
 
 namespace fs = std::filesystem;
 
-SdlTexture::SdlTexture(const std::string& path) :
-	ITexture(path)
+SdlTexture::SdlTexture(const std::string& path)
 {
 	load_texture(path);
 }
 
-SdlTexture::SdlTexture(const std::string& path, unsigned int* res_x, unsigned int* res_y) :
-	ITexture(path)
+SdlTexture::SdlTexture(const std::string& path, unsigned int* res_x, unsigned int* res_y)
 {
 	load_texture(path);
 	if (_texture) {
@@ -30,6 +28,16 @@ SdlTexture::SdlTexture(const std::string& path, unsigned int* res_x, unsigned in
 std::shared_ptr<SDL2pp::Texture> SdlTexture::get_texture() const
 {
 	return _texture;
+}
+
+float SdlTexture::get_size_x() const
+{
+	return static_cast<float>(_texture->GetWidth());
+}
+
+float SdlTexture::get_size_y() const
+{
+	return static_cast<float>(_texture->GetHeight());
 }
 
 void SdlTexture::load_texture(const std::string& path)

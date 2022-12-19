@@ -10,6 +10,7 @@
 #include "components/rigidbody.hpp"
 #include "race/behaviours/ai_behaviour.hpp"
 
+class UIObject;
 class Collider;
 class CheckpointBehaviour;
 class Checkpoint;
@@ -23,15 +24,17 @@ public:
 
 class MousePressedEvent : public IEvent {
 public:
-    explicit MousePressedEvent(MouseInput btn) : IEvent(MousePressed), button(btn) {}
+    explicit MousePressedEvent(MouseInput btn, const int x, const int y) : IEvent(MousePressed), button(btn), x(x), y(y) {}
 
+    int x, y;
     MouseInput button;
 };
 
 class MouseReleasedEvent : public IEvent {
 public:
-    explicit MouseReleasedEvent(MouseInput btn) : IEvent(MouseReleased), button(btn) {}
+    explicit MouseReleasedEvent(MouseInput btn, const int x, const int y) : IEvent(MouseReleased), button(btn), x(x), y(y) {}
 
+    int x, y;
     MouseInput button;
 };
 
@@ -157,6 +160,21 @@ public:
 
     CheckpointBehaviour *checkpoint_behaviour;
     std::shared_ptr<Checkpoint> checkpoint;
+}
+class UiObjectPressedEvent : public IEvent {
+public:
+    UiObjectPressedEvent(MouseInput btn, UIObject& ui_object) : IEvent(UiObjectPressed), button(btn), ui_object(ui_object) {}
+
+    MouseInput button;
+    UIObject& ui_object;
+};
+
+class UiObjectReleasedEvent : public IEvent {
+public:
+    UiObjectReleasedEvent(MouseInput btn, UIObject& ui_object) : IEvent(UiObjectReleased), button(btn), ui_object(ui_object) {}
+
+    MouseInput button;
+    UIObject& ui_object;
 };
 
 #endif //ENGINE_EVENTS_HPP

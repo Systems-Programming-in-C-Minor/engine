@@ -202,7 +202,7 @@ public:
      * @brief Render the rigid body.
      * @param is_world_space Optionally render the rigid body in world space.
      */
-    void render(bool is_world_space) const override;
+    void render(bool is_world_space) override;
 
 private:
     b2Body *_body;

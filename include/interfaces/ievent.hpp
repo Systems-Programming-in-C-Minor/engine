@@ -22,6 +22,8 @@ enum Event {
     CheckpointTouched,
     CheckpointReached,
     CheckpointLapped,
+    UiObjectPressed,
+    UiObjectReleased,
 };
 
 class IEvent {
