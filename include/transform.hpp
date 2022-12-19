@@ -98,6 +98,10 @@ public:
      * @param angle The new local angle which will be set.
      */
     void set_local_angle(float angle);
+
+    void deserialize(const std::string &data);
+
+    [[nodiscard]] std::string serialize() const;
 };
 
 #endif // ENGINE_TRANSFORM_H_sZYCcKEA4x

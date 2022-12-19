@@ -2,6 +2,9 @@
 #include "box2d/box2d.h"
 #include "components/rigidbody.hpp"
 #include "gameobject.hpp"
+#include <nlohmann/json.hpp>
+#include "json_converters.hpp"
+
 
 Transform::Transform(const Vector2d &position, const Vector2d &local_position, float angle, float scale) :
         _position(position),
@@ -74,4 +77,23 @@ std::shared_ptr<RigidBody> Transform::get_rigid_body() const {
         return nullptr;
 
     return _game_object->get_component<RigidBody>();
+}
+
+void Transform::deserialize(const std::string &data) {
+    const auto j = nlohmann::json::parse(data);
+    set_angle(j.at("angle").get<float>());
+    set_scale(j.at("scale").get<float>());
+    set_position(j.at("position").get<Vector2d>());
+    set_local_position(j.at("local_position").get<Vector2d>());
+    set_local_angle(j.at("local_angle").get<float>());
+}
+
+std::string Transform::serialize() const {
+    return nlohmann::json{
+            {"angle",          get_angle()},
+            {"scale",          get_scale()},
+            {"position",       get_position()},
+            {"local_position", get_local_position()},
+            {"local_angle",    get_local_angle()},
+    }.dump();
 }

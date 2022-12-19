@@ -4,11 +4,11 @@
 
 std::string NetworkableCar::serialize() {
     auto data = nlohmann::json();
-    data["transform"] = _car->transform;
+    data["transform"] = _car->transform.serialize();
     return data.dump();
 }
 
 void NetworkableCar::deserialize(const std::string &import_json) {
     auto data = nlohmann::json::parse(import_json);
-    _car->transform = data.at("transform").get<Transform>();
+    _car->transform.deserialize(data.at("transform").get<std::string>());
 }

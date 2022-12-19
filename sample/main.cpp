@@ -287,12 +287,20 @@ int main() {
     car->add_component(ui_velocity_indicator_behaviour);
     car->get_component<Sprite>()->set_color(Color(255, 255, 255, 140));
 
-    const auto car2 = std::make_shared<Car>("James", "./assets/red_car.png", Vector2d{-6.f, 0.f}, scene);
-//    car2->add_component(std::make_shared<DriveInputBehaviour>(scene->get_event_manager()));
-//    car2->add_component(std::make_shared<DriveInputControllerBehaviour>(scene->get_event_manager(), 0));
+//    const auto car2 = std::make_shared<Car>("James", "./assets/red_car.png", Vector2d{-6.f, 0.f}, scene);
+//
+//    engine_ref._multiplayer_manager->register_networkable(std::make_shared<NetworkableCar>(car, true, false));
+//    engine_ref._multiplayer_manager->register_networkable(std::make_shared<NetworkableCar>(car2, false, true));
 
-    engine_ref._multiplayer_manager->register_networkable(std::make_shared<NetworkableCar>(car, true, false));
-    engine_ref._multiplayer_manager->register_networkable(std::make_shared<NetworkableCar>(car2, false, true));
+
+    const auto car2 = std::make_shared<Car>("James", "./assets/red_car.png", Vector2d{-6.f, 0.f}, scene);
+    car2->add_component(std::make_shared<DriveInputBehaviour>(scene->get_event_manager()));
+    car2->add_component(std::make_shared<DriveInputControllerBehaviour>(scene->get_event_manager(), 0));
+
+    engine_ref._multiplayer_manager->register_networkable(std::make_shared<NetworkableCar>(car, false, true));
+    engine_ref._multiplayer_manager->register_networkable(std::make_shared<NetworkableCar>(car2, true, false));
+
+
 
 
     TargetFactory tf;
