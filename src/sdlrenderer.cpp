@@ -32,31 +32,6 @@
 
 #define camera Global::get_instance()->get_active_scene().get_camera
 
-void SdlRenderer::render_sprite(const Sprite& sprite, ITexture& texture, Transform& transform, bool is_world_space) const
-{
-	/*
-	 * TODO Open PR for SDL2pp
-	 * Segfaults, SDL2pp needs to fix this
-	 * int x = _renderer->GetOutputWidth();
-	 * int x, y = 0;
-	 * SDL_GetRendererOutputSize(_renderer->Get(), &x, nullptr);
-	 */
-
-	const auto center = transform_vector(transform.get_position());
-	const float left_corner_x = center.x + -sprite.get_size_x() * transform.get_scale() / 2.f;
-	const float left_corner_y = center.y + sprite.get_size_y() * transform.get_scale() / 2.f;
-
-	const auto left_corner = world_space_to_screen(Vector2d{ left_corner_x, left_corner_y });
-
-	const int size_x = static_cast<int>(round(sprite.get_size_x() * transform.get_scale() * camera()->mtp));
-	const int size_y = static_cast<int>(round(sprite.get_size_y() * transform.get_scale() * camera()->mtp));
-	const auto size = SDL2pp::Point{ size_x, size_y };
-
-	auto rect = SDL2pp::Rect{ static_cast<SDL2pp::Point>(left_corner), size };
-
-	_renderer->Copy(*texture.get_texture(), SDL2pp::NullOpt, rect, -radians_to_degrees(transform.get_angle() - camera()->transform.get_angle()));
-}
-
 void SdlRenderer::render_texture(ITexture& texture, Transform& transform, bool is_world_space, float pixels_to_meters) const
 {
     /*
@@ -218,11 +193,10 @@ void SdlRenderer::add_render_call(RenderCall& render_call) {
 
 Vector2d SdlRenderer::world_space_to_screen(const Vector2d& position) const
 {
-	const Vector2d return_pos{
+	return Vector2d{
 		static_cast<float>(_renderer->GetOutputSize().GetX()) * 0.5f + position.x * camera()->mtp,
 		static_cast<float>(_renderer->GetOutputSize().GetY()) * 0.5f - position.y * camera()->mtp
 	};
-	return return_pos;
 }
 
 void SdlRenderer::toggle_fullscreen() {
@@ -248,16 +222,10 @@ Vector2d SdlRenderer::screen_space_to_screen(const Vector2d& position) const
 	const auto res_x = static_cast<float>(_renderer->GetOutputSize().GetX());
 	const auto res_y = static_cast<float>(_renderer->GetOutputSize().GetY());
 
-	//convert relative space to pixel space
-	// res_x / 200 (screenspace to screen ratio)
-	//transpose pixel space to sdl pixel space
-
-	const Vector2d return_pos{
+	return Vector2d{
 		(res_x * 0.5f + position.x * (res_x / camera()->screen_space_limits)),
 		(res_y * 0.5f - position.y * (res_y / camera()->screen_space_limits))
 	};
-
-	return return_pos;
 }
 
 Vector2d SdlRenderer::screen_to_screen_space(const Vector2d& position) const
@@ -265,16 +233,10 @@ Vector2d SdlRenderer::screen_to_screen_space(const Vector2d& position) const
 	const auto res_x = static_cast<float>(_renderer->GetOutputSize().GetX());
 	const auto res_y = static_cast<float>(_renderer->GetOutputSize().GetY());
 
-	//convert relative space to pixel space
-	// res_x / 200 (screenspace to screen ratio)
-	//transpose pixel space to sdl pixel space
-
-	const Vector2d return_pos{
+	return Vector2d{
 		(position.x - (res_x * 0.5f)) / (res_x / camera()->screen_space_limits),
 		-(position.y - (res_y * 0.5f)) / (res_y / camera()->screen_space_limits)
-	};
-
-	return return_pos;
+	};;
 }
 
 
