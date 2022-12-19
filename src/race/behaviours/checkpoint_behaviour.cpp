@@ -22,6 +22,7 @@ void CheckpointBehaviour::check_and_set_checkpoint(GameObject *game_object) {
 
     auto checkpoint = reinterpret_cast<Checkpoint *>(game_object);
     _last_touched = std::make_shared<Checkpoint>(*checkpoint);
+    Global::get_instance()->notify_event_manager(CheckpointTouchedEvent{this, _last_touched.value()});
 
     auto first_checkpoint = !checkpoint->previous_checkpoint.has_value() && !_reached.has_value();
     auto new_checkpoint = checkpoint->previous_checkpoint.has_value() && _reached.has_value() &&
@@ -34,11 +35,14 @@ void CheckpointBehaviour::check_and_set_checkpoint(GameObject *game_object) {
         auto epoch = now_ms.time_since_epoch();
         auto value = std::chrono::duration_cast<std::chrono::milliseconds>(epoch);
         _lap_times.emplace_back(value.count());
+        Global::get_instance()->notify_event_manager(CheckpointLappedEvent{this, _last_touched.value()});
         return;
     }
 
-    if (new_checkpoint || first_checkpoint)
+    if (new_checkpoint || first_checkpoint) {
         _reached = std::make_shared<Checkpoint>(*checkpoint);
+        Global::get_instance()->notify_event_manager(CheckpointReachedEvent{this, _reached.value()});
+    }
 }
 
 int CheckpointBehaviour::get_number_of_laps() const {
