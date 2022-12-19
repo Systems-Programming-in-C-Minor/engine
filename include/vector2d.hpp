@@ -8,7 +8,15 @@ class PolygonCollider;
 class ChainCollider;
 class SdlRenderer;
 
+namespace SDL2pp
+{
+    class Point;
+}
+
 class Vector2d {
+    friend class PolygonCollider;
+    friend class ChainCollider;
+    friend class SdlRenderer;
 public:
     float x, y;
 
@@ -58,11 +66,11 @@ public:
 
     explicit Vector2d(float x = 0.0f, float y = 0.0f);
 private:
-    friend class PolygonCollider;
-    friend class ChainCollider;
-    friend class SdlRenderer;
     explicit Vector2d(const b2Vec2& b2vec);
     explicit operator b2Vec2() const;
+
+    explicit Vector2d(const SDL2pp::Point& point);
+    explicit operator SDL2pp::Point() const;
 };
 
 std::ostream &operator<<(std::ostream &stream, const Vector2d &vector);
