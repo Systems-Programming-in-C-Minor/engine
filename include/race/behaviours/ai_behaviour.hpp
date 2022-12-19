@@ -3,13 +3,14 @@
 
 #include "interfaces/itickable.hpp"
 #include "components/component.hpp"
-#include "car_behaviour.hpp"
+#include "drive_behaviour.hpp"
 #include "vector2d.hpp"
+#include "friction_behaviour.hpp"
 #include <memory>
 
 class GameObject;
 
-class AIBehaviour : public CarBehaviour {
+class AIBehaviour : public DriveBehaviour, public FrictionBehaviour {
 
 private:
     std::shared_ptr<GameObject> _target;
@@ -17,8 +18,8 @@ private:
 
     void move_to_target();
 public:
-    explicit AIBehaviour(std::shared_ptr<GameObject> target);
-    explicit AIBehaviour();
+    explicit AIBehaviour(RigidBody &body, std::shared_ptr<GameObject> target);
+    explicit AIBehaviour(RigidBody &body);
     ~AIBehaviour() override;
 
     float reached_target_distance = 5.f;

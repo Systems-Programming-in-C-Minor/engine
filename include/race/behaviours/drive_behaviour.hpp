@@ -5,16 +5,19 @@
 #include "interfaces/itickable.hpp"
 #include "components/component.hpp"
 
-class CarBehaviour : public Component, public ITickable {
+class RigidBody;
+
+class DriveBehaviour {
 
 private:
-    void _friction();
 
     void _drive(float desired_speed);
 
     void _turn(float steering);
 
-public:
+    RigidBody &_body;
+
+protected:
     void turn(float amount = 1.0f);
 
     void drive_forwards(float amount = 1.0f);
@@ -27,17 +30,14 @@ public:
 
     void brake();
 
+    explicit DriveBehaviour(RigidBody &body);
+
+public:
     float max_speed_forwards = 2030.f;
     float max_speed_backwards = -1200.f;
     float max_drive_force = 800.f;
-    float current_traction = 3.6f;
-    float max_lateral_impulse = 1.f;
-    float drift_friction = 1.6f;
-    float angular_friction = 1.6f;
-    float drag_modifier = .3f;
+    float drive_traction = 3.6f;
     float steering_impulse = 60.f;
-
-    void tick(GameObject &object) override;
 };
 
 #endif //ENGINE_CARBEHAVIOUR_HPP

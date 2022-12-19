@@ -55,12 +55,12 @@ void AIBehaviour::set_target(std::shared_ptr<GameObject> game_object) {
 }
 
 void AIBehaviour::tick(GameObject &gameObject) {
-    CarBehaviour::tick(gameObject);
+    FrictionBehaviour::tick(gameObject);
     move_to_target();
 }
 
-AIBehaviour::AIBehaviour(std::shared_ptr<GameObject> target) {
+AIBehaviour::AIBehaviour(RigidBody &body, std::shared_ptr<GameObject> target) : DriveBehaviour(body) {
     _target = std::move(target);
 }
 
-AIBehaviour::AIBehaviour() = default;
+AIBehaviour::AIBehaviour(RigidBody &body) : DriveBehaviour(body) {}
