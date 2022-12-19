@@ -100,18 +100,20 @@ public:
 
 class ColliderEntryEvent : public IEvent {
 public:
-    explicit ColliderEntryEvent(RigidBody *col_a, RigidBody *col_b) :
-            IEvent(ColliderEntry), collider_a(col_a), collider_b(col_b) {};
+    explicit ColliderEntryEvent(RigidBody *col_a, RigidBody *col_b, bool is_touching) :
+            IEvent(ColliderEntry), collider_a(col_a), collider_b(col_b), is_touching(is_touching) {};
     RigidBody *collider_a;
     RigidBody *collider_b;
+    const bool is_touching;
 };
 
 class ColliderExitEvent : public IEvent {
 public:
-    explicit ColliderExitEvent(RigidBody *col_a, RigidBody *col_b) :
-            IEvent(ColliderExit), collider_a(col_a), collider_b(col_b) {};
+    explicit ColliderExitEvent(RigidBody *col_a, RigidBody *col_b, bool is_touching) :
+            IEvent(ColliderExit), collider_a(col_a), collider_b(col_b), is_touching(is_touching) {};
     RigidBody *collider_a;
     RigidBody *collider_b;
+    const bool is_touching;
 };
 
 class SceneLoadedEvent : public IEvent {
