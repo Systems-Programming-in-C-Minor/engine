@@ -3,9 +3,12 @@
 #include <utility>
 #include "global.hpp"
 
-DriveBehaviour::DriveBehaviour(std::shared_ptr<RigidBody> body) : _body(std::move(body)) {}
+DriveBehaviour::DriveBehaviour(std::shared_ptr<RigidBody> body, bool is_enabled) : _body(std::move(body)), is_enabled(is_enabled) {}
 
 void DriveBehaviour::_drive(float desired_speed){
+    if (!is_enabled)
+        return;
+
     if(desired_speed > max_speed_forwards)
         desired_speed = max_speed_forwards;
 
@@ -25,6 +28,9 @@ void DriveBehaviour::_drive(float desired_speed){
 }
 
 void DriveBehaviour::_turn(float steering) {
+    if (!is_enabled)
+        return;
+
     if (steering > steering_impulse)
         steering = steering_impulse;
 
