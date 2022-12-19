@@ -32,7 +32,6 @@ private:
 	std::shared_ptr<SDL2pp::Texture> _texture;
 
 	void load_texture(const std::string& path);
-	void get_resolution(unsigned int* res_x, unsigned int* res_y) const;
 	[[nodiscard]] std::shared_ptr<SDL2pp::Texture> get_texture() const override;
 	[[nodiscard]] float get_size_x() const override;
 	[[nodiscard]] float get_size_y() const override;

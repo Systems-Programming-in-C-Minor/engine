@@ -27,8 +27,6 @@ public:
 
     void render() override;
     void set_text(const std::string & text);
-    [[nodiscard]] float get_size_x() const;
-    [[nodiscard]] float get_size_y() const;
 private:
     std::string _font_path;
     int _font_size;

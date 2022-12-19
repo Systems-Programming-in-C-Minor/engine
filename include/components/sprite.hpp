@@ -13,7 +13,6 @@
  */
 class Sprite : public Component, public IRenderable {
 public:
-    unsigned int res_x, res_y;
     float pixels_to_meters;
 
     Sprite(std::string sprite, int order_in_layer, float pixels_to_meters = 100.f, Color color = Color{0, 0, 0, 0}, bool flip_x = false, bool flip_y = false);
@@ -22,18 +21,6 @@ public:
      * @brief Render the sprite.
      */
     void render() override;
-
-    /**
-     * @brief Getter for the current size x.
-     * @return The current size x.
-     */
-    [[nodiscard]] float get_size_x() const;
-
-    /**
-     * @brief Getter for the current size y.
-     * @return The current size y.
-     */
-    [[nodiscard]] float get_size_y() const;
     void set_color(const Color& color);
 private:
     Color color;

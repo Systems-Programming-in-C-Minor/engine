@@ -11,8 +11,6 @@
 
 Sprite::Sprite(std::string sprite, int order_in_layer, float pixels_to_meters, Color color, bool flip_x, bool flip_y) :
 		IRenderable(order_in_layer),
-		res_x(0),
-		res_y(0),
 		pixels_to_meters(pixels_to_meters),
 		color(color),
 		flip_x(flip_x),
@@ -41,18 +39,9 @@ void Sprite::render() {
     }
 }
 
-float Sprite::get_size_x() const
-{
-	return static_cast<float>(res_x) / pixels_to_meters;
-}
-float Sprite::get_size_y() const
-{
-	return static_cast<float>(res_y) / pixels_to_meters;
-}
-
 void Sprite::load_texture(const std::string& sprite)
 {
-	_texture = std::make_shared<SdlTexture>(sprite, &res_x, &res_y);
+	_texture = std::make_shared<SdlTexture>(sprite);
 }
 
 void Sprite::set_color(const Color& color) {

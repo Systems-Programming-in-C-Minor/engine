@@ -25,25 +25,6 @@ SdlText::SdlText(const std::string& text,
 	render_texture(text);
 };
 
-SdlText::SdlText(const std::string& text,
-	unsigned int* res_x,
-	unsigned int* res_y,
-	const std::string& font_path,
-	const int font_size,
-	const Color& foreground_color,
-	const Color& background_color) :
-	_font_path(font_path),
-	_font_size(font_size),
-	_foreground_color(foreground_color),
-	_background_color(background_color)
-{
-	cache_font();
-	render_texture(text);
-	if (_texture) {
-		get_resolution(res_x, res_y);
-	}
-}
-
 SdlText::~SdlText() = default;
 
 std::shared_ptr<SDL2pp::Texture> SdlText::get_texture() const
@@ -77,13 +58,6 @@ try {
 		static_cast<SDL2pp::Color>(_foreground_color),
 		static_cast<SDL2pp::Color>(_background_color)
 	));
-}
-catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
-
-void SdlText::get_resolution(unsigned int * res_x, unsigned int * res_y) const
-try {
-	*res_x = _texture->GetWidth();
-	*res_y = _texture->GetHeight();
 }
 catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
 

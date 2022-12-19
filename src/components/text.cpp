@@ -24,8 +24,6 @@ Text::Text(const std::string& text,
 	bool flip_y
 ) :
 	IRenderable(order_in_layer),
-	res_x(0),
-	res_y(0),
 	pixels_to_meters(pixels_to_meters),
 	_font_path(font_path),
 	_font_size(font_size),
@@ -58,15 +56,6 @@ void Text::render() {
                 }, _order_in_layer);
         renderer->add_render_call(render_call);
     }
-}
-
-float Text::get_size_x() const
-{
-	return static_cast<float>(res_x) / pixels_to_meters;
-}
-float Text::get_size_y() const
-{
-	return static_cast<float>(res_y) / pixels_to_meters;
 }
 
 void Text::load_texture(const std::string& text)
