@@ -41,16 +41,6 @@ public:
      * */
     virtual void tick() = 0;
 
-    virtual void on_host(std::function<void()> callback) = 0;
-
-    virtual void on_user_join(std::function<void(int id)> callback) = 0;
-
-    virtual void on_user_leave(std::function<void(int id)> callback) = 0;
-
-    virtual void on_user_allocation(std::function<void(int id)> callback) = 0;
-
-    virtual void on_users(std::function<void(std::list<int> ids)> callback) = 0;
-
     virtual ~IMultiplayer() = default;
 };
 

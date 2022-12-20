@@ -1,6 +1,8 @@
 #include "multiplayer_client.hpp"
 #include "network_client.hpp"
 #include "nlohmann/json.hpp"
+#include "global.hpp"
+#include "events.hpp"
 
 using json = nlohmann::json;
 
@@ -26,38 +28,29 @@ void MultiplayerClient::initialize() {
 void MultiplayerClient::_tick() {
     const std::lock_guard<std::mutex> lock(_received_messages_mutex);
 
+    const auto global = Global::get_instance();
+
     while (!_received_messages.empty()) {
         const auto &message = _received_messages.front();
         const auto data = json::parse(message);
 
         switch (data.at("type").get<NetworkableType>()) {
-            case Host: {
+            case Host:
                 is_host = true;
-                for (const auto &callback: _host_callbacks)
-                    callback();
+                global->notify_event_manager(HostMultiplayerEvent());
                 break;
-            }
-            case Join: {
-                for (const auto &callback: _user_join_callbacks)
-                    callback(data["user_id"]);
+            case Join:
+                global->notify_event_manager(UserJoinedMultiplayerEvent(data["user_id"]));
                 break;
-            }
-            case Leave: {
-                for (const auto &callback: _user_leave_callbacks)
-                    callback(data["user_id"]);
+            case Leave:
+                global->notify_event_manager(UserLeftMultiplayerEvent(data["user_id"]));
                 break;
-            }
-            case Allocation: {
-                for (const auto &callback: _user_allocation_callbacks) {
-                    callback(data["user_id"]);
-                }
+            case Allocation:
+                global->notify_event_manager(AllocationMultiplayerEvent(data["user_id"]));
                 break;
-            }
-            case Users: {
-                for (const auto &callback: _users_callbacks)
-                    callback(data.at("user_ids").get<std::list<int>>());
+            case Users:
+                global->notify_event_manager(UsersMultiplayerEvent(data.at("user_ids").get<std::list<int>>()));
                 break;
-            }
             case Update: {
                 for (const auto &networkable: _networkables) {
                     if (!networkable->receive) continue;
@@ -96,24 +89,4 @@ MultiplayerClient::~MultiplayerClient() {
 
     _network_client.close();
     _networking_thread.join();
-}
-
-void MultiplayerClient::on_user_join(std::function<void(int)> callback) {
-    _user_join_callbacks.push_back(callback);
-}
-
-void MultiplayerClient::on_user_leave(std::function<void(int)> callback) {
-    _user_leave_callbacks.push_back(callback);
-}
-
-void MultiplayerClient::on_user_allocation(std::function<void(int)> callback) {
-    _user_allocation_callbacks.push_back(callback);
-}
-
-void MultiplayerClient::on_users(std::function<void(std::list<int>)> callback) {
-    _users_callbacks.push_back(callback);
-}
-
-void MultiplayerClient::on_host(std::function<void()> callback) {
-    _host_callbacks.push_back(callback);
 }

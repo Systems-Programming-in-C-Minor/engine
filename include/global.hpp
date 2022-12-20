@@ -89,7 +89,7 @@ public:
      * @brief Method which notifies the event manager.
      * @param event The event which will be used for notifying.
      */
-    void  notify_event_manager(const IEvent& event);
+    void notify_event_manager(const IEvent& event);
 
     /**
      * @brief Method which sets one Global instance to another.

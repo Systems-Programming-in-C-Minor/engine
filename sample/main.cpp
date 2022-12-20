@@ -158,28 +158,23 @@ public:
     }
 };
 
-class DebugScreenToWorld : public Component, public MouseListener
-{
+class DebugScreenToWorld : public Component, public MouseListener {
 public:
-	explicit DebugScreenToWorld(EventManager& event_manager)
-		: MouseListener(event_manager)
-	{}
+    explicit DebugScreenToWorld(EventManager &event_manager)
+            : MouseListener(event_manager) {}
 
-	void on_mouse_pressed(const MousePressedEvent& event) override
-	{
-		const auto click_pos = Vector2d{
-            static_cast<float>(event.x),
-            static_cast<float>(event.y)
+    void on_mouse_pressed(const MousePressedEvent &event) override {
+        const auto click_pos = Vector2d{
+                static_cast<float>(event.x),
+                static_cast<float>(event.y)
         };
         const auto result_pos = Global::get_instance()->get_engine().get_renderer()->screen_to_world_space(click_pos);
         std::cout << result_pos << "\n";
-	}
+    }
 };
 
-class FpsIndicator : public Component, public ITickable
-{
-	void tick(GameObject& _game_object) override
-	{
+class FpsIndicator : public Component, public ITickable {
+    void tick(GameObject &_game_object) override {
         const auto text = _game_object.get_component<Text>();
         const unsigned long fps = Global::get_instance()->get_engine().get_fps();
         text->set_text(std::to_string(fps));
@@ -245,11 +240,16 @@ int main() {
     Engine &engine_ref = global->get_engine();
 
     // Setup music
-    const auto background_music = std::make_shared<AudioSource>("./assets/audio/background1.mp3", false, false, 0.1, "background");
-    const auto acceleration_sound = std::make_shared<AudioSource>("./assets/audio/engine-driving.mp3", false, false, 0.1, "acceleration");
-    const auto engine_idle = std::make_shared<AudioSource>("./assets/audio/engine-idle.mp3", false, true, 0.2, "engine_idle");
-    const auto car_drift = std::make_shared<AudioSource>("./assets/audio/tire-screech-drift.mp3", false, false, 0.2, "car_drift");
-    const auto car_drive_off = std::make_shared<AudioSource>("./assets/audio/tire-screech-drive-off.mp3", false, false, 0.2, "car_drive_off");
+    const auto background_music = std::make_shared<AudioSource>("./assets/audio/background1.mp3", false, false, 0.1,
+                                                                "background");
+    const auto acceleration_sound = std::make_shared<AudioSource>("./assets/audio/engine-driving.mp3", false, false,
+                                                                  0.1, "acceleration");
+    const auto engine_idle = std::make_shared<AudioSource>("./assets/audio/engine-idle.mp3", false, true, 0.2,
+                                                           "engine_idle");
+    const auto car_drift = std::make_shared<AudioSource>("./assets/audio/tire-screech-drift.mp3", false, false, 0.2,
+                                                         "car_drift");
+    const auto car_drive_off = std::make_shared<AudioSource>("./assets/audio/tire-screech-drive-off.mp3", false, false,
+                                                             0.2, "car_drive_off");
     const auto car_crash = std::make_shared<AudioSource>("./assets/audio/car-crash.mp3", false, false, 1, "car_crash");
     background_music->play(true);
     engine_idle->play(true);
@@ -333,7 +333,7 @@ int main() {
         cars.push_back(networkable_car);
     }
 
-    engine_ref.multiplayer_manager->on_host([&cars, &targets]() {
+    scene->get_event_manager().register_listener(HostMultiplayer, [&cars, &targets](const IEvent &) {
         for (const auto &car: cars) {
             car->car->add_component(std::make_shared<AIBehaviour>(targets[0]));
             auto ai_listener_component = std::make_shared<AITargetListenerComponent>(scene->get_event_manager());
@@ -346,7 +346,10 @@ int main() {
     });
 
 
-    engine_ref.multiplayer_manager->on_user_join([&cars, &engine_ref](int id) {
+    scene->get_event_manager().register_listener(UserJoinedMultiplayer, [&cars, &engine_ref](const IEvent &event) {
+        const auto e = dynamic_cast<const UserJoinedMultiplayerEvent &>(event);
+        const auto id = e.user_id;
+
         if (id >= cars.size()) return;
         if (!engine_ref.multiplayer_manager->is_host) return;
 
@@ -358,7 +361,10 @@ int main() {
         cars[id]->receive = true;
     });
 
-    engine_ref.multiplayer_manager->on_user_allocation([&cars, &ui_velocity_indicator_behaviour](int id) {
+    scene->get_event_manager().register_listener(AllocationMultiplayer, [&cars, &ui_velocity_indicator_behaviour](const IEvent &event) {
+        const auto e = dynamic_cast<const AllocationMultiplayerEvent &>(event);
+        const auto id = e.user_id;
+
         if (id >= cars.size()) return;
 
         auto car = cars[id]->car;
@@ -374,7 +380,10 @@ int main() {
         cars[id]->receive = false;
     });
 
-    engine_ref.multiplayer_manager->on_user_leave([&cars, &engine_ref](int id) {
+    scene->get_event_manager().register_listener(UserLeftMultiplayer, [&cars, &engine_ref](const IEvent &event) {
+        const auto e = dynamic_cast<const UserLeftMultiplayerEvent &>(event);
+        const auto id = e.user_id;
+
         if (id >= cars.size()) return;
         if (!engine_ref.multiplayer_manager->is_host) return;
 
@@ -390,7 +399,10 @@ int main() {
         cars[id]->receive = false;
     });
 
-    engine_ref.multiplayer_manager->on_users([&engine_ref, &cars](const std::list<int> &ids) {
+    scene->get_event_manager().register_listener(UsersMultiplayer, [&cars, &engine_ref](const IEvent &event) {
+        const auto e = dynamic_cast<const UsersMultiplayerEvent &>(event);
+        const auto ids = e.user_ids;
+
         if (!engine_ref.multiplayer_manager->is_host) return;
 
         auto ids_str = std::string();
