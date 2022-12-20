@@ -12,7 +12,7 @@ public:
     NetworkableCar(const std::shared_ptr<Car>& car, bool transmit, bool receive) :
             car(car), INetworkable(car->get_name(), Update, transmit, receive) {}
 
-    std::string serialize() override;
+    std::string serialize() const override;
 
     void deserialize(const std::string &import_json) override;
 };

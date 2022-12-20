@@ -2,7 +2,7 @@
 #include "../../../json_converters.hpp"
 
 
-std::string NetworkableCar::serialize() {
+std::string NetworkableCar::serialize() const {
     auto data = nlohmann::json();
     data["transform"] = car->transform.serialize();
     return data.dump();

@@ -28,8 +28,8 @@
 #include "race/behaviours/drive_input_controller_behaviour.hpp"
 #include "race/objects/networkables/networkable_car.hpp"
 
-const auto camera = std::make_shared<Camera>(6);
-const auto camera2 = std::make_shared<Camera>(6);
+const auto camera = std::make_shared<Camera>(20.0f);
+const auto camera2 = std::make_shared<Camera>(6.0f);
 const auto scene = std::make_shared<Scene>(camera);
 const auto scene2 = std::make_shared<Scene>(camera2);
 
@@ -158,7 +158,6 @@ public:
     }
 };
 
-<<<<<<< HEAD
 class DebugScreenToWorld : public Component, public MouseListener
 {
 public:
@@ -181,10 +180,6 @@ class FpsIndicator : public Component, public ITickable
 {
 	void tick(GameObject& _game_object) override
 	{
-=======
-class FpsIndicator : public Component, public ITickable {
-    void tick(GameObject &_game_object) override {
->>>>>>> 4e0b325 (Allow players to take over ai and vice verca)
         const auto text = _game_object.get_component<Text>();
         const unsigned long fps = Global::get_instance()->get_engine().get_fps();
         text->set_text(std::to_string(fps));
@@ -408,13 +403,9 @@ int main() {
 
     const auto text = std::make_shared<GameObject>(
             "ad_board", "ad", Transform{Vector2d{-50.f, 10.f}, Vector2d{}, 0.2f, 1.f});
-<<<<<<< HEAD
-    text->add_component(std::make_shared<Text>("Powered by UnEngine", "./assets/Roboto/Roboto-Medium.ttf", 500, 10, Color{255,255,255,0 }, Color{0,0,0,1 }, 1));
-    //car->add_child(camera);
-=======
+
     text->add_component(std::make_shared<Text>("Powered by UnEngine", "./assets/Roboto/Roboto-Medium.ttf", 500, 10,
                                                Color{255, 255, 255, 0}, Color{0, 0, 0, 1}, 1));
->>>>>>> 4e0b325 (Allow players to take over ai and vice verca)
 
 
     const auto ui_velocity_indicator = std::make_shared<UIObject>("ui_velocity_indicator", "ui", 16, 32,
