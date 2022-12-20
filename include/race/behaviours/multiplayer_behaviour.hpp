@@ -42,6 +42,7 @@ public:
      * @param car_id The id of the car.
      * @param targets Targets for the AI to track.
      * @param active_car_components Components to add on the actively controller car.
+     * @param active_car_children GameObjects to add on the actively controller car.
      */
     explicit MultiplayerBehaviour(
             EventManager &event_manager,
