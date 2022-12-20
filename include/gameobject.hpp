@@ -95,6 +95,24 @@ public:
     }
 
     /**
+     * @brief Remove a the given Component.
+     * @details This function removes all pointers to the component in
+     *          a suitable container.
+     * @param component Reference to the component.
+     */
+    template<class T>
+    void remove_component() {
+        assert_T_derived_from_component;
+
+        auto component = get_component<T>();
+
+        if (!component) return;
+
+        components.remove(component);
+        std::dynamic_pointer_cast<Component>(component)->game_object = nullptr;
+    }
+
+    /**
      * @brief Get the first component of the specified type. Must be
      *        a valid subclass of Component.
      * @return Pointer to Component instance.

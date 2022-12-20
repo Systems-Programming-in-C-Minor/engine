@@ -6,38 +6,51 @@
 #include "../components/component.hpp"
 
 /**
+ * @brief Type of Networkable, contains events from the server.
+ */
+enum NetworkableType { // DO NOT CHANGE ORDER, the server has to have the same order to work
+    Host,
+    Join,
+    Leave,
+    Allocation,
+    Users,
+    Update,
+};
+
+/**
  * @brief Interface for objects which are networkable.
  */
 class INetworkable : public Component {
-private:
-    const std::string _id;
+protected:
+    /**
+     * @brief Constructor.
+     * @param id The id of the INetworkable object.
+     * @param type The type of networkable.
+     * @param transmit Whether the object should be sent to other users.
+     * @param receive Whether the object should be updated from other users.
+     */
+    INetworkable(std::string id, NetworkableType type, bool transmit, bool receive) : id(std::move(id)),
+                                                                                      type(type),
+                                                                                      transmit(transmit),
+                                                                                      receive(receive) {}
 
 public:
-    /**
-     * @brief Explicit constructor.
-     * @param id The id of the INetworkable object.
-     */
-    explicit INetworkable(std::string id) : _id(std::move(id)) {}
+    const std::string id;
+    const NetworkableType type;
+    bool transmit;
+    bool receive;
 
     /**
      * @brief Serialize the INetworkable object.
      * @return The serialized object as a std::string.
      */
-    virtual const std::string& serialize() = 0;
+    [[nodiscard]] virtual std::string serialize() const = 0;
 
     /**
      * @brief Deserialize the INetworkable object.
      * @param import_json The serialized std::string of the INetworkable object.
      */
     virtual void deserialize(const std::string &import_json) = 0;
-
-    /**
-     * @brief Return the id of the INetworkable object.
-     * @return The current id as an int.
-     */
-    [[nodiscard]] std::string get_id() const {
-        return _id;
-    }
 };
 
 #endif //ENGINE_INETWORKABLE_HPP

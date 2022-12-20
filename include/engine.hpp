@@ -19,7 +19,6 @@ private:
     const std::shared_ptr<Time> _time;
     const std::shared_ptr<KeyHandler> _key_handler;
     const std::shared_ptr<MouseHandler> _mouse_handler;
-    std::shared_ptr<IMultiplayer> _multiplayer_manager;
     std::shared_ptr<Scene> _active_scene;
     std::shared_ptr<IRenderer> _renderer;
     std::shared_ptr<ISoundEngine> _sound_engine;
@@ -29,33 +28,19 @@ private:
     int _tps;
 
 public:
-    /**
-    * @brief Constructor.
-    */
-    Engine();
+    std::shared_ptr<IMultiplayer> multiplayer_manager;
 
     /**
-    * @brief Explicit constructor.
+    * @brief Normal constructor.
+    */
+    explicit Engine();
+
+    /**
+    * @brief Constructor with given renderer and sound_engine.
     * @param renderer A shared pointer to the IRenderer the engine will use.
     * @param sound_engine A shared pointer to the ISoundEngine the engine will use.
     */
-    explicit Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine);
-
-    /**
-    * @brief Explicit constructor.
-    * @param user_id The user_id the engine class will refer to.
-    * @param is_host The boolean value whether the engine is a host.
-    */
-    explicit Engine(const std::string &user_id, bool is_host = true);
-
-    /**
-    * @brief Constructor.
-    * @param renderer A shared pointer to the IRenderer the engine will use.
-    * @param sound_engine A shared pointer to the ISoundEngine the engine will use.
-    * @param user_id The user_id the engine class will refer to.
-    * @param is_host The boolean value whether the engine is a host.
-    */    
-    Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine, const std::string& user_id, bool is_host = true);
+    Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine);
 
     /**
      * @brief Virtual destructor.
@@ -131,6 +116,16 @@ public:
      * @returns A Time object of the current time of the engine.
      */
     [[nodiscard]] Time &get_time() const;
+
+    /**
+     * @brief Enables multiplayer, this immediately connects to the signalling server.
+     */
+    void enable_multiplayer(const std::string &signalling_server);
+
+    /**
+     * @brief Disables multiplayer, this immediately disconnects from the signalling server.
+     */
+    void disable_multiplayer();
 };
 
 #endif //ENGINE_ENGINE_HPP

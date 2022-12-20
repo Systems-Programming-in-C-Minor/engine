@@ -27,6 +27,11 @@ enum Event {
     CheckpointLapped,
     UiObjectPressed,
     UiObjectReleased,
+    UserJoinedMultiplayer,
+    UserLeftMultiplayer,
+    AllocationMultiplayer,
+    UsersMultiplayer,
+    HostMultiplayer,
 };
 
 /**

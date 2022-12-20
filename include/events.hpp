@@ -2,6 +2,7 @@
 #define ENGINE_EVENTS_HPP
 
 #include <utility>
+#include <list>
 
 #include "interfaces/ievent.hpp"
 #include "enums/key.hpp"
@@ -337,6 +338,73 @@ public:
 
     MouseInput button;
     UIObject& ui_object;
+};
+
+/**
+ * @brief Class for handling UserJoinedMultiplayerEvents.
+ */
+class UserJoinedMultiplayerEvent : public IEvent {
+public:
+    /**
+     * @brief Constructor.
+     * @param user_id The user id of the user that joined the session.
+     */
+    UserJoinedMultiplayerEvent(const int user_id) : IEvent(UserJoinedMultiplayer), user_id(user_id) {}
+
+    int user_id;
+};
+
+/**
+ * @brief Class for handling UserLeftMultiplayerEvents.
+ */
+class UserLeftMultiplayerEvent : public IEvent {
+public:
+    /**
+     * @brief Constructor.
+     * @param user_id The user id of the user that left the session.
+     */
+    UserLeftMultiplayerEvent(const int user_id) : IEvent(UserLeftMultiplayer), user_id(user_id) {}
+
+    int user_id;
+};
+
+/**
+ * @brief Class for handling AllocationMultiplayerEvents.
+ */
+class AllocationMultiplayerEvent : public IEvent {
+public:
+    /**
+     * @brief Constructor.
+     * @param user_id The user id you have received upon joining the session.
+     */
+    AllocationMultiplayerEvent(const int user_id) : IEvent(AllocationMultiplayer), user_id(user_id) {}
+
+    int user_id;
+};
+
+/**
+ * @brief Class for handling UsersMultiplayerEvents.
+ */
+class UsersMultiplayerEvent : public IEvent {
+public:
+    /**
+     * @brief Constructor.
+     * @param user_ids The ids of the users currently in the multiplayer session.
+     */
+    UsersMultiplayerEvent(std::list<int> user_ids) : IEvent(UsersMultiplayer), user_ids(std::move(user_ids)) {}
+
+    std::list<int> user_ids;
+};
+
+/**
+ * @brief Class for handling HostMultiplayerEvents.
+ */
+class HostMultiplayerEvent : public IEvent {
+public:
+    /**
+     * @brief Constructor.
+     */
+    HostMultiplayerEvent() : IEvent(HostMultiplayer) {}
 };
 
 #endif //ENGINE_EVENTS_HPP

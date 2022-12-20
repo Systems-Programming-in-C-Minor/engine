@@ -4,31 +4,30 @@
 
 #include <string>
 #include <memory>
-#include <vector>
+#include <list>
+#include <functional>
 #include "inetworkable.hpp"
 
 /**
  * @brief Interface for the multiplayer implementation.
  */
 class IMultiplayer {
-private:
-    std::vector<std::shared_ptr<INetworkable>> _networkables;
-
 protected:
+    std::list<std::shared_ptr<INetworkable>> _networkables;
+
     /**
-     * @brief Explicit constructor.
-     * @param user_id The user_id of the IMultiplayer object.
+     * @brief Default constructor.
      */
-    explicit IMultiplayer(std::string user_id);
+    IMultiplayer() = default;
 
 public:
-    const std::string user_id;
+    bool is_host = false; // Only available after first tick
 
     /**
      * @brief Register a networkable object.
      * @param networkable The INetworkable which will be registered.
      */
-    void register_networkable(const std::shared_ptr<INetworkable>& networkable);
+    void register_networkable(const std::shared_ptr<INetworkable> &networkable);
 
     /**
      * @brief Initialize the IMultiplayer object.
@@ -42,21 +41,6 @@ public:
      * */
     virtual void tick() = 0;
 
-    /**
-     * @brief Connect the IMultiplayer object.
-     *        Override for implementing the desired behaviour.
-     */
-    virtual void connect() = 0;
-
-    /**
-     * @brief Disconnect the IMultiplayer object.
-     *        Override for implementing the desired behaviour.
-     */
-    virtual void disconnect() = 0;
-
-    /**
-     * @brief Virtual destructor.
-     */
     virtual ~IMultiplayer() = default;
 };
 
