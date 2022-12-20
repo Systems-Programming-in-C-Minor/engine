@@ -26,6 +26,7 @@ public:
 	[[nodiscard]] virtual Vector2d world_space_to_screen(const Vector2d& position) const = 0;
 	[[nodiscard]] virtual Vector2d screen_space_to_screen(const Vector2d & position) const = 0;
 	[[nodiscard]] virtual Vector2d screen_to_screen_space(const Vector2d & position) const = 0;
+	[[nodiscard]] virtual Vector2d screen_to_world_space(const Vector2d & position) const = 0;
 
     virtual ~IRenderer() = default;
 };
