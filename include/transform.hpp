@@ -20,6 +20,9 @@ private:
     float _scale;
     GameObject* _game_object = nullptr;
 
+    /**
+    * @brief The GameObject friend class.
+    */
     friend class GameObject;
 
     /**
