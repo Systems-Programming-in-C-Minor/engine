@@ -99,8 +99,15 @@ public:
      */
     void set_local_angle(float angle);
 
+    /**
+     * @brief Unpacks the given json data and updates itself with the new values.
+     * @param data Json string containing new data.
+     */
     void deserialize(const std::string &data);
 
+    /**
+     * @brief Serializes itself to json and returns it as a string.
+     */
     [[nodiscard]] std::string serialize() const;
 };
 

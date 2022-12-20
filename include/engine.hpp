@@ -117,8 +117,14 @@ public:
      */
     [[nodiscard]] Time &get_time() const;
 
+    /**
+     * @brief Enables multiplayer, this immediately connects to the signalling server.
+     */
     void enable_multiplayer(const std::string &signalling_server);
 
+    /**
+     * @brief Disables multiplayer, this immediately disconnects from the signalling server.
+     */
     void disable_multiplayer();
 };
 
