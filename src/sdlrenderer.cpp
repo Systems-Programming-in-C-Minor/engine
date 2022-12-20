@@ -1,6 +1,5 @@
 #include "transform.hpp"
 #include "render/itexture.hpp"
-#include "uiobjects/text.hpp"
 #include "components/sprite.hpp"
 #include "color.hpp"
 #include "sdlrenderer.hpp"
@@ -28,31 +27,59 @@
 #include <ostream>
 #include <utility>
 
-void SdlRenderer::render_sprite(const Sprite& sprite, ITexture& texture, Transform& transform, bool is_world_space) const
+#include "camera.hpp"
+#include "global.hpp"
+
+#define camera Global::get_instance()->get_active_scene().get_camera
+
+void SdlRenderer::render_texture(ITexture& texture, Transform& transform, float pixels_to_meters) const
 {
-	/*
-	 * TODO Open PR for SDL2pp
-	 * Segfaults, SDL2pp needs to fix this
-	 * int x = _renderer->GetOutputWidth();
-	 * int x, y = 0;
-	 * SDL_GetRendererOutputSize(_renderer->Get(), &x, nullptr);
-	 */
+    /*
+     * TODO Open PR for SDL2pp
+     * Segfaults, SDL2pp needs to fix this
+     * int x = _renderer->GetOutputWidth();
+     * int x, y = 0;
+     * SDL_GetRendererOutputSize(_renderer->Get(), &x, nullptr);
+     */
 
-	const float left_corner_x = transform.get_position().x + -sprite.get_size_x() * transform.get_scale() / 2.f;
-	const float left_corner_y = transform.get_position().y + sprite.get_size_y() * transform.get_scale() / 2.f;
+    const auto center = transform_vector(transform.get_position());
+    const float left_corner_x = center.x + -texture.get_size_x() / pixels_to_meters * transform.get_scale() / 2.f;
+    const float left_corner_y = center.y + texture.get_size_y() / pixels_to_meters * transform.get_scale() / 2.f;
 
-	const auto center = world_to_screen(transform.get_position());
-	const auto left_corner = world_to_screen(Vector2d{ left_corner_x, left_corner_y });
+    const auto left_corner = world_space_to_screen(Vector2d{ left_corner_x, left_corner_y });
 
-	const int size_x = static_cast<int>(round(sprite.get_size_x() * transform.get_scale() * _mtp));
-	const int size_y = static_cast<int>(round(sprite.get_size_y() * transform.get_scale() * _mtp));
-	const auto size = SDL2pp::Point{ size_x, size_y };
+    const int size_x = static_cast<int>(round(texture.get_size_x() / pixels_to_meters * transform.get_scale() * camera()->mtp));
+    const int size_y = static_cast<int>(round(texture.get_size_y() / pixels_to_meters * transform.get_scale() * camera()->mtp));
+    const auto size = SDL2pp::Point{ size_x, size_y };
 
-	auto rect = SDL2pp::Rect{ left_corner, size };
-	_renderer->Copy(*texture.get_texture(), SDL2pp::NullOpt, rect, -radians_to_degrees(transform.get_angle()));
+    auto rect = SDL2pp::Rect{ static_cast<SDL2pp::Point>(left_corner), size };
+
+    _renderer->Copy(*texture.get_texture(), SDL2pp::NullOpt, rect, -radians_to_degrees(transform.get_angle() - camera()->transform.get_angle()));
 }
 
-void SdlRenderer::render_rigid_body(const RigidBody& rigid_body, Transform& transform, bool is_world_space) const
+void SdlRenderer::render_texture(ITexture& texture, Transform& transform, float width, float height) const
+{
+    // TODO Optimization: only retrieve when resolution changes
+    const SDL2pp::Point res = _renderer->GetOutputSize();
+    const auto ratio_x = static_cast<float>(res.GetX()) / camera()->screen_space_limits;
+    const auto ratio_y = static_cast<float>(res.GetY()) / camera()->screen_space_limits;
+
+    const auto center = transform.get_position();
+
+    const float left_corner_x = center.x + -width * transform.get_scale() / 2.f;
+    const float left_corner_y = center.y + height * transform.get_scale() / 2.f;
+
+    const auto left_corner = screen_space_to_screen(Vector2d{ left_corner_x, left_corner_y });
+
+    const int size_x = static_cast<int>(round(width * transform.get_scale() * ratio_x));
+    const int size_y = static_cast<int>(round(height * transform.get_scale() * ratio_y));
+
+    const auto size = SDL2pp::Point{ size_x, size_y };
+    auto rect = SDL2pp::Rect{ static_cast<SDL2pp::Point>(left_corner), size };
+    _renderer->Copy(*texture.get_texture(), SDL2pp::NullOpt, rect, -radians_to_degrees(transform.get_angle()));
+}
+
+void SdlRenderer::render_rigid_body(const RigidBody& rigid_body) const
 {
 	if (!_debug_mode) return;
 	b2Body* body = rigid_body.get_body();
@@ -75,7 +102,6 @@ void SdlRenderer::render_rigid_body(const RigidBody& rigid_body, Transform& tran
 		case b2Shape::e_typeCount: break;
 		// NOLINTEND(bugprone-branch-clone)
 	}
-
 }
 
 void SdlRenderer::render_ngon(b2Body* body, b2PolygonShape* shape) const
@@ -119,40 +145,15 @@ void SdlRenderer::render_lines(std::vector<Vector2d>& vectors, const Color& colo
 	points.reserve(vectors.size());
 
 	for(auto& vector : vectors) {
-		points.push_back(world_to_screen(vector));
+		points.push_back(static_cast<SDL2pp::Point>(world_space_to_screen(transform_vector(vector))));
 	}
 	_renderer->SetDrawColor(static_cast<SDL2pp::Color>(color));
 	_renderer->DrawLines(points.data(), static_cast<int>(points.size()));
 }
 
-void SdlRenderer::render_text(const Text& text) const
+void SdlRenderer::clear() const try
 {
-    SDL2pp::Font font(text.get_font(), text.get_size());
-
-	// TODO Cache font for performance gains
-	// https://stackoverflow.com/a/29725751/10787114
-	SDL2pp::Texture texture(*_renderer, font.RenderUTF8_Solid(text.get_text(), static_cast<SDL2pp::Color>(text.get_color())));
-
-    const auto text_size_x = static_cast<float>(text.get_width());
-    const auto text_size_y = static_cast<float>(text.get_width());
-
-	const float left_corner_x = text.transform.get_position().x + -text_size_x * text.transform.get_scale() / 2.f;
-	const float left_corner_y = text.transform.get_position().y + text_size_y * text.transform.get_scale() / 2.f;
-
-	const auto center = world_to_screen(text.transform.get_position());
-	const auto left_corner = world_to_screen(Vector2d{ left_corner_x, left_corner_y });
-
-	const int size_x = static_cast<int>(round(text_size_x * text.transform.get_scale() * _mtp));
-	const int size_y = static_cast<int>(round(text_size_y * text.transform.get_scale() * _mtp));
-
-	const auto size = SDL2pp::Point{ size_x, size_y };
-	auto rect = SDL2pp::Rect{ left_corner, size };
-    _renderer->Copy(texture, SDL2pp::NullOpt, rect, -radians_to_degrees(text.transform.get_angle()));
-}
-
-void SdlRenderer::clear(const Color& color) const try
-{
-	const auto _color = static_cast<SDL2pp::Color>(color);
+	const auto _color = static_cast<SDL2pp::Color>(camera()->background_color);
 	_renderer->SetDrawColor(_color).Clear();
 } catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
 
@@ -189,15 +190,12 @@ void SdlRenderer::add_render_call(RenderCall& render_call) {
 	_render_queue.push_back(render_call);
 }
 
-SDL2pp::Point SdlRenderer::world_to_screen(const Vector2d& position) const
+Vector2d SdlRenderer::world_space_to_screen(const Vector2d& position) const
 {
-	// TODO Optimization: only retrieve when resolution changes
-	const SDL2pp::Point res = _renderer->GetOutputSize();
-	const SDL2pp::Point return_pos{
-		static_cast<int>(round(static_cast<float>(res.GetX()) * 0.5f + position.x * _mtp)),
-		static_cast<int>(round(static_cast<float>(res.GetY()) * 0.5f - position.y * _mtp))
+	return Vector2d{
+		static_cast<float>(_renderer->GetOutputSize().GetX()) * 0.5f + position.x * camera()->mtp,
+		static_cast<float>(_renderer->GetOutputSize().GetY()) * 0.5f - position.y * camera()->mtp
 	};
-	return return_pos;
 }
 
 void SdlRenderer::toggle_fullscreen() {
@@ -210,12 +208,56 @@ void SdlRenderer::toggle_fullscreen() {
 	SDL_DisplayMode dm;
 	SDL_GetCurrentDisplayMode(_window->GetDisplayIndex(), &dm);
 	_window->SetSize(dm.w, dm.h);
-	_window->SetFullscreen(SDL_WINDOW_FULLSCREEN_DESKTOP);
+	_window->SetFullscreen(SDL_WINDOW_FULLSCREEN);
 	_fullscreen = true;
 }
 
 void SdlRenderer::toggle_debug_mode() {
 	_debug_mode = !_debug_mode;
+}
+
+Vector2d SdlRenderer::screen_space_to_screen(const Vector2d& position) const
+{
+	const auto res_x = static_cast<float>(_renderer->GetOutputSize().GetX());
+	const auto res_y = static_cast<float>(_renderer->GetOutputSize().GetY());
+
+	return Vector2d{
+		(res_x * 0.5f + position.x * (res_x / camera()->screen_space_limits)),
+		(res_y * 0.5f - position.y * (res_y / camera()->screen_space_limits))
+	};
+}
+
+Vector2d SdlRenderer::screen_to_screen_space(const Vector2d& position) const
+{
+	const auto res_x = static_cast<float>(_renderer->GetOutputSize().GetX());
+	const auto res_y = static_cast<float>(_renderer->GetOutputSize().GetY());
+
+	return Vector2d{
+		(position.x - (res_x * 0.5f)) / (res_x / camera()->screen_space_limits),
+		-(position.y - (res_y * 0.5f)) / (res_y / camera()->screen_space_limits)
+	};;
+}
+
+Vector2d SdlRenderer::screen_to_world_space(const Vector2d& position) const
+{
+	const auto res_x = static_cast<float>(_renderer->GetOutputSize().GetX());
+	const auto res_y = static_cast<float>(_renderer->GetOutputSize().GetY());
+
+	return Vector2d{
+		(position.x - (res_x * 0.5f)) / (camera()->mtp),
+		-(position.y - (res_y * 0.5f)) / (camera()->mtp)
+	};
+}
+
+
+Vector2d SdlRenderer::transform_vector(const Vector2d& position) const {
+	const auto camera_position = camera()->transform.get_position();
+	const auto position_translated = position - camera_position;
+
+	const auto angle = camera()->transform.get_angle();
+	const b2Mat22 rotation_matrix{ cos(angle),-sin(angle), sin(angle), cos(angle) };
+	const auto result = b2MulT(rotation_matrix, static_cast<b2Vec2>(position_translated));
+	return Vector2d{ result };
 }
 
 std::shared_ptr<SDL2pp::Renderer> SdlRenderer::get_renderer()

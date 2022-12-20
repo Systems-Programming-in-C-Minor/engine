@@ -7,7 +7,7 @@
 
 class MockGameObject final : public GameObject {
 public:
-	MockGameObject(const std::string& name, const std::string& tag, bool is_world_space = true) : GameObject(name, tag, is_world_space) {}
+	MockGameObject(const std::string& name, const std::string& tag) : GameObject(name, tag) {}
 
 	MOCK_METHOD(void, tick, (), (override));
 	MOCK_METHOD(void, render, (), (override, const));

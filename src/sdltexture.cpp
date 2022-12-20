@@ -12,24 +12,24 @@
 
 namespace fs = std::filesystem;
 
-SdlTexture::SdlTexture(const std::string& path) :
-	ITexture(path)
+SdlTexture::SdlTexture(const std::string& path)
 {
 	load_texture(path);
-}
-
-SdlTexture::SdlTexture(const std::string& path, unsigned int* res_x, unsigned int* res_y) :
-	ITexture(path)
-{
-	load_texture(path);
-	if (_texture) {
-		get_resolution(res_x, res_y);
-	}
 }
 
 std::shared_ptr<SDL2pp::Texture> SdlTexture::get_texture() const
 {
 	return _texture;
+}
+
+float SdlTexture::get_size_x() const
+{
+	return static_cast<float>(_texture->GetWidth());
+}
+
+float SdlTexture::get_size_y() const
+{
+	return static_cast<float>(_texture->GetHeight());
 }
 
 void SdlTexture::load_texture(const std::string& path)
@@ -56,14 +56,6 @@ try {
 }
 catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
 
-void SdlTexture::get_resolution(unsigned int * res_x, unsigned int * res_y) const
-try {
-	*res_x = _texture->GetWidth();
-	*res_y = _texture->GetHeight();
-}
-catch (SDL2pp::Exception& e) { handle_fatal_exception(e); }
-
 void SdlTexture::set_color(const Color& color) {
 	_texture->SetColorAndAlphaMod(static_cast<SDL2pp::Color>(color));
 }
-

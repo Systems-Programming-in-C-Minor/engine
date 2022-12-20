@@ -1,4 +1,5 @@
 #include "../include/scene.hpp"
+#include "../include/camera.hpp"
 #include "../../mocks/mock_gameobject.hpp"
 #include "../../mocks/mock_renderer.hpp"
 
@@ -8,7 +9,7 @@
 
 TEST(SceneTest, Tick_OneGameObject) {
     auto game_object1 = mock_game_object;
-    auto scene = Scene();
+    auto scene = Scene(std::make_shared<Camera>());
 
     scene.gameobjects.push_back(game_object1);
     
@@ -21,7 +22,7 @@ TEST(SceneTest, Tick_ThreeGameObjects) {
     auto game_object1 = mock_game_object;
     auto game_object2 = mock_game_object;
     auto game_object3 = mock_game_object;
-    auto scene = Scene();
+    auto scene = Scene(std::make_shared<Camera>());
 
     scene.gameobjects.push_back(game_object1);
     scene.gameobjects.push_back(game_object2);
@@ -37,7 +38,7 @@ TEST(SceneTest, Tick_ThreeGameObjects) {
 
 TEST(SceneTest, Render_OneGameObject) {
     auto game_object1 = mock_game_object;
-    auto scene = Scene();
+    auto scene = Scene(std::make_shared<Camera>());
     auto renderer = MockRenderer();
 
     scene.gameobjects.push_back(game_object1);
@@ -51,7 +52,7 @@ TEST(SceneTest, Render_ThreeGameObjects) {
     auto game_object1 = mock_game_object;
     auto game_object2 = mock_game_object;
     auto game_object3 = mock_game_object;
-    auto scene = Scene();
+    auto scene = Scene(std::make_shared<Camera>());
     auto renderer = MockRenderer();
 
     scene.gameobjects.push_back(game_object1);
