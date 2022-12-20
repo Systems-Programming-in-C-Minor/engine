@@ -23,6 +23,9 @@ protected:
 
     friend class GameObject;
 public:
+    /**
+     * @brief The GameObject of the Component.
+     */
     GameObject* game_object = nullptr;
 
     /**

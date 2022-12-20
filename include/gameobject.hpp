@@ -21,14 +21,39 @@ private:
     int _id;
     static int object_counter;
 protected:
+    /**
+    * @brief The name of the GameObject.
+    */
     std::string name;
+
+    /**
+    * @brief The tag of the GameObject.
+    */
     std::string tag;
+
+    /**
+    * @brief Boolean value whether or not the GameObject is active.
+    */
     bool active = true;
+
+    /**
+    * @brief The layer in which the GameObject will be rendered.
+    */
     int layer = 0;
 
+    /**
+    * @brief A list containing the components of the GameObject (Component classes).
+    */
     std::list<std::shared_ptr<Component>> components;
 
+    /**
+    * @brief The parent of the GameObject.
+    */
     GameObject *parent;
+
+    /**
+    * @brief A list containing the children of the GameObject (GameObject classes).
+    */
     std::list<std::shared_ptr<GameObject>> children;
 public:
     Transform transform;

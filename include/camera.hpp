@@ -10,8 +10,19 @@
 class Camera : public GameObject
 {
 public:
+    /**
+     * @brief The background color object of the Camera (Color).
+     */
     Color background_color;
+
+    /**
+     * @brief The meters to pixel ratio of the Camera.
+     */
     float mtp;
+
+    /**
+     * @brief The screen space limits of the Camera.
+     */
     float screen_space_limits;
 
     /**

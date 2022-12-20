@@ -38,14 +38,17 @@ enum Event {
  * @brief Interface for all Event types.
  */
 class IEvent {
+protected:
     /**
      * @brief Explicit constructor.
      * @param event The desired event type.
      */
-protected:
     explicit IEvent(Event event) : event(event) {}
 
 public:
+    /**
+     * @brief The actual Event object.
+     */
     const Event event;
 
     /**

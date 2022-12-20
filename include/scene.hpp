@@ -19,6 +19,9 @@ class GameObject;
  * @brief Class representing a scene which can be rendered by the Camera.
  */
 class Scene {
+    /**
+    * @brief The RigidBody friend class.
+    */
     friend class RigidBody;
 private:
     const std::unique_ptr<EventManager> _event_manager;
@@ -26,6 +29,9 @@ private:
     const std::unique_ptr<CollisionHandler> _collision_handler;
     std::shared_ptr<Camera> _camera;
 public:
+    /**
+    * @brief A vector containing the game objects of the Scene (GameObject).
+    */
     std::vector<std::shared_ptr<GameObject>> gameobjects;
 
     /**

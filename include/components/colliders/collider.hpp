@@ -15,9 +15,19 @@ class RigidBody;
 class Collider
 {
 protected:
+    /**
+     * @brief The RigidBody friend class.
+     */
     friend class RigidBody;
 
+    /**
+     * @brief A vector of Vector2d points of the Collider.
+     */
     std::vector<Vector2d> _points;
+
+    /**
+     * @brief Flag to optionally ignore physics on collision.
+     */
     bool _ignore_collision_physics;
 
     /**

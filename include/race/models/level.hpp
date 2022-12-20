@@ -23,8 +23,19 @@ public:
     RaceLevel(const std::vector<std::shared_ptr<Car>>& cars, std::vector<Vector2d> targets,
               const std::shared_ptr<Scene>& scene);
 
+    /**
+     * @brief A vector containing the targets (Vector2d objects) of the RaceLevel.
+     */
     const std::vector<Vector2d> targets;
+
+    /**
+     * @brief A vector containing the cars (Car objects) of the RaceLevel.
+     */
     const std::vector<std::shared_ptr<Car>> cars;
+
+    /**
+     * @brief A shared pointer to the Scene of the RaceLevel.
+     */
     const std::shared_ptr<Scene> scene;
 };
 

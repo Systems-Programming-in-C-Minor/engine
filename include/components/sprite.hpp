@@ -13,6 +13,9 @@
  */
 class Sprite : public Component, public IRenderable {
 public:
+    /**
+     * @brief The pixels to meters ratio of the Sprite.
+     */
     float pixels_to_meters;
 
     /**

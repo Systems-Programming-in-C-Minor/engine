@@ -12,7 +12,14 @@
 class Input {
 
 public:
+    /**
+    * @brief A vector containing previously pressed keys (Key).
+    */
     std::vector<Key> _previous_keystate;
+
+    /**
+    * @brief A vector containing previous MouseInput.
+     * */
     std::vector<MouseInput> _previous_mousestate;
 
     /**

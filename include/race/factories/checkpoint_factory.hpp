@@ -17,8 +17,19 @@ public:
      */
     CheckpointDef(Vector2d position, float width, float angle);
 
+    /**
+     * @brief The Vector2d position of the CheckpointDef class.
+     */
     const Vector2d position;
+
+    /**
+     * @brief The width of the CheckpointDef class (float).
+     */
     const float width;
+
+    /**
+     * @brief The angle of the CheckpointDef class (float).
+     */
     const float angle;
 };
 
@@ -27,7 +38,11 @@ public:
  */
 class CheckpointFactory {
 public:
+    /**
+     * @brief A shared pointer to a Checkpoint object.
+     */
     static std::shared_ptr<Checkpoint>
+
     /**
      * @brief Get method of the checkpoint factory.
      * @param is_finish_line Boolean value whether or not the checkpoint is a finish line.

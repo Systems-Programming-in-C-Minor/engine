@@ -22,6 +22,9 @@ public:
      */
     virtual void set_color(const Color& color) = 0;
 private:
+    /**
+    * @brief The SdlRenderer friend class.
+    */
     friend class SdlRenderer;
 protected:
     /**
