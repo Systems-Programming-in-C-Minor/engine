@@ -28,13 +28,8 @@
 #include "race/behaviours/drive_input_controller_behaviour.hpp"
 #include "race/objects/networkables/networkable_car.hpp"
 
-<<<<<<< HEAD
 const auto camera = std::make_shared<Camera>(6);
 const auto camera2 = std::make_shared<Camera>(6);
-=======
-const auto camera = std::make_shared<Camera>(6.0f);
-const auto camera2 = std::make_shared<Camera>();
->>>>>>> 4e0b325 (Allow players to take over ai and vice verca)
 const auto scene = std::make_shared<Scene>(camera);
 const auto scene2 = std::make_shared<Scene>(camera2);
 

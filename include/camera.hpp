@@ -21,7 +21,7 @@ public:
      * @param mtp Meters to pixel ratio.
      * @param screen_space_limits The screen space limits of the camera.
      */
-    Camera(
+    explicit Camera(
         float mtp = 20.f,
         Transform transform = Transform{},
         const Color& background_color = Color{},
