@@ -1,5 +1,6 @@
 #ifndef ENGINE_COMPONENT_HPP
 #define ENGINE_COMPONENT_HPP
+#include <string>
 
 class GameObject;
 
@@ -7,11 +8,14 @@ class GameObject;
  * @brief Base class for all components.
  */
 class Component {
+private:
+    const std::string _name;
 protected:
     /**
-     * @brief Default Constructor.
+     * @brief Constructor.
+     * @param name Set the name of the Component.
      */
-    Component() = default;
+    Component(const std::string name = "");
 
     bool active = true;
     friend class GameObject;
@@ -29,6 +33,7 @@ public:
      * @return true if active, false otherwise.
      */
     [[nodiscard]] bool get_active() const;
+    [[nodiscard]] std::string get_name() const;
 
     /**
      * @brief Virtual destructor.

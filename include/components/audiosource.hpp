@@ -5,6 +5,7 @@
 
 #include <string>
 #include <filesystem>
+#include "audio/sdl_mixer_audio_sample.hpp"
 
 /**
  * @brief Component for playback of an audio file.
@@ -17,7 +18,7 @@ public:
 	 * Plays audio if play on awake is true and component is active.
 	 * @param[in] isActive Sets active state.
 	 */
-	virtual void set_active(bool is_active) override;
+	void set_active(bool is_active) override;
 
 	/**
 	 * Plays an audio source.
@@ -34,29 +35,31 @@ public:
 	 * Returns the times a sample has been played.
 	 * @return Times this audio source has been played.
 	 */
-	int get_play_count() const;
+	[[nodiscard]] int get_play_count() const;
 
     /**
-     * @brief Constructor.
+     * @brief Explicit constructor.
      * @param audio_clip The path to the mp3 audio clip.
      * @param play_on_awake Flag to tell the audio source to play automatically.
      * @param loop Flag to tell the audio source to loop.
      * @param volume Set the initial volume of the audio source.
+     * @param name Set the name of the AudioSource.
      */
-	AudioSource(
+	explicit AudioSource(
 		const std::string& audio_clip,
 		bool play_on_awake = false,
 		bool loop = false,
-		double volume = 1.0
+    float volume = 1.0,
+		const std::string name = ""
 	);
 private:
 	std::filesystem::path _audio_clip;
 	bool _play_on_awake;
 	bool _loop;
-	double _volume;
-
+    float _volume;
 	bool _is_playing = false;
 	int _play_count = 0;
+    std::shared_ptr<SDLMixerAudioSample> _sample;
 };
 
 #endif // COMPONENTS_AUDIOSOURCE_H_NE8Ak79aUp

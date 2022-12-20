@@ -19,8 +19,10 @@
 #include "components/text.hpp"
 #include "input.hpp"
 #include "storage/json_properties.hpp"
+#include "components/audiosource.hpp"
 #include "listeners/joystick_listener.hpp"
 #include "listeners/ai_listener.hpp"
+#include <cstring>
 #include "race/objects/car.hpp"
 #include "race/behaviours/drive_input_behaviour.hpp"
 #include "race/behaviours/drive_input_controller_behaviour.hpp"
@@ -235,12 +237,23 @@ public:
 };
 
 int main() {
+
     // Setup engine
     const auto global = Global::get_instance();
     auto engine = std::make_unique<Engine>();
     global->set_engine(std::move(engine));
     global->set_properties(std::make_unique<JsonProperties>("settings.json"));
     Engine &engine_ref = global->get_engine();
+
+    // Setup music
+    const auto background_music = std::make_shared<AudioSource>("./assets/audio/background1.mp3", false, false, 0.1, "background");
+    const auto acceleration_sound = std::make_shared<AudioSource>("./assets/audio/engine-driving.mp3", false, false, 0.1, "acceleration");
+    const auto engine_idle = std::make_shared<AudioSource>("./assets/audio/engine-idle.mp3", false, true, 0.2, "engine_idle");
+    const auto car_drift = std::make_shared<AudioSource>("./assets/audio/tire-screech-drift.mp3", false, false, 0.2, "car_drift");
+    const auto car_drive_off = std::make_shared<AudioSource>("./assets/audio/tire-screech-drive-off.mp3", false, false, 0.2, "car_drive_off");
+    const auto car_crash = std::make_shared<AudioSource>("./assets/audio/car-crash.mp3", false, false, 1, "car_crash");
+    background_music->play(true);
+    engine_idle->play(true);
 
     // Create game objects with component
     const auto track_outer = std::make_shared<GameObject>(
@@ -265,7 +278,6 @@ int main() {
     track_bg->add_component(std::make_shared<Sprite>(sprite2));
 
     track_outer->add_component(std::make_shared<Sprite>(sprite1));
-
 
     const auto car = std::make_shared<Car>("player_car", "./assets/blue_car.png", Vector2d(), scene);
     car->add_component(std::make_shared<DriveInputBehaviour>(scene->get_event_manager()));

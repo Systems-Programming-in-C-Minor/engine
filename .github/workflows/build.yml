@@ -26,13 +26,16 @@ jobs:
           valgrind --version
       - name: Setup SDL
         run: |
-          sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
+          sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev
           sudo mkdir /usr/lib/x86_64-linux-gnu/cmake/sdl2_image/
           echo -e 'set(prefix "/usr")\nset(exec_prefix "${prefix}")\nset(libdir "${prefix}/lib/x86_64-linux-gnu")\nset(SDL2_IMAGE_PREFIX "/usr")\nset(SDL2_IMAGE_EXEC_PREFIX "/usr")\nset(SDL2_IMAGE_INCLUDE_DIRS "${prefix}/include/SDL2_image")\nset(SDL2_IMAGE_LIBRARIES "-lSDL2_image")' > sdl2_image-config.cmake
           sudo mv sdl2_image-config.cmake /usr/lib/x86_64-linux-gnu/cmake/sdl2_image/
           sudo mkdir /usr/lib/x86_64-linux-gnu/cmake/sdl2_ttf/
           echo -e 'set(prefix "/usr")\nset(exec_prefix "${prefix}")\nset(libdir "${prefix}/lib/x86_64-linux-gnu")\nset(SDL2_TTF_PREFIX "/usr")\nset(SDL2_TTF_EXEC_PREFIX "/usr")\nset(SDL2_TTF_INCLUDE_DIRS "${prefix}/include/SDL2_ttf")\nset(SDL2_TTF_LIBRARIES "-lSDL2_ttf")' > sdl2_ttf-config.cmake
           sudo mv sdl2_ttf-config.cmake /usr/lib/x86_64-linux-gnu/cmake/sdl2_ttf/
+          sudo mkdir /usr/lib/x86_64-linux-gnu/cmake/sdl2_mixer/
+          echo -e 'set(prefix "/usr")\nset(exec_prefix "${prefix}")\nset(libdir "${prefix}/lib/x86_64-linux-gnu")\nset(SDL2_MIXER_PREFIX "/usr")\nset(SDL2_MIXER_EXEC_PREFIX "/usr")\nset(SDL2_MIXER_INCLUDE_DIRS "${prefix}/include/SDL2_mixer")\nset(SDL2_MIXER_LIBRARIES "-lSDL2_mixer")' > sdl2_mixer-config.cmake
+          sudo mv sdl2_mixer-config.cmake /usr/lib/x86_64-linux-gnu/cmake/sdl2_mixer/
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Cache build files

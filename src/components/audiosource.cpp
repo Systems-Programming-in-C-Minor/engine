@@ -9,6 +9,8 @@ void AudioSource::set_active(bool is_active)
 	active = is_active;
 	if (_play_on_awake && active)
 		play(_loop);
+    if(!active)
+        stop();
 }
 
 void AudioSource::play(bool looping)
@@ -19,21 +21,22 @@ void AudioSource::play(bool looping)
 		return;
 	}
 
-	if (_audio_clip.extension() != ".wav") {
+	if (_audio_clip.extension() != ".mp3") {
 		fmt::print("Unsupported audio format {}\n", _audio_clip.extension().string());
 		stop();
 		return;
 	}
 
 	_loop = looping;
+    _sample->set_looping(_loop);
 	_is_playing = true;
-	// Play audio file here
+	_sample->play();
 	++_play_count;
-	stop();
 }
 
 void AudioSource::stop()
 {
+    _sample->stop();
 	_is_playing = false;
 }
 
@@ -47,14 +50,15 @@ AudioSource::AudioSource(
 	const std::string& audio_clip,
 	bool play_on_awake,
 	bool loop,
-	double volume) :
-	_audio_clip(fs::current_path().append(audio_clip)),
-	_play_on_awake(play_on_awake),
-	_loop(loop),
-	_volume(volume) 
+	float volume,
+	const std::string name) :
+		Component(name),
+		_audio_clip(fs::current_path().append(audio_clip)),
+		_play_on_awake(play_on_awake),
+		_loop(loop),
+		_volume(volume)
 {
-	// Play sample if component is active
-	// and play on awake is true
+	_sample = std::make_unique<SDLMixerAudioSample>(audio_clip, volume, loop);
 	if (_play_on_awake && active)
 		play(loop);
 }

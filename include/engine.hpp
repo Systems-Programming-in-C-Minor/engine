@@ -5,6 +5,7 @@
 #include "scene.hpp"
 #include "render/irenderer.hpp"
 #include "interfaces/imultiplayer.hpp"
+#include "interfaces/isound_engine.hpp"
 #include "handlers/key_handler.hpp"
 #include "handlers/mouse_handler.hpp"
 #include "time.hpp"
@@ -21,6 +22,7 @@ private:
     std::shared_ptr<IMultiplayer> _multiplayer_manager;
     std::shared_ptr<Scene> _active_scene;
     std::shared_ptr<IRenderer> _renderer;
+    std::shared_ptr<ISoundEngine> _sound_engine;
 
     long long _time_after_last_frame;
     unsigned long _fps;
@@ -35,8 +37,9 @@ public:
     /**
     * @brief Explicit constructor.
     * @param renderer A shared pointer to the IRenderer the engine will use.
+    * @param sound_engine A shared pointer to the ISoundEngine the engine will use.
     */
-    explicit Engine(std::shared_ptr<IRenderer> renderer);
+    explicit Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine);
 
     /**
     * @brief Explicit constructor.
@@ -48,10 +51,11 @@ public:
     /**
     * @brief Constructor.
     * @param renderer A shared pointer to the IRenderer the engine will use.
+    * @param sound_engine A shared pointer to the ISoundEngine the engine will use.
     * @param user_id The user_id the engine class will refer to.
     * @param is_host The boolean value whether the engine is a host.
-    */
-    Engine(std::shared_ptr<IRenderer> renderer, const std::string &user_id, bool is_host = true);
+    */    
+    Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine, const std::string& user_id, bool is_host = true);
 
     /**
      * @brief Virtual destructor.
@@ -97,6 +101,12 @@ public:
      * @returns A shared pointer to the current IRenderer.
      */
     [[nodiscard]] virtual std::shared_ptr<IRenderer> get_renderer() const;
+
+    /**
+     * @brief The getter for the current ISoundEngine.
+     * @returns A shared pointer to the current ISoundEngine.
+     */
+    [[nodiscard]] virtual std::shared_ptr<ISoundEngine> get_sound_engine() const;
 
     /**
      * @brief The setter method for the current ticks per seconds.

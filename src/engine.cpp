@@ -7,6 +7,7 @@
 #include <thread>
 #include "gameobject.hpp"
 #include "sdlrenderer.hpp"
+#include "audio/sdl_mixer_sound_engine.hpp"
 #include "managers/host_multiplayer_manager.hpp"
 #include "managers/client_multiplayer_manager.hpp"
 #include "fmt/core.h"
@@ -82,27 +83,32 @@ std::shared_ptr<IRenderer> Engine::get_renderer() const {
 	return _renderer;
 }
 
-Engine::Engine() : Engine(std::make_shared<SdlRenderer>()) {}
-
-Engine::Engine(std::shared_ptr<IRenderer> renderer) : Engine(std::move(renderer), "engine-host") {}
-
-Engine::Engine(const std::string &user_id, bool is_host) : Engine(std::make_shared<SdlRenderer>(), user_id, is_host) {}
-
-Engine::Engine(std::shared_ptr<IRenderer> renderer, const std::string &user_id, bool is_host) :
-		_should_quit(false),
-		_time(std::make_shared<Time>()),
-		_key_handler(std::make_shared<KeyHandler>()),
-		_mouse_handler(std::make_shared<MouseHandler>()),
-		_renderer(std::move(renderer)),
-		_time_after_last_frame(0),
-		_fps(0),
-		_tps(60)
-{
-	if (is_host)
-		_multiplayer_manager = std::make_shared<HostMultiplayerManager>(user_id);
-	else
-		_multiplayer_manager = std::make_shared<ClientMultiplayerManager>(user_id);
+std::shared_ptr<ISoundEngine> Engine::get_sound_engine() const {
+    return _sound_engine;
 }
+
+Engine::Engine() : Engine(std::make_shared<SdlRenderer>(), std::make_shared<SDLMixerSoundEngine>()) {}
+
+Engine::Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine) : Engine(std::move(renderer), std::move(sound_engine), "engine-host") {}
+
+Engine::Engine(const std::string &user_id, bool is_host) : Engine(std::make_shared<SdlRenderer>(), std::make_shared<SDLMixerSoundEngine>(), user_id, is_host) {}
+
+Engine::Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine, const std::string &user_id, bool is_host) :
+        _should_quit(false), 
+		    _time(std::make_shared<Time>()),
+        _key_handler(std::make_shared<KeyHandler>()),
+        _mouse_handler(std::make_shared<MouseHandler>()),
+        _renderer(std::move(renderer)),
+        _sound_engine(std::move(sound_engine)),
+        _time_after_last_frame(0),
+		    _fps(0),
+		    _tps(60)
+        {
+          if (is_host)
+            _multiplayer_manager = std::make_shared<HostMultiplayerManager>(user_id);
+          else
+            _multiplayer_manager = std::make_shared<ClientMultiplayerManager>(user_id);
+        } 
 
 unsigned long Engine::get_number_of_controllers() const {
 	return _key_handler->get_number_of_controllers();

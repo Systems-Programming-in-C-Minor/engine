@@ -6,6 +6,7 @@
 #include "storage/iproperties.hpp"
 #include "scene.hpp"
 #include "time.hpp"
+#include "input.hpp"
 
 /**
  * @brief Global engine class.
@@ -95,6 +96,8 @@ public:
      * @param & The Global object which will be set.
      */
     void operator=(const Global &) = delete;
+
+    Input input;
 };
 
 #endif //ENGINE_GLOBAL_HPP
