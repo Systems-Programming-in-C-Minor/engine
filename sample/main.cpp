@@ -321,6 +321,9 @@ int main() {
             "orange_car.png",
             "yellow_car.png",
     };
+
+    engine_ref.enable_multiplayer("signaling.maik.sh:10000");
+
     auto cars = std::vector<std::shared_ptr<NetworkableCar>>();
 
     for (int i = 0; i < car_sprites.size(); i++) {

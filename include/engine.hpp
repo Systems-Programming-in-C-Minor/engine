@@ -116,6 +116,10 @@ public:
      * @returns A Time object of the current time of the engine.
      */
     [[nodiscard]] Time &get_time() const;
+
+    void enable_multiplayer(const std::string &signalling_server);
+
+    void disable_multiplayer();
 };
 
 #endif //ENGINE_ENGINE_HPP
