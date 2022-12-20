@@ -408,8 +408,6 @@ int main() {
         }
     });
 
-    engine_ref.multiplayer_manager->tick();
-
     const auto text = std::make_shared<GameObject>(
             "ad_board", "ad", Transform{Vector2d{-50.f, 10.f}, Vector2d{}, 0.2f, 1.f});
 <<<<<<< HEAD
