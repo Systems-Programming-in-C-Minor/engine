@@ -20,8 +20,6 @@ private:
 public:
     explicit MultiplayerClient(const std::string &signaling_server);
 
-    void initialize() override;
-
     void tick() override;
 
     ~MultiplayerClient() override;
