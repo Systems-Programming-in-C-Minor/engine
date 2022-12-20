@@ -12,9 +12,9 @@ public:
     float screen_space_limits;
 
     Camera(
+        float mtp = 20.f,
         Transform transform = Transform{},
         const Color& background_color = Color{},
-        float mtp = 20.f,
         float screen_space_limits = 200.f
     );
 
