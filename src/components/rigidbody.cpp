@@ -150,8 +150,9 @@ b2Body *RigidBody::get_body() const {
 
 void RigidBody::render() {
     const auto renderer = Global::get_instance()->get_engine().get_renderer();
-    auto render_call = RenderCall([this, renderer, transform = game_object->transform]() {
-        renderer->render_rigid_body(*this);
+
+    auto render_call = RenderCall([collider = _collider, renderer, transform = game_object->transform, body = _body]() {
+        renderer->render_lines(collider->get_vertices(*body, transform), Color{255, 255, 0, 0});
     }, _order_in_layer);
     renderer->add_render_call(render_call);
 }

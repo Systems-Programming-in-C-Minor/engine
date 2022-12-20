@@ -32,6 +32,9 @@ public:
      * @return The current height.
      */
     [[nodiscard]] float get_height() const;
+
+protected:
+    [[nodiscard]] std::vector<Vector2d> get_vertices(b2Body& body, const Transform& transform) const override;
 };
 
 #endif //COLLIDERS_BOXCOLLIDER_HPP

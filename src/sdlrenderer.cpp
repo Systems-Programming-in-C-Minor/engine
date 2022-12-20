@@ -138,7 +138,7 @@ void SdlRenderer::render_ngon(b2Body* body, b2ChainShape* shape) const
 	render_lines(vectors, Color{ 255, 255,0,0 });
 }
 
-void SdlRenderer::render_lines(std::vector<Vector2d>& vectors, const Color& color) const
+void SdlRenderer::render_lines(const std::vector<Vector2d>& vectors, const Color& color) const
 {
 	if (!_debug_mode) return;
 	std::vector<SDL2pp::Point> points;

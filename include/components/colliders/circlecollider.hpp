@@ -20,6 +20,7 @@ protected:
      */
     void set_fixture(b2Body& body, float friction, float restitution) override;
 
+    [[nodiscard]] std::vector<Vector2d> get_vertices(b2Body& body, const Transform& transform) const override;
 public:
     /**
      * @brief Explicit constructor.
@@ -33,6 +34,7 @@ public:
      * @return The radius.
      */
     [[nodiscard]] float get_radius() const;
+
 };
 
 #endif //COLLIDERS_CIRCLECOLLIDER_HPP

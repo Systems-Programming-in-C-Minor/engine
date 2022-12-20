@@ -37,6 +37,8 @@ protected:
      * @param restitution The desired restitution.
      */
     virtual void set_fixture(b2Body& body, float friction, float restitution) = 0;
+
+    virtual std::vector<Vector2d> get_vertices(b2Body& body, const Transform& transform) const = 0;
 };
 
 #endif //COLLIDERS_COLLIDER_HPP
