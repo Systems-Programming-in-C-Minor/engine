@@ -50,7 +50,7 @@ FetchContent_Declare(
 
 FetchContent_Declare(
         asio
-        GIT_REPOSITORY git@github.com:chriskohlhoff/asio.git
+        GIT_REPOSITORY https://github.com/chriskohlhoff/asio.git
         GIT_TAG master
         CONFIGURE_COMMAND ""
         BUILD_COMMAND ""
