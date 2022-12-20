@@ -2,6 +2,7 @@
 #include "gameobject.hpp"
 #include "scene.hpp"
 #include "handlers/collision_handler.hpp"
+#include "camera.hpp"
 
 void Scene::tick() {
     for (auto &game_object: gameobjects) {
@@ -37,4 +38,5 @@ Scene::Scene(std::shared_ptr<Camera> camera) :
     _camera(std::move(camera))
 {
     _world->SetContactListener(_collision_handler.get());
+    gameobjects.push_back(_camera);
 }

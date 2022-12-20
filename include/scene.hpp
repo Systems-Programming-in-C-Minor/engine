@@ -5,6 +5,7 @@
 #include <memory>
 #include "components/rigidbody.hpp"
 #include "managers/event_manager.hpp"
+#include "camera.hpp"
 
 class Camera;
 class IRenderer;
@@ -40,7 +41,7 @@ public:
 
     [[nodiscard]] std::shared_ptr<Camera> get_camera() const;
 
-    Scene(std::shared_ptr<Camera> camera);    
+    Scene(std::shared_ptr<Camera> camera = std::make_shared<Camera>());    
 
     virtual ~Scene();
 };
