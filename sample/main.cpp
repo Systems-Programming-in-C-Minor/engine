@@ -24,6 +24,7 @@
 #include "race/objects/car.hpp"
 #include "race/behaviours/drive_input_behaviour.hpp"
 #include "race/behaviours/drive_input_controller_behaviour.hpp"
+#include "components/colliders/circlecollider.hpp"
 
 const auto camera = std::make_shared<Camera>();
 const auto camera2 = std::make_shared<Camera>();
@@ -364,8 +365,7 @@ int main() {
 
     const auto track_inner_coll = std::make_shared<ChainCollider>("./assets/track1_inner.xml", false,
                                                                   ColliderNormal::outwards);
-    const auto track_inner_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{0.f, 0.f},
-                                                            1.0f);
+    const auto track_inner_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{0.f, 0.f}, 1.0f);
     track_inner_rb->set_collider(track_inner_coll);
     track_inner->add_component(track_inner_rb);
 
