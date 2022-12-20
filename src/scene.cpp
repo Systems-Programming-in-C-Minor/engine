@@ -1,4 +1,5 @@
 #include <thread>
+#include <utility>
 #include "gameobject.hpp"
 #include "scene.hpp"
 #include "handlers/collision_handler.hpp"
@@ -27,6 +28,11 @@ EventManager &Scene::get_event_manager() const {
 std::shared_ptr<Camera> Scene::get_camera() const
 {
     return _camera;
+}
+
+void Scene::set_camera(std::shared_ptr<Camera> camera)
+{
+    _camera = std::move(camera);
 }
 
 Scene::~Scene() = default;

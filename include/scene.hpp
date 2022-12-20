@@ -41,6 +41,8 @@ public:
 
     [[nodiscard]] std::shared_ptr<Camera> get_camera() const;
 
+    void set_camera(std::shared_ptr<Camera> camera);
+
     Scene(std::shared_ptr<Camera> camera = std::make_shared<Camera>());    
 
     virtual ~Scene();
