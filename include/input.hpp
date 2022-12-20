@@ -61,6 +61,9 @@ public:
      */
     bool get_mouse_button_up(MouseInput which);
 
+    /**
+     * @brief Returns the controller count as an integer value.
+     */
     [[nodiscard]] static int get_controller_count();
 };
 

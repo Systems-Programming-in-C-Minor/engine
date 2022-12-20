@@ -98,8 +98,16 @@ public:
      */
     [[nodiscard]] virtual std::shared_ptr<IRenderer> get_renderer() const;
 
+    /**
+     * @brief The setter method for the current ticks per seconds.
+     * @param tps The new ticks per seconds, default at 60.
+     */
     void set_ticks_per_second(int tps = 60);
 
+    /**
+     * @brief The getter for the current ticks per seconds.
+     * @returns An integer value of the tps.
+     */
     [[nodiscard]] int get_ticks_per_second() const;
 
     /**
