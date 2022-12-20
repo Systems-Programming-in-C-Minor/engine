@@ -36,7 +36,7 @@ void SDLMixerSoundEngine::play(const std::string &path, double volume, bool loop
     }
 
     // max volume = 128
-    int converted_volume = (int) (128 * volume);
+    int converted_volume = static_cast<int>(128 * volume);
     if(converted_volume > MIX_MAX_VOLUME)
         converted_volume = MIX_MAX_VOLUME;
     Mix_Volume(_channels[path], converted_volume);

@@ -1,8 +1,6 @@
 #ifndef ENGINE_IAUDIO_SAMPLE_HPP
 #define ENGINE_IAUDIO_SAMPLE_HPP
 
-#include <string>
-
 class IAudioSample {
 public:
     virtual void play() = 0;
