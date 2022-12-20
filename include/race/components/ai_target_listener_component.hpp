@@ -6,6 +6,10 @@
 #include "components/component.hpp"
 #include "listeners/ai_listener.hpp"
 
+
+/**
+ * @brief Class which defines a listener for ai targets.
+ */
 class AITargetListenerComponent : public Component, protected AIListener {
 protected:
     std::vector<std::shared_ptr<GameObject>> _targets;
@@ -14,10 +18,21 @@ protected:
     void on_target_reached(const AITargetReachedEvent &event) override;
 
 public:
+    /**
+     * @brief Constructor.
+     * @param event_manager The EventManager the behaviour will use to send/receive events.
+     * @param target_vectors Targets for the AI to track.
+     */
     AITargetListenerComponent(EventManager &event_manager, const std::vector<Vector2d> &target_vectors);
 
+    /**
+     * @brief Returns the current target.
+     */
     [[nodiscard]] std::shared_ptr<GameObject> get_target() const;
 
+    /**
+     * @brief Resets the target back to the initial one.
+     */
     void reset();
 };
 
