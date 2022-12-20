@@ -11,6 +11,10 @@ private:
     int _width;
     int _height;
 
+    /**
+     * @brief Method which returns whether an x and y position is within the ui object.
+     * @return Boolean value whether or not this is true.
+     */
     bool is_in_object(int x, int y) const;
 public:
     /**
@@ -19,6 +23,8 @@ public:
      * @param tag The tag of the text GameObject.
      * @param width The width of the text.
      * @param height The height of the text.
+     * @param event_manager The EventManager object of the text.
+     * @param transform The Transform object of the text.
      */
     UIObject(const std::string& name, const std::string& tag, int width, int height, EventManager &event_manager, Transform transform = Transform{});
 
@@ -45,7 +51,21 @@ public:
      * @return Return the height as an int value.
      */
     [[nodiscard]] int get_height() const;
+
+    /**
+     * @brief Method which gets called when a MousePressedEvent occurs.
+     * @param event The MousePressedEvent.
+     */
     void on_mouse_pressed(const MousePressedEvent &event) override;
+
+    /**
+     * @brief Method which gets called when a MouseReleasedEvent occurs.
+     * @param event The MouseReleasedEvent.
+     */
     void on_mouse_released(const MouseReleasedEvent & event) override;
+
+    /**
+     * @brief Virtual destructor.
+     */
     virtual ~UIObject() override;
 };

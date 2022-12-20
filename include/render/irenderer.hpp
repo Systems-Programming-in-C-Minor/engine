@@ -112,6 +112,13 @@ public:
      * @returns A transformed vector2d object.
      * */
 	[[nodiscard]] virtual Vector2d screen_to_screen_space(const Vector2d & position) const = 0;
+
+    /**
+     * @brief Method which translates the screen to world space, using the given vector2d.
+     *        Override for implementing the desired behaviour.
+     * @param position The vector2d used for transforming the vector.
+     * @returns A transformed vector2d object.
+     * */
 	[[nodiscard]] virtual Vector2d screen_to_world_space(const Vector2d & position) const = 0;
 
     /**

@@ -15,6 +15,9 @@ class CollisionHandler;
 
 class GameObject;
 
+/**
+ * @brief Class representing a scene which can be rendered by the Camera.
+ */
 class Scene {
     friend class RigidBody;
 private:
@@ -26,25 +29,47 @@ public:
     std::vector<std::shared_ptr<GameObject>> gameobjects;
 
     /**
-     * Simulates a tick on this scene's gameobjects
+     * @brief Simulates a tick on this scene's gameobjects.
      */
     virtual void tick();
 
+    /**
+     * @brief Simulates a tick on this scene's world.
+     */
     void tick_world();
 
     /**
-     * Calls the render functions on this scene's gameobjects
+     * @brief Calls the render functions on this scene's gameobjects.
      */
     virtual void render() const;
 
+    /**
+     * @brief Getter method for the event manager.
+     * @return The current EventManager object.
+     */
     [[nodiscard]] EventManager &get_event_manager() const;
 
+    /**
+     * @brief Getter method for the camera.
+     * @return The current Camera object.
+     */
     [[nodiscard]] std::shared_ptr<Camera> get_camera() const;
 
+    /**
+     * @brief Setter method for the camera.
+     * @param camera The Camera object which will be set.
+     */
     void set_camera(std::shared_ptr<Camera> camera);
 
-    Scene(std::shared_ptr<Camera> camera = std::make_shared<Camera>());    
+    /**
+     * @brief Constructor.
+     * @param camera The current Camera object.
+     */
+    Scene(std::shared_ptr<Camera> camera = std::make_shared<Camera>());
 
+    /**
+     * @brief Virtual destructor.
+     */
     virtual ~Scene();
 };
 

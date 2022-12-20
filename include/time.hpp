@@ -9,20 +9,20 @@
 class Time {
 public:
     /**
-     * brief Get the time from the previous tick to time of call in milliseconds
-     * @return delta time value
+     * brief Get the time from the previous tick to time of call in milliseconds.
+     * @return A float delta time value.
      */
     [[nodiscard]] float delta_time() const;
 
     /**
      * @brief The scale at which time passes.
-     * @return time scale value
+     * @return A double time scale value.
      */
     [[nodiscard]] double time_scale() const;
 
     /**
      * @brief The setter of the new time scale.
-     * @param new_time_scale the new time scale value
+     * @param new_time_scale the new time scale value.
      */
     void time_scale(double new_time_scale);
 

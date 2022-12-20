@@ -13,13 +13,19 @@ namespace SDL2pp {
 	class Texture;
 }
 
+/**
+ * @brief SDL text implementation of the ITexture interface.
+ */
 class SdlText : public ITexture
 {
 	friend class Text;
 public:
 	/**
-	 * @brief A texture used by SDL, rendered from a font
-	 * @param path (Relative) path to a font
+	 * @brief Constructor.
+	 * @param font_path (Relative) path to a font.
+	 * @param font_size The size of the font.
+	 * @param foreground_color The color of the foreground.
+	 * @param background_color The color of the background.
 	 */
 	SdlText(const std::string& text,
 		const std::string& font_path,
@@ -28,8 +34,15 @@ public:
 		const Color& background_color = Color{ 0, 0, 0, 255 }
 	);
 
+    /**
+     * @brief Virtual destructor.
+     */
     virtual ~SdlText();
 
+    /**
+     * @brief Setter method for the color
+     * @param color The Color object which will be set.
+     */
 	void set_color(const Color& color) override;
 private:
 	std::string _font_path;
@@ -39,11 +52,34 @@ private:
 	std::unique_ptr<SDL2pp::Font> _font;
 	std::shared_ptr<SDL2pp::Texture> _texture;
 
-	void cache_font();
+    /**
+     * @brief Cache method for the font.
+     */
+    void cache_font();
+
+    /**
+     * @brief Render method for the texture.
+     * @param text The text string which will be rendered to the screen.
+     */
 	void render_texture(const std::string& text);
-	[[nodiscard]] std::shared_ptr<SDL2pp::Texture> get_texture() const override;
+
+    /**
+     * @brief Getter method for the texture.
+     * @return A shared pointer to an SDL2pp::Texture object.
+     */
+    [[nodiscard]] std::shared_ptr<SDL2pp::Texture> get_texture() const override;
+
+    /**
+     * @brief Getter method for the x size.
+     * @return A float value of the x size.
+     */
 	[[nodiscard]] float get_size_x() const override;
-	[[nodiscard]] float get_size_y() const override;
+
+    /**
+     * @brief Getter method for the y size.
+     * @return A float value of the y size.
+     */
+    [[nodiscard]] float get_size_y() const override;
 };
 
 #endif // ENGINE_SDLTEXT_HPP
