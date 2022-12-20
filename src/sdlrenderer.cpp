@@ -102,7 +102,6 @@ void SdlRenderer::render_rigid_body(const RigidBody& rigid_body) const
 		case b2Shape::e_typeCount: break;
 		// NOLINTEND(bugprone-branch-clone)
 	}
-
 }
 
 void SdlRenderer::render_ngon(b2Body* body, b2PolygonShape* shape) const
@@ -237,6 +236,17 @@ Vector2d SdlRenderer::screen_to_screen_space(const Vector2d& position) const
 		(position.x - (res_x * 0.5f)) / (res_x / camera()->screen_space_limits),
 		-(position.y - (res_y * 0.5f)) / (res_y / camera()->screen_space_limits)
 	};;
+}
+
+Vector2d SdlRenderer::screen_to_world_space(const Vector2d& position) const
+{
+	const auto res_x = static_cast<float>(_renderer->GetOutputSize().GetX());
+	const auto res_y = static_cast<float>(_renderer->GetOutputSize().GetY());
+
+	return Vector2d{
+		(position.x - (res_x * 0.5f)) / (camera()->mtp),
+		-(position.y - (res_y * 0.5f)) / (camera()->mtp)
+	};
 }
 
 
