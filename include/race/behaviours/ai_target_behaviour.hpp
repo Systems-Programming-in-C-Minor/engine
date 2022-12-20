@@ -10,7 +10,7 @@
 /**
  * @brief Class which defines a listener for ai targets.
  */
-class AITargetListenerComponent : public Component, protected AIListener {
+class AITargetBehaviour : public Component, protected AIListener {
 protected:
     std::vector<std::shared_ptr<GameObject>> _targets;
     int _target_index = 0;
@@ -23,7 +23,7 @@ public:
      * @param event_manager The EventManager the behaviour will use to send/receive events.
      * @param target_vectors Targets for the AI to track.
      */
-    AITargetListenerComponent(EventManager &event_manager, const std::vector<Vector2d> &target_vectors);
+    AITargetBehaviour(EventManager &event_manager, const std::vector<Vector2d> &target_vectors);
 
     /**
      * @brief Returns the current target.
