@@ -21,7 +21,7 @@ protected:
     bool _ignore_collision_physics;
 
     /**
-     * @brief Set the collider's fixture.
+     * @brief Set the fixture of the collider.
      * @param body The current b2Body.
      * @param friction desired friction.
      * @param restitution The desired restitution.

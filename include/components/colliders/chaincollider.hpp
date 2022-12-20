@@ -17,7 +17,20 @@ class Vector2d;
 class ChainCollider : public Collider
 {
 public:
-    explicit ChainCollider(std::vector<Vector2d> points, bool ignore_collision_physics = false, ColliderNormal collider_normal = ColliderNormal::outwards);
+    /**
+     * @brief Explicit constructor.
+     * @param points The points of the collider in a Vector2D vector.
+     * @param ignore_collision_physics An optional flag to ignore collision physics.
+     * @param collider_normal An enum which defines the direction of the collider.
+     */
+    explicit ChainCollider(std::vector<Vector2d> points, bool ignore_collision_physics = false, ColliderNormal collider_normal = ColliderNormal::outwards);\
+
+    /**
+     * @brief Explicit constructor.
+     * @param path The path from which the collider is loaded.
+     * @param ignore_collision_physics An optional flag to ignore collision physics.
+     * @param collider_normal An enum which defines the direction of the collider.
+     */
     explicit ChainCollider(const std::string& path, bool ignore_collision_physics = false, ColliderNormal collider_normal = ColliderNormal::outwards);
 
     /**

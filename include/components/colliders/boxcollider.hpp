@@ -13,6 +13,12 @@ private:
     float _height;
 
 public:
+    /**
+     * @brief Constructor.
+     * @param width The width of the collider.
+     * @param height The height of the collider.
+     * @param ignore_collision_physics An optional flag to ignore collision physics.
+     */
     BoxCollider(float width, float height, bool ignore_collision_physics = false);
 
     /**

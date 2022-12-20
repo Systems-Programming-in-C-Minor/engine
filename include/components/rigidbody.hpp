@@ -30,6 +30,15 @@ class SdlRenderer;
 class RigidBody : public Component, public IRenderable {
     friend class SdlRenderer;
 public:
+    /**
+     * @brief Constructor.
+     * @param order_in_layer The order in which the rigid body is rendered.
+     * @param type The BodyType of the rigid body.
+     * @param vector The Vector2d of the rigid body.
+     * @param gravity_scale The initial gravity scale of the rigid body.
+     * @param restitution The initial restitution of the rigid body.
+     * @param friction The initial friction of the rigid body.
+     */
     RigidBody(const Scene &scene,
         int order_in_layer,
         BodyType type,

@@ -16,8 +16,25 @@ class Vector2d;
  */
 class IRenderer {
 public:
-	  virtual void render_texture(ITexture & texture, Transform & transform, float pixels_to_meters) const = 0;
+    /**
+     * @brief Render a texture to the screen.
+     *        Override for implementing the desired behaviour.
+     * @param texture The source texture which will be rendered.
+     * @param transform The transform where the texture will be rendered.
+     * @param pixels_to_meters The pixel to meters ratio which will be used.
+     * */
+    virtual void render_texture(ITexture & texture, Transform & transform, float pixels_to_meters) const = 0;
+
+    /**
+     * @brief Render a texture to the screen.
+     *        Override for implementing the desired behaviour.
+     * @param texture The source texture which will be rendered.
+     * @param transform The transform where the texture will be rendered.
+     * @param width The width which will be used.
+     * @param height The height which will be used.
+     * */
     virtual void render_texture(ITexture & texture, Transform & transform, float width, float height) const = 0;
+
     /**
      * @brief Render a rigid body to the screen.
      *        Override for implementing the desired behaviour.
@@ -63,9 +80,37 @@ public:
      *        Override for implementing the desired behaviour.
      * */
 	virtual void toggle_debug_mode() = 0;
+
+    /**
+     * @brief Method which transforms a vector to the correct camera position, using the given vector2d.
+     *        Override for implementing the desired behaviour.
+     * @param position The vector2d used for transforming the vector.
+     * @returns A transformed vector2d object.
+     * */
 	[[nodiscard]] virtual Vector2d transform_vector(const Vector2d &position) const = 0;
+
+    /**
+     * @brief Method which translates world space to the screen, using the given vector2d.
+     *        Override for implementing the desired behaviour.
+     * @param position The vector2d used for transforming the vector.
+     * @returns A transformed vector2d object.
+     * */
 	[[nodiscard]] virtual Vector2d world_space_to_screen(const Vector2d& position) const = 0;
+
+    /**
+     * @brief Method which translates screen space to the screen, using the given vector2d.
+     *        Override for implementing the desired behaviour.
+     * @param position The vector2d used for transforming the vector.
+     * @returns A transformed vector2d object.
+     * */
 	[[nodiscard]] virtual Vector2d screen_space_to_screen(const Vector2d & position) const = 0;
+
+    /**
+     * @brief Method which translates the screen to screen space, using the given vector2d.
+     *        Override for implementing the desired behaviour.
+     * @param position The vector2d used for transforming the vector.
+     * @returns A transformed vector2d object.
+     * */
 	[[nodiscard]] virtual Vector2d screen_to_screen_space(const Vector2d & position) const = 0;
 
     /**
