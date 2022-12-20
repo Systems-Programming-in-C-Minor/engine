@@ -103,6 +103,12 @@ target_link_libraries(engine PRIVATE
         asio
         )
 
+if (WIN32)
+    target_link_libraries(engine PRIVATE
+            ws2_32
+            )
+endif ()
+
 if (ENGINE_TEST)
     add_subdirectory(test)
     enable_testing()

@@ -82,7 +82,6 @@ std::shared_ptr<IRenderer> Engine::get_renderer() const {
 	return _renderer;
 }
 
-<<<<<<< HEAD
 std::shared_ptr<ISoundEngine> Engine::get_sound_engine() const {
     return _sound_engine;
 }

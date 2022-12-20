@@ -26,7 +26,6 @@
 #include "race/objects/car.hpp"
 #include "race/behaviours/drive_input_behaviour.hpp"
 #include "race/behaviours/drive_input_controller_behaviour.hpp"
-#include "components/colliders/circlecollider.hpp"
 #include "race/objects/networkables/networkable_car.hpp"
 
 <<<<<<< HEAD
@@ -154,7 +153,7 @@ public:
               _ticks(0) {}
 
     void tick(GameObject &_game_object) override {
-        if (_game_object.get_name() == "player_car") {
+        if (_game_object.get_tag() == "car") {
             _velocity = _game_object.get_component<RigidBody>()->get_forward_velocity().length();
         }
         if (_game_object.get_name() == "ui_velocity_indicator") {
@@ -355,8 +354,6 @@ int main() {
 
 
     engine_ref.multiplayer_manager->on_user_join([&cars, &engine_ref](int id) {
-        std::cout << "User joined: " << id << std::endl;
-
         if (id >= cars.size()) return;
         if (!engine_ref.multiplayer_manager->is_host) return;
 
@@ -369,8 +366,6 @@ int main() {
     });
 
     engine_ref.multiplayer_manager->on_user_allocation([&cars, &ui_velocity_indicator_behaviour](int id) {
-        std::cout << "Allocation: " << id << std::endl;
-
         if (id >= cars.size()) return;
 
         auto car = cars[id]->car;
@@ -387,8 +382,6 @@ int main() {
     });
 
     engine_ref.multiplayer_manager->on_user_leave([&cars, &engine_ref](int id) {
-        std::cout << "User left: " << id << std::endl;
-
         if (id >= cars.size()) return;
         if (!engine_ref.multiplayer_manager->is_host) return;
 
@@ -404,14 +397,15 @@ int main() {
         cars[id]->receive = false;
     });
 
-    engine_ref.multiplayer_manager->on_users([](const std::list<int> &ids) {
+    engine_ref.multiplayer_manager->on_users([&engine_ref, &cars](const std::list<int> &ids) {
+        if (!engine_ref.multiplayer_manager->is_host) return;
+
         auto ids_str = std::string();
 
         for (const auto &id: ids) {
-            ids_str += std::to_string(id) + ", ";
+            if (id >= cars.size()) continue;
+            cars[id]->car->remove_component<AIBehaviour>();
         }
-
-        std::cout << "Users: " << ids_str << std::endl;
     });
 
     engine_ref.multiplayer_manager->tick();
