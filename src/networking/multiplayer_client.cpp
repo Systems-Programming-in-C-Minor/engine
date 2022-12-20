@@ -21,10 +21,6 @@ MultiplayerClient::MultiplayerClient(const std::string &signaling_server) :
     std::this_thread::sleep_for(std::chrono::milliseconds(400));
 }
 
-void MultiplayerClient::initialize() {
-
-}
-
 void MultiplayerClient::_tick() {
     const std::lock_guard<std::mutex> lock(_received_messages_mutex);
 

@@ -30,12 +30,6 @@ public:
     void register_networkable(const std::shared_ptr<INetworkable> &networkable);
 
     /**
-     * @brief Initialize the IMultiplayer object.
-     *        Override for implementing the desired behaviour.
-     */
-    virtual void initialize() = 0;
-
-    /**
      * @brief Method which gets called every tick.
      *        Override for implementing the desired behaviour.
      * */

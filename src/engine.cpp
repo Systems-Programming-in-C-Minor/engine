@@ -17,8 +17,6 @@ void Engine::load_scene(std::shared_ptr<Scene> new_scene) {
 }
 
 void Engine::start() {
-    multiplayer_manager->initialize();
-
     while (!_should_quit) {
         ThreadWait thread_wait{_tps};
 
@@ -27,7 +25,10 @@ void Engine::start() {
         _key_handler->tick();
         _mouse_handler->tick();
         _active_scene->tick();
-        multiplayer_manager->tick();
+
+        if (multiplayer_manager != nullptr)
+            multiplayer_manager->tick();
+
         _active_scene->tick();
         _active_scene->tick_world();
         _active_scene->render();
