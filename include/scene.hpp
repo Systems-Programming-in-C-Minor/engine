@@ -26,6 +26,9 @@ private:
     const std::unique_ptr<CollisionHandler> _collision_handler;
     std::shared_ptr<Camera> _camera;
 public:
+    /**
+    * @brief A vector containing the game objects of the Scene (GameObject).
+    */
     std::vector<std::shared_ptr<GameObject>> gameobjects;
 
     /**

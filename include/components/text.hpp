@@ -13,6 +13,9 @@
  */
 class Text : public Component, public IRenderable {
 public:
+    /**
+     * @brief The pixels to meters ratio of the Text object.
+     */
     float pixels_to_meters;
 
     /**

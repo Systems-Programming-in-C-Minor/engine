@@ -21,7 +21,16 @@ class Vector2d {
     friend class ChainCollider;
     friend class SdlRenderer;
 public:
-    float x, y;
+
+    /**
+    * @brief The x position of the Vector2d.
+    */
+    float x;
+
+    /**
+    * @brief The y position of the Vector2d.
+    */
+    float y;
 
     /**
      * @brief Method which adds 2 Vector2d objects.

@@ -44,9 +44,24 @@ public:
      */
 	~Color() = default;
 
-	unsigned int _r;
+    /**
+     * @brief The red value of the Color object.
+     */
+    unsigned int _r;
+
+    /**
+     * @brief The green value of the Color object.
+     */
 	unsigned int _g;
+
+    /**
+     * @brief The blue value of the Color object.
+     */
 	unsigned int _b;
+
+    /**
+     * @brief The alpha value of the Color object.
+     */
 	unsigned int _a;
 
     /**

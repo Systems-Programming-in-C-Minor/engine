@@ -23,10 +23,29 @@ public:
      */
     explicit DriveKeybinds(Key forward = W, Key backwards = S, Key left = A, Key right = D, Key brake = SPACE);
 
+    /**
+     * @brief The mapped key to go forwards.
+     */
     const Key forward;
+
+    /**
+     * @brief The mapped key to go backwards.
+     */
     const Key backwards;
+
+    /**
+     * @brief The mapped key to go left.
+     */
     const Key left;
+
+    /**
+     * @brief The mapped key to go right.
+     */
     const Key right;
+
+    /**
+     * @brief The mapped key to brake.
+     */
     const Key brake;
 };
 

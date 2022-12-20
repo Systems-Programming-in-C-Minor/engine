@@ -19,7 +19,14 @@ public:
     Checkpoint(const std::string &name, const std::string &tag, bool is_finish_line,
                std::optional<std::shared_ptr<Checkpoint>> previous_checkpoint);
 
+    /**
+     * @brief Optionally the previous checkpoint linked to this one.
+     */
     const std::optional<std::shared_ptr<Checkpoint>> previous_checkpoint;
+
+    /**
+     * @brief Boolean value whether or not the checkpoint is a finish line.
+     */
     const bool is_finish_line;
 };
 

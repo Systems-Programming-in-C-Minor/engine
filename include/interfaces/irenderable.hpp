@@ -29,6 +29,9 @@ public:
         return _order_in_layer;
     }
 protected:
+    /**
+     * @brief The order in layer in which the IRenderable will be rendered.
+     */
     int _order_in_layer;
 
     /**

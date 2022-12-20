@@ -14,7 +14,6 @@ class RigidBody;
 class DriveBehaviour {
 
 private:
-
     /**
      * @brief The private drive method of the behavior.
      * @param desired_speed The speed at which will be driven.
@@ -74,13 +73,35 @@ public:
      */
     void brake();
 
-
+    /**
+     * @brief The max speed forwards.
+     */
     float max_speed_forwards = 2030.f;
+
+    /**
+     * @brief The max speed backwards.
+     */
     float max_speed_backwards = -1200.f;
+
+    /**
+     * @brief The max amount of applied force.
+     */
     float max_drive_force = 800.f;
+
+    /**
+     * @brief The max amount of applied traction.
+     */
     float drive_traction = 3.6f;
+
+    /**
+     * @brief The max amount of steering impulse.
+     */
     float steering_impulse = 60.f;
 
+    /**
+     * @brief Whether or not the object is enabled.
+     * @details If the object is not enabled, it will not drive.
+     */
     bool is_enabled;
 };
 

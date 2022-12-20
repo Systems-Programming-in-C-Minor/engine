@@ -27,7 +27,15 @@ public:
      */
     MouseMovedEvent(const int x, const int y) : IEvent(MouseMoved), x(x), y(y) {}
 
-    int x, y;
+    /**
+     * @brief The x position of the mouse.
+     */
+    int x;
+
+    /**
+     * @brief The y position of the mouse.
+     */
+    int y;
 };
 
 /**
@@ -43,7 +51,19 @@ public:
      */
     explicit MousePressedEvent(MouseInput btn, const int x, const int y) : IEvent(MousePressed), button(btn), x(x), y(y) {}
 
-    int x, y;
+    /**
+     * @brief The x position of the mouse.
+     */
+    int x;
+
+    /**
+     * @brief The y position of the mouse.
+     */
+    int y;
+
+    /**
+     * @brief The MouseInput button that has been pressed.
+     */
     MouseInput button;
 };
 
@@ -60,7 +80,19 @@ public:
      */
     explicit MouseReleasedEvent(MouseInput btn, const int x, const int y) : IEvent(MouseReleased), button(btn), x(x), y(y) {}
 
-    int x, y;
+    /**
+     * @brief The x position of the mouse.
+     */
+    int x;
+
+    /**
+     * @brief The y position of the mouse.
+     */
+    int y;
+
+    /**
+    * @brief The MouseInput button that has been released.
+    */
     MouseInput button;
 };
 
@@ -74,6 +106,10 @@ public:
      * @param key The key that has been pressed.
      */
     explicit KeyPressedEvent(Key key) : IEvent(KeyPressed), key(key) {};
+
+    /**
+    * @brief The Key that has been pressed.
+    */
     Key key;
 };
 
@@ -87,6 +123,10 @@ public:
      * @param key The key that is being held.
      */
     explicit KeyHoldEvent(Key key) : IEvent(KeyHold), key(key) {};
+
+    /**
+    * @brief The Key that is being held.
+    */
     Key key;
 };
 
@@ -100,6 +140,10 @@ public:
      * @param key The key that has been released.
      */
     explicit KeyReleasedEvent(Key key) : IEvent(KeyReleased), key(key) {};
+
+    /**
+    * @brief The Key that has been released.
+    */
     Key key;
 };
 
@@ -116,7 +160,14 @@ public:
     explicit JoystickButtonPressedEvent(int joystick_id, JoystickButton button) : IEvent(JoystickButtonPressed),
                                                                                   joystick_id(joystick_id),
                                                                                   button(button) {};
+    /**
+    * @brief The id of the joystick.
+    */
     int joystick_id;
+
+    /**
+    * @brief The JoystickButton that has been pressed.
+    */
     JoystickButton button;
 };
 
@@ -133,7 +184,14 @@ public:
     explicit JoystickButtonHoldEvent(int joystick_id, JoystickButton button) : IEvent(JoystickButtonHold),
                                                                                joystick_id(joystick_id),
                                                                                button(button) {};
+    /**
+    * @brief The id of the joystick.
+    */
     int joystick_id;
+
+    /**
+    * @brief The JoystickButton that is being held.
+    */
     JoystickButton button;
 };
 
@@ -150,7 +208,14 @@ public:
     explicit JoystickButtonReleasedEvent(int joystick_id, JoystickButton button) : IEvent(JoystickButtonReleased),
                                                                                    joystick_id(joystick_id),
                                                                                    button(button) {};
+    /**
+    * @brief The id of the joystick.
+    */
     int joystick_id;
+
+    /**
+    * @brief The JoystickButton that has been released.
+    */
     JoystickButton button;
 };
 
@@ -168,8 +233,19 @@ public:
     JoystickAxisChangedEvent(int joystick_id, JoystickAxis axis, float value) : IEvent(JoystickAxisChanged),
                                                                                 joystick_id(joystick_id), axis(axis),
                                                                                 value(value) {};
+    /**
+    * @brief The id of the joystick.
+    */
     int joystick_id;
+
+    /**
+    * @brief The JoystickAxis of the joystick.
+    */
     JoystickAxis axis;
+
+    /**
+    * @brief The value the axis has changed.
+    */
     float value;
 };
 
@@ -187,8 +263,19 @@ public:
     JoystickAxisCurrentEvent(int joystick_id, JoystickAxis axis, float value) : IEvent(JoystickAxisCurrent),
                                                                                 joystick_id(joystick_id), axis(axis),
                                                                                 value(value) {};
+    /**
+    * @brief The id of the joystick.
+    */
     int joystick_id;
+
+    /**
+    * @brief The JoystickAxis of the joystick.
+    */
     JoystickAxis axis;
+
+    /**
+    * @brief The value of the current axis.
+    */
     float value;
 };
 
@@ -205,8 +292,20 @@ public:
      */
     explicit ColliderEntryEvent(RigidBody *col_a, RigidBody *col_b, bool is_touching) :
             IEvent(ColliderEntry), collider_a(col_a), collider_b(col_b), is_touching(is_touching) {};
+
+    /**
+    * @brief The RigidBody collider which is touching collider b.
+    */
     RigidBody *collider_a;
+
+    /**
+    * @brief The RigidBody collider which is touching collider a.
+    */
     RigidBody *collider_b;
+
+    /**
+    * @brief Boolean value whether or not collider a & b are still touching.
+    */
     const bool is_touching;
 };
 
@@ -223,8 +322,19 @@ public:
      */
     explicit ColliderExitEvent(RigidBody *col_a, RigidBody *col_b, bool is_touching) :
             IEvent(ColliderExit), collider_a(col_a), collider_b(col_b), is_touching(is_touching) {};
+    /**
+    * @brief The RigidBody collider which is leaving collider b.
+    */
     RigidBody *collider_a;
+
+    /**
+    * @brief The RigidBody collider which is leaving collider a.
+    */
     RigidBody *collider_b;
+
+    /**
+    * @brief Boolean value whether or not collider a & b are still touching.
+    */
     const bool is_touching;
 };
 
@@ -252,7 +362,14 @@ public:
     AITargetReachedEvent(AIBehaviour &ai_behaviour, std::shared_ptr<GameObject> target) : IEvent(AITargetReached),
                                                                                           ai_behaviour(ai_behaviour),
                                                                                           target(std::move(target)) {};
+    /**
+    * @brief A reference to the AIBehaviour class.
+    */
     AIBehaviour &ai_behaviour;
+
+    /**
+    * @brief The GameObject target which has been reached.
+    */
     std::shared_ptr<GameObject> target;
 };
 
@@ -269,7 +386,14 @@ public:
     CheckpointTouchedEvent(CheckpointBehaviour *checkpoint_behaviour, std::shared_ptr<Checkpoint> checkpoint) :
             IEvent(CheckpointTouched), checkpoint_behaviour(checkpoint_behaviour), checkpoint(std::move(checkpoint)) {}
 
+    /**
+    * @brief A reference to the CheckpointBehaviour class.
+    */
     CheckpointBehaviour *checkpoint_behaviour;
+
+    /**
+    * @brief The Checkpoint which has been touched.
+    */
     std::shared_ptr<Checkpoint> checkpoint;
 };
 
@@ -286,7 +410,14 @@ public:
     CheckpointReachedEvent(CheckpointBehaviour *checkpoint_behaviour, std::shared_ptr<Checkpoint> checkpoint) :
             IEvent(CheckpointReached), checkpoint_behaviour(checkpoint_behaviour), checkpoint(std::move(checkpoint)) {}
 
+    /**
+    * @brief A reference to the CheckpointBehaviour class.
+    */
     CheckpointBehaviour *checkpoint_behaviour;
+
+    /**
+    * @brief The Checkpoint which has been reached.
+    */
     std::shared_ptr<Checkpoint> checkpoint;
 };
 
@@ -303,7 +434,14 @@ public:
     CheckpointLappedEvent(CheckpointBehaviour *checkpoint_behaviour, std::shared_ptr<Checkpoint> checkpoint) :
         IEvent(CheckpointLapped), checkpoint_behaviour(checkpoint_behaviour), checkpoint(std::move(checkpoint)) {}
 
+    /**
+    * @brief A reference to the CheckpointBehaviour class.
+    */
     CheckpointBehaviour *checkpoint_behaviour;
+
+    /**
+    * @brief The Checkpoint which has been lapped.
+    */
     std::shared_ptr<Checkpoint> checkpoint;
 };
 
@@ -319,7 +457,14 @@ public:
      */
     UiObjectPressedEvent(MouseInput btn, UIObject& ui_object) : IEvent(UiObjectPressed), button(btn), ui_object(ui_object) {}
 
+    /**
+    * @brief The MouseInput which has been pressed.
+    */
     MouseInput button;
+
+    /**
+    * @brief The UIObject which has been pressed.
+    */
     UIObject& ui_object;
 };
 
@@ -335,7 +480,14 @@ public:
      */
     UiObjectReleasedEvent(MouseInput btn, UIObject& ui_object) : IEvent(UiObjectReleased), button(btn), ui_object(ui_object) {}
 
+    /**
+    * @brief The MouseInput which has been released.
+    */
     MouseInput button;
+
+    /**
+    * @brief The UIObject which has been released.
+    */
     UIObject& ui_object;
 };
 
