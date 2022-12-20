@@ -260,25 +260,15 @@ int main() {
 
     engine_ref.enable_multiplayer("signaling.maik.sh:10000");
 
-    auto cars = std::vector<std::shared_ptr<NetworkableCar>>();
-
     for (int i = 0; i < car_sprites.size(); i++) {
         const auto &sprite = car_sprites[i];
         const auto car = std::make_shared<Car>(sprite.substr(0, sprite.find('.')), "./assets/" + sprite,
                                                Vector2d{static_cast<float>(14 + i * 5), static_cast<float>(-76 + i)},
                                                scene);
 
-        const auto networkable_car = std::make_shared<NetworkableCar>(car, false, true);
+        car->add_component(std::make_shared<MultiplayerBehaviour>(scene->get_event_manager(), i, targets));
 
-        car->add_component(std::make_shared<MultiplayerBehaviour>(
-                scene->get_event_manager(),
-                networkable_car,
-                i,
-                targets
-        ));
-
-        engine_ref.multiplayer_manager->register_networkable(networkable_car);
-        cars.push_back(networkable_car);
+        scene->gameobjects.push_back(car);
     }
 
     const auto text = std::make_shared<GameObject>(
@@ -314,10 +304,6 @@ int main() {
     scene->gameobjects.push_back(ui_velocity_indicator);
     scene->gameobjects.push_back(ui_fps_indicator);
     scene->gameobjects.push_back(text);
-
-    for (const auto &car: cars) {
-        scene->gameobjects.push_back(car->car);
-    }
 
     // Add rigid bodies
     const auto track_outer_coll = std::make_shared<ChainCollider>("./assets/track1_outer.xml", false,

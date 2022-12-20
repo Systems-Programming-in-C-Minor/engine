@@ -7,9 +7,9 @@
 
 class NetworkableCar : public INetworkable {
 public:
-    std::shared_ptr<Car> car;
+    Car* car;
 
-    NetworkableCar(const std::shared_ptr<Car>& car, bool transmit, bool receive) :
+    NetworkableCar(Car* car, bool transmit, bool receive) :
             car(car), INetworkable(car->get_name(), Update, transmit, receive) {}
 
     /**

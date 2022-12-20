@@ -30,18 +30,16 @@ private:
 
     void on_host(const HostMultiplayerEvent &event) override;
 
+    void on_parent_set() override;
+
 public:
     /**
      * @brief Constructor.
      * @param event_manager The EventManager the behaviour will use to receive events.
-     * @param networkable_car The NetworkableCar the behaviour will control.
      * @param car_id The id of the car.
+     * @param targets Targets for the AI to track.
      */
-    explicit MultiplayerBehaviour(EventManager &event_manager,
-                                  std::shared_ptr<NetworkableCar> networkable_car,
-                                  int car_id,
-                                  std::vector<Vector2d> targets
-    );
+    explicit MultiplayerBehaviour(EventManager &event_manager, int car_id, std::vector<Vector2d> targets);
 
     /**
      * @brief Virtual destructor.

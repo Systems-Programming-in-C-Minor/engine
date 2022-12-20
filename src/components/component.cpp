@@ -1,6 +1,8 @@
 #include "components/component.hpp"
 
-Component::Component(const std::string name) : _name(name) {}
+#include <utility>
+
+Component::Component(std::string name) : _name(std::move(name)) {}
 
 void Component::set_active(bool is_active) {
     active = is_active;
@@ -14,3 +16,6 @@ std::string Component::get_name() const
 {
     return _name;
 }
+
+void Component::on_parent_set() {}
+

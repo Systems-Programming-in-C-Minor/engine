@@ -9,11 +9,9 @@
 
 
 MultiplayerBehaviour::MultiplayerBehaviour(EventManager &event_manager,
-                                           std::shared_ptr<NetworkableCar> networkable_car,
                                            int car_id,
                                            std::vector<Vector2d> targets) :
         MultiplayerListener(event_manager),
-        _networkable_car(std::move(networkable_car)),
         _car_id(car_id),
         _event_manager(event_manager),
         _targets(std::move(targets)) {}
@@ -72,4 +70,11 @@ void MultiplayerBehaviour::on_host(const HostMultiplayerEvent &event) {
 
     _networkable_car->transmit = true;
     _networkable_car->receive = false;
+}
+
+void MultiplayerBehaviour::on_parent_set() {
+    const auto car = reinterpret_cast<Car *>(game_object);
+    _networkable_car = std::make_shared<NetworkableCar>(car, false, true);
+
+    Global::get_instance()->get_engine().multiplayer_manager->register_networkable(_networkable_car);
 }
