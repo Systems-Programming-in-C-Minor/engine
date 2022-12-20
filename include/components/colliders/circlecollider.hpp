@@ -9,7 +9,7 @@
 class CircleCollider : public Collider
 {
 private:
-    double _radius;
+    float _radius;
 
 protected:
     /**
@@ -23,15 +23,16 @@ protected:
 public:
     /**
      * @brief Explicit constructor.
-     * @param point The vector2d point of the circle collider.
      * @param radius The radius of the circle collider.
+     * @param ignore_collision_physics Optioanlly ignore collision physics.     
      */
-    explicit CircleCollider(Vector2d point, float radius);
+    explicit CircleCollider(float radius, bool ignore_collision_physics = false);
+    
     /**
      * @brief Get the collider's radius.
      * @return The radius.
      */
-    [[nodiscard]] double get_radius() const;
+    [[nodiscard]] float get_radius() const;
 };
 
 #endif //COLLIDERS_CIRCLECOLLIDER_HPP

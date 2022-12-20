@@ -95,6 +95,7 @@ private:
 	[[nodiscard]] Vector2d world_space_to_screen(const Vector2d& position) const override;
 	[[nodiscard]] Vector2d screen_space_to_screen(const Vector2d & position) const override;
 	[[nodiscard]] Vector2d screen_to_screen_space(const Vector2d & position) const override;
+	[[nodiscard]] Vector2d screen_to_world_space(const Vector2d & position) const;
 	void render_ngon(b2Body* body, b2PolygonShape* shape) const;
 	void render_ngon(b2Body* body, b2ChainShape* shape) const;
 

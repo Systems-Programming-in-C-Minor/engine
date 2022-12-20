@@ -24,9 +24,10 @@
 #include "race/objects/car.hpp"
 #include "race/behaviours/drive_input_behaviour.hpp"
 #include "race/behaviours/drive_input_controller_behaviour.hpp"
+#include "components/colliders/circlecollider.hpp"
 
-const auto camera = std::make_shared<Camera>();
-const auto camera2 = std::make_shared<Camera>();
+const auto camera = std::make_shared<Camera>(6);
+const auto camera2 = std::make_shared<Camera>(6);
 const auto scene = std::make_shared<Scene>(camera);
 const auto scene2 = std::make_shared<Scene>(camera2);
 
@@ -158,6 +159,24 @@ public:
             text->set_text(std::to_string(static_cast<int>(round(_velocity * 3.6f))));
         }
     }
+};
+
+class DebugScreenToWorld : public Component, public MouseListener
+{
+public:
+	explicit DebugScreenToWorld(EventManager& event_manager)
+		: MouseListener(event_manager)
+	{}
+
+	void on_mouse_pressed(const MousePressedEvent& event) override
+	{
+		const auto click_pos = Vector2d{
+            static_cast<float>(event.x),
+            static_cast<float>(event.y)
+        };
+        const auto result_pos = Global::get_instance()->get_engine().get_renderer()->screen_to_world_space(click_pos);
+        std::cout << result_pos << "\n";
+	}
 };
 
 class FpsIndicator : public Component, public ITickable
@@ -322,7 +341,7 @@ int main() {
     const auto text = std::make_shared<GameObject>(
             "ad_board", "ad", Transform{Vector2d{-50.f, 10.f}, Vector2d{}, 0.2f, 1.f});
     text->add_component(std::make_shared<Text>("Powered by UnEngine", "./assets/Roboto/Roboto-Medium.ttf", 500, 10, Color{255,255,255,0 }, Color{0,0,0,1 }, 1));
-    car->add_child(camera);
+    //car->add_child(camera);
 
 
     const auto ui_velocity_indicator = std::make_shared<UIObject>("ui_velocity_indicator", "ui", 16, 32, scene->get_event_manager(), Transform{ Vector2d{-92.f, -84}, Vector2d{}, 0.f });
@@ -335,6 +354,8 @@ int main() {
     const auto ui_fps_indicator_text = std::make_shared<Text>("0",  "./assets/Roboto/Roboto-Medium.ttf", 100, 1000, Color{ 0, 255, 0, 255 }, Color{ 0, 0, 0, 150 }, 1);
     ui_fps_indicator->add_component(ui_fps_indicator_text);
     ui_fps_indicator->add_component(ui_fps_indicator_behaviour);
+    // For debug purposes
+    ui_fps_indicator->add_component(std::make_shared<DebugScreenToWorld>(scene->get_event_manager()));
 
     scene->gameobjects.push_back(track_outer);
     scene->gameobjects.push_back(track_inner);
@@ -344,7 +365,6 @@ int main() {
     scene->gameobjects.push_back(car);
     scene->gameobjects.push_back(ui_velocity_indicator);
     scene->gameobjects.push_back(ui_fps_indicator);
-    scene->gameobjects.push_back(camera);
     scene->gameobjects.push_back(text);
 
     scene->gameobjects.push_back(ai_car);
@@ -364,8 +384,7 @@ int main() {
 
     const auto track_inner_coll = std::make_shared<ChainCollider>("./assets/track1_inner.xml", false,
                                                                   ColliderNormal::outwards);
-    const auto track_inner_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{0.f, 0.f},
-                                                            1.0f);
+    const auto track_inner_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{0.f, 0.f}, 1.0f);
     track_inner_rb->set_collider(track_inner_coll);
     track_inner->add_component(track_inner_rb);
 
