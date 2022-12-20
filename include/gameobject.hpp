@@ -46,10 +46,22 @@ public:
      */
     bool operator==(const GameObject &other) const;
 
+    /**
+     * @brief Add a child to the current game object.
+     * @param game_object The game object which will be added as a child.
+     */
     void add_child(const std::shared_ptr<GameObject> &game_object);
 
+    /**
+     * @brief Remove a child from the current game object.
+     * @param game_object The game object which will be removed from the children.
+     */
     void remove_child(const std::shared_ptr<GameObject> &game_object);
 
+    /**
+     * @brief Getter method for the children of the current game object.
+     * @return A list of shared pointers, containing all children as game objects.
+     */
     std::list<std::shared_ptr<GameObject>> get_children();
 
     /**
@@ -181,8 +193,16 @@ public:
      */
     [[nodiscard]] bool is_active() const;
 
+    /**
+     * @brief Returns the name of the game object.
+     * @return a std::string containing the name of the game object.
+     */
     std::string get_name() const;
 
+    /**
+     * @brief Returns the tag of the game object.
+     * @return a std::string containing the tag of the game object.
+     */
     std::string get_tag() const;
 
     /**
@@ -193,12 +213,29 @@ public:
      */
     [[nodiscard]] bool is_active_in_world() const;
 
+    /**
+     * @brief Render the game object.
+     *        Override for implementing the desired behaviour.
+     */
     virtual void render() const;
 
+    /**
+     * @brief Method will be ran every tick.
+     *        Override for implementing the desired behaviour.
+     */
     virtual void tick();
 
+    /**
+     * @brief Constructor
+     * @param name The name of the game object.
+     * @param tag The tag of the game object.
+     * @param transform The initial transform of the game object.
+     */
     GameObject(std::string name, std::string tag, Transform transform = Transform{Vector2d{}});
 
+    /**
+     * @brief Virtual destructor.
+     */
     virtual ~GameObject();
 };
 

@@ -8,7 +8,11 @@ class GameObject;
  */
 class Component {
 protected:
+    /**
+     * @brief Default Constructor.
+     */
     Component() = default;
+
     bool active = true;
     friend class GameObject;
 public:

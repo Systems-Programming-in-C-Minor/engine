@@ -14,9 +14,20 @@ using Sprites = std::vector<std::shared_ptr<Sprite>>;
  */
 class Animator : public Component, public ITickable {
 public:
-
+    /**
+     * @brief Constructor.
+     * @param sprites The sprites the Animator uses.
+     * @param fps The max amount of fps the Animator uses.
+     */
     Animator(Sprites sprites, int fps);
 
+    /**
+     * @brief Constructor.
+     * @param sprites The sprites the Animator uses.
+     * @param fps The max amount of fps the Animator uses.
+     * @param start_playing Flag to tell the animator to start playing automatically.
+     * @param looping Flag to tell the animator to loop.
+     */
     Animator(Sprites sprites, int fps, bool start_playing, bool looping = false);
 
     /**
@@ -48,7 +59,7 @@ private:
 
     /**
      * @brief Determines how many ticks there are between swaps.
-     * @return int  number of ticks between sprite swap.
+     * @return int number of ticks between sprite swap.
      */
     [[nodiscard]] bool should_animate();
 };

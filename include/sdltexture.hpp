@@ -9,22 +9,48 @@ namespace SDL2pp {
 	class Texture;
 }
 
+/**
+ * @brief SDL texture implementation of the ITexture interface.
+ */
 class SdlTexture : public ITexture
 {
 public:
 	/**
-	 * @brief A texture used by SDL
+	 * @brief Constructor.
 	 * @param path (Relative) path to a texture
 	 */
 	SdlTexture(const std::string& path);
 
-	void set_color(const Color& color) override;
+    /**
+     * @brief Setter method for the color
+     * @param color The Color object which will be set.
+     */
+    void set_color(const Color& color) override;
 private:
 	std::shared_ptr<SDL2pp::Texture> _texture;
 
-	void load_texture(const std::string& path);
+    /**
+     * @brief Load method for the texture.
+     * @param path The path from which the texture will be loaded.
+     */
+    void load_texture(const std::string& path);
+
+    /**
+     * @brief Getter method for the texture.
+     * @return A shared pointer to an SDL2pp::Texture object.
+     */
 	[[nodiscard]] std::shared_ptr<SDL2pp::Texture> get_texture() const override;
-	[[nodiscard]] float get_size_x() const override;
+
+    /**
+     * @brief Getter method for the x size.
+     * @return A float value of the x size.
+     */
+    [[nodiscard]] float get_size_x() const override;
+
+    /**
+     * @brief Getter method for the y size.
+     * @return A float value of the y size.
+     */
 	[[nodiscard]] float get_size_y() const override;
 };
 

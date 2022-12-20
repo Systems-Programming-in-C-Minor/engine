@@ -4,18 +4,29 @@
 #include <ratio>
 #include <chrono>
 
+/**
+ * @brief Class to handle Thread wait occurrences.
+ */
 class ThreadWait {
 private:
 	const int _microseconds = 1e6;
 	std::chrono::steady_clock::time_point _start_time;
 	std::chrono::duration<long long, std::micro> _duration;
 public:
+    /**
+     * @brief Constructor.
+     * @param fps Integer value used in calculating the duration of the wait.
+     */
 	ThreadWait(int fps = 60) :
 
 		_start_time(std::chrono::steady_clock::now()),
 		_duration(std::chrono::duration<long long, std::micro>(_microseconds /fps))
 	{}
-	void wait() const
+
+    /**
+     * @brief The wait method of the Thread.
+     */
+    void wait() const
 	{
 		bool wait = true;
 		while (wait)
