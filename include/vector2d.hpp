@@ -17,8 +17,19 @@ namespace SDL2pp
  * @brief Class representing a 2D vector.
  */
 class Vector2d {
+    /**
+    * @brief The PolygonCollider friend class.
+    */
     friend class PolygonCollider;
+
+    /**
+    * @brief The ChainCollider friend class.
+    */
     friend class ChainCollider;
+
+    /**
+    * @brief The SdlRenderer friend class.
+    */
     friend class SdlRenderer;
 public:
 

@@ -19,6 +19,9 @@ class GameObject;
  * @brief Class representing a scene which can be rendered by the Camera.
  */
 class Scene {
+    /**
+    * @brief The RigidBody friend class.
+    */
     friend class RigidBody;
 private:
     const std::unique_ptr<EventManager> _event_manager;

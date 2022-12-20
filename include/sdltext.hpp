@@ -18,6 +18,9 @@ namespace SDL2pp {
  */
 class SdlText : public ITexture
 {
+    /**
+    * @brief The Text friend class.
+    */
 	friend class Text;
 public:
 	/**

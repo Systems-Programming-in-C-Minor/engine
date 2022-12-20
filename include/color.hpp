@@ -14,9 +14,20 @@ namespace SDL2pp
  * @brief Color represents a red-green-blue color with alpha.
  */
 class Color {
-	friend class SdlTexture;
-	friend class SdlRenderer;
-	friend class SdlText;
+    /**
+    * @brief The SdlTexture friend class.
+    */
+    friend class SdlTexture;
+
+    /**
+    * @brief The SdlRenderer friend class.
+    */
+    friend class SdlRenderer;
+
+    /**
+    * @brief The SdlText friend class.
+    */
+    friend class SdlText;
 private:
     /**
      * @brief Explicit constructor.

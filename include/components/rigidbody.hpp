@@ -28,6 +28,9 @@ class SdlRenderer;
  * @brief A component representing a rigid body.
  */
 class RigidBody : public Component, public IRenderable {
+    /**
+    * @brief The SdlRenderer friend class.
+    */
     friend class SdlRenderer;
 public:
     /**
