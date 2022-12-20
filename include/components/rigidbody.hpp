@@ -46,7 +46,7 @@ public:
         int order_in_layer,
         BodyType type,
         Vector2d vector,
-        float gravity_scale,
+        float gravity_scale = 1.0f,
         float restitution = 0.5f, 
         float friction = 0.5f
     );
