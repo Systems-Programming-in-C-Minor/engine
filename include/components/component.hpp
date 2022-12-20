@@ -15,9 +15,12 @@ protected:
      * @brief Constructor.
      * @param name Set the name of the Component.
      */
-    Component(const std::string name = "");
+    explicit Component(std::string name = "");
 
     bool active = true;
+
+    virtual void on_parent_set();
+
     friend class GameObject;
 public:
     GameObject* game_object = nullptr;

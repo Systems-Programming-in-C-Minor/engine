@@ -77,7 +77,9 @@ public:
         assert_T_derived_from_component;
 
         components.push_back(component);
-        std::dynamic_pointer_cast<Component>(component)->game_object = this;
+        auto comp = std::dynamic_pointer_cast<Component>(component);
+        comp->game_object = this;
+        comp->on_parent_set();
     }
 
     /**
