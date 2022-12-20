@@ -18,7 +18,18 @@ class Vector2d;
 class PolygonCollider : public Collider
 {
 public:
+    /**
+     * @brief Explicit constructor.
+     * @param points The points of the collider in a Vector2D vector.
+     * @param ignore_collision_physics An optional flag to ignore collision physics.
+     */
     explicit PolygonCollider(std::vector<Vector2d> points, bool ignore_collision_physics = false);
+
+    /**
+     * @brief Explicit constructor.
+     * @param path The path from which the collider is loaded.
+     * @param ignore_collision_physics An optional flag to ignore collision physics.
+     */
     explicit PolygonCollider(const std::string& path, bool ignore_collision_physics = false);
 
     /**

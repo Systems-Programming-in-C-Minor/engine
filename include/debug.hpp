@@ -5,8 +5,8 @@
 #include "vector2d.hpp"
 
 /**
-     * @brief Some convenient debugging functions.
-     */
+ * @brief Some convenient debugging functions.
+ */
 namespace Debug {
 
     /**

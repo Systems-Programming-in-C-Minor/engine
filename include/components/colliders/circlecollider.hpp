@@ -21,8 +21,13 @@ protected:
     void set_fixture(b2Body& body, float friction, float restitution) override;
 
 public:
+    /**
+     * @brief Explicit constructor.
+     * @param radius The radius of the circle collider.
+     * @param ignore_collision_physics Optioanlly ignore collision physics.     
+     */
     explicit CircleCollider(float radius, bool ignore_collision_physics = false);
-
+    
     /**
      * @brief Get the collider's radius.
      * @return The radius.

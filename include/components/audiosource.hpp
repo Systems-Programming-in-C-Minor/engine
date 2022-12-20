@@ -33,15 +33,23 @@ public:
 
 	/**
 	 * Returns the times a sample has been played.
-	 * @return Times this audiosource has been played.
+	 * @return Times this audio source has been played.
 	 */
 	[[nodiscard]] int get_play_count() const;
 
+    /**
+     * @brief Explicit constructor.
+     * @param audio_clip The path to the mp3 audio clip.
+     * @param play_on_awake Flag to tell the audio source to play automatically.
+     * @param loop Flag to tell the audio source to loop.
+     * @param volume Set the initial volume of the audio source.
+     * @param name Set the name of the AudioSource.
+     */
 	explicit AudioSource(
 		const std::string& audio_clip,
 		bool play_on_awake = false,
 		bool loop = false,
-        float volume = 1.0,
+    float volume = 1.0,
 		const std::string name = ""
 	);
 private:

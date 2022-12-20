@@ -11,7 +11,12 @@ class Component {
 private:
     const std::string _name;
 protected:
+    /**
+     * @brief Constructor.
+     * @param name Set the name of the Component.
+     */
     Component(const std::string name = "");
+
     bool active = true;
     friend class GameObject;
 public:
