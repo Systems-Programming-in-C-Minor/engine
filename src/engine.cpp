@@ -10,7 +10,6 @@
 #include "audio/sdl_mixer_sound_engine.hpp"
 #include "fmt/core.h"
 #include "utils/thread_wait.hpp"
-#include "networking/multiplayer_host.hpp"
 #include "networking/multiplayer_client.hpp"
 
 void Engine::load_scene(std::shared_ptr<Scene> new_scene) {
@@ -18,7 +17,7 @@ void Engine::load_scene(std::shared_ptr<Scene> new_scene) {
 }
 
 void Engine::start() {
-	_multiplayer_manager->initialize();
+    multiplayer_manager->initialize();
 
 	while (!_should_quit) {
 		ThreadWait thread_wait{_tps};
@@ -28,7 +27,7 @@ void Engine::start() {
 		_key_handler->tick();
 		_mouse_handler->tick();
 		_active_scene->tick();
-		_multiplayer_manager->tick();
+		multiplayer_manager->tick();
 		_active_scene->tick();
 		_active_scene->tick_world();
 		_active_scene->render();
@@ -83,17 +82,14 @@ std::shared_ptr<IRenderer> Engine::get_renderer() const {
 	return _renderer;
 }
 
+<<<<<<< HEAD
 std::shared_ptr<ISoundEngine> Engine::get_sound_engine() const {
     return _sound_engine;
 }
 
 Engine::Engine() : Engine(std::make_shared<SdlRenderer>(), std::make_shared<SDLMixerSoundEngine>()) {}
 
-Engine::Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine) : Engine(std::move(renderer), std::move(sound_engine), "engine-host") {}
-
-Engine::Engine(const std::string &user_id, bool is_host) : Engine(std::make_shared<SdlRenderer>(), std::make_shared<SDLMixerSoundEngine>(), user_id, is_host) {}
-
-Engine::Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine, const std::string &player_name, bool is_host) :
+Engine::Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine) :
         _should_quit(false),
         _time(std::make_shared<Time>()),
         _key_handler(std::make_shared<KeyHandler>()),
@@ -104,10 +100,7 @@ Engine::Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine
         _fps(0),
         _tps(60) {
     const auto signalling_server = "localhost:10000";
-    if (is_host)
-        _multiplayer_manager = std::make_unique<MultiplayerHost>(player_name, signalling_server);
-    else
-        _multiplayer_manager = std::make_unique<MultiplayerClient>(player_name, signalling_server);
+    multiplayer_manager = std::make_unique<MultiplayerClient>(signalling_server);
 }
 
 unsigned long Engine::get_number_of_controllers() const {

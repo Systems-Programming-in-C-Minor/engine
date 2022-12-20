@@ -6,12 +6,11 @@
 #include "race/objects/car.hpp"
 
 class NetworkableCar : public INetworkable {
-private:
-    std::shared_ptr<Car> _car;
-
 public:
+    std::shared_ptr<Car> car;
+
     NetworkableCar(const std::shared_ptr<Car>& car, bool transmit, bool receive) :
-            _car(car), INetworkable(car->get_name(), transmit, receive) {}
+            car(car), INetworkable(car->get_name(), Update, transmit, receive) {}
 
     std::string serialize() override;
 

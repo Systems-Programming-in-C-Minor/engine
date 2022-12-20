@@ -28,35 +28,19 @@ private:
     int _tps;
 
 public:
-    std::shared_ptr<IMultiplayer> _multiplayer_manager;
+    std::shared_ptr<IMultiplayer> multiplayer_manager;
 
     /**
-    * @brief Constructor.
+    * @brief Normal constructor.
     */
-    Engine();
+    explicit Engine();
 
     /**
-    * @brief Constructor.
+    * @brief Constructor with given renderer and sound_engine.
     * @param renderer A shared pointer to the IRenderer the engine will use.
     * @param sound_engine A shared pointer to the ISoundEngine the engine will use.
     */
     Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine);
-
-    /**
-    * @brief Explicit constructor.
-    * @param user_id The user_id the engine class will refer to.
-    * @param is_host The boolean value whether the engine is a host.
-    */
-    explicit Engine(const std::string &user_id, bool is_host = false);
-
-    /**
-    * @brief Constructor.
-    * @param renderer A shared pointer to the IRenderer the engine will use.
-    * @param sound_engine A shared pointer to the ISoundEngine the engine will use.
-    * @param player_name The user_id the engine class will refer to.
-    * @param is_host The boolean value whether the engine is a host.
-    */
-    Engine(std::shared_ptr<IRenderer> renderer, std::shared_ptr<ISoundEngine> sound_engine, const std::string& player_name, bool is_host = true);
 
     /**
      * @brief Virtual destructor.

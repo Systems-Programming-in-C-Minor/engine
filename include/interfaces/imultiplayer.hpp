@@ -5,6 +5,7 @@
 #include <string>
 #include <memory>
 #include <list>
+#include <functional>
 #include "inetworkable.hpp"
 
 /**
@@ -20,6 +21,8 @@ protected:
     IMultiplayer() = default;
 
 public:
+    bool is_host = false; // Only available after first tick
+
     /**
      * @brief Register a networkable object.
      * @param networkable The INetworkable which will be registered.
@@ -37,6 +40,16 @@ public:
      *        Override for implementing the desired behaviour.
      * */
     virtual void tick() = 0;
+
+    virtual void on_host(std::function<void()> callback) = 0;
+
+    virtual void on_user_join(std::function<void(int id)> callback) = 0;
+
+    virtual void on_user_leave(std::function<void(int id)> callback) = 0;
+
+    virtual void on_user_allocation(std::function<void(int id)> callback) = 0;
+
+    virtual void on_users(std::function<void(std::list<int> ids)> callback) = 0;
 
     virtual ~IMultiplayer() = default;
 };
