@@ -20,6 +20,9 @@ private:
     EventManager &_event_manager;
     std::vector<Vector2d> _targets;
 
+    std::list<std::shared_ptr<Component>> _active_car_components;
+    std::list<std::shared_ptr<GameObject>> _active_car_children;
+
     void on_user_join(const UserJoinedMultiplayerEvent &event) override;
 
     void on_user_leave(const UserLeftMultiplayerEvent &event) override;
@@ -38,8 +41,15 @@ public:
      * @param event_manager The EventManager the behaviour will use to receive events.
      * @param car_id The id of the car.
      * @param targets Targets for the AI to track.
+     * @param active_car_components Components to add on the actively controller car.
      */
-    explicit MultiplayerBehaviour(EventManager &event_manager, int car_id, std::vector<Vector2d> targets);
+    explicit MultiplayerBehaviour(
+            EventManager &event_manager,
+            int car_id,
+            std::vector<Vector2d> targets,
+            std::list<std::shared_ptr<Component>> active_car_components = {},
+            std::list<std::shared_ptr<GameObject>> active_car_children = {}
+    );
 
     /**
      * @brief Virtual destructor.

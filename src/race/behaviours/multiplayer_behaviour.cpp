@@ -10,11 +10,15 @@
 
 MultiplayerBehaviour::MultiplayerBehaviour(EventManager &event_manager,
                                            int car_id,
-                                           std::vector<Vector2d> targets) :
+                                           std::vector<Vector2d> targets,
+                                           std::list<std::shared_ptr<Component>> active_car_components,
+                                           std::list<std::shared_ptr<GameObject>> active_car_children) :
         MultiplayerListener(event_manager),
         _car_id(car_id),
         _event_manager(event_manager),
-        _targets(std::move(targets)) {}
+        _targets(std::move(targets)),
+        _active_car_components(std::move(active_car_components)),
+        _active_car_children(std::move(active_car_children)) {}
 
 void MultiplayerBehaviour::on_user_join(const UserJoinedMultiplayerEvent &event) {
     if (event.user_id != _car_id) return;
@@ -45,10 +49,13 @@ void MultiplayerBehaviour::on_allocation(const AllocationMultiplayerEvent &event
     _networkable_car->car->add_component(std::make_shared<DriveInputBehaviour>(_event_manager));
     _networkable_car->car->add_component(std::make_shared<DriveInputControllerBehaviour>(_event_manager, 0));
 
-    // TODO: !!!
-    _networkable_car->car->add_child(Global::get_instance()->get_active_scene().get_camera());
-//    _networkable_car->car->add_component(ui_velocity_indicator_behaviour);
-//    _networkable_car->car->get_component<Sprite>()->set_color(Color(255, 255, 255, 140));
+    for (const auto &component: _active_car_components) {
+        _networkable_car->car->add_component(component);
+    }
+
+    for (const auto &game_object: _active_car_children) {
+        _networkable_car->car->add_child(game_object);
+    }
 
     _networkable_car->transmit = true;
     _networkable_car->receive = false;

@@ -260,13 +260,22 @@ int main() {
 
     engine_ref.enable_multiplayer("signaling.maik.sh:10000");
 
+    auto active_car_components = std::list<std::shared_ptr<Component>>{ui_velocity_indicator_behaviour};
+    auto active_car_children = std::list<std::shared_ptr<GameObject>>{camera};
+
     for (int i = 0; i < car_sprites.size(); i++) {
         const auto &sprite = car_sprites[i];
         const auto car = std::make_shared<Car>(sprite.substr(0, sprite.find('.')), "./assets/" + sprite,
                                                Vector2d{static_cast<float>(14 + i * 5), static_cast<float>(-76 + i)},
                                                scene);
 
-        car->add_component(std::make_shared<MultiplayerBehaviour>(scene->get_event_manager(), i, targets));
+        car->add_component(std::make_shared<MultiplayerBehaviour>(
+                scene->get_event_manager(),
+                i,
+                targets,
+                active_car_components,
+                active_car_children
+        ));
 
         scene->gameobjects.push_back(car);
     }
