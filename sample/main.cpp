@@ -309,17 +309,10 @@ int main() {
     scene->gameobjects.push_back(track_grass_outer);
     scene->gameobjects.push_back(track_grass_inner);
     scene->gameobjects.push_back(track_bg);
-    scene->gameobjects.push_back(car);
+
     scene->gameobjects.push_back(ui_velocity_indicator);
     scene->gameobjects.push_back(ui_fps_indicator);
     scene->gameobjects.push_back(text);
-
-    scene->gameobjects.push_back(ai_car);
-    scene->gameobjects.push_back(ai_car2);
-    scene->gameobjects.push_back(ai_car3);
-    scene->gameobjects.push_back(ai_car4);
-    scene->gameobjects.push_back(ai_car5);
-    scene->gameobjects.push_back(ai_car6);
 
     // Add rigid bodies
     const auto track_outer_coll = std::make_shared<ChainCollider>("./assets/track1_outer.xml", false,
