@@ -5,6 +5,7 @@
 #include <memory>
 
 class SdlRenderer;
+class Color;
 
 namespace SDL2pp {
     class Texture;

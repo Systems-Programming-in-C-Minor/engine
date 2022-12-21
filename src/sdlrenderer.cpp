@@ -138,6 +138,11 @@ void SdlRenderer::render_ngon(b2Body* body, b2ChainShape* shape) const
 	render_lines(vectors, Color{ 255, 255,0,0 });
 }
 
+std::shared_ptr<TexturePool> SdlRenderer::get_texture_pool() const
+{
+	return _texture_pool;
+}
+
 void SdlRenderer::render_lines(const std::vector<Vector2d>& vectors, const Color& color) const
 {
 	if (!_debug_mode) return;
@@ -176,6 +181,8 @@ void SdlRenderer::init(bool fullscreen) try
 	_sdl = std::make_unique<SDL2pp::SDL>(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK);
 	_sdl_image = std::make_unique<SDL2pp::SDLImage>();
 	_sdl_ttf = std::make_unique<SDL2pp::SDLTTF>();
+	_texture_pool = std::make_shared<TexturePool>();
+
 	_window = std::make_shared<SDL2pp::Window>("UnEngine",
 		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 		_windowed_res_x, _windowed_res_y,

@@ -316,11 +316,11 @@ int main(int argc, char *argv[]) {
 
     const auto car_sprites = std::vector<std::string>{
             "blue_car.png",
-            "red_car.png",
+            "blue_car.png",
             "green_car.png",
-            "pink_car.png",
-            "orange_car.png",
-            "yellow_car.png",
+            "green_car.png",
+            "red_car.png",
+            "red_car.png",
     };
 
     engine_ref.enable_multiplayer(server_url);
