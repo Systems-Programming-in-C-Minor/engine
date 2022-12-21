@@ -16,3 +16,8 @@ float BoxCollider::get_width() const {
 float BoxCollider::get_height() const {
     return _height;
 }
+
+std::vector<Vector2d> BoxCollider::get_vertices(b2Body& body, const Transform& transform) const
+{
+	return PolygonCollider::get_vertices(body, transform);
+}

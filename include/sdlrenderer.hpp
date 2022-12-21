@@ -63,7 +63,7 @@ public:
 	 * @param vectors Vector of points (Vector2d), to be  drawn as a line
 	 * @param color Color of the to-be-drawn line
 	 */
-	void render_lines(std::vector<Vector2d>& vectors, const Color& color) const override;
+	void render_lines(const std::vector<Vector2d>& vectors, const Color& color) const override;
 
 	/**
 	 * @brief Clears the back buffer and applies a default colour

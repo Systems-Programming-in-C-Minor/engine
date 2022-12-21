@@ -101,6 +101,7 @@ target_link_libraries(engine PRIVATE
         tinyxml2::tinyxml2
         nlohmann_json::nlohmann_json
         asio
+        m
         )
 
 if (WIN32)

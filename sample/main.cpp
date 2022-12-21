@@ -26,8 +26,8 @@
 #include "race/objects/networkables/networkable_car.hpp"
 #include "race/behaviours/multiplayer_behaviour.hpp"
 
-const auto camera = std::make_shared<Camera>(20.0f);
-const auto camera2 = std::make_shared<Camera>(6.0f);
+const auto camera = std::make_shared<Camera>(6);
+const auto camera2 = std::make_shared<Camera>(6);
 const auto scene = std::make_shared<Scene>(camera);
 const auto scene2 = std::make_shared<Scene>(camera2);
 
@@ -179,7 +179,14 @@ class FpsIndicator : public Component, public ITickable {
     }
 };
 
-int main() {
+int main(int argc, char *argv[]) {
+    std::string server_url = "localhost:10000";
+    if(argc <= 1) {
+        std::cout << "No server address given, defaulting to " << server_url << "\n";
+        std::cout << "Usage: engine_sample (server address:port)" << "\n";
+    } else {
+        server_url = argv[1];
+    }
 
     // Setup engine
     const auto global = Global::get_instance();
@@ -220,7 +227,7 @@ int main() {
             Transform{Vector2d{}, Vector2d{}, 0.f, 2.f});
     Sprite sprite1{"./assets/track1.png", 1, 12.f};
 
-    Sprite sprite2{"./assets/track1_bg.png", 0, 6.f};
+    Sprite sprite2{ "./assets/track1_bg.png", 0, 6.f};
 
     track_outer->add_component(std::make_shared<Sprite>(sprite2));
     track_bg->add_component(std::make_shared<Sprite>(sprite2));
@@ -258,7 +265,7 @@ int main() {
             "yellow_car.png",
     };
 
-    engine_ref.enable_multiplayer("signaling.maik.sh:10000");
+    engine_ref.enable_multiplayer(server_url);
 
     auto active_car_components = std::list<std::shared_ptr<Component>>{ui_velocity_indicator_behaviour};
     auto active_car_children = std::list<std::shared_ptr<GameObject>>{camera};
@@ -282,9 +289,7 @@ int main() {
 
     const auto text = std::make_shared<GameObject>(
             "ad_board", "ad", Transform{Vector2d{-50.f, 10.f}, Vector2d{}, 0.2f, 1.f});
-
-    text->add_component(std::make_shared<Text>("Powered by UnEngine", "./assets/Roboto/Roboto-Medium.ttf", 500, 10,
-                                               Color{255, 255, 255, 0}, Color{0, 0, 0, 1}, 1));
+    text->add_component(std::make_shared<Text>("Powered by UnEngine", "./assets/Roboto/Roboto-Medium.ttf", 500, 10, Color{255,255,255,0 }, Color{0,0,0,1 }, 1));
 
 
     const auto ui_velocity_indicator = std::make_shared<UIObject>("ui_velocity_indicator", "ui", 16, 32,
@@ -310,6 +315,7 @@ int main() {
     scene->gameobjects.push_back(track_grass_outer);
     scene->gameobjects.push_back(track_grass_inner);
     scene->gameobjects.push_back(track_bg);
+
     scene->gameobjects.push_back(ui_velocity_indicator);
     scene->gameobjects.push_back(ui_fps_indicator);
     scene->gameobjects.push_back(text);
@@ -317,29 +323,25 @@ int main() {
     // Add rigid bodies
     const auto track_outer_coll = std::make_shared<ChainCollider>("./assets/track1_outer.xml", false,
                                                                   ColliderNormal::inwards);
-    const auto track_outer_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{0.f, 0.f},
-                                                            1.0f);
+    const auto track_outer_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{0.f, 0.f});
     track_outer_rb->set_collider(track_outer_coll);
     track_outer->add_component(track_outer_rb);
 
     const auto track_inner_coll = std::make_shared<ChainCollider>("./assets/track1_inner.xml", false,
                                                                   ColliderNormal::outwards);
-    const auto track_inner_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{0.f, 0.f},
-                                                            1.0f);
+    const auto track_inner_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{0.f, 0.f});
     track_inner_rb->set_collider(track_inner_coll);
     track_inner->add_component(track_inner_rb);
 
     const auto track_grass_outer_coll = std::make_shared<ChainCollider>("./assets/track1_2x_grass_outer.xml", true,
                                                                         ColliderNormal::inwards);
-    const auto track_grass_outer_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{0.f, 0.f},
-                                                                  1.0f);
+    const auto track_grass_outer_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{0.f, 0.f}, Color{0, 0, 255, 0});
     track_grass_outer_rb->set_collider(track_grass_outer_coll);
     track_grass_outer->add_component(track_grass_outer_rb);
 
     const auto track_grass_inner_coll = std::make_shared<ChainCollider>("./assets/track1_2x_grass_inner.xml", true,
                                                                         ColliderNormal::outwards);
-    const auto track_grass_inner_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{0.f, 0.f},
-                                                                  1.0f);
+    const auto track_grass_inner_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{0.f, 0.f}, Color{ 0, 0, 255, 0 });
     track_grass_inner_rb->set_collider(track_grass_inner_coll);
     track_grass_inner->add_component(track_grass_inner_rb);
 

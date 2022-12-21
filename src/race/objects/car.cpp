@@ -9,7 +9,7 @@
 Car::Car(const std::string &name, const std::string &sprite_path, const Vector2d position,
          const std::shared_ptr<Scene> &scene, bool is_enabled)
         : GameObject(name, "car"),
-          DriveBehaviour(std::make_shared<RigidBody>(*scene, 1000, BodyType::dynamic_body, position, 1.f), is_enabled) {
+          DriveBehaviour(std::make_shared<RigidBody>(*scene, 1000, BodyType::dynamic_body, position), is_enabled) {
 
 
     auto sprite = std::make_shared<Sprite>(sprite_path, 2);

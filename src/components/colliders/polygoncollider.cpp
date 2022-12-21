@@ -19,6 +19,25 @@ std::vector<Vector2d> PolygonCollider::get_points() const {
 	return _points;
 }
 
+std::vector<Vector2d> PolygonCollider::get_vertices(b2Body& body, const Transform& transform) const
+{
+	const auto shape = dynamic_cast<b2PolygonShape*>(body.GetFixtureList()->GetShape());
+
+	const int vertex_count = shape->m_count;
+
+	std::vector<Vector2d> vectors;
+	vectors.reserve(vertex_count);
+
+	for (int i = 0; i < vertex_count; ++i) {
+		vectors.push_back(static_cast<Vector2d>(body.GetWorldPoint(shape->m_vertices[i])));
+	}
+
+	const Vector2d start_vertex = vectors[0];
+	vectors.push_back(start_vertex);
+
+	return vectors;
+}
+
 void PolygonCollider::get_points_from_file(const std::string& path) {
     XmlReader xmlreader(path);
     _points = xmlreader.get_points_vec2d();

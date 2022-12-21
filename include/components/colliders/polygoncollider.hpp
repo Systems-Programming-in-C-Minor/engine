@@ -37,6 +37,7 @@ public:
      * @return The current points.
      */
     [[nodiscard]] std::vector<Vector2d> get_points() const;
+
 protected:
     /**
      * @brief Set the collider's fixture.
@@ -45,6 +46,7 @@ protected:
      * @param restitution The desired restitution.
      */
     void set_fixture(b2Body& body, float friction, float restitution) override;
+    [[nodiscard]] std::vector<Vector2d> get_vertices(b2Body& body, const Transform& transform) const override;
 private:
     /**
      * @brief Get points from a given file.
