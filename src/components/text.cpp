@@ -11,17 +11,16 @@
 
 #include "fmt/core.h"
 
-
 Text::Text(const std::string& text,
-	const std::string& font_path,
-	const int font_size,
-	int order_in_layer,
-	const Color& foreground_color,
-	const Color& background_color,
-    float fps,
-	float pixels_to_meters,
-	bool flip_x,
-	bool flip_y
+           const std::string& font_path,
+           const int font_size,
+           int order_in_layer,
+           const Color& foreground_color,
+           const Color& background_color,
+           float fps,
+           float pixels_to_meters,
+           bool flip_x,
+           bool flip_y
 ) :
 	IRenderable(order_in_layer),
 	pixels_to_meters(pixels_to_meters),
@@ -79,4 +78,26 @@ bool Text::should_render() {
         return true;
     }
     return false;
+}
+
+Color Text::get_foreground_color() const
+{
+    return _foreground_color;
+}
+
+void Text::set_foreground_color(const Color& foreground_color)
+{
+    _foreground_color = foreground_color;
+    load_texture(_prev_text);
+}
+
+Color Text::get_background_color() const
+{
+    return _background_color;
+}
+
+void Text::set_background_color(const Color& background_color)
+{
+    _background_color = background_color;
+    load_texture(_prev_text);
 }
