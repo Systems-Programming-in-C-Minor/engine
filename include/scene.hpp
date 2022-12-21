@@ -28,6 +28,7 @@ private:
     const std::unique_ptr<b2World> _world;
     const std::unique_ptr<CollisionHandler> _collision_handler;
     std::shared_ptr<Camera> _camera;
+    const std::string _name;
 public:
     /**
     * @brief A vector containing the game objects of the Scene (GameObject).
@@ -62,6 +63,12 @@ public:
     [[nodiscard]] std::shared_ptr<Camera> get_camera() const;
 
     /**
+     * @brief Getter method for the name.
+     * @return The current std::string name object.
+     */
+    [[nodiscard]] std::string get_name() const;
+
+    /**
      * @brief Setter method for the camera.
      * @param camera The Camera object which will be set.
      */
@@ -70,8 +77,9 @@ public:
     /**
      * @brief Constructor.
      * @param camera The current Camera object.
+     * @param name The name of the Scene (optionally).
      */
-    Scene(std::shared_ptr<Camera> camera = std::make_shared<Camera>());
+    Scene(std::shared_ptr<Camera> camera = std::make_shared<Camera>(), std::string  name = "");
 
     /**
      * @brief Virtual destructor.

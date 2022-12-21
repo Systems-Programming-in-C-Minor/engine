@@ -30,6 +30,11 @@ std::shared_ptr<Camera> Scene::get_camera() const
     return _camera;
 }
 
+std::string Scene::get_name() const
+{
+    return _name;
+}
+
 void Scene::set_camera(std::shared_ptr<Camera> camera)
 {
     _camera = std::move(camera);
@@ -37,11 +42,12 @@ void Scene::set_camera(std::shared_ptr<Camera> camera)
 
 Scene::~Scene() = default;
 
-Scene::Scene(std::shared_ptr<Camera> camera) :
+Scene::Scene(std::shared_ptr<Camera> camera, std::string name) :
     _event_manager(std::make_unique<EventManager>()),
     _world(std::make_unique<b2World>(b2Vec2(0.0f, 0.0f))),
     _collision_handler(std::make_unique<CollisionHandler>()),
-    _camera(std::move(camera))
+    _camera(std::move(camera)),
+    _name(std::move(name))
 {
     _world->SetContactListener(_collision_handler.get());
     gameobjects.push_back(_camera);
