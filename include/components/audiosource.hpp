@@ -6,11 +6,14 @@
 #include <string>
 #include <filesystem>
 #include "audio/sdl_mixer_audio_sample.hpp"
+#include "interfaces/itickable.hpp"
+
+class GameObject;
 
 /**
  * @brief Component for playback of an audio file.
  */
-class AudioSource : public Component
+class AudioSource : public Component, public ITickable
 {
 public:
 	/**
@@ -47,6 +50,12 @@ public:
 	 * @return Times this audio source has been played.
 	 */
 	[[nodiscard]] int get_play_count() const;
+
+	/*
+	 *	Tick method for checking if current gameobject that this is attached to is still active
+	 *	otherwise, stop playing audio.
+	 */
+	void tick(GameObject& gameobject) override;
 
     /**
      * @brief Explicit constructor.

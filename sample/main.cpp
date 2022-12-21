@@ -222,6 +222,17 @@ class FpsIndicator : public Component, public ITickable {
     }
 };
 
+class Inacterscript : public Component, public KeyListener {
+public:
+    explicit Inacterscript(EventManager &event_manager) : KeyListener(event_manager) {};
+
+    void on_key_pressed(const KeyPressedEvent &event) override {
+        if(event.key == U){
+            game_object->set_active(false);
+        }
+    };
+};
+
 int main(int argc, char *argv[]) {
     std::string server_url = "localhost:10000";
     if(argc <= 1) {
@@ -250,8 +261,12 @@ int main(int argc, char *argv[]) {
     const auto car_drive_off = std::make_shared<AudioSource>("./assets/audio/tire-screech-drive-off.mp3", false, false,
                                                              0.2, "car_drive_off");
     const auto car_crash = std::make_shared<AudioSource>("./assets/audio/car-crash.mp3", false, false, 1, "car_crash");
+    const auto bg = std::make_shared<GameObject>("bg", "bg");
+    auto script = std::make_shared<Inacterscript>(scene->get_event_manager());
+    bg->add_component(script);
+    bg->add_component(background_music);
+    scene->gameobjects.push_back(bg);
     background_music->play(true);
-    engine_idle->play(true);
 
     // Create game objects with component
     const auto track_outer = std::make_shared<GameObject>(
@@ -329,7 +344,6 @@ int main(int argc, char *argv[]) {
 
         scene->gameobjects.push_back(car);
     }
-
     const auto text = std::make_shared<GameObject>(
             "ad_board", "ad", Transform{Vector2d{-50.f, 10.f}, Vector2d{}, 0.2f, 1.f});
     text->add_component(std::make_shared<Text>("Powered by UnEngine", "./assets/Roboto/Roboto-Medium.ttf", 500, 10, Color{255,255,255,0 }, Color{0,0,0,1 }, 1));

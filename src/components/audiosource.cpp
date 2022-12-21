@@ -1,6 +1,7 @@
 #include <iostream>
 #include "components/audiosource.hpp"
 
+#include "gameobject.hpp"
 #include "fmt/core.h"
 
 namespace fs = std::filesystem;
@@ -42,6 +43,13 @@ void AudioSource::stop()
 int AudioSource::get_play_count() const
 {
 	return _play_count;
+}
+
+void AudioSource::tick(GameObject &gameobject)
+{
+    if (!game_object->is_active()){
+		_sample->stop();
+	}
 }
 
 // TODO Relative path should be resolved using executable directory, not working directory
