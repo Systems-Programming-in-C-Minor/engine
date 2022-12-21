@@ -179,7 +179,14 @@ class FpsIndicator : public Component, public ITickable {
     }
 };
 
-int main() {
+int main(int argc, char *argv[]) {
+    std::string server_url = "localhost:10000";
+    if(argc <= 1) {
+        std::cout << "No server address given, defaulting to " << server_url << "\n";
+        std::cout << "Usage: engine_sample (server address:port)" << "\n";
+    } else {
+        server_url = argv[1];
+    }
 
     // Setup engine
     const auto global = Global::get_instance();
@@ -258,7 +265,7 @@ int main() {
             "yellow_car.png",
     };
 
-    engine_ref.enable_multiplayer("signaling.maik.sh:10000");
+    engine_ref.enable_multiplayer(server_url);
 
     auto active_car_components = std::list<std::shared_ptr<Component>>{ui_velocity_indicator_behaviour};
     auto active_car_children = std::list<std::shared_ptr<GameObject>>{camera};
@@ -316,29 +323,25 @@ int main() {
     // Add rigid bodies
     const auto track_outer_coll = std::make_shared<ChainCollider>("./assets/track1_outer.xml", false,
                                                                   ColliderNormal::inwards);
-    const auto track_outer_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{0.f, 0.f},
-                                                            1.0f);
+    const auto track_outer_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{0.f, 0.f});
     track_outer_rb->set_collider(track_outer_coll);
     track_outer->add_component(track_outer_rb);
 
     const auto track_inner_coll = std::make_shared<ChainCollider>("./assets/track1_inner.xml", false,
                                                                   ColliderNormal::outwards);
-    const auto track_inner_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{0.f, 0.f},
-                                                            1.0f);
+    const auto track_inner_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{0.f, 0.f});
     track_inner_rb->set_collider(track_inner_coll);
     track_inner->add_component(track_inner_rb);
 
     const auto track_grass_outer_coll = std::make_shared<ChainCollider>("./assets/track1_2x_grass_outer.xml", true,
                                                                         ColliderNormal::inwards);
-    const auto track_grass_outer_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{0.f, 0.f},
-                                                                  1.0f);
+    const auto track_grass_outer_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{0.f, 0.f});
     track_grass_outer_rb->set_collider(track_grass_outer_coll);
     track_grass_outer->add_component(track_grass_outer_rb);
 
     const auto track_grass_inner_coll = std::make_shared<ChainCollider>("./assets/track1_2x_grass_inner.xml", true,
                                                                         ColliderNormal::outwards);
-    const auto track_grass_inner_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{0.f, 0.f},
-                                                                  1.0f);
+    const auto track_grass_inner_rb = std::make_shared<RigidBody>(*scene, 2, BodyType::dynamic_body, Vector2d{0.f, 0.f});
     track_grass_inner_rb->set_collider(track_grass_inner_coll);
     track_grass_inner->add_component(track_grass_inner_rb);
 
