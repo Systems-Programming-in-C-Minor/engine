@@ -19,9 +19,17 @@ public:
      * @brief Method which returns a random float between a min and max value.
      * @param min The min float value of the randomizer, 0 at default.
      * @param max The max float value of the randomizer, 1 at default.
-     * @return A random float between the min and max value.
+     * @return A random int between the min and max value.
      * */
     static int random(float max, float min);
+
+    /**
+     * @brief Method which returns a random float between a min and max value.
+     * @param min The min float value of the randomizer, 0 at default.
+     * @param max The max float value of the randomizer, 1 at default.
+     * @return A random float between the min and max value.
+     * */
+    static float random_float (float min, float max);
 
     /**
      * @brief Method which returns a random boolean value.

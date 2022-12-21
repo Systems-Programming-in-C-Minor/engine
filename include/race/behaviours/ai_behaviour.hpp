@@ -18,6 +18,7 @@ class AIBehaviour : public Component, public ITickable {
 private:
     std::shared_ptr<GameObject> _target;
     bool reached_target = false;
+    float _offset = 2.5f;
 
     /**
      * @brief Method which lets an AI object move to the defined _target value.
@@ -55,6 +56,18 @@ public:
      * @param game_object A shared pointer to the GameObject which will become the _target.
      */
     void set_target(std::shared_ptr<GameObject> game_object);
+
+    /**
+     * @brief Getter method for the _offset value used for randomization of the AI
+     * @return Offset value in meters
+     */
+     [[nodiscard]] float get_offset();
+
+    /**
+    * @brief Getter method for the _offset value used for randomization of the AI
+     * @param offset in meters from the original position of the target
+    */
+     void set_offset(float offset);
 
     /**
      * @brief Method runs every tick.
