@@ -965,3 +965,6 @@ FodyWeavers.xsd
 # Doxygen
 html/
 docs/
+
+# Json tests
+test.json
