@@ -13,13 +13,23 @@ class SDLMixerSoundEngine : public ISoundEngine {
 
 public:
     SDLMixerSoundEngine();
-    void play(const std::string &path, double volume, bool loop) override;
-    void stop(const std::string &path) override;
-    void load_chunk(const std::string &path);
+
+    int play(const std::string &path, double volume, bool loop) override;
+    void play(int id) override;
+
+    void resume(int id) override;
+
+    void stop(int id) override;
+
+    [[nodiscard]] bool is_playing(int id) const override;
+
     ~SDLMixerSoundEngine();
+
 private:
-    std::map<std::string, std::shared_ptr<SDL2pp::Chunk>> _audio_files = {};
-    std::map<std::string, int> _channels = {};
+    void load_chunk(int id, const std::string &path);
+
+    std::map<int, std::shared_ptr<SDL2pp::Chunk>> _audio_samples = {};
+    std::map<int, int> _channels = {};
 };
 
 #endif //ENGINE_SDL_MIXER_SOUND_ENGINE_HPP

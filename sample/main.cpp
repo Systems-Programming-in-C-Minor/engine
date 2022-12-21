@@ -38,11 +38,22 @@ public:
     explicit KeyMouseListenerComponent(EventManager &event_manager) : KeyListener(event_manager),
                                                                       MouseListener(event_manager),
                                                                       ColliderListener(event_manager),
-                                                                      JoystickListener(event_manager) {}
+                                                                      JoystickListener(event_manager) {
+        _sound_car_crash = std::make_shared<AudioSource>("./assets/audio/car-crash.mp3", false, false, 0.1f, "car_crash");
+        _test_sound = std::make_shared<AudioSource>("./assets/audio/test-song.mp3", false, false, 0.1f, "test_sound");
+    }
 
     void on_key_pressed(const KeyPressedEvent &event) override {
         if (event.key == P)
             enabled = !enabled;
+        if (event.key == X) {
+            if (_test_sound->get_play_count() == 0)
+                _test_sound->play();
+            else if (_test_sound->is_playing())
+                _test_sound->stop();
+            else
+                _test_sound->resume();
+        }
         if (event.key == C)
             colliders_enabled = !colliders_enabled;
         if (event.key == ALT_LEFT)
@@ -101,6 +112,15 @@ public:
             std::cout << std::endl << "Collider entry a: " << event.collider_a->game_object->get_name() << std::endl;
             std::cout << "Collider entry b: " << event.collider_b->game_object->get_name() << std::endl;
         }
+
+        if (event.collider_a->game_object->get_tag() != "car" && event.collider_b->game_object->get_tag() != "get_tag")
+            return;
+
+        if (event.collider_a->game_object->get_name() != "blue_car" && event.collider_b->game_object->get_name() != "blue_car")
+            return;
+
+        if (!_sound_car_crash->is_playing())
+            _sound_car_crash->play();
     }
 
     void on_collider_exit(const ColliderExitEvent &event) override {
@@ -135,6 +155,8 @@ private:
     bool enabled = false;
     bool colliders_enabled = false;
     bool _ALT = false;
+    std::shared_ptr<AudioSource> _sound_car_crash;
+    std::shared_ptr<AudioSource> _test_sound;
 };
 
 class VelocityIndicator : public Component, public ITickable {

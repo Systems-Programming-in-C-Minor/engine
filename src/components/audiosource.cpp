@@ -1,3 +1,4 @@
+#include <iostream>
 #include "components/audiosource.hpp"
 
 #include "fmt/core.h"
@@ -29,7 +30,6 @@ void AudioSource::play(bool looping)
 
 	_loop = looping;
     _sample->set_looping(_loop);
-	_is_playing = true;
 	_sample->play();
 	++_play_count;
 }
@@ -37,7 +37,6 @@ void AudioSource::play(bool looping)
 void AudioSource::stop()
 {
     _sample->stop();
-	_is_playing = false;
 }
 
 int AudioSource::get_play_count() const
@@ -61,4 +60,12 @@ AudioSource::AudioSource(
 	_sample = std::make_unique<SDLMixerAudioSample>(audio_clip, volume, loop);
 	if (_play_on_awake && active)
 		play(loop);
+}
+
+void AudioSource::resume() {
+    _sample->resume();
+}
+
+bool AudioSource::is_playing() const {
+    return _sample->is_playing();
 }

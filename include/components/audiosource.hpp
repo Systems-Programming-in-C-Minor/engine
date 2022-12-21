@@ -26,6 +26,17 @@ public:
 	 */
 	void play(bool looping = false);
 
+    /**
+	 * Resumes the sound.
+	 */
+	void resume();
+
+    /**
+	 * Check whether the sound is currently playing.
+	 * @return Whether the sound is currently playing.
+	 */
+	[[nodiscard]] bool is_playing() const;
+
 	/**
 	 * Stops playback if playing.
 	 */
@@ -57,7 +68,6 @@ private:
 	bool _play_on_awake;
 	bool _loop;
     float _volume;
-	bool _is_playing = false;
 	int _play_count = 0;
     std::shared_ptr<SDLMixerAudioSample> _sample;
 };
