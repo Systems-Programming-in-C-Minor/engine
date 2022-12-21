@@ -29,7 +29,7 @@ public:
      * @param max The max float value of the randomizer, 1 at default.
      * @return A random float between the min and max value.
      * */
-    static float random_f(float min, float max);
+    static float random_float (float min, float max);
 
     /**
      * @brief Method which returns a random boolean value.
