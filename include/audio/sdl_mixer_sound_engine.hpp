@@ -15,10 +15,13 @@ public:
     SDLMixerSoundEngine();
 
     int play(const std::string &path, double volume, bool loop) override;
+    void play(int id) override;
 
     void resume(int id) override;
 
     void stop(int id) override;
+
+    [[nodiscard]] bool is_playing(int id) const override;
 
     ~SDLMixerSoundEngine();
 

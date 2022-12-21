@@ -41,8 +41,7 @@ int SDLMixerSoundEngine::play(const std::string &path, double volume, bool loop)
 
 void SDLMixerSoundEngine::stop(int id)
 {
-    if(_audio_samples.contains(id))
-    {
+    if(_audio_samples.contains(id)) {
         Mix_Pause(_channels[id]);
     }
 }
@@ -55,4 +54,13 @@ SDLMixerSoundEngine::~SDLMixerSoundEngine()
 void SDLMixerSoundEngine::resume(int id) {
     // channel number exists, continue playing
     Mix_Resume(_channels[id]);
+}
+
+void SDLMixerSoundEngine::play(int id) {
+    Mix_PlayChannel(_channels[id], _audio_samples[id]->Get(), 0);
+    Mix_Resume(_channels[id]);
+}
+
+bool SDLMixerSoundEngine::is_playing(int id) const {
+    return Mix_Playing(id) != 0 && Mix_Paused(id) == 0;
 }
