@@ -5,7 +5,7 @@
 #include "events.hpp"
 
 /**
- * @brief Interface for objects wanting to respond to ui object events.
+ * @brief Used for listening for multiplayer events.
  */
 class MultiplayerListener {
 protected:
@@ -17,34 +17,46 @@ protected:
 
 public:
     /**
-     * @brief Called whenever a ui object is pressed.
+     * @brief Called when a user joins the session.
      * @param event The desired UserJoinedMultiplayerEvent.
      */
     virtual void on_user_join(const UserJoinedMultiplayerEvent &event) {}
 
     /**
-     * @brief Called whenever a ui object is pressed.
+     * @brief Called when a user leaves the session.
      * @param event The desired UserLeftMultiplayerEvent.
      */
     virtual void on_user_leave(const UserLeftMultiplayerEvent &event) {}
 
     /**
-     * @brief Called whenever a ui object is pressed.
+     * @brief Called when an id is allocated to the user.
      * @param event The desired AllocationMultiplayerEvent.
      */
     virtual void on_allocation(const AllocationMultiplayerEvent &event) {}
 
     /**
-     * @brief Called whenever a ui object is pressed.
+     * @brief Called when the user count changes.
      * @param event The desired UsersMultiplayerEvent.
      */
     virtual void on_users(const UsersMultiplayerEvent &event) {}
 
     /**
-     * @brief Called whenever a ui object is pressed.
+     * @brief Called when the user is assigned to be the host, can be called at any point.
      * @param event The desired HostMultiplayerEvent.
      */
     virtual void on_host(const HostMultiplayerEvent &event) {}
+
+    /**
+     * @brief Called when the game starts.
+     * @param event The desired StartGameMultiplayerEvent.
+     */
+    virtual void on_start_game(const StartGameMultiplayerEvent &event) {}
+
+    /**
+     * @brief Called when the game stops.
+     * @param event The desired StopGameMultiplayerEvent.
+     */
+    virtual void on_stop_game(const StopGameMultiplayerEvent &event) {}
 };
 
 #endif //ENGINE_MULTIPLAYER_LISTENER_HPP

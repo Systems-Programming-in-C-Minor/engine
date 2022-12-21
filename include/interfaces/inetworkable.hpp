@@ -15,6 +15,8 @@ enum NetworkableType { // DO NOT CHANGE ORDER, the server has to have the same o
     Allocation,
     Users,
     Update,
+    StartGame,
+    StopGame,
 };
 
 /**

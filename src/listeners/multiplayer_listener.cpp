@@ -16,4 +16,10 @@ MultiplayerListener::MultiplayerListener(EventManager &event_manager) {
     event_manager.register_listener(HostMultiplayer, [this](const IEvent &event) {
         on_host(dynamic_cast<const HostMultiplayerEvent &>(event));
     });
+    event_manager.register_listener(StartGameMultiplayer, [this](const IEvent &event) {
+        on_start_game(dynamic_cast<const StartGameMultiplayerEvent &>(event));
+    });
+    event_manager.register_listener(StopGameMultiplayer, [this](const IEvent &event) {
+        on_stop_game(dynamic_cast<const StopGameMultiplayerEvent &>(event));
+    });
 }

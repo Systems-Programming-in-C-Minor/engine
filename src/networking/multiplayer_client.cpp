@@ -57,6 +57,12 @@ void MultiplayerClient::_tick() {
                 }
                 break;
             }
+            case StartGame:
+                global->notify_event_manager(StartGameMultiplayerEvent());
+                break;
+            case StopGame:
+                global->notify_event_manager(StopGameMultiplayerEvent());
+                break;
         }
 
         _received_messages.pop_front();
