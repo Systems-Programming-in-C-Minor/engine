@@ -9,19 +9,19 @@ void DriveInputBehaviour::on_key_pressed(const KeyPressedEvent &event) {}
 void DriveInputBehaviour::on_key_hold(const KeyHoldEvent &event) {
     const auto car = reinterpret_cast<Car *>(game_object);
     if (event.key == _keybinds.forward) {
-        car->drive_forwards();
+        car->drive(1);
         return;
     }
     if (event.key == _keybinds.backwards) {
-        car->drive_backwards();
+        car->drive(-1);
         return;
     }
     if (event.key == _keybinds.left) {
-        car->turn_left();
+        car->turn(-1);
         return;
     }
     if (event.key == _keybinds.right) {
-        car->turn_right();
+        car->turn(1);
         return;
     }
     if (event.key == _keybinds.brake) {

@@ -316,11 +316,11 @@ int main(int argc, char *argv[]) {
 
     const auto car_sprites = std::vector<std::string>{
             "blue_car.png",
-            "blue_car.png",
-            "green_car.png",
-            "green_car.png",
-            "red_car.png",
-            "red_car.png",
+//            "blue_car.png",
+//            "green_car.png",
+//            "green_car.png",
+//            "red_car.png",
+//            "red_car.png",
     };
 
     engine_ref.enable_multiplayer(server_url);
@@ -331,7 +331,8 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < car_sprites.size(); i++) {
         const auto &sprite = car_sprites[i];
         const auto car = std::make_shared<Car>(sprite.substr(0, sprite.find('.')), "./assets/" + sprite,
-                                               Vector2d{static_cast<float>(14 + i * 5), static_cast<float>(-76 + i)},
+//                                               Vector2d{static_cast<float>(14 + i * 5), static_cast<float>(-76 + i)},
+                                               Vector2d{static_cast<float>(0), static_cast<float>(-120)},
                                                scene);
 
         car->add_component(std::make_shared<MultiplayerBehaviour>(

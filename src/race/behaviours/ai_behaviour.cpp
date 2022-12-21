@@ -26,8 +26,8 @@ void AIBehaviour::move_to_target() {
     const Vector2d target_position = _target->transform.get_position();
 
     const auto angle = game_object->transform.get_angle();
-    const auto x_forward = -sin(angle);
-    const auto y_forward = cos(angle);
+    const auto x_forward = -std::sin(angle);
+    const auto y_forward = std::cos(angle);
     auto forward = Vector2d(x_forward, y_forward);
 
     Vector2d direction_to_target = target_position - current_position;
@@ -41,13 +41,14 @@ void AIBehaviour::move_to_target() {
     const auto behaviour = reinterpret_cast<Car *>(game_object);
 
     if (dot > 0 || distance_to_target > reverse_distance)
-        behaviour->drive_forwards();
-    else behaviour->drive_backwards();
+        behaviour->drive(1);
+    else
+        behaviour->drive(-1);
 
     if (angle_to_dir > max_angle_to_direction)
-        behaviour->turn_left();
+        behaviour->turn(-1);
     if(angle_to_dir < -max_angle_to_direction)
-        behaviour->turn_right();
+        behaviour->turn(1);
 
     if(distance_to_target < reached_target_distance)
         reached_target = true;
