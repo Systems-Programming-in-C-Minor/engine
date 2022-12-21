@@ -13,9 +13,28 @@
  */
 class Text : public Component, public IRenderable {
 public:
+    /**
+     * @brief Getter for the foreground color of the Text Component.
+     * @return The Color of the text itself.
+     */
 	[[nodiscard]] Color get_foreground_color() const;
+
+    /**
+     * @brief Setter for the foreground color of the Text Component.
+     * @param color The new Color of the Text itself.
+     */
 	void set_foreground_color(const Color& foreground_color);
-	[[nodiscard]] Color get_background_color() const;
+
+    /**
+     * @brief Getter for the background color of the Text Component.
+     * @return The Color of the background of the Text.
+     * */
+    [[nodiscard]] Color get_background_color() const;
+
+    /**
+     * @brief Setter for the background color of the Text Component.
+     * @param color The new Color of the background.
+     */
 	void set_background_color(const Color& background_color);
 
 	/**
