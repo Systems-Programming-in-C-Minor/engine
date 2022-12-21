@@ -10,13 +10,16 @@ RigidBody::RigidBody(const Scene &scene,
                      int order_in_layer,
                      const BodyType type,
                      const Vector2d vector,
+                     const Color color,
                      const float gravity_scale,
                      const float restitution,
                      const float friction
 ) :
         IRenderable(order_in_layer),
         _restitution(restitution),
-        _friction(friction) {
+        _friction(friction),
+        _color(color)
+{
     b2BodyDef body_def;
     body_def.type = static_cast<b2BodyType>(type);
     body_def.position.Set(vector.x, vector.y);
@@ -151,8 +154,8 @@ b2Body *RigidBody::get_body() const {
 void RigidBody::render() {
     const auto renderer = Global::get_instance()->get_engine().get_renderer();
 
-    auto render_call = RenderCall([collider = _collider, renderer, transform = game_object->transform, body = _body]() {
-        renderer->render_lines(collider->get_vertices(*body, transform), Color{255, 255, 0, 0});
+    auto render_call = RenderCall([&, collider = _collider, renderer, transform = game_object->transform, body = _body]() {
+        renderer->render_lines(collider->get_vertices(*body, transform), _color);
     }, _order_in_layer);
     renderer->add_render_call(render_call);
 }

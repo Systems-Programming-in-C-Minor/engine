@@ -1,6 +1,7 @@
 #ifndef RIGID_BODY_HPP
 #define RIGID_BODY_HPP
 
+#include "color.hpp"
 #include "component.hpp"
 #include "vector2d.hpp"
 #include "memory"
@@ -16,11 +17,9 @@ enum class BodyType {
 };
 
 class b2Body;
-
-class b2Vec2;
+struct b2Vec2;
 
 class Scene;
-
 class Collider;
 class SdlRenderer;
 
@@ -35,9 +34,11 @@ class RigidBody : public Component, public IRenderable {
 public:
     /**
      * @brief Constructor.
+     * @param scene The scene to which this rigid body should be added
      * @param order_in_layer The order in which the rigid body is rendered.
      * @param type The BodyType of the rigid body.
      * @param vector The Vector2d of the rigid body.
+     * @param color Color in which the rigid body will be rendered
      * @param gravity_scale The initial gravity scale of the rigid body.
      * @param restitution The initial restitution of the rigid body.
      * @param friction The initial friction of the rigid body.
@@ -46,6 +47,7 @@ public:
         int order_in_layer,
         BodyType type,
         Vector2d vector,
+        Color color = Color{ 255, 255, 0, 0 },
         float gravity_scale = 1.0f,
         float restitution = 0.5f, 
         float friction = 0.5f
@@ -220,6 +222,7 @@ private:
     std::shared_ptr<Collider> _collider;
     float _restitution;
     float _friction;
+    Color _color;
 
     /**
      * @brief Getter for the current b2Body.
