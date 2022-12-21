@@ -37,21 +37,6 @@ public:
     ~AIBehaviour() override;
 
     /**
-     * @brief Distance within the AI object will have reached the target (meters).
-     */
-    float reached_target_distance = 5.f;
-
-    /**
-     * @brief If the target is this far behind, the AI object will turn around to reach the target (meters).
-     */
-    float reverse_distance = 25.f;
-
-    /**
-     * @brief If this angle is reached, the AI object will turn left or right to reach the target (meters).
-     */
-    float max_angle_to_direction = 0.08f;
-
-    /**
      * @brief Setter method for the _target value of the AI object.
      * @param game_object A shared pointer to the GameObject which will become the _target.
      */
@@ -61,7 +46,7 @@ public:
      * @brief Getter method for the _offset value used for randomization of the AI
      * @return Offset value in meters
      */
-     [[nodiscard]] float get_offset();
+     [[nodiscard]] float get_offset() const;
 
     /**
     * @brief Getter method for the _offset value used for randomization of the AI
