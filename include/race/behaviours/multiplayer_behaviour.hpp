@@ -15,6 +15,7 @@ class GameObject;
 class MultiplayerBehaviour : public Component, protected MultiplayerListener {
 private:
     int _car_id;
+    bool _game_is_running;
     std::shared_ptr<NetworkableCar> _networkable_car;
 
     EventManager &_event_manager;
@@ -32,6 +33,10 @@ private:
     void on_users(const UsersMultiplayerEvent &event) override;
 
     void on_host(const HostMultiplayerEvent &event) override;
+
+    void on_start_game(const StartGameMultiplayerEvent &event) override;
+
+    void on_stop_game(const StopGameMultiplayerEvent &event) override;
 
     void on_parent_set() override;
 
