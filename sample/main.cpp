@@ -1,3 +1,4 @@
+#include <cmath>
 #include <iostream>
 
 #include "camera.hpp"
@@ -12,18 +13,13 @@
 #include "listeners/mouse_listener.hpp"
 #include "listeners/collider_listener.hpp"
 #include "race/behaviours/drive_behaviour.hpp"
-#include "race/behaviours/ai_behaviour.hpp"
-#include "utils/trigonometry.hpp"
-#include "utils/xmlreader.hpp"
 #include "uiobject.hpp"
 #include "components/text.hpp"
 #include "input.hpp"
 #include "storage/json_properties.hpp"
 #include "components/audiosource.hpp"
 #include "listeners/joystick_listener.hpp"
-#include "listeners/ai_listener.hpp"
 #include "race/objects/car.hpp"
-#include "race/objects/networkables/networkable_car.hpp"
 #include "debug.hpp"
 #include "race/behaviours/multiplayer_behaviour.hpp"
 
@@ -57,20 +53,20 @@ public:
         if (event.key == C)
             colliders_enabled = !colliders_enabled;
         if (event.key == ALT_LEFT)
-            _ALT = true;
-        if (event.key == ENTER && _ALT)
+            ALT_PRESS = true;
+        if (event.key == ENTER && ALT_PRESS)
             Global::get_instance()->get_engine().get_renderer()->toggle_fullscreen();
-        if (event.key == D && _ALT)
+        if (event.key == D && ALT_PRESS)
             Global::get_instance()->get_engine().get_renderer()->toggle_debug_mode();
-        if (event.key == NUM_5 && _ALT)
+        if (event.key == NUM_5 && ALT_PRESS)
             Global::get_instance()->get_engine().load_scene(scene2);
-        if (event.key == NUM_4 && _ALT)
+        if (event.key == NUM_4 && ALT_PRESS)
             Global::get_instance()->get_engine().load_scene(scene);
-        if (event.key == RIGHT && _ALT) {
+        if (event.key == RIGHT && ALT_PRESS) {
             const int ticks = Global::get_instance()->get_engine().get_ticks_per_second();
             (ticks < 1000) ? Global::get_instance()->get_engine().set_ticks_per_second(ticks + 10) : void();
         }
-        if (event.key == LEFT && _ALT) {
+        if (event.key == LEFT && ALT_PRESS) {
             const int ticks = Global::get_instance()->get_engine().get_ticks_per_second();
             (ticks > 10) ? Global::get_instance()->get_engine().set_ticks_per_second(ticks - 10) : void();
         }
@@ -85,7 +81,7 @@ public:
 
     void on_key_released(const KeyReleasedEvent &event) override {
         if (event.key == ALT_LEFT)
-            _ALT = false;
+            ALT_PRESS = false;
         if (enabled)
             std::cout << "Released key: " << event.key << std::endl;
     }
@@ -154,7 +150,7 @@ public:
 private:
     bool enabled = false;
     bool colliders_enabled = false;
-    bool _ALT = false;
+    bool ALT_PRESS = false;
     std::shared_ptr<AudioSource> _sound_car_crash;
     std::shared_ptr<AudioSource> _test_sound;
 };
@@ -162,11 +158,9 @@ private:
 class VelocityIndicator : public Component, public ITickable {
 private:
     float _velocity;
-    int _ticks;
 public:
     explicit VelocityIndicator(float velocity = 0.f)
-            : _velocity(velocity),
-              _ticks(0) {}
+            : _velocity(velocity) {}
 
     void tick(GameObject &_game_object) override {
         if (_game_object.get_tag() == "car") {
@@ -174,7 +168,7 @@ public:
         }
         if (_game_object.get_name() == "ui_velocity_indicator") {
             const auto text = _game_object.get_component<Text>();
-            text->set_text(std::to_string(static_cast<int>(round(_velocity * 3.6f))));
+            text->set_text(std::to_string(static_cast<int>(std::round(_velocity * 3.6f))));
         }
     }
 };
