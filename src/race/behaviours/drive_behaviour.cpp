@@ -5,11 +5,6 @@
 #include <complex>
 #include "global.hpp"
 
-const float drive_force_multiplier = 300.f;
-const float drive_backwards_force_multiplier = 70.f;
-const float break_force_multiplier = 20.f;
-const float steering_multiplier = 130.f;
-
 DriveBehaviour::DriveBehaviour(std::shared_ptr<RigidBody> body, bool is_enabled) : _body(std::move(body)),
                                                                                    is_enabled(is_enabled) {}
 

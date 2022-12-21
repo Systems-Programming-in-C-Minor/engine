@@ -9,11 +9,6 @@
 #include "utils/random.hpp"
 #include "race/objects/car.hpp"
 
-
-const float reached_target_distance = 15.f;
-const float reverse_distance = 30.f;
-const float max_angle_to_direction = 0.08f;
-
 AIBehaviour::~AIBehaviour() = default;
 
 void AIBehaviour::move_to_target() {

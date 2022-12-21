@@ -24,6 +24,26 @@ protected:
 
 public:
     /**
+     * @brief The force to use for driving forwards.
+     */
+    float drive_force_multiplier = 300.f;
+
+    /**
+     * @brief The force to use for reversing.
+     */
+    float drive_backwards_force_multiplier = 70.f;
+
+    /**
+     * @brief The force to use for braking.
+     */
+    float break_force_multiplier = 20.f;
+
+    /**
+     * @brief Specifies how much to steer.
+     */
+    float steering_multiplier = 130.f;
+
+    /**
      * @brief The turn method of the behavior.
      * @param amount The float value how much will be turned.
      */

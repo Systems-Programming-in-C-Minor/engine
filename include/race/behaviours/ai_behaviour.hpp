@@ -26,6 +26,21 @@ private:
     void move_to_target();
 public:
     /**
+     * @brief Distance within the AI object will have reached the target (meters).
+     */
+    float reached_target_distance = 15.f;
+
+    /**
+     * @brief If the target is this far behind, the AI object will turn around to reach the target (meters).
+     */
+    float reverse_distance = 30.f;
+
+    /**
+     * @brief If this angle is reached, the AI object will turn left or right to reach the target (meters).
+     */
+    float max_angle_to_direction = 0.08f;
+
+    /**
      * @brief Explicit constructor.
      * @param target The target the AI object will move to.
      */
