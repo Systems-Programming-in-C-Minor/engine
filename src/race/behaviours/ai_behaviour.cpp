@@ -5,6 +5,7 @@
 #include <cmath>
 #include "global.hpp"
 #include "events.hpp"
+#include "utils/random.hpp"
 #include "race/objects/car.hpp"
 
 AIBehaviour::~AIBehaviour() = default;
@@ -54,11 +55,22 @@ void AIBehaviour::move_to_target() {
 
 void AIBehaviour::set_target(std::shared_ptr<GameObject> game_object) {
     _target = std::move(game_object);
+    const auto oldpos = _target->transform.get_position();
+    const auto newpos = oldpos + Vector2d(Random::random_f(-_offset,_offset), Random::random_f(-_offset,_offset));
+    _target->transform.set_position(newpos);
     reached_target = false;
 }
 
 void AIBehaviour::tick(GameObject &gameObject) {
     move_to_target();
+}
+
+float AIBehaviour::get_offset() {
+    return _offset;
+}
+
+void AIBehaviour::set_offset(float offset) {
+    _offset = offset;
 }
 
 AIBehaviour::AIBehaviour(std::shared_ptr<GameObject> target) {
