@@ -1,7 +1,7 @@
 #include "box2d/box2d.h"
 #include "components/colliders/chaincollider.hpp"
 #include "fmt/core.h"
-#include "utils/xmlreader.hpp"
+#include "../../utils/xmlreader.hpp"
 
 ChainCollider::ChainCollider(std::vector<Vector2d> points, bool ignore_collision_physics ,ColliderNormal collider_normal) : Collider(), _collider_normal(collider_normal)
 {
