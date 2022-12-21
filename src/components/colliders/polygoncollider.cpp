@@ -1,7 +1,7 @@
 #include "box2d/box2d.h"
 #include "components/colliders/polygoncollider.hpp"
 #include "fmt/core.h"
-#include "utils/xmlreader.hpp"
+#include "../../utils/xmlreader.hpp"
 
 PolygonCollider::PolygonCollider(std::vector<Vector2d> points, bool ignore_collision_physics) : Collider()
 {
