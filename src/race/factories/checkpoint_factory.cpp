@@ -8,7 +8,7 @@ CheckpointFactory::get(bool is_finish_line, const std::optional<std::shared_ptr<
                        const std::shared_ptr<Scene> &scene, CheckpointDef orientation) {
 
     const auto collider = std::make_shared<BoxCollider>(orientation.width, .2f, true);
-    const auto body = std::make_shared<RigidBody>(*scene, 2, BodyType::static_body, orientation.position);
+    const auto body = std::make_shared<RigidBody>(*scene, 2, BodyType::static_body, orientation.position, Color{ 255, 255, 255, 0 });
     body->set_collider(collider);
     body->set_angle(degrees_to_radians(orientation.angle));
 
