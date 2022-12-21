@@ -1,7 +1,9 @@
 #ifndef ENGINE_IRENDERER_HPP
 #define ENGINE_IRENDERER_HPP
 #include <vector>
+#include <memory>
 
+class TexturePool;
 class Sprite;
 class Text;
 class Color;
@@ -120,6 +122,8 @@ public:
      * @returns A transformed vector2d object.
      * */
 	[[nodiscard]] virtual Vector2d screen_to_world_space(const Vector2d & position) const = 0;
+
+    [[nodiscard]] virtual std::shared_ptr<TexturePool> get_texture_pool() const = 0;
 
     /**
      * @brief Virtual destructor.

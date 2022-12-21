@@ -7,6 +7,7 @@
 #include "sdlrenderer.hpp"
 #include "uiobject.hpp"
 #include "../rendercall.hpp"
+#include "render/texture_pool.hpp"
 
 
 Sprite::Sprite(std::string sprite, int order_in_layer, float pixels_to_meters, Color color, bool flip_x, bool flip_y) :
@@ -41,7 +42,7 @@ void Sprite::render() {
 
 void Sprite::load_texture(const std::string& sprite)
 {
-	_texture = std::make_shared<SdlTexture>(sprite);
+    _texture = Global::get_instance()->get_engine().get_renderer()->get_texture_pool()->load_texture(sprite);
 }
 
 void Sprite::set_color(const Color& color) {

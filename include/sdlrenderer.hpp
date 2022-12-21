@@ -3,6 +3,7 @@
 
 #include "render/irenderer.hpp"
 #include "components/colliders/collider.hpp"
+#include "render/texture_pool.hpp"
 
 #include <memory>
 #include <list>
@@ -167,12 +168,16 @@ private:
      * */
     void render_ngon(b2Body* body, b2ChainShape* shape) const;
 
-	std::unique_ptr<SDL2pp::SDL> _sdl;
+    [[nodiscard]] std::shared_ptr<TexturePool> get_texture_pool() const override;
+
+
+    std::unique_ptr<SDL2pp::SDL> _sdl;
 	std::unique_ptr<SDL2pp::SDLImage> _sdl_image;
 	std::unique_ptr<SDL2pp::SDLTTF> _sdl_ttf;
 	std::shared_ptr<SDL2pp::Window> _window;
 	std::shared_ptr<SDL2pp::Renderer> _renderer;
     std::list<RenderCall> _render_queue;
+    std::shared_ptr<TexturePool> _texture_pool;
 
 	// Todo move to something which gamedev can set
 	float _mtp = 6.f;
