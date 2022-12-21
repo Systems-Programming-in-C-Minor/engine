@@ -13,7 +13,12 @@
  */
 class Text : public Component, public IRenderable {
 public:
-    /**
+	[[nodiscard]] Color get_foreground_color() const;
+	void set_foreground_color(const Color& foreground_color);
+	[[nodiscard]] Color get_background_color() const;
+	void set_background_color(const Color& background_color);
+
+	/**
      * @brief The pixels to meters ratio of the Text object.
      */
     float pixels_to_meters;
@@ -25,7 +30,7 @@ public:
      * @param font_size The size of the text.
      * @param order_in_layer The order in which the text will be rendered.
      * @param foreground_color The color of the foreground of the text.
-     * @param background_color_color The color of the background od the text.
+     * @param background_color The color of the background od the text.
      * @param fps Initial fps value.
      * @param pixels_to_meters The pixels to meters ratio.
      * @param flip_x The flip x value of the sprite.
