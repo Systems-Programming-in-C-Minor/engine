@@ -35,6 +35,17 @@ public:
      * */
     virtual void tick() = 0;
 
+    /**
+     * @brief Sends a StartGame event to the server.
+     * */
+    virtual void start_game() = 0;
+
+    /**
+     * @brief Sends a StopGame event to the server.
+     * */
+    virtual void stop_game() = 0;
+
+
     virtual ~IMultiplayer() = default;
 };
 

@@ -76,9 +76,15 @@ void MultiplayerClient::_tick() {
         data["type"] = networkable->type;
         data["data"] = networkable->serialize();
 
-        const auto message = NetworkMessage(data.dump());
-        _network_client.write(message);
+        _send_queue.push_back(data.dump());
     }
+
+    while (!_send_queue.empty()) {
+        const auto message = NetworkMessage(_send_queue.front());
+        _network_client.write(message);
+        _send_queue.pop_front();
+    }
+
 }
 
 void MultiplayerClient::tick() {
@@ -91,4 +97,16 @@ MultiplayerClient::~MultiplayerClient() {
 
     _network_client.close();
     _networking_thread.join();
+}
+
+void MultiplayerClient::start_game() {
+    auto data = json();
+    data["type"] = StartGame;
+    _send_queue.push_back(data.dump());
+}
+
+void MultiplayerClient::stop_game() {
+    auto data = json();
+    data["type"] = StopGame;
+    _send_queue.push_back(data.dump());
 }
