@@ -559,4 +559,26 @@ public:
     HostMultiplayerEvent() : IEvent(HostMultiplayer) {}
 };
 
+/**
+ * @brief Class for handling StartGameMultiplayerEvents.
+ */
+class StartGameMultiplayerEvent : public IEvent {
+public:
+    /**
+     * @brief Constructor.
+     */
+    StartGameMultiplayerEvent() : IEvent(StartGameMultiplayer) {}
+};
+
+/**
+ * @brief Class for handling StopGameMultiplayerEvents.
+ */
+class StopGameMultiplayerEvent : public IEvent {
+public:
+    /**
+     * @brief Constructor.
+     */
+    StopGameMultiplayerEvent() : IEvent(StopGameMultiplayer) {}
+};
+
 #endif //ENGINE_EVENTS_HPP

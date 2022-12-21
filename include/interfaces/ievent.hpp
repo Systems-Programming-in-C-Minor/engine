@@ -32,6 +32,8 @@ enum Event {
     AllocationMultiplayer,
     UsersMultiplayer,
     HostMultiplayer,
+    StartGameMultiplayer,
+    StopGameMultiplayer,
 };
 
 /**

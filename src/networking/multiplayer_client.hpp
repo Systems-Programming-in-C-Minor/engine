@@ -13,6 +13,7 @@ private:
     NetworkClient _network_client;
     std::thread _networking_thread;
     std::deque<std::string> _received_messages;
+    std::deque<std::string> _send_queue;
     std::mutex _received_messages_mutex;
 
     void _tick();
@@ -21,6 +22,10 @@ public:
     explicit MultiplayerClient(const std::string &signaling_server);
 
     void tick() override;
+
+    void start_game() override;
+
+    void stop_game() override;
 
     ~MultiplayerClient() override;
 };
