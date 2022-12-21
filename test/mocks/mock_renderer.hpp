@@ -19,7 +19,7 @@ public:
 	MOCK_METHOD(Vector2d, world_space_to_screen, (const Vector2d&), (const, override));
 	MOCK_METHOD(Vector2d, screen_space_to_screen, (const Vector2d&), (const, override));
 	MOCK_METHOD(Vector2d, screen_to_screen_space, (const Vector2d&), (const, override));
-	MOCK_METHOD(void, render_lines, (std::vector<Vector2d>&, const Color&), (const, override));
+	MOCK_METHOD(void, render_lines, (const std::vector<Vector2d>&, const Color&), (const, override));
 	MOCK_METHOD(void, add_render_call, (RenderCall&), (override));
 	MOCK_METHOD(void, clear, (), (const, override));
 	MOCK_METHOD(void, push_to_screen, (), (override));
