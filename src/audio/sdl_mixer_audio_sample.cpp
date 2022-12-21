@@ -7,19 +7,26 @@
 SDLMixerAudioSample::SDLMixerAudioSample(std::string path, float volume, bool loop) :
     _path(std::move(path)),
     _volume(volume),
-    _loop(loop)
+    _loop(loop),
+    _id(std::nullopt)
     {
         _sound_engine = Global::get_instance()->get_engine().get_sound_engine();
     }
 
 void SDLMixerAudioSample::play()
 {
-    _sound_engine->play(_path, _volume, _loop);
+    if (!_id.has_value()) {
+        _id = _sound_engine->play(_path, _volume, _loop);
+    } else {
+        _sound_engine->resume(_id.value());
+    }
 }
 
 void SDLMixerAudioSample::stop()
 {
-    _sound_engine->stop(_path);
+    if (_id.has_value()) {
+        _sound_engine->stop(_id.value());
+    }
 }
 
 void SDLMixerAudioSample::set_looping(bool loop)

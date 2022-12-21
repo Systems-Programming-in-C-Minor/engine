@@ -101,6 +101,15 @@ public:
             std::cout << std::endl << "Collider entry a: " << event.collider_a->game_object->get_name() << std::endl;
             std::cout << "Collider entry b: " << event.collider_b->game_object->get_name() << std::endl;
         }
+
+        if (event.collider_a->game_object->get_tag() != "car" && event.collider_b->game_object->get_tag() != "get_tag")
+            return;
+
+        if (event.collider_a->game_object->get_name() != "blue_car" && event.collider_b->game_object->get_name() != "blue_car")
+            return;
+
+        const auto sound_car_crash = std::make_shared<AudioSource>("./assets/audio/car-crash.mp3", false, false, 0.1f, "car_crash");
+        sound_car_crash->play();
     }
 
     void on_collider_exit(const ColliderExitEvent &event) override {

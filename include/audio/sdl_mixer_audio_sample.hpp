@@ -4,6 +4,7 @@
 #include "interfaces/iaudio_sample.hpp"
 #include "interfaces/isound_engine.hpp"
 #include <memory>
+#include <optional>
 
 namespace SDL2pp {
     class Chunk;
@@ -22,6 +23,7 @@ private:
     const std::string _path;
     double _volume;
     bool _loop;
+    std::optional<int> _id;
 };
 
 #endif //ENGINE_SDL_MIXER_AUDIO_SAMPLE_HPP
