@@ -300,27 +300,33 @@ int main(int argc, char *argv[]) {
                     Vector2d{-52.f, 73.f},
                     Vector2d{64.f, 73.f},
                     Vector2d{77.f, 57.f},
+                    Vector2d{65.f, 47.f},
                     Vector2d{22.f, 37.f},
                     Vector2d{16.f, -34.f},
+                    Vector2d{32.f, -45.f},
                     Vector2d{49.f, -39.f},
-                    Vector2d{34.f, 18.f},
+                    Vector2d{41.f, -2.f},
+                    Vector2d{35.f, 2.f},
+                    Vector2d{34.f, 16.f},
+                    Vector2d{42.f, 16.f},
                     Vector2d{72.f, 20.f},
                     Vector2d{73.f, -66.f}
             };
 
     const auto car_sprites = std::vector<std::string>{
             "blue_car.png",
-            "blue_car.png",
+//            "blue_car.png",
             "green_car.png",
-            "green_car.png",
+//            "green_car.png",
             "red_car.png",
-            "red_car.png",
+//            "red_car.png",
     };
 
     engine_ref.enable_multiplayer(server_url);
 
     auto active_car_components = std::list<std::shared_ptr<Component>>{ui_velocity_indicator_behaviour};
-    auto active_car_children = std::list<std::shared_ptr<GameObject>>{camera};
+//    auto active_car_children = std::list<std::shared_ptr<GameObject>>{camera};
+    auto active_car_children = std::list<std::shared_ptr<GameObject>>{};
 
     for (int i = 0; i < car_sprites.size(); i++) {
         const auto &sprite = car_sprites[i];

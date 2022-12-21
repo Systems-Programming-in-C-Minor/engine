@@ -12,19 +12,19 @@ void DriveInputControllerBehaviour::on_axis_current(const JoystickAxisCurrentEve
         case LeftJoystickX:
         case LeftTouchpadX: {
             if (std::abs(event.value) > 0.1f) {
-                car->turn(-event.value);
+                car->turn(event.value);
             }
             break;
         }
         case LeftTrigger: {
             if (event.value > -0.9) {
-                car->drive_backwards((event.value + 1.0f) / 2);
+                car->drive(-(event.value + 1.0f) / 2);
             }
             break;
         }
         case RightTrigger: {
             if (event.value > -0.9) {
-                car->drive_forwards((event.value + 1.0f) / 2);
+                car->drive((event.value + 1.0f) / 2);
             }
             break;
         }

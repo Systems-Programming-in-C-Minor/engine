@@ -1,73 +1,63 @@
 #include "race/behaviours/drive_behaviour.hpp"
 #include <gameobject.hpp>
 #include <utility>
+#include <iostream>
+#include <complex>
 #include "global.hpp"
 
-DriveBehaviour::DriveBehaviour(std::shared_ptr<RigidBody> body, bool is_enabled) : _body(std::move(body)), is_enabled(is_enabled) {}
+const float drive_force_multiplier = 300.f;
+const float drive_backwards_force_multiplier = 70.f;
+const float break_force_multiplier = 20.f;
+const float steering_multiplier = 130.f;
 
-void DriveBehaviour::_drive(float desired_speed){
+DriveBehaviour::DriveBehaviour(std::shared_ptr<RigidBody> body, bool is_enabled) : _body(std::move(body)),
+                                                                                   is_enabled(is_enabled) {}
+
+void DriveBehaviour::drive(float force) {
     if (!is_enabled)
         return;
 
-    if(desired_speed > max_speed_forwards)
-        desired_speed = max_speed_forwards;
+    force = std::clamp(force, -1.f, 1.f);
 
-    if (desired_speed < max_speed_backwards)
-        desired_speed = max_speed_backwards;
-
-    //find current speed in forward direction
-    float current_speed = _body->get_current_speed();
-
-    //apply necessary force
-    float force = std::min(max_drive_force, std::max(-max_drive_force, (desired_speed/100 - current_speed) * max_drive_force));
-
-    if (desired_speed != current_speed) {
-        auto force_vec = _body->get_world_vector(Vector2d{0, 1}) * drive_traction * force;
-        _body->apply_force(force_vec, _body->get_world_center());
+    const auto speed = _body->get_current_speed();
+    if (speed > 0 && force < 0) {
+        brake(std::abs(force));
+        return;
     }
+
+    const auto force_multiplier = force > 0 ? drive_force_multiplier : drive_backwards_force_multiplier;
+    const auto force_vec = _body->get_world_vector(Vector2d{0, 1}) * force * force_multiplier;
+    _body->apply_force(force_vec, _body->get_world_center());
 }
 
-void DriveBehaviour::_turn(float steering) {
+void DriveBehaviour::turn(float steering) {
     if (!is_enabled)
         return;
 
-    if (steering > steering_impulse)
-        steering = steering_impulse;
+    if (steering == 0.f) return;
 
-    if(steering < -steering_impulse)
-        steering = -steering_impulse;
-    
     auto speed = _body->get_current_speed();
+    if (std::abs(speed) < .5f) return;
 
-    if (speed < 0.5f && speed > -0.5f)
-        return;
+    steering = -1 * std::clamp(steering, -1.f, 1.f);
 
-    if (speed < 0)
-        steering *= -1;
+    steering *= (speed / std::abs(speed));
 
-    _body->apply_angular_impulse(steering);
+    steering *= 1.f / std::pow(std::abs(speed), 0.4f);
+
+    steering = std::min(0.5f, std::abs(steering)) * (steering / std::abs(steering));
+
+    _body->apply_angular_impulse(steering * steering_multiplier);
 }
 
-void DriveBehaviour::turn_left(float amount) {
-    turn(amount);
-}
+void DriveBehaviour::brake(float amount) {
+    if (_body->get_current_speed() <= 0) return;
 
-void DriveBehaviour::turn_right(float amount) {
-    turn(-amount);
-}
+    amount = std::clamp(amount, 0.f, 1.f);
 
-void DriveBehaviour::drive_forwards(float amount) {
-    _drive(max_speed_forwards * amount);
-}
+    auto vec = _body->get_forward_velocity();
+    vec.normalize();
 
-void DriveBehaviour::drive_backwards(float amount) {
-    _drive(max_speed_backwards * amount);
-}
-
-void DriveBehaviour::brake() {
-    _drive(0.f);
-}
-
-void DriveBehaviour::turn(float amount) {
-    _turn(steering_impulse * amount);
+    const auto force_vec = vec * -1 * amount * break_force_multiplier;
+    _body->apply_force(force_vec, _body->get_world_center());
 }

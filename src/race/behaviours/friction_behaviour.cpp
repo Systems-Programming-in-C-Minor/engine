@@ -2,15 +2,16 @@
 #include <gameobject.hpp>
 #include "global.hpp"
 
-void FrictionBehaviour::tick(GameObject &object) {
-    _friction();
-}
+const float max_lateral_impulse = 1.f;
+const float drift_friction = 1.6f;
+const float angular_friction = 1.6f;
+const float drag_modifier = .14f;
 
-void FrictionBehaviour::_friction() {
+void FrictionBehaviour::tick(GameObject &object) {
     auto &body = *game_object->get_component<RigidBody>();
 
     //calculate the counter lateral impulse based on drift parameters
-    Vector2d impulse = body.get_lateral_velocity() * -body.get_mass();
+    auto impulse = body.get_lateral_velocity() * -body.get_mass();
     if (impulse.length() > max_lateral_impulse)
         impulse = impulse * (max_lateral_impulse / impulse.length());
 
@@ -21,11 +22,10 @@ void FrictionBehaviour::_friction() {
     body.apply_angular_impulse(angular_friction * body.get_inertia() * -body.get_angular_velocity());
 
     //forward linear velocity
-    Vector2d currentForwardNormal = body.get_forward_velocity();
-    float currentForwardSpeed = currentForwardNormal.normalized_length();
-    float dragForceMagnitude = -2 * currentForwardSpeed * drag_modifier;
+    auto vec = body.get_forward_velocity();
+    vec.normalize();
 
-    auto force_vec = currentForwardNormal * traction * dragForceMagnitude;
+    auto force_vec = vec * -1 * body.get_current_speed() * body.get_current_speed() * drag_modifier;
 
     body.apply_force(force_vec, body.get_world_center());
 }
