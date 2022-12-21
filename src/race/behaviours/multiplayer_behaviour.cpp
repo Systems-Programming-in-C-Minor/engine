@@ -15,6 +15,7 @@ MultiplayerBehaviour::MultiplayerBehaviour(EventManager &event_manager,
                                            std::list<std::shared_ptr<GameObject>> active_car_children) :
         MultiplayerListener(event_manager),
         _car_id(car_id),
+        _game_is_running(false),
         _event_manager(event_manager),
         _targets(std::move(targets)),
         _active_car_components(std::move(active_car_components)),
@@ -29,6 +30,10 @@ void MultiplayerBehaviour::on_user_join(const UserJoinedMultiplayerEvent &event)
 
     _networkable_car->transmit = false;
     _networkable_car->receive = true;
+
+    if (_game_is_running) {
+        Global::get_instance()->get_engine().multiplayer_manager->start_game();
+    }
 }
 
 void MultiplayerBehaviour::on_user_leave(const UserLeftMultiplayerEvent &event) {
@@ -84,4 +89,12 @@ void MultiplayerBehaviour::on_parent_set() {
     _networkable_car = std::make_shared<NetworkableCar>(car, false, true);
 
     Global::get_instance()->get_engine().multiplayer_manager->register_networkable(_networkable_car);
+}
+
+void MultiplayerBehaviour::on_start_game(const StartGameMultiplayerEvent &event) {
+    _game_is_running = true;
+}
+
+void MultiplayerBehaviour::on_stop_game(const StopGameMultiplayerEvent &event) {
+    _game_is_running = false;
 }
