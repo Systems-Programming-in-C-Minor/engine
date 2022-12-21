@@ -2,11 +2,6 @@
 #include <gameobject.hpp>
 #include "global.hpp"
 
-const float max_lateral_impulse = 1.f;
-const float drift_friction = 1.6f;
-const float angular_friction = 1.6f;
-const float drag_modifier = .14f;
-
 void FrictionBehaviour::tick(GameObject &object) {
     auto &body = *game_object->get_component<RigidBody>();
 

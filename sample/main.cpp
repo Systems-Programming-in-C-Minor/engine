@@ -317,16 +317,15 @@ int main(int argc, char *argv[]) {
             "blue_car.png",
 //            "blue_car.png",
             "green_car.png",
-//            "green_car.png",
+            "green_car.png",
             "red_car.png",
-//            "red_car.png",
+            "red_car.png",
     };
 
     engine_ref.enable_multiplayer(server_url);
 
     auto active_car_components = std::list<std::shared_ptr<Component>>{ui_velocity_indicator_behaviour};
-//    auto active_car_children = std::list<std::shared_ptr<GameObject>>{camera};
-    auto active_car_children = std::list<std::shared_ptr<GameObject>>{};
+    auto active_car_children = std::list<std::shared_ptr<GameObject>>{camera};
 
     for (int i = 0; i < car_sprites.size(); i++) {
         const auto &sprite = car_sprites[i];
