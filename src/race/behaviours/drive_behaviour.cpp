@@ -32,13 +32,13 @@ void DriveBehaviour::turn(float steering) {
     if (steering == 0.f) return;
 
     auto speed = _body->get_current_speed();
-    if (std::abs(speed) < .5f) return;
+    if (std::abs(speed) < minimum_driving_speed_for_turning) return;
 
     steering = -1 * std::clamp(steering, -1.f, 1.f);
 
     steering *= (speed / std::abs(speed));
 
-    steering *= 1.f / std::pow(std::abs(speed), 0.4f);
+    steering *= 1.f / std::pow(std::abs(speed), speed_to_turn_ratio);
 
     steering = std::min(0.5f, std::abs(steering)) * (steering / std::abs(steering));
 

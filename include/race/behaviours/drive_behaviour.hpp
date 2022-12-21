@@ -44,6 +44,16 @@ public:
     float steering_multiplier = 130.f;
 
     /**
+     * @brief Specifies the minimum speed required to turn the car.
+     */
+    float minimum_driving_speed_for_turning = .5f;
+
+    /**
+     * @brief If this value is increased, the car is harder to turn at higher speeds.
+     */
+    float speed_to_turn_ratio = .4f;
+
+    /**
      * @brief The turn method of the behavior.
      * @param amount The float value how much will be turned.
      */
