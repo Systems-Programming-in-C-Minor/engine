@@ -48,7 +48,7 @@ public:
      * @param vectors The vectors on which the line will be rendered.
      * @param color The desired color of the line.
      * */
-	virtual void render_lines(std::vector<Vector2d>& vectors, const Color& color) const = 0;
+	virtual void render_lines(const std::vector<Vector2d>& vectors, const Color& color) const = 0;
   
      /**
      * @brief Clear the screen of all known objects in the render queue.
