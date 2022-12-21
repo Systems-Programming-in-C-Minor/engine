@@ -11,6 +11,7 @@ class Color;
 
 class MockRenderer : public IRenderer {
 public:
+	MOCK_METHOD(std::shared_ptr<TexturePool>, get_texture_pool, (), (const, override));
 	MOCK_METHOD(Vector2d, screen_to_world_space, (const Vector2d&), (const, override));
 	MOCK_METHOD(void, render_texture, (ITexture&, Transform&, float), (const, override));
 	MOCK_METHOD(void, render_texture, (ITexture&, Transform&, float, float), (const, override));
