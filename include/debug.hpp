@@ -7,33 +7,33 @@
 /**
  * @brief Some convenient debugging functions.
  */
-namespace Debug {
-
+class Debug {
+public:
     /**
      * @brief Draws a colored line between specified start and end points.
      * @param start The starting point.
      * @param end The end point.
      * @param color The line color, defaults to white.
      */
-    void draw_line(const Vector2d& start, const Vector2d& end, const Color& color);
+    void static draw_line(const Vector2d& start, const Vector2d& end, const Color& color);
 
     /**
      * @brief Logs a message to the Console.
      * @param message The message to write.
      */
-    void log(const std::string& message);
+    void static log(const std::string& message);
 
     /**
      * @brief A variant of Debug.Log that logs an error message to the console.
-     * @param message The message to write.
+     * @param error The message to write.
      */
-    void log_error(const std::string& error);
+    void static log_error(const std::string& error);
 
     /**
      * @brief A variant of Debug.Log that logs a warning message to the console.
-     * @param message The message to write.
+     * @param warning The message to write.
      */
-    void log_warning(const std::string& warning);
+    void static log_warning(const std::string& warning);
 
 };
 

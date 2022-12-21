@@ -1,6 +1,10 @@
 #include "debug.hpp"
+#include "global.hpp"
 
 #include <iostream>
+
+#include "rendercall.hpp"
+
 
 void Debug::log(const std::string &message)
 {
@@ -19,5 +23,11 @@ void Debug::log_error(const std::string &error)
 
 void Debug::draw_line(const Vector2d &start, const Vector2d &end, const Color &color)
 {
-    //TODO: https://app.clickup.com/t/377qjj4
+    const std::vector<Vector2d> vector = { start , end };
+
+    const auto renderer = Global::get_instance()->get_engine().get_renderer();
+    auto render_call = RenderCall([renderer, vector, color]() {
+        renderer->render_lines(vector, color);
+        }, 999);
+    renderer->add_render_call(render_call);
 }

@@ -24,6 +24,7 @@
 #include "listeners/ai_listener.hpp"
 #include "race/objects/car.hpp"
 #include "race/objects/networkables/networkable_car.hpp"
+#include "debug.hpp"
 #include "race/behaviours/multiplayer_behaviour.hpp"
 
 const auto camera = std::make_shared<Camera>(6);
@@ -171,6 +172,26 @@ public:
     }
 };
 
+class DebugDrawLines : public Component, public IRenderable {
+private:
+    std::vector<Vector2d> _vectors;
+public:
+    explicit DebugDrawLines(std::vector<Vector2d> vectors)
+        : IRenderable(999), _vectors(std::move(vectors))
+    {
+        const Vector2d start_vertex = _vectors[0];
+        _vectors.push_back(start_vertex);
+    }
+
+
+    void render() override
+    {
+        for (int i = 1; i < static_cast<int>(_vectors.size()); ++i) {
+            Debug::draw_line(_vectors[i-1], _vectors[i], Color{0, 0, 255, 0});
+        }
+    }
+};
+
 class FpsIndicator : public Component, public ITickable {
     void tick(GameObject &_game_object) override {
         const auto text = _game_object.get_component<Text>();
@@ -309,6 +330,7 @@ int main(int argc, char *argv[]) {
     ui_fps_indicator->add_component(ui_fps_indicator_behaviour);
     // For debug purposes
     ui_fps_indicator->add_component(std::make_shared<DebugScreenToWorld>(scene->get_event_manager()));
+    ui_fps_indicator->add_component(std::make_shared<DebugDrawLines>(targets));
 
     scene->gameobjects.push_back(track_outer);
     scene->gameobjects.push_back(track_inner);
