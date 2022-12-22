@@ -28,7 +28,7 @@ public:
     /**
      * @brief Distance within the AI object will have reached the target (meters).
      */
-    float reached_target_distance = 15.f;
+    float reached_target_distance = 8.f;
 
     /**
      * @brief If the target is this far behind, the AI object will turn around to reach the target (meters).
