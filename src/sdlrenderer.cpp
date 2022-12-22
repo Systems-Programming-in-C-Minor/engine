@@ -215,7 +215,7 @@ void SdlRenderer::toggle_fullscreen() {
 	SDL_DisplayMode dm;
 	SDL_GetCurrentDisplayMode(_window->GetDisplayIndex(), &dm);
 	_window->SetSize(dm.w, dm.h);
-	_window->SetFullscreen(SDL_WINDOW_FULLSCREEN);
+	_window->SetFullscreen(SDL_WINDOW_FULLSCREEN_DESKTOP);
 	_fullscreen = true;
 }
 
