@@ -19,7 +19,7 @@ public:
     /**
      * @brief The amount of drift friction which will be applied.
      */
-    float drift_friction = 1.6f;
+    float drift_friction = 3.2f;
 
     /**
      * @brief The amount of angular friction which will be applied.
@@ -29,7 +29,7 @@ public:
     /**
      * @brief The amount of drag to apply.
      */
-    float drag_modifier = .14f;
+    float drag_modifier = .28f;
 
     /**
      * @brief Method will run every tick.

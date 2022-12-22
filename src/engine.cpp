@@ -24,7 +24,6 @@ void Engine::start() {
         _renderer->clear();
         _key_handler->tick();
         _mouse_handler->tick();
-        _active_scene->tick();
 
         if (multiplayer_manager != nullptr)
             multiplayer_manager->tick();
