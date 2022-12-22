@@ -15,6 +15,7 @@ void FrictionBehaviour::tick(GameObject &object) {
 
     //angular velocity
     body.apply_angular_impulse(angular_friction * body.get_inertia() * -body.get_angular_velocity());
+    body.apply_angular_impulse(angular_friction * body.get_inertia() * -body.get_angular_velocity());
 
     //forward linear velocity
     auto vec = body.get_forward_velocity();

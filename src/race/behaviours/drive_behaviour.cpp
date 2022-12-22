@@ -34,7 +34,7 @@ void DriveBehaviour::turn(float steering) {
     auto speed = _body->get_current_speed();
     if (std::abs(speed) < minimum_driving_speed_for_turning) return;
 
-    steering = -1 * std::clamp(steering, -1.f, 1.f);
+    steering = std::clamp(steering, -1.f, 1.f);
 
     steering *= (speed / std::abs(speed));
 
@@ -42,7 +42,7 @@ void DriveBehaviour::turn(float steering) {
 
     steering = std::min(0.5f, std::abs(steering)) * (steering / std::abs(steering));
 
-    _body->apply_angular_impulse(steering * steering_multiplier);
+    _body->apply_angular_impulse(-steering * steering_multiplier);
 }
 
 void DriveBehaviour::brake(float amount) {
